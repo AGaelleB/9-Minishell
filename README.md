@@ -1,5 +1,8 @@
 # 9-Minishell
 
+## TO DO LIST :
+https://trello.com/invite/b/jPIV4VSH/ATTI4eaff27ca10a747cfa7521b0fa9c3132836036E3/minishell
+
 ## Travailler en équipe avec Git
 Travailler en équipe avec Git implique de **gérer les modifications de code source** apportées par plusieurs membres, de résoudre les conflits qui peuvent survenir, et de synchroniser les différentes versions du projet. Voici les principales commandes et fonctionnalités pour travailler efficacement en équipe avec Git :
 
