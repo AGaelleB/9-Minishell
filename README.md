@@ -3,6 +3,12 @@
 ## TO DO LIST :
 https://trello.com/invite/b/jPIV4VSH/ATTI4eaff27ca10a747cfa7521b0fa9c3132836036E3/minishell
 
+## DOCUMENTATION :
+42 docs : https://harm-smits.github.io/42docs/projects/minishell
+Shell syntax : https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
+Mcombeau tuto : https://www.codequoi.com/pourquoi-je-necris-plus-darticles-sur-les-projets-de-42/
+petite explication sur la marche a suivre : http://i.paysdu42.fr/?page=minishell.c
+
 ## Travailler en équipe avec Git
 Travailler en équipe avec Git implique de **gérer les modifications de code source** apportées par plusieurs membres, de résoudre les conflits qui peuvent survenir, et de synchroniser les différentes versions du projet. Voici les principales commandes et fonctionnalités pour travailler efficacement en équipe avec Git :
 
