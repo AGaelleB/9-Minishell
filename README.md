@@ -1,7 +1,7 @@
 # 9-Minishell
 
 ## TO DO LIST :
-https://trello.com/invite/b/jPIV4VSH/ATTI4eaff27ca10a747cfa7521b0fa9c3132836036E3/minishell
+https://trello.com/b/HVYpBej1/minishell-42
 
 ## DOCUMENTATION :
 42 docs : https://harm-smits.github.io/42docs/projects/minishell

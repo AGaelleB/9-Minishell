@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/05 17:12:45 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/05 17:26:31 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int ac, char **av, char **envp)
 			free(input);
 			break;
 		}
+		//////////////////////
 		cmd_args = ft_split(input, ' ');
 		if (!cmd_args || !cmd_args[0])
 			free(input);
@@ -41,6 +42,7 @@ int	main(int ac, char **av, char **envp)
 				free(cmd_path);
 			}
 		}
+		//////////////////////
 		add_history(input);
 		ft_free_tab(cmd_args);
 		free(input);
