@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/08/25 14:17:09 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/09/05 10:44:29 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror #-g3
 
 OBJ_DIR_MINISHELL = srcs/obj_minishell
 
@@ -94,7 +94,7 @@ $(OBJ_DIR_MINISHELL)/%.o $(OBJ_DIR_LIBFT)/%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS)  -lreadline -lhistory -o $(NAME)
 	@echo "\033[5;36m\n-gcc *.c libft done\033[0m"
 	@echo "\033[5;36m-gcc *.c get_next_line done\033[0m"
 	@echo "\033[5;36m-gcc *.c ft_printf done\033[0m"
