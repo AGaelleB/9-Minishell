@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/05 10:40:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/05 15:29:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@
 # include "../includes/get_next_line.h"
 # include "../includes/libft.h"
 
+
+typedef struct s_cmd
+{
+	char	*path;
+	char	**args;
+}	t_cmd;
+
+
+
 /********************************* main.c ************************************/
+
+int		ft_strchr_slash(char *str, char c);
+int		ft_strncmp_minishell(char *s1, char *s2, int n);
+char	*ft_strjoin_minishell(char *s1, char *s2);
+
+void	ft_print_error(char *str);
+void	ft_free_tab(char **tab);
+char	*ft_check_paths(char **envp, char *args);
 
 #endif
