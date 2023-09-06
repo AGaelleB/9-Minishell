@@ -1,129 +1,58 @@
-
-char	**ft_get_paths(char **envp)
+char	**split_string(const char *str, char delimiter)
 {
-	char	*path;
-	char	**all_paths;
+	int i;
+	int j;
+	int k;
+	int token_count;
+	char **tokens;
+	int start;
+	int token_size;
 
-	path = NULL;
-	all_paths = NULL;
-	while (*envp)
-	{
-		if (ft_strncmp_minishell("PATH=", *envp, 5) == 0)
-		{
-			path = &((*envp)[5]);
-			break ;
-		}
-		envp++;
-	}
-	if (path == NULL)
-		return (NULL);
-	all_paths = ft_split(path, ':');
-	return (all_paths);
-}
-
-char	*ft_check_absolute_path(char *args)
-{
-	if (ft_strchr_slash(args, '/') == 1)
-	{
-		if (access(args, F_OK | X_OK) == 0)
-			return (ft_strdup(args));
-		else
-			return (NULL);
-	}
-	return (NULL);
-}
-
-char	*find_valid_path(char **temp_path, char *args)
-{
-	char	*valid_path;
-	int		i;
-
-	valid_path = NULL;
+	token_count = 1;
 	i = 0;
-	while (temp_path[i] && !valid_path)
+	while(str[i])
 	{
-		valid_path = ft_strjoin_minishell(temp_path[i], args);
-		if (access(valid_path, F_OK | X_OK) != 0)
-		{
-			free(valid_path);
-			valid_path = NULL;
-		}
+		if (str[i] == delimiter)
+			token_count++;
 		i++;
 	}
-	return (valid_path);
-}
 
-char	*ft_check_relative_paths(char **envp, char *args)
-{
-	char	**temp_path;
-	char	*valid_path;
-
-	temp_path = ft_get_paths(envp);
-	if (temp_path == NULL || (temp_path[0][0]) == 0)
+	tokens = malloc((token_count + 1) * sizeof(char *));
+	if (!tokens)
 	{
-		write(2, "No such file or directory: ", 28);
-		write(2, args, ft_strlen(args));
-		write(2, "\n", 1);
-		return (NULL);
+		perror("malloc");
+		return NULL;
 	}
-	valid_path = find_valid_path(temp_path, args);
-	ft_free_tab(temp_path);
-	if (valid_path != NULL)
+
+	start = 0;
+	i = 0;
+	j = 0;
+
+	while(str[j])
 	{
-		if (access(valid_path, F_OK | X_OK) == 0)
-			return (valid_path);
-	}
-	ft_print_error(args);
-	return (NULL);
-}
-
-char	*ft_check_paths(char **envp, char *args)
-{
-	char	*valid_path;
-
-	valid_path = ft_check_absolute_path(args);
-	if (valid_path != NULL)
-		return (valid_path);
-	valid_path = ft_check_relative_paths(envp, args);
-	return (valid_path);
-}
-
-int	main(int ac, char **av, char **envp)
-{
-	char *input;
-	char *cmd_path;
-	char **cmd_args;
-
-	while (1)
-	{
-		input = readline("minishell$> ");
-
-		if (!input || strcmp(input, "exit") == 0)
+		if (str[j] == delimiter || str[j + 1] == '\0')
 		{
-			printf("exit\n");
-			free(input);
-			break;
-		}
-		//////////////////////
-		cmd_args = ft_split(input, ' ');
-		if (!cmd_args || !cmd_args[0])
-			free(input);
-		else
-		{
-			cmd_path = ft_check_paths(envp, cmd_args[0]);
-			if (cmd_path)
+			token_size = (str[j] == delimiter) ? j - start : j - start + 1;
+			tokens[i] = malloc(token_size + 1);
+			if (!tokens[i])
 			{
-				if (execve(cmd_path, cmd_args, envp) == -1)
-					perror("minishell"); // a gerer plus tard
-				free(cmd_path);
+				perror("malloc");
+				k = 0;
+				while(k < i)
+				{
+					free(tokens[k]);
+					k++;
+				}
+				free(tokens);
+				return (NULL);
 			}
+			strncpy(tokens[i], &str[start], token_size);
+			tokens[i][token_size] = '\0';
+			start = j + 1;
+			i++;
 		}
-		//////////////////////
-		add_history(input);
-		ft_free_tab(cmd_args);
-		free(input);
+		j++;
 	}
-	(void)ac;
-	(void)av;
-	return (0);
+	tokens[i] = NULL; // Marquer la fin du tableau avec NULL
+	return (tokens);
 }
