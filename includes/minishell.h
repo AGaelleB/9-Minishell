@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/06 14:20:36 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:05:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@
 # include "../includes/get_next_line.h"
 # include "../includes/libft.h"
 
-typedef struct s_cmd
-{
-	char	*path;
-	char	**args;
-	
-}	t_cmd;
+typedef struct s_command {
+	char	*command;			// e.g. "cat test.txt"
+	char	separator;			// e.g. '|'
+	struct	s_command *next;	// Pointer vers la prochaine commande
+} t_command;
 
 
 /********************************* main.c ************************************/
@@ -50,5 +49,6 @@ void	ft_print_error(char *str);
 void	ft_free_tab(char **tab);
 char	*ft_check_paths(char **envp, char *args);
 char	**split_string(const char *str, char delimiter);
+void	set_command_list(char *input);
 
 #endif
