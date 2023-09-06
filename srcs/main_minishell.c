@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/05 17:26:31 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/06 12:07:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	return (0);
 }
+
+
+// builtin export
+// variable globale pour exit
+// utiliser token

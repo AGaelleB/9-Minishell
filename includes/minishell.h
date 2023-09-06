@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/05 15:29:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:11:05 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@
 # include "../includes/get_next_line.h"
 # include "../includes/libft.h"
 
-
 typedef struct s_cmd
 {
 	char	*path;
 	char	**args;
+	
 }	t_cmd;
-
 
 
 /********************************* main.c ************************************/
