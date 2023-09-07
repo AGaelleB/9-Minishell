@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/07 15:24:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/07 16:29:26 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ t_token *new_token(t_e_token_type e_type, char *split_value)
 
 t_token *tokenize_input(char *input)
 {
-	char	**words;
-	t_token	*head;
-	t_token	*curr;
-	t_token	*token;
-	int		i;
+	char		**words;
+	t_token		*head;
+	t_token		*curr;
+	t_token		*token;
+	int			i;
 
 	words = split_string(input, ' ');  // Assuming a space delimiter
 	head = NULL;
@@ -51,7 +51,7 @@ t_token *tokenize_input(char *input)
 			token = new_token(TYPE_REDIR_IN, words[i]);
 		else if (strcmp(words[i], ">>") == 0)
 			token = new_token(TYPE_REDIR_APPEND, words[i]);
-		else if (i == 0 || 
+		else if (i == 0 ||
 				(i > 0 && (strcmp(words[i - 1], "|") == 0 || 
 							strcmp(words[i - 1], ">") == 0 || 
 							strcmp(words[i - 1], "<") == 0 || 

@@ -6,11 +6,42 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/07 11:07:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/07 16:33:12 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+t_command	*get_command(char *input)
+{
+	t_command	*head;
+	t_command	*current;
+	t_command	*new_cmd;
+	char		**command;
+	int			i;
+
+	head = NULL;
+	current = NULL;
+	command = split_string(input, '|');
+	i = 0;
+	while(command[i])
+	{
+		new_cmd = malloc(sizeof(t_command));
+		new_cmd->command = ft_strdup(command[i]);
+		if (!head)
+		{
+			head = new_cmd;
+			current = head;
+		}
+		else
+		{
+			current->next = new_cmd;
+			current = new_cmd;
+		}
+		i++;
+	}
+	return (current);
+}
 
 void	ft_set_args_and_paths(t_command *current, char **envp)
 {
