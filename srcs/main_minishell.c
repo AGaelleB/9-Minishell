@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/06 17:14:35 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/07 11:59:42 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	char *input;
-	// char *cmd_path;
-	// char **cmd_args;
-	// char **prem_argc;
+	t_command	*current;
+	char		*input;
+	int			input_fd;
+	int			output_fd;
+
 	while (1)
 	{
 		input = readline("minishell$> ");
@@ -30,29 +31,23 @@ int	main(int ac, char **av, char **envp)
 			free(input);
 			break;
 		}
-		set_command_list(input);
-		// int i = 0;
-		// while(input[i])
+		// input_fd = open(av[1], O_RDONLY);
+		// output_fd = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644); // av[4]
+		current = get_command_and_separator(input);
+		// if (current->command_arg[1])
 		// {
-		// 	if(input[i] == '|')
-		// 	{
-		// 		prem_argc = split_string(input, '|');
-		// 		cmd_args = split_string(prem_argc[0], ' ');
-		// 		if (!cmd_args || !cmd_args[0])
-		// 			free(input);
-		// 		else
-		// 		{
-		// 			cmd_path = ft_check_paths(envp, cmd_args[0]);
-		// 			if (cmd_path)
-		// 			{
-		// 				if (execve(cmd_path, cmd_args, envp) == -1)
-		// 					perror("minishell"); // a gerer plus tard
-		// 				free(cmd_path);
-		// 			}
-		// 		}
-		// 	}
-		// 	i++;
-		// }
+			input_fd = open(current->command_arg[1], O_RDONLY);
+			if (input_fd == -1)
+			{
+				perror("Error opening input file");
+				exit(EXIT_FAILURE);
+			}
+			output_fd = open(current->command_arg[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		// else
+		// 	input_fd = 0;  // stdin
+		
+		multiple_pipe(current, envp, input_fd, output_fd);
+
 		add_history(input);
 		free(input);
 	}

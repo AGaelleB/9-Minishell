@@ -1,58 +1,48 @@
-char	**split_string(const char *str, char delimiter)
+
+
+
+#ifndef STRUCT_H
+# define STRUCT_H
+# include "define.h"
+
+typedef struct s_exec			t_exec;
+typedef struct s_token			t_token;
+typedef struct s_commande_line	t_commande_line;
+typedef struct s_env			t_env;
+
+struct		s_exec
 {
-	int i;
-	int j;
-	int k;
-	int token_count;
-	char **tokens;
-	int start;
-	int token_size;
+	char	**argv;
+	int		fd_in;
+	int		fd_out;
+	t_exec	*next;	
+};
 
-	token_count = 1;
-	i = 0;
-	while(str[i])
-	{
-		if (str[i] == delimiter)
-			token_count++;
-		i++;
-	}
+struct			s_token
+{
+	char		*str;
+	t_e_token	type;
+	bool		expanded;
+	t_token		*next;
+};
 
-	tokens = malloc((token_count + 1) * sizeof(char *));
-	if (!tokens)
-	{
-		perror("malloc");
-		return NULL;
-	}
+struct				s_commande_line
+{
+	char			*string;
+	t_token			*first_token;
+	char			**envp;
+	char			**argv;
+	int				fd_in;
+	int				fd_out;
+	char			*name_file;
+	t_commande_line	*next;
+};
 
-	start = 0;
-	i = 0;
-	j = 0;
+struct		s_env
+{
+	char	*str;
+	int		declare;
+	t_env	*next;
+};
 
-	while(str[j])
-	{
-		if (str[j] == delimiter || str[j + 1] == '\0')
-		{
-			token_size = (str[j] == delimiter) ? j - start : j - start + 1;
-			tokens[i] = malloc(token_size + 1);
-			if (!tokens[i])
-			{
-				perror("malloc");
-				k = 0;
-				while(k < i)
-				{
-					free(tokens[k]);
-					k++;
-				}
-				free(tokens);
-				return (NULL);
-			}
-			strncpy(tokens[i], &str[start], token_size);
-			tokens[i][token_size] = '\0';
-			start = j + 1;
-			i++;
-		}
-		j++;
-	}
-	tokens[i] = NULL; // Marquer la fin du tableau avec NULL
-	return (tokens);
-}
+#endif

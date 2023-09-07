@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/06 17:05:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:23:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,36 @@
 # include "../includes/get_next_line.h"
 # include "../includes/libft.h"
 
-typedef struct s_command {
-	char	*command;			// e.g. "cat test.txt"
-	char	separator;			// e.g. '|'
-	struct	s_command *next;	// Pointer vers la prochaine commande
-} t_command;
+typedef enum e_token_type {
+	TYPE_CMD,
+	TYPE_ARG,
+	TYPE_SEPARATOR,
+	TYPE_REDIR_OUT,		// ">"
+	TYPE_REDIR_IN,		// "<"
+	TYPE_REDIR_APPEND,	// ">>"
+	TYPE_BUILTIN,
+	TYPE_HEREDOC,
+	TYPE_EOF
+} t_e_token_type;
 
+typedef struct s_token
+{
+	t_e_token_type		type;
+	char				*split_value;
+	struct s_token		*next;
+} t_token;
+
+typedef struct s_command
+{
+	char				*command;			// e.g. "cat test.txt"
+	char				**command_arg;		// e.g. "cat"
+	char				*command_path;		// e.g. /usr/bin/cat/
+	// char	separator;			// e.g. '|'
+	int					input_fd;
+	int					output_fd;
+	struct s_token		*token;
+	struct	s_command	*next;	// Pointer vers la prochaine commande
+} t_command;
 
 /********************************* main.c ************************************/
 
@@ -49,6 +73,7 @@ void	ft_print_error(char *str);
 void	ft_free_tab(char **tab);
 char	*ft_check_paths(char **envp, char *args);
 char	**split_string(const char *str, char delimiter);
-void	set_command_list(char *input);
+t_command	*get_command_and_separator(char *input);
+void	multiple_pipe(t_command *current, char **envp, int infile, int outfile);
 
 #endif

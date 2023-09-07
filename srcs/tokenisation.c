@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 14:05:06 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/06 17:19:45 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/07 14:19:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ char	**split_string(const char *str, char delimiter)
 	return (tokens);
 }
 
-void	set_command_list(char *input)
+t_command	*get_command_and_separator(char *input)
 {
-	t_command *head;
-	t_command *current;
-	t_command *new_cmd;
-	char **tokens;
-	int	i;
+	// t_command	*head; //
+	t_command	*current;
+	t_command	*new_cmd;
+	char		**tokens;
+	int			i;
 
-	head = NULL;
+	// head = NULL; // 
 	current = NULL;
 	tokens = split_string(input, '|');
 	i = 0;
@@ -90,15 +90,15 @@ void	set_command_list(char *input)
 	{
 		new_cmd = malloc(sizeof(t_command));
 		new_cmd->command = ft_strdup(tokens[i]);
-		if (tokens[i + 1])
-			new_cmd->separator = '|';
-		else
-			new_cmd->separator = '\0';
-		new_cmd->next = NULL;
-		if (!head)
+		// if (tokens[i + 1])
+		// 	new_cmd->separator = '|';
+		// else
+		// 	new_cmd->separator = '\0';
+		// new_cmd->next = NULL;
+		if (!current)
 		{
-			head = new_cmd;
-			current = head;
+			current = new_cmd;
+			// current = head; // 
 		}
 		else
 		{
@@ -107,15 +107,15 @@ void	set_command_list(char *input)
 		}
 		i++;
 	}
+	return (current);
+	
+// //////////////////////////////////////////////////////////////////////////////////////////
+// 	current = head;  // Réinitialisation à la tête de la liste pour l'impression
 
-//////////////////////////////////////////////////////////////////////////////////////////
-	current = head;  // Réinitialisation à la tête de la liste pour l'impression
-
-	while(current)  // Parcourir jusqu'à ce que current soit NULL
-	{
-		printf("cmd = %s\n", current->command);
-		current = current->next;
-	}
-//////////////////////////////////////////////////////////////////////////////////////////
-
+// 	while(current)  // Parcourir jusqu'à ce que current soit NULL
+// 	{
+// 		printf("cmd = %s\n", current->command);
+// 		current = current->next;
+// 	}
+// //////////////////////////////////////////////////////////////////////////////////////////
 }
