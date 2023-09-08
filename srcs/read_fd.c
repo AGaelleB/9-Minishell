@@ -6,81 +6,43 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/07 16:50:27 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/08 16:19:25 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int redirect_file_in(t_command *cmd, t_token *token)
+void	open_fd(t_command *current, t_token *token, char **envp)
 {
-	if (token->type == TYPE_REDIR_IN)
-	{
-		cmd->input_fd = open(token->next->split_value, O_RDONLY);
-		if (cmd->input_fd == -1)
-		{
-			perror("Error opening file for input redirection");
-			return (-1);
-		}
-	}
-	else if (token->type == TYPE_SEPARATOR)
-	{
-		// La gestion des pipes sera gérée dans la fonction `multiple_pipe`.
-	}
-	return (0);
-}
-
-int redirect_file_out(t_command *cmd, t_token *token)
-{
-	if (token->type == TYPE_REDIR_OUT)
-	{
-		cmd->output_fd = open(token->next->split_value, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (cmd->output_fd == -1)
-		{
-			perror("Error opening file for output redirection");
-			return (-1);
-		}
-	}
-	else if (token->type == TYPE_REDIR_APPEND)
-	{
-		cmd->output_fd = open(token->next->split_value, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if (cmd->output_fd == -1)
-		{
-			perror("Error opening file for output appending");
-			return (-1);
-		}
-	}
-	else if (token->type == TYPE_SEPARATOR)
-	{
-		// La gestion des pipes sera gérée dans la fonction `multiple_pipe`.
-	}
-	return (0);
-}
-
-int open_fd(t_command *current, char **envp)
-{
-	t_token *token;
+	int fd[2];
+	int infile = 0;  // Par défaut, lire depuis stdin
+	int outfile = 1; // Par défaut, écrire vers stdout
 
 	while (current)
 	{
-		token = current->token;
-		while (token)
-		{
-			if (token->type == TYPE_REDIR_IN)
-			{
-				redirect_file_in(current, token);
-				token = token->next;  // pour passer le nom du fichier
-			}
-			else if (token->type == TYPE_REDIR_OUT || token->type == TYPE_REDIR_APPEND)
-			{
-				redirect_file_out(current, token);
-				token = token->next;  // pour passer le nom du fichier
-			}
-			token = token->next;
-		}
-		multiple_pipe(current, envp, current->input_fd, current->output_fd);
+		pipe(fd); // Créer un nouveau pipe pour cette commande
+
+		// Configurer la sortie (stdout)
+		if (current->next != NULL)
+			current->output_fd = fd[1]; // La sortie sera l'entrée du pipe suivant
+		else
+			current->output_fd = outfile; // Sinon, utiliser le stdout
+
+		// Configurer l'entrée (stdin)
+		current->input_fd = infile;
+
+		// Exécuter la commande
+		exec_pipe(current, current->input_fd, current->output_fd, envp);
+
+		// La sortie de cette commande sera l'entrée de la prochaine
+		if (infile != 0)
+			close(infile);
+		close(current->output_fd);
+
+		infile = fd[0]; // Jambon. Le read end du pipe devient l'entrée de la prochaine commande
 		current = current->next;
+		(void)token;
 	}
-	return (0);
 }
+
 

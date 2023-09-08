@@ -9,6 +9,8 @@ Shell syntax : https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_cha
 Mcombeau tuto : https://www.codequoi.com/pourquoi-je-necris-plus-darticles-sur-les-projets-de-42/
 petite explication sur la marche a suivre : http://i.paysdu42.fr/?page=minishell.c
 
+Bonnes explications : https://github.com/maiadegraaf/minishell
+
 ## Travailler en équipe avec Git
 Travailler en équipe avec Git implique de **gérer les modifications de code source** apportées par plusieurs membres, de résoudre les conflits qui peuvent survenir, et de synchroniser les différentes versions du projet. Voici les principales commandes et fonctionnalités pour travailler efficacement en équipe avec Git :
 

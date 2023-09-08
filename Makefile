@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/09/07 17:21:21 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/09/08 16:38:09 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror #-g3
+CFLAGS = -Wall -Wextra -Werror -g3
 
 OBJ_DIR_MINISHELL = srcs/obj_minishell
 
