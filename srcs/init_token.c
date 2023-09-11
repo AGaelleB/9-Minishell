@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/07 16:29:26 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/11 14:32:18 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,13 @@ t_token *tokenize_input(char *input)
 	t_token		*token;
 	int			i;
 
-	words = split_string(input, ' ');  // Assuming a space delimiter
+	words = split_string(input, ' ');
 	head = NULL;
 	curr = NULL;
 	i = 0;
 	while (words[i])
 	{
 		token = NULL;
-
 		if (strcmp(words[i], "|") == 0)
 			token = new_token(TYPE_SEPARATOR, words[i]);
 		else if (strcmp(words[i], ">") == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/08 16:17:14 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/11 14:25:45 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ typedef struct s_token
 
 typedef struct s_command
 {
+	int					nb_pipes; //ATTENTION
 	char				*command;			// e.g. "cat test.txt"
 	char				**command_arg;		// e.g. "cat"
 	char				*command_path;		// e.g. /usr/bin/cat/
 	// char	separator;			// e.g. '|'
-	int					input_fd;
-	int					output_fd;
+	int					read_fd;
+	int					write_fd;
 	struct s_token		*token;
 	struct	s_command	*next;	// Pointer vers la prochaine commande
 } t_command;
@@ -77,5 +78,8 @@ t_token	*tokenize_input(char *input);
 void	open_fd(t_command *current, t_token *token, char **envp);
 void	multiple_pipe(t_command *current, char **envp, int infile, int outfile);
 void	exec_pipe(t_command *current, int read_fd, int write_fd, char **envp);
+void child_process(t_command *current, int read_fd, int write_fd, char **envp);
+
+void count_and_set_pipes(char *input, t_command *command);
 
 #endif

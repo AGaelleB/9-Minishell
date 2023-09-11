@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
+#    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/09/08 16:38:09 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/09/11 14:33:28 by bfresque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS = srcs/main_minishell.c \
 	srcs/tokenisation.c \
 	srcs/read_fd.c \
 	srcs/init_token.c \
+	srcs/utils.c \
 
 SRC_LIBFT = libft/ft_atoi.c \
 	libft/ft_bzero.c \
