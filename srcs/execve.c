@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 12:24:49 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:56:59 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// t_command	*get_command(char *input)
+// {
+// 	t_command	*head;
+// 	t_command	*current;
+// 	t_command	*new_cmd;
+// 	char		**command;
+// 	int			i;
+
+// 	head = NULL;
+// 	current = NULL;
+// 	command = split_string(input, '|');
+// 	i = 0;
+// 	while(command[i])
+// 	{
+// 		new_cmd = malloc(sizeof(t_command));
+// 		new_cmd->command = ft_strdup(command[i]);
+// 		if (!head)
+// 		{
+// 			head = new_cmd;
+// 			current = head;
+// 		}
+// 		else
+// 		{
+// 			current->next = new_cmd;
+// 			current = new_cmd;
+// 		}
+// 		i++;
+// 	}
+// 	return (current);
+// }
+
 
 t_command	*get_command(char *input)
 {
@@ -27,7 +59,21 @@ t_command	*get_command(char *input)
 	while(command[i])
 	{
 		new_cmd = malloc(sizeof(t_command));
+		if (!new_cmd)
+		{
+			// Gérer l'erreur, peut-être sortir du programme ou retourner NULL
+			perror("Failed to allocate memory for new command");
+			exit(1);
+		}
 		new_cmd->command = ft_strdup(command[i]);
+		if (!new_cmd->command)
+		{
+			// Gérer l'erreur
+			perror("Failed to duplicate command string");
+			exit(1);
+		}
+		new_cmd->next = NULL;  // Initialise next à NULL
+		
 		if (!head)
 		{
 			head = new_cmd;
@@ -40,8 +86,12 @@ t_command	*get_command(char *input)
 		}
 		i++;
 	}
-	return (current);
+	// Libérer la mémoire pour le tableau command si nécessaire
+	// free(command);
+
+	return (head);  // Retourner la tête de la liste
 }
+
 
 void	ft_set_args_and_paths(t_command *current, char **envp)
 {

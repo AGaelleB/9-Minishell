@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 15:38:20 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:58:12 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,20 @@ void open_fd(t_command *current, t_token *token, char **envp)
 	int infile = 0;
 	pid_t pid;
 	t_command *command;
+
+	command = NULL;
+
 	command = current;
 
-	while (current)
+	while (current != NULL)
 	{
 		if (pipe(fd) == -1)
 		{
 			perror("pipe");
 			exit(1);
 		}
+
+		// printf("	current: %p\n", (void *)current);
 		// Configurer l'entrée (stdin)
 		current->read_fd = infile;
 		if (current->next != NULL)
