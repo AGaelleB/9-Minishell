@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 14:25:45 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:23:29 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_command
 
 int		ft_strchr_slash(char *str, char c);
 int		ft_strncmp_minishell(char *s1, char *s2, int n);
+int	ft_strcmp_minishell(char *s1, char *s2);
 char	*ft_strjoin_minishell(char *s1, char *s2);
 void	ft_print_error(char *str);
 void	ft_free_tab(char **tab);
@@ -75,7 +76,7 @@ char	*ft_check_paths(char **envp, char *args);
 char	**split_string(const char *str, char delimiter);
 t_command	*get_command(char *input);
 t_token	*tokenize_input(char *input);
-void	open_fd(t_command *current, t_token *token, char **envp);
+void open_fd(t_command *current, char **envp);
 void	multiple_pipe(t_command *current, char **envp, int infile, int outfile);
 void	exec_pipe(t_command *current, int read_fd, int write_fd, char **envp);
 void child_process(t_command *current, int read_fd, int write_fd, char **envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 14:32:18 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:24:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ t_token *tokenize_input(char *input)
 	while (words[i])
 	{
 		token = NULL;
-		if (strcmp(words[i], "|") == 0)
+		if (ft_strcmp_minishell(words[i], "|") == 0)
 			token = new_token(TYPE_SEPARATOR, words[i]);
-		else if (strcmp(words[i], ">") == 0)
+		else if (ft_strcmp_minishell(words[i], ">") == 0)
 			token = new_token(TYPE_REDIR_OUT, words[i]);
-		else if (strcmp(words[i], "<") == 0)
+		else if (ft_strcmp_minishell(words[i], "<") == 0)
 			token = new_token(TYPE_REDIR_IN, words[i]);
-		else if (strcmp(words[i], ">>") == 0)
+		else if (ft_strcmp_minishell(words[i], ">>") == 0)
 			token = new_token(TYPE_REDIR_APPEND, words[i]);
 		else if (i == 0 ||
-				(i > 0 && (strcmp(words[i - 1], "|") == 0 || 
-							strcmp(words[i - 1], ">") == 0 || 
-							strcmp(words[i - 1], "<") == 0 || 
-							strcmp(words[i - 1], ">>") == 0)))
+				(i > 0 && (ft_strcmp_minishell(words[i - 1], "|") == 0 || 
+							ft_strcmp_minishell(words[i - 1], ">") == 0 || 
+							ft_strcmp_minishell(words[i - 1], "<") == 0 || 
+							ft_strcmp_minishell(words[i - 1], ">>") == 0)))
 			token = new_token(TYPE_CMD, words[i]);
 		else
 			token = new_token(TYPE_ARG, words[i]);
