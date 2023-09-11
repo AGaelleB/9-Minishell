@@ -6,11 +6,11 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:16:28 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 17:23:07 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:43:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	ft_strchr_slash(char *str, char c)
 {

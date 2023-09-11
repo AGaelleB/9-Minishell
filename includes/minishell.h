@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 17:23:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/11 18:05:15 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ void open_fd(t_command *current, char **envp);
 void	multiple_pipe(t_command *current, char **envp, int infile, int outfile);
 void	exec_pipe(t_command *current, int read_fd, int write_fd, char **envp);
 void child_process(t_command *current, int read_fd, int write_fd, char **envp);
+
+void	ft_builtin_exit(char *input);
+void	handle_sigint (int sig);
+
 
 void count_and_set_pipes(char *input, t_command *command);
 

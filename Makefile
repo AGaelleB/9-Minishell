@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
+#    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/09/11 14:33:28 by bfresque         ###   ########.fr        #
+#    Updated: 2023/09/11 17:47:34 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,16 +20,16 @@ OBJ_DIR_MINISHELL = srcs/obj_minishell
 
 OBJ_DIR_LIBFT = libft/obj_libft
 
-SRCS = srcs/main_minishell.c \
-	srcs/path.c \
-	srcs/libft_modify.c \
-	srcs/free.c \
-	srcs/error.c \
-	srcs/execve.c \
-	srcs/tokenisation.c \
-	srcs/read_fd.c \
-	srcs/init_token.c \
-	srcs/utils.c \
+SRCS = srcs/execution/main_minishell.c \
+	srcs/builtins/builtins_exit.c \
+	srcs/execution/execve.c \
+	srcs/init_and_parsing/init_token.c \
+	srcs/init_and_parsing/path.c \
+	srcs/init_and_parsing/read_fd.c \
+	srcs/utils/libft_modify.c \
+	srcs/utils/free.c \
+	srcs/utils/error.c \
+	srcs/utils/utils.c \
 
 SRC_LIBFT = libft/ft_atoi.c \
 	libft/ft_bzero.c \
