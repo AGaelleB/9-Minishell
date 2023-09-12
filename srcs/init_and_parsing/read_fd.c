@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/12 12:23:07 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:00:53 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,14 @@ void open_fd(t_command *current, char **envp)
 	}
 	current = command;
 	child_pids = malloc(num_children * sizeof(pid_t));
+	if (!child_pids)
+		return ;
 	while (current)
 	{
 		if (pipe(fd) == -1)
 		{
 			perror("pipe");
+			free(child_pids);
 			exit(1);
 		}
 		current->read_fd = infile;
@@ -63,6 +66,7 @@ void open_fd(t_command *current, char **envp)
 		else
 		{
 			perror("fork");
+			free(child_pids);
 			exit(1);
 		}
 		current = current->next;
@@ -71,6 +75,7 @@ void open_fd(t_command *current, char **envp)
 	{
 		++i;
 		waitpid(child_pids[i], NULL, 0);
+		close(fd[i]); // test inutile
 	}
 	free(child_pids);
 }

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/12 12:17:12 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:32:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,17 @@ t_command	*get_command(char *input)
 		if (!new_cmd)
 		{
 			perror("Failed to allocate memory for new command");
+			ft_free_tab(command);
 			exit(1);
 		}
 		new_cmd->command = ft_strdup(command[i]);
 		if (!new_cmd->command)
 		{
 			perror("Failed to duplicate command string");
+			ft_free_tab(command);
 			exit(1);
 		}
 		new_cmd->next = NULL;
-		
 		if (!head)
 		{
 			head = new_cmd;
@@ -52,8 +53,7 @@ t_command	*get_command(char *input)
 		}
 		i++;
 	}
-	// Libérer la mémoire pour le tableau command si nécessaire
-	// free(command);
+	ft_free_tab(command);
 	return (head);
 }
 

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/12 11:05:17 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/12 13:33:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	block_signal(int signal);
 /***********UTILS***********/
 void		ft_print_error(char *str);
 void		ft_free_tab(char **tab);
+void		ft_free_all_cmd(t_command *command);
 int			ft_strchr_slash(char *str, char c);
 int			ft_strncmp_minishell(char *s1, char *s2, int n);
 int			ft_strcmp_minishell(char *s1, char *s2);
