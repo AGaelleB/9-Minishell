@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 17:43:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:17:12 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void child_process(t_command *current, int read_fd, int write_fd, char **envp)
 	ft_set_args_and_paths(current, envp);
 	if (current->command_path == NULL)
 	{
-		write(2, "command not found: ", 19);
+		write(2, "minishell: command not found: ", 31);
 		write(2, current->command_arg[0], ft_strlen(current->command_arg[0]));
 		write(2, "\n", 1);
 		exit(127);  // Code de sortie standard pour "commande introuvable"

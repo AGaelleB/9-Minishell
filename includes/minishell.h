@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 18:05:15 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/12 11:05:17 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 # include "../includes/get_next_line.h"
 # include "../includes/libft.h"
 
-typedef enum e_token_type {
+typedef enum e_token_type
+{
 	TYPE_CMD,
 	TYPE_ARG,
 	TYPE_SEPARATOR,
@@ -51,6 +52,13 @@ typedef struct s_token
 	struct s_token		*next;
 } t_token;
 
+typedef struct s_sigset
+{
+
+} t_sigset;
+
+
+
 typedef struct s_command
 {
 	int					nb_pipes; //ATTENTION
@@ -64,27 +72,40 @@ typedef struct s_command
 	struct	s_command	*next;	// Pointer vers la prochaine commande
 } t_command;
 
-/********************************* main.c ************************************/
 
-int		ft_strchr_slash(char *str, char c);
-int		ft_strncmp_minishell(char *s1, char *s2, int n);
-int	ft_strcmp_minishell(char *s1, char *s2);
-char	*ft_strjoin_minishell(char *s1, char *s2);
-void	ft_print_error(char *str);
-void	ft_free_tab(char **tab);
-char	*ft_check_paths(char **envp, char *args);
-char	**split_string(const char *str, char delimiter);
+/***********BUILTINS***********/
+int			ft_builtin_exit(char *input);
+int			ft_all_builtins(char *input);
+
+
+
+/***********EXECUTION***********/
 t_command	*get_command(char *input);
-t_token	*tokenize_input(char *input);
-void open_fd(t_command *current, char **envp);
-void	multiple_pipe(t_command *current, char **envp, int infile, int outfile);
-void	exec_pipe(t_command *current, int read_fd, int write_fd, char **envp);
-void child_process(t_command *current, int read_fd, int write_fd, char **envp);
-
-void	ft_builtin_exit(char *input);
-void	handle_sigint (int sig);
+void		child_process(t_command *current, int read_fd, int write_fd, char **envp);
 
 
-void count_and_set_pipes(char *input, t_command *command);
+
+/***********INIT_AND_PARSING***********/
+t_token		*tokenize_input(char *input);
+char		*ft_check_paths(char **envp, char *args);
+void		open_fd(t_command *current, char **envp);
+
+
+
+/***********SIGNALS***********/
+void		handle_sigint (int sig);
+void	block_signal(int signal);
+
+
+
+/***********UTILS***********/
+void		ft_print_error(char *str);
+void		ft_free_tab(char **tab);
+int			ft_strchr_slash(char *str, char c);
+int			ft_strncmp_minishell(char *s1, char *s2, int n);
+int			ft_strcmp_minishell(char *s1, char *s2);
+char		*ft_strjoin_minishell(char *s1, char *s2);
+char		**split_string(const char *str, char delimiter);
+void		count_and_set_pipes(char *input, t_command *command);
 
 #endif

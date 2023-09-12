@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 17:43:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/12 12:23:07 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void open_fd(t_command *current, char **envp)
 	infile = 0;
 	num_children = 0;
 	index = 0;
-	i = 0;
+	i = -1;
 	while(current)
 	{
 		num_children++;
@@ -69,8 +69,8 @@ void open_fd(t_command *current, char **envp)
 	}
 	while (i < command->nb_pipes)
 	{
+		++i;
 		waitpid(child_pids[i], NULL, 0);
-		i++;
 	}
 	free(child_pids);
 }

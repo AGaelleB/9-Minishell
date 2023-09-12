@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/11 18:06:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/12 11:28:42 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,26 @@ int	main(int ac, char **av, char **envp)
 	t_command	*new_commands;
 
 	new_commands = NULL;
-	signal(SIGINT, handle_sigint); 
+	// block_signal(SIGQUIT);
+	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		input = readline("minishell$> ");
-		ft_builtin_exit(input);
+		if (!input) // Si input est NULL, CTRL-D a été pressé sur une ligne vide
+		{
+			write(1, "exit\n", 5);  // Nouvelle ligne pour quitter proprement
+			exit(0);  // Quitter le shell
+		}
+		else if (ft_strcmp_minishell(input, "") == 0)  // Si input est une chaîne vide
+		{
+			free(input);
+			continue;  // Retournez simplement au prompt
+		}
+		if (ft_all_builtins(input) != 0)
+		{
+			free(input);
+			exit(0);
+		}
 		new_commands = get_command(input);
 		count_and_set_pipes(input, new_commands);
 		if(new_commands != NULL)
@@ -38,6 +53,7 @@ int	main(int ac, char **av, char **envp)
 	(void)envp;
 	return (0);
 }
+
 
 
 /*
