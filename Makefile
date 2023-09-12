@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/09/12 10:31:26 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/09/12 17:57:24 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,9 @@ SRCS = srcs/execution/main_minishell.c \
 	srcs/builtins/all_builtins.c \
 	srcs/builtins/builtins_exit.c \
 	srcs/execution/execve.c \
+	srcs/execution/read_fd.c \
 	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/path.c \
-	srcs/init_and_parsing/read_fd.c \
 	srcs/signals/signal_exit.c \
 	srcs/utils/libft_modify.c \
 	srcs/utils/free.c \

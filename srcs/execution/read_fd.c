@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/12 14:00:53 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:58:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void open_fd(t_command *current, char **envp)
 	{
 		++i;
 		waitpid(child_pids[i], NULL, 0);
-		close(fd[i]); // test inutile
 	}
 	free(child_pids);
 }
