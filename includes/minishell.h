@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/12 13:33:27 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/13 11:57:18 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,16 @@ typedef struct s_sigset
 
 } t_sigset;
 
-
-
 typedef struct s_command
 {
 	int					nb_pipes; //ATTENTION
 	char				*command;			// e.g. "cat test.txt"
 	char				**command_arg;		// e.g. "cat"
 	char				*command_path;		// e.g. /usr/bin/cat/
-	// char	separator;			// e.g. '|'
-	int					read_fd;
-	int					write_fd;
+	int					fd[2];
 	struct s_token		*token;
-	struct	s_command	*next;	// Pointer vers la prochaine commande
+	struct	s_command	*next;	// Pointer to the next command
 } t_command;
-
 
 /***********BUILTINS***********/
 int			ft_builtin_exit(char *input);
@@ -81,7 +76,7 @@ int			ft_all_builtins(char *input);
 
 /***********EXECUTION***********/
 t_command	*get_command(char *input);
-void		child_process(t_command *current, int read_fd, int write_fd, char **envp);
+void		child_process(t_command *current, char **envp);
 
 
 

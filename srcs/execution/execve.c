@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/12 13:32:13 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/13 11:57:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,33 @@ t_command	*get_command(char *input)
 	return (head);
 }
 
-
 void	ft_set_args_and_paths(t_command *current, char **envp)
 {
 	current->command_arg = ft_split(current->command, ' ');
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
 }
 
-void child_process(t_command *current, int read_fd, int write_fd, char **envp)
+void	child_process(t_command *current, char **envp)
 {
-	dup2(read_fd, 0);  // Duplique read_fd vers stdin
-	if (write_fd != 1)
-		dup2(write_fd, 1);  // Duplique write_fd vers stdout
+	if (current->fd[0] != -1)
+	{
+		dup2(current->fd[0], 0);
+		close(current->fd[0]);
+	}
+	if (current->fd[1] != -1)
+	{
+		dup2(current->fd[1], 1);
+		close(current->fd[1]);
+	}
 	ft_set_args_and_paths(current, envp);
 	if (current->command_path == NULL)
 	{
 		write(2, "minishell: command not found: ", 31);
 		write(2, current->command_arg[0], ft_strlen(current->command_arg[0]));
 		write(2, "\n", 1);
-		exit(127);  // Code de sortie standard pour "commande introuvable"
+		exit(127);
 	}
-	else if (execve(current->command_path, current->command_arg, envp) == -1) 
+	else if (execve(current->command_path, current->command_arg, envp) == -1)
 	{
 		perror("Error");
 		exit(-1);

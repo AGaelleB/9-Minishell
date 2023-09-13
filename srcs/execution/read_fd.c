@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/12 17:58:02 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/13 11:57:50 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void open_fd(t_command *current, char **envp)
 	t_command	*command;
 	pid_t		pid;
 	pid_t		*child_pids;
-	int			fd[2];
 	int			infile;
 	int			num_children;
 	int			index;
+	int			fd;
 	int			i;
 
 	command = current;
@@ -28,7 +28,8 @@ void open_fd(t_command *current, char **envp)
 	num_children = 0;
 	index = 0;
 	i = -1;
-	while(current)
+	fd = 3;
+	while (current)
 	{
 		num_children++;
 		current = current->next;
@@ -36,32 +37,38 @@ void open_fd(t_command *current, char **envp)
 	current = command;
 	child_pids = malloc(num_children * sizeof(pid_t));
 	if (!child_pids)
-		return ;
+		exit(1);
 	while (current)
 	{
-		if (pipe(fd) == -1)
+		if (pipe(current->fd) == -1)
 		{
 			perror("pipe");
 			free(child_pids);
 			exit(1);
 		}
-		current->read_fd = infile;
-		if (current->next != NULL)
-			current->write_fd = fd[1];
-		else
-			current->write_fd = 1;
 		pid = fork();
-		child_pids[index] = pid; // Stocker le PID
-		index++;
-		if (pid == 0)
-			child_process(current, current->read_fd, current->write_fd, envp);
-		else if (pid > 0)
+		child_pids[index++] = pid;
+		if (pid == 0) // Child
 		{
-			close(fd[1]);
-			if (current->next != NULL)
-				infile = fd[0];
-			else
-				close(fd[0]);
+			close(current->fd[0]);
+			dup2(infile, 0);
+			if (current->next)
+				dup2(current->fd[1], 1);
+			close(current->fd[1]);
+			// Brute force close of stray file descriptors in the child
+			while (fd < 100)
+			{
+				close(fd);
+				fd++;
+			}
+			child_process(current, envp);
+		}
+		else if (pid > 0) // Parent
+		{
+			close(current->fd[1]);
+			if (infile != 0)
+				close(infile);
+			infile = current->fd[0];
 		}
 		else
 		{
@@ -77,8 +84,9 @@ void open_fd(t_command *current, char **envp)
 		waitpid(child_pids[i], NULL, 0);
 	}
 	free(child_pids);
+	if (infile != 0)
+		close(infile);
 }
-
 
 // RAYAN
 // 	int status;
