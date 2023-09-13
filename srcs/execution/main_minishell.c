@@ -6,38 +6,33 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/13 11:19:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/13 16:30:55 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+
+int main(int ac, char **av, char **envp)
 {
-	char		*input;
-	t_command	*new_commands;
+	char        *input;
+	t_command   *new_commands;
+	int         builtin_status;
 
 	new_commands = NULL;
-	// block_signal(SIGQUIT);
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
 		input = readline("minishell$> ");
-		if (!input) // Si input est NULL, CTRL-D a été pressé sur une ligne vide
-		{
-			write(1, "exit\n", 5);  // Nouvelle ligne pour quitter proprement
-			exit(0);  // Quitter le shell
-		}
-		else if (ft_strcmp_minishell(input, "") == 0)  // Si input est une chaîne vide
-		{
-			free(input);
-			continue;  // Retournez simplement au prompt
-		}
-		if (ft_all_builtins(input) != 0)
+		ft_builtin_ctrl_D(input);
+		builtin_status = ft_all_builtins_exit(input);
+		if (builtin_status == 1)
 		{
 			free(input);
 			exit(0);
 		}
+		else if (builtin_status == 2)
+			continue;
 		new_commands = get_command(input);
 		count_and_set_pipes(input, new_commands);
 		if(new_commands != NULL)
@@ -59,34 +54,35 @@ int	main(int ac, char **av, char **envp)
 }
 
 
-
 /*
-attention fin progam segfault si 1 cmd 
+builtins a faire : 
+- cd
+- 
 
+
+
+
+**********************
+
+ETAPE 1 : 
+
+-> pour resoudre faire une free de l'input apres le ctrl_C
 
  ./minishell
 minishell$> hgfkg^C
 minishell$> dghlhd^C
 minishell$> exit
-minishell$> command not found :hgfkgdghlhdexit
-command not found: hgfkgdghlhdexit
+minishell: command not found: hgfkgdghlhdexit
+minishell$>
 
 
 
 
+ETAPE 2 : 
 
-./minishell
-minishell$> ls | cat test.txt 
-coucou mots
-c'est 
-mémoire
-mots
-les mots
+-> corriger les leaks pour les fausses commandes 
+valgrind --leak-check=full --show-leak-kinds=all ./minishell
 
-beaucoup de mots
-minishell$> sdf
-minishell$> command not found :sdf
-command not found: sdf
 
-[1]    542162 segmentation fault (core dumped)  ./minishell
+
 */

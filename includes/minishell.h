@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/13 11:57:18 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/13 16:10:39 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ typedef struct s_command
 } t_command;
 
 /***********BUILTINS***********/
-int			ft_builtin_exit(char *input);
-int			ft_all_builtins(char *input);
-
+int			ft_builtin_write_exit(char *input);
+void		ft_builtin_ctrl_D(char *input);
+int			ft_all_builtins_exit(char *input);
+int			ft_builtin_enter(char *input);
+int			ft_is_all_space(char *input);
 
 
 /***********EXECUTION***********/

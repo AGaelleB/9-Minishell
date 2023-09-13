@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:15:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/02/03 11:57:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/13 15:07:58 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ caractères spécifiés dans ’set’ au début et à la fin de la chaîne de c
 
 #include "../includes/libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char *set)
 {
 	size_t	front;
 	size_t	rear;
@@ -32,7 +32,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		front++;
 	while (s1[rear - 1] && ft_strchr(set, s1[rear - 1]) && rear > front)
 		rear--;
-	str = (char *)malloc(sizeof(char) * (rear - front + 1));
+	str = malloc(sizeof(char) * (rear - front + 1));
 	if (str == 0)
 		return (NULL);
 	ft_strlcpy(str, &s1[front], rear - front + 1);

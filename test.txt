@@ -1,7 +1,3 @@
-coucou mots
-c'est 
-mémoire
-mots
+coucou motsmots
 les mots
-
-beaucoup de mots
+beaucoup de mots c'est mémoire co
