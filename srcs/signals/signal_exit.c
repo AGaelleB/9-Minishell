@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 15:48:34 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:35:05 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,3 +20,4 @@ void ft_signal_ctrl_C(int signal)
 	rl_replace_line("", 0);  // Efface la ligne actuelle
 	rl_redisplay();  // Réaffiche le prompt
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 15:49:27 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:58:57 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int main(int ac, char **av, char **envp)
 	int			builtin_status;
 	
 	signal(SIGINT, ft_signal_ctrl_C);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		input = readline("minishell$> ");
@@ -73,7 +74,6 @@ int main(int ac, char **av, char **envp)
 
 /*
 										A CORRIGER :
-
 
 a faire : redirections 
 */
