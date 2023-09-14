@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/13 16:10:39 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:29:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # include "../includes/ft_printf.h"
 # include "../includes/get_next_line.h"
 # include "../includes/libft.h"
+
+
+extern volatile int ctrl_c_pressed;
+
 
 typedef enum e_token_type
 {
@@ -68,6 +72,11 @@ typedef struct s_command
 	struct	s_command	*next;	// Pointer to the next command
 } t_command;
 
+
+/***********MAIN***********/
+// void		cleanup_resources(void);
+
+
 /***********BUILTINS***********/
 int			ft_builtin_write_exit(char *input);
 void		ft_builtin_ctrl_D(char *input);
@@ -90,7 +99,7 @@ void		open_fd(t_command *current, char **envp);
 
 
 /***********SIGNALS***********/
-void		handle_sigint (int sig);
+void		ft_signal_ctrl_C (int sig);
 void	block_signal(int signal);
 
 

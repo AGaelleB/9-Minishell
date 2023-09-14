@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/13 11:57:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 10:55:52 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ void open_fd(t_command *current, char **envp)
 		}
 		current = current->next;
 	}
+	signal(SIGINT, SIG_IGN); // permet de lancer plusieurs minishell en meme temps en bloquant les siganux
 	while (i < command->nb_pipes)
 	{
 		++i;
 		waitpid(child_pids[i], NULL, 0);
 	}
+	signal(SIGINT, ft_signal_ctrl_C); // mettre ici nos differents signaux 
 	free(child_pids);
 	if (infile != 0)
 		close(infile);
@@ -99,4 +101,3 @@ void open_fd(t_command *current, char **envp)
 // 		i++;
 // 	}
 // 	WEXITSTATUS(status);
-// 	(void)token;

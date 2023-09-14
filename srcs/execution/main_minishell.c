@@ -6,29 +6,56 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/13 16:30:55 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 11:03:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+t_command	*new_commands = NULL;
+
+void cleanup_resources(void)
+{
+	if (new_commands)
+	{
+		close(new_commands->fd[1]);
+		close(new_commands->fd[0]);
+		ft_free_all_cmd(new_commands);
+		free(new_commands);
+		new_commands = NULL;
+	}
+}
+
+// char	*return_input(char *input)
+// {
+// 	static char *inp;
+
+// 	if (input = NULL)
+// 		return (inp);
+// 	inp = input;
+// }
+
 
 int main(int ac, char **av, char **envp)
 {
-	char        *input;
-	t_command   *new_commands;
-	int         builtin_status;
-
-	new_commands = NULL;
-	signal(SIGINT, handle_sigint);
+	char		*input;
+	int			builtin_status;
+	signal(SIGINT, ft_signal_ctrl_C);
 	while (1)
 	{
+		ctrl_c_pressed = 0; // Reset the flag en debut de boucle
 		input = readline("minishell$> ");
+		if (ctrl_c_pressed == 1)
+		{
+			free(input);
+			continue;
+		}
 		ft_builtin_ctrl_D(input);
 		builtin_status = ft_all_builtins_exit(input);
 		if (builtin_status == 1)
 		{
 			free(input);
+			cleanup_resources(); // NEW
 			exit(0);
 		}
 		else if (builtin_status == 2)
@@ -43,10 +70,6 @@ int main(int ac, char **av, char **envp)
 		add_history(input);
 		free(input);
 	}
-	close(new_commands->fd[1]);
-	close(new_commands->fd[0]);
-	ft_free_all_cmd(new_commands);
-	free(new_commands);
 	(void)ac;
 	(void)av;
 	(void)envp;
@@ -58,9 +81,6 @@ int main(int ac, char **av, char **envp)
 builtins a faire : 
 - cd
 - 
-
-
-
 
 **********************
 
@@ -75,14 +95,9 @@ minishell$> exit
 minishell: command not found: hgfkgdghlhdexit
 minishell$>
 
-
-
-
 ETAPE 2 : 
 
 -> corriger les leaks pour les fausses commandes 
 valgrind --leak-check=full --show-leak-kinds=all ./minishell
-
-
 
 */
