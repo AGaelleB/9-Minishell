@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 10:29:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:48:34 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-volatile int ctrl_c_pressed = 0;
-
 void ft_signal_ctrl_C(int signal)
 {
 	(void)signal;
-	write(1, "\nminishell$> ", 13);
-	ctrl_c_pressed = 1;
+	write(1, "\n", 1);
+	rl_on_new_line();  // Informe readline que nous sommes sur une nouvelle ligne
+	rl_replace_line("", 0);  // Efface la ligne actuelle
+	rl_redisplay();  // Réaffiche le prompt
 }
