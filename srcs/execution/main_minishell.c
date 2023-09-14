@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 12:03:26 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:03:56 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int main(int ac, char **av, char **envp)
 	signal(SIGINT, ft_signal_ctrl_C);
 	while (1)
 	{
-		ctrl_c_pressed = 0; // Reset the flag en debut de boucle
+		ctrl_c_pressed = 0; // Reset le flag en debut de boucle
 		input = readline("minishell$> ");
 		if (ctrl_c_pressed == 1)
 		{
