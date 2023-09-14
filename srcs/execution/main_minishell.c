@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 12:13:58 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 14:36:55 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int main(int ac, char **av, char **envp)
 			open_fd(new_commands, envp);
 		}
 		add_history(input);
+		// ft_free_tab(new_commands->command_arg);
+		ft_free_current(new_commands);
 		free(input);
 	}
 	(void)ac;
@@ -81,7 +83,6 @@ int main(int ac, char **av, char **envp)
 
 valgrind --leak-check=full --show-leak-kinds=all --memcheck:suppressions=./.minishell.supp ./minishell
 
--> corriger les leaks pour les fausses commandes 
--> l'exit du contr_D leak aussi si par exemple la commande d avant est valide
--> Invalid read si 1er commande est un enter
+-> ctrl D bug si ctrl C avant (doit etre tapé deux fois pour quitter)
+-> ctrl D bug si ctrl C sur une commande juste avant (doit etre tapé deux fois pour quitter)
 */

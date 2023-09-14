@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 12:20:16 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 14:26:47 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_command	*get_command(char *input)
 			ft_free_tab(command);
 			exit(1);
 		}
+		new_cmd->command = NULL;
 		new_cmd->command = ft_strdup(command[i]);
 		if (!new_cmd->command)
 		{
@@ -54,19 +55,18 @@ t_command	*get_command(char *input)
 		i++;
 	}
 	ft_free_tab(command);
-	// ft_free_all_cmd(current);
-	// ft_free_all_cmd(new_cmd);
-
 	return (head);
 }
 
 void	ft_set_args_and_paths(t_command *current, char **envp)
 {
+	current->command_arg = NULL;
+	current->command_path = NULL;
 	current->command_arg = ft_split(current->command, ' ');
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
 }
 
-void	child_process(t_command *current, char **envp)
+int	child_process(t_command *current, char **envp)
 {
 	if (current->fd[0] != -1)
 	{
@@ -84,11 +84,14 @@ void	child_process(t_command *current, char **envp)
 		write(2, "minishell: command not found: ", 31);
 		write(2, current->command_arg[0], ft_strlen(current->command_arg[0]));
 		write(2, "\n", 1);
-		exit(127);
+		ft_free_tab(current->command_arg);
+		ft_free_current(current);
+		return (127);
 	}
 	else if (execve(current->command_path, current->command_arg, envp) == -1)
 	{
 		perror("Error");
 		exit(-1);
 	}
+	return (0);
 }

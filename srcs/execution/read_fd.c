@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 10:55:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 14:14:42 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ void open_fd(t_command *current, char **envp)
 				close(fd);
 				fd++;
 			}
-			child_process(current, envp);
+			if(child_process(current, envp) == 127)
+			{
+				free(child_pids);
+				exit(127);
+			}
 		}
 		else if (pid > 0) // Parent
 		{
@@ -78,13 +82,13 @@ void open_fd(t_command *current, char **envp)
 		}
 		current = current->next;
 	}
-	signal(SIGINT, SIG_IGN); // permet de lancer plusieurs minishell en meme temps en bloquant les siganux
+	signal(SIGINT, SIG_IGN);
 	while (i < command->nb_pipes)
 	{
 		++i;
 		waitpid(child_pids[i], NULL, 0);
 	}
-	signal(SIGINT, ft_signal_ctrl_C); // mettre ici nos differents signaux 
+	signal(SIGINT, ft_signal_ctrl_C);
 	free(child_pids);
 	if (infile != 0)
 		close(infile);
