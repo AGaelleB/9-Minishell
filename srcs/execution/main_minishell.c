@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 12:02:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:03:26 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,8 @@ builtins a faire :
 
 **********************
 
-ETAPE 1 :
-
--> pour resoudre faire une free de l'input apres le ctrl_C
-
- ./minishell
-minishell$> hgfkg^C
-minishell$> dghlhd^C
-minishell$> exit
-minishell: command not found: hgfkgdghlhdexit
-minishell$>
-
 ETAPE 2 :
 
 -> corriger les leaks pour les fausses commandes 
-valgrind --leak-check=full --show-leak-kinds=all ./minishell
-
+valgrind --leak-check=full --show-leak-kinds=all --memcheck:suppressions=./.minishell.supp ./minishell
 */
