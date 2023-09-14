@@ -6,13 +6,22 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 11:03:01 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:02:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 t_command	*new_commands = NULL;
+
+// char	*return_input(char *input) // truc de rayan
+// {
+// 	static char *inp;
+
+// 	if (input = NULL)
+// 		return (inp);
+// 	inp = input;
+// }
 
 void cleanup_resources(void)
 {
@@ -25,16 +34,6 @@ void cleanup_resources(void)
 		new_commands = NULL;
 	}
 }
-
-// char	*return_input(char *input)
-// {
-// 	static char *inp;
-
-// 	if (input = NULL)
-// 		return (inp);
-// 	inp = input;
-// }
-
 
 int main(int ac, char **av, char **envp)
 {
@@ -76,15 +75,14 @@ int main(int ac, char **av, char **envp)
 	return (0);
 }
 
-
 /*
-builtins a faire : 
+builtins a faire :
 - cd
 - 
 
 **********************
 
-ETAPE 1 : 
+ETAPE 1 :
 
 -> pour resoudre faire une free de l'input apres le ctrl_C
 
@@ -95,7 +93,7 @@ minishell$> exit
 minishell: command not found: hgfkgdghlhdexit
 minishell$>
 
-ETAPE 2 : 
+ETAPE 2 :
 
 -> corriger les leaks pour les fausses commandes 
 valgrind --leak-check=full --show-leak-kinds=all ./minishell
