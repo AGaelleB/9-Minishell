@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 12:03:56 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:13:58 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int main(int ac, char **av, char **envp)
 {
 	char		*input;
 	int			builtin_status;
+	
 	signal(SIGINT, ft_signal_ctrl_C);
 	while (1)
 	{
@@ -76,14 +77,11 @@ int main(int ac, char **av, char **envp)
 }
 
 /*
-builtins a faire :
-- cd
-- 
+										A CORRIGER :
 
-**********************
-
-ETAPE 2 :
+valgrind --leak-check=full --show-leak-kinds=all --memcheck:suppressions=./.minishell.supp ./minishell
 
 -> corriger les leaks pour les fausses commandes 
-valgrind --leak-check=full --show-leak-kinds=all --memcheck:suppressions=./.minishell.supp ./minishell
+-> l'exit du contr_D leak aussi si par exemple la commande d avant est valide
+-> Invalid read si 1er commande est un enter
 */
