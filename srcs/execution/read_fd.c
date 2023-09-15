@@ -3,16 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 14:14:42 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/15 11:51:53 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void open_fd(t_command *current, char **envp)
+/*
+si < prendre argc passé avant comme infile fd[0]
+si > prendre argc passé apres comme outfile fd[1]
+*/
+
+void open_fd_pipe(t_command *current, int infile)
+{
+	close(current->fd[0]);
+	dup2(infile, 0);
+	if (current->next)
+		dup2(current->fd[1], 1);
+	close(current->fd[1]);
+	close_fd();
+}
+
+void open_fd_redir_out(t_command *current, int infile, char *filename)
+
+{
+	int fd_out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+
+
+	// printf ()	
+	close(current->fd[0]);
+	dup2(infile, 0);
+	if (current->next)
+		dup2(current->fd[1], 1);
+	else
+		dup2(fd_out, 1);
+	close(current->fd[1]);
+	close_fd();
+}
+
+void execve_fd(t_command *current, char **envp)
 {
 	t_command	*command;
 	pid_t		pid;
@@ -20,7 +52,6 @@ void open_fd(t_command *current, char **envp)
 	int			infile;
 	int			num_children;
 	int			index;
-	int			fd;
 	int			i;
 
 	command = current;
@@ -28,7 +59,6 @@ void open_fd(t_command *current, char **envp)
 	num_children = 0;
 	index = 0;
 	i = -1;
-	fd = 3;
 	while (current)
 	{
 		num_children++;
@@ -50,17 +80,11 @@ void open_fd(t_command *current, char **envp)
 		child_pids[index++] = pid;
 		if (pid == 0) // Child
 		{
-			close(current->fd[0]);
-			dup2(infile, 0);
-			if (current->next)
-				dup2(current->fd[1], 1);
-			close(current->fd[1]);
-			// Brute force close of stray file descriptors in the child
-			while (fd < 100)
-			{
-				close(fd);
-				fd++;
-			}
+			if(TYPE_DELIMITATOR)
+				open_fd_pipe(current, infile);
+			if(TYPE_REDIR_OUT)
+				open_fd_redir_out(current, infile);
+
 			if(child_process(current, envp) == 127)
 			{
 				free(child_pids);
@@ -93,6 +117,7 @@ void open_fd(t_command *current, char **envp)
 	if (infile != 0)
 		close(infile);
 }
+
 
 // RAYAN
 // 	int status;

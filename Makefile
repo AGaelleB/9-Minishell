@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
+#    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/09/14 15:49:42 by bfresque         ###   ########.fr        #
+#    Updated: 2023/09/15 11:23:14 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS = srcs/execution/main_minishell.c \
 	srcs/builtins/builtins_exit.c \
 	srcs/execution/execve.c \
 	srcs/execution/read_fd.c \
+	srcs/execution/open_fd_cmd.c \
 	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/path.c \
 	srcs/signals/signal_exit.c \

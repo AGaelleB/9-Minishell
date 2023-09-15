@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 16:56:33 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/15 11:25:07 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ typedef enum e_token_type
 	TYPE_SEPARATOR,
 	TYPE_REDIR_OUT,		// ">"
 	TYPE_REDIR_IN,		// "<"
+	TYPE_DELIMITATOR,	// "<<"
 	TYPE_REDIR_APPEND,	// ">>"
-	TYPE_BUILTIN,
-	TYPE_HEREDOC,
-	TYPE_EOF
+	// TYPE_BUILTIN,
+	// TYPE_HEREDOC,
+	// TYPE_EOF
 } t_e_token_type;
 
 typedef struct s_token
@@ -71,7 +72,6 @@ typedef struct s_command
 
 
 /***********MAIN***********/
-// void		cleanup_resources(void);
 
 
 /***********BUILTINS***********/
@@ -91,7 +91,7 @@ int			child_process(t_command *current, char **envp);
 /***********INIT_AND_PARSING***********/
 t_token		*tokenize_input(char *input);
 char		*ft_check_paths(char **envp, char *args);
-void		open_fd(t_command *current, char **envp);
+void		execve_fd(t_command *current, char **envp);
 
 
 
@@ -114,6 +114,8 @@ int			ft_strncmp_minishell(char *s1, char *s2, int n);
 int			ft_strcmp_minishell(char *s1, char *s2);
 char		*ft_strjoin_minishell(char *s1, char *s2);
 char		**split_string(const char *str, char delimiter);
+
 void		count_and_set_pipes(char *input, t_command *command);
+void		close_fd();
 
 #endif

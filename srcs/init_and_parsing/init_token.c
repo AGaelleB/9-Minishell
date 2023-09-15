@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 11:58:59 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/15 10:04:32 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,18 @@ t_token *tokenize_input(char *input)
 		else if (ft_strcmp_minishell(words[i], "<") == 0)
 			token = new_token(TYPE_REDIR_IN, words[i]);
 		else if (ft_strcmp_minishell(words[i], ">>") == 0)
+			token = new_token(TYPE_DELIMITATOR, words[i]);
+		else if (ft_strcmp_minishell(words[i], "<<") == 0)
 			token = new_token(TYPE_REDIR_APPEND, words[i]);
 		else if (i == 0 ||
-				(i > 0 && (ft_strcmp_minishell(words[i - 1], "|") == 0 || 
-							ft_strcmp_minishell(words[i - 1], ">") == 0 || 
-							ft_strcmp_minishell(words[i - 1], "<") == 0 || 
-							ft_strcmp_minishell(words[i - 1], ">>") == 0)))
+				(i > 0 && (ft_strcmp_minishell(words[i - 1], "|") == 0 ||
+							ft_strcmp_minishell(words[i - 1], ">") == 0 ||
+							ft_strcmp_minishell(words[i - 1], "<") == 0 ||
+							ft_strcmp_minishell(words[i - 1], ">>") == 0 ||
+							ft_strcmp_minishell(words[i - 1], "<<") == 0)))
 			token = new_token(TYPE_CMD, words[i]);
 		else
 			token = new_token(TYPE_ARG, words[i]);
-
 		if (!head)
 		{
 			head = token;
@@ -69,6 +71,7 @@ t_token *tokenize_input(char *input)
 			curr->next = token;
 			curr = token;
 		}
+		// printf("decoupage : %s\n", words[i]);
 		i++;
 	}
 	ft_free_tab(words);

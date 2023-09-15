@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/15 09:52:35 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/15 10:12:18 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int main(int ac, char **av, char **envp)
 		if(new_commands != NULL)
 		{
 			new_commands->token = tokenize_input(input);
-			open_fd(new_commands, envp);
+			execve_fd(new_commands, envp);
 		}
 		add_history(input);
 		ft_free_current(new_commands);
