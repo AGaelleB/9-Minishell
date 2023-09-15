@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/15 11:51:53 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/15 12:01:39 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,10 @@ void execve_fd(t_command *current, char **envp)
 		child_pids[index++] = pid;
 		if (pid == 0) // Child
 		{
-			if(TYPE_DELIMITATOR)
+			if(current->token->type == TYPE_DELIMITATOR)
 				open_fd_pipe(current, infile);
-			if(TYPE_REDIR_OUT)
-				open_fd_redir_out(current, infile);
-
+			if(current->token->type == TYPE_REDIR_OUT)
+				open_fd_redir_out(current, infile, command->redir_out_filename);
 			if(child_process(current, envp) == 127)
 			{
 				free(child_pids);

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/15 11:25:07 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/15 11:55:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_command
 	char				*command;			// e.g. "cat test.txt"
 	char				**command_arg;		// e.g. "cat"
 	char				*command_path;		// e.g. /usr/bin/cat/
+	char				*redir_out_filename; 
 	int					fd[2];
 	struct s_token		*token;
 	struct	s_command	*next;	// Pointer to the next command

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/15 10:04:32 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/15 12:03:40 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ t_token *tokenize_input(char *input)
 	t_token		*head;
 	t_token		*curr;
 	t_token		*token;
+	t_command	*command;
 	int			i;
 
 	words = split_string(input, ' ');
 	head = NULL;
 	curr = NULL;
+	command = NULL;
 	i = 0;
 	while (words[i])
 	{
@@ -45,7 +47,21 @@ t_token *tokenize_input(char *input)
 		if (ft_strcmp_minishell(words[i], "|") == 0)
 			token = new_token(TYPE_SEPARATOR, words[i]);
 		else if (ft_strcmp_minishell(words[i], ">") == 0)
+		{
 			token = new_token(TYPE_REDIR_OUT, words[i]);
+			if (words[i + 1])
+			{
+				if (!command) // Initialize the command structure if it's not already initialized.
+				{
+					command = malloc(sizeof(t_command));
+					if (!command)
+						exit(EXIT_FAILURE); // Or handle the error as you wish.
+					memset(command, 0, sizeof(t_command)); // Set all fields to 0/NULL.
+				}
+				command->redir_out_filename = ft_strdup(words[i + 1]);
+				i++;
+			}
+		}
 		else if (ft_strcmp_minishell(words[i], "<") == 0)
 			token = new_token(TYPE_REDIR_IN, words[i]);
 		else if (ft_strcmp_minishell(words[i], ">>") == 0)

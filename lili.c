@@ -1,5 +1,4 @@
-We want to code the rediction of ">" in a fileout, we did that and we dont knwo how to spell our file in the line int fd_out = open("argc fileout", O_RDONLY);
-
+pourquoi je seg fault sur cette commande: minishell$> cat celine.txt | grep L > coucou.txt 
 typedef enum e_token_type
 {
 	TYPE_CMD,
@@ -59,11 +58,13 @@ t_token *tokenize_input(char *input)
 	t_token		*head;
 	t_token		*curr;
 	t_token		*token;
+	t_command	*command;
 	int			i;
 
 	words = split_string(input, ' ');
 	head = NULL;
 	curr = NULL;
+	command = NULL;
 	i = 0;
 	while (words[i])
 	{
@@ -71,7 +72,14 @@ t_token *tokenize_input(char *input)
 		if (ft_strcmp_minishell(words[i], "|") == 0)
 			token = new_token(TYPE_SEPARATOR, words[i]);
 		else if (ft_strcmp_minishell(words[i], ">") == 0)
+		{
 			token = new_token(TYPE_REDIR_OUT, words[i]);
+			if (words[i + 1])
+			{
+				command->redir_out_filename = ft_strdup(words[i + 1]);
+				i++;
+			}
+		}
 		else if (ft_strcmp_minishell(words[i], "<") == 0)
 			token = new_token(TYPE_REDIR_IN, words[i]);
 		else if (ft_strcmp_minishell(words[i], ">>") == 0)
@@ -104,7 +112,6 @@ t_token *tokenize_input(char *input)
 	ft_free_tokens(head);
 	return (head);
 }
-
 
 int	child_process(t_command *current, char **envp)
 {
@@ -147,9 +154,13 @@ void open_fd_pipe(t_command *current, int infile)
 	close_fd();
 }
 
-void open_fd_redir_out(t_command *current, int infile)
+void open_fd_redir_out(t_command *current, int infile, char *filename)
+
 {
-	int fd_out = open("argc fileout", O_RDONLY);
+	int fd_out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+
+
+	// printf ()	
 	close(current->fd[0]);
 	dup2(infile, 0);
 	if (current->next)
@@ -199,7 +210,7 @@ void execve_fd(t_command *current, char **envp)
 			if(TYPE_DELIMITATOR)
 				open_fd_pipe(current, infile);
 			if(TYPE_REDIR_OUT)
-				open_fd_redir_out(current, infile);
+				open_fd_redir_out(current, infile, command->redir_out_filename);
 
 			if(child_process(current, envp) == 127)
 			{
