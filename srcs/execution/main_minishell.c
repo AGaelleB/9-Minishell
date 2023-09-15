@@ -6,13 +6,11 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/14 16:58:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/15 09:52:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_command	*new_commands = NULL;
 
 // char	*return_input(char *input) // truc de rayan
 // {
@@ -23,23 +21,13 @@ t_command	*new_commands = NULL;
 // 	inp = input;
 // }
 
-void cleanup_resources(void)
-{
-	if (new_commands)
-	{
-		close(new_commands->fd[1]);
-		close(new_commands->fd[0]);
-		ft_free_all_cmd(new_commands);
-		free(new_commands);
-		new_commands = NULL;
-	}
-}
-
 int main(int ac, char **av, char **envp)
 {
 	char		*input;
 	int			builtin_status;
+	t_command	*new_commands;
 	
+	new_commands = NULL;
 	signal(SIGINT, ft_signal_ctrl_C);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -50,7 +38,6 @@ int main(int ac, char **av, char **envp)
 		if (builtin_status == 1)
 		{
 			free(input);
-			cleanup_resources();
 			exit(0);
 		}
 		else if (builtin_status == 2)
@@ -76,4 +63,5 @@ int main(int ac, char **av, char **envp)
 										A CORRIGER :
 
 a faire : redirections 
+
 */
