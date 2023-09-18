@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/18 14:33:26 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:44:05 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	redirect_file_out(t_command **cmd, t_token *cur, t_e_token_type type)
 		if ((*cmd)->fd_out != 1)
 			close((*cmd)->fd_out);
 		filename = cur->next->split_value;
-		printf("%s\n", filename); //printf
+		// printf("%s\n", filename); //printf
 		(*cmd)->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if ((*cmd)->fd_out == -1)
 		{
@@ -42,17 +42,10 @@ int	open_fd(t_command **cmdl)
 	t_token	*cur;
 
 	cur = (*cmdl)->token;
-	// printf("ici\n");
 	while (cur)
 	{
-		// if (cur->type == FILE_IN || cur->type == LIMITOR)
-		// 	if (redirect_file_in(cmdl, cur, cur->type) == -1)
-		// 		return (-1);
-		// printf("boucle\n");
-		// printf("cur->type : %d\n", cur->type);
 		if (cur->type == TYPE_REDIR_OUT)
 		{
-			// printf("coucou on me voit ??\n");
 			if (redirect_file_out(cmdl, cur, cur->type) == -1)
 				return (-1);
 		}
@@ -65,7 +58,6 @@ int	open_fd(t_command **cmdl)
 void execve_fd(t_command *current, char **envp)
 {
 	t_command	*command;
-	// t_token		*token;	//NEW
 	pid_t		pid;
 	pid_t		*child_pids;
 	int			infile;
@@ -73,12 +65,6 @@ void execve_fd(t_command *current, char **envp)
 	int			index;
 	int			i;
 
-	// if (current->token == NULL)	//NEW
-	// {
-	// 	printf("TOKEN POINT SUR NULL !!!!!\n");
-	// 	return;
-	// }
-	// token = current->token;	//NEW
 	command = current;
 	infile = 0;
 	num_children = 0;
@@ -96,19 +82,6 @@ void execve_fd(t_command *current, char **envp)
 	open_fd(&current);
 	while (current)
 	{
-		// printf("juste AVANT---------\n");	//NEW
-		// if (ft_strcmp_minishell(current->command, ">") == 0)
-		// if (token->type == TYPE_REDIR_OUT)
-		// if (current->token->type == TYPE_REDIR_OUT)
-		// {
-		// 	printf("ici DANS verif redir\n");
-		// 	if (redirect_file_out(&current, current->token->next, TYPE_REDIR_OUT) == -1)
-		// 	{
-		// 		perror("Redirection de sortie a échoué");
-		// 		exit(1);
-		// 	}
-		// }
-		// printf("juste APRES++++++++++\n");	//NEW
 		if (pipe(current->fd) == -1)
 		{
 			perror("pipe");
@@ -121,9 +94,17 @@ void execve_fd(t_command *current, char **envp)
 		{
 			close(current->fd[0]);
 			dup2(infile, 0);
-			if (current->next)
-				dup2(current->fd[1], 1);
-			close(current->fd[1]);
+			if (current->token->type == TYPE_SEPARATOR)
+			{
+				if (current->next)
+					dup2(current->fd[1], 1);
+				close(current->fd[1]);
+			}
+			else if (current->token->type == TYPE_REDIR_OUT)
+			{
+				dup2(current->fd_out, 1);
+				close(current->fd_out);
+			}
 			close_fd();
 			if(child_process(current, envp) == 127)
 			{

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/18 14:28:25 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:38:19 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_token
 	t_e_token_type		type;
 	char				*split_value; // e.g. "cat"
 	struct s_token		*next;
+	struct s_token		*before;
 } t_token;
 
 typedef struct s_sigset
@@ -67,7 +68,7 @@ typedef struct s_command
 	char				**command_arg;	// e.g. "cat"
 	char				*command_path;	// e.g. /usr/bin/cat/
 	int					fd[2];
-	int					fd_out;	// rjouter un pointeur *
+	int					fd_out;
 	struct s_token		*token;
 	struct s_command	*next;	// Pointeur vers la commande suivante
 } t_command;
