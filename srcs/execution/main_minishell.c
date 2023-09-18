@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/15 10:12:18 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:28:15 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int main(int ac, char **av, char **envp)
 		if(new_commands != NULL)
 		{
 			new_commands->token = tokenize_input(input);
-			execve_fd(new_commands, envp);
+			// printf("%s\n %d\n\n", new_commands->token->split_value, new_commands->token->type);
+			// if(new_commands->token != NULL)
+				execve_fd(new_commands, envp);
 		}
 		add_history(input);
 		ft_free_current(new_commands);
@@ -63,5 +65,10 @@ int main(int ac, char **av, char **envp)
 										A CORRIGER :
 
 a faire : redirections 
+
+
+seg fault:
+minishell$> cat celine.txt | txt.txt
+[1]    2038653 segmentation fault (core dumped)  ./minishell
 
 */

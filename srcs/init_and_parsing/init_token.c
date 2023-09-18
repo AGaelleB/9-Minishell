@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/15 12:03:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:27:16 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_token *new_token(t_e_token_type e_type, char *split_value)
 	token->split_value = ft_strdup(split_value);  // Remember to free this later!
 	token->next = (NULL);
 
+
 	return (token);
 }
 
@@ -33,13 +34,11 @@ t_token *tokenize_input(char *input)
 	t_token		*head;
 	t_token		*curr;
 	t_token		*token;
-	t_command	*command;
 	int			i;
 
 	words = split_string(input, ' ');
 	head = NULL;
 	curr = NULL;
-	command = NULL;
 	i = 0;
 	while (words[i])
 	{
@@ -47,21 +46,7 @@ t_token *tokenize_input(char *input)
 		if (ft_strcmp_minishell(words[i], "|") == 0)
 			token = new_token(TYPE_SEPARATOR, words[i]);
 		else if (ft_strcmp_minishell(words[i], ">") == 0)
-		{
 			token = new_token(TYPE_REDIR_OUT, words[i]);
-			if (words[i + 1])
-			{
-				if (!command) // Initialize the command structure if it's not already initialized.
-				{
-					command = malloc(sizeof(t_command));
-					if (!command)
-						exit(EXIT_FAILURE); // Or handle the error as you wish.
-					memset(command, 0, sizeof(t_command)); // Set all fields to 0/NULL.
-				}
-				command->redir_out_filename = ft_strdup(words[i + 1]);
-				i++;
-			}
-		}
 		else if (ft_strcmp_minishell(words[i], "<") == 0)
 			token = new_token(TYPE_REDIR_IN, words[i]);
 		else if (ft_strcmp_minishell(words[i], ">>") == 0)
@@ -70,11 +55,12 @@ t_token *tokenize_input(char *input)
 			token = new_token(TYPE_REDIR_APPEND, words[i]);
 		else if (i == 0 ||
 				(i > 0 && (ft_strcmp_minishell(words[i - 1], "|") == 0 ||
-							ft_strcmp_minishell(words[i - 1], ">") == 0 ||
 							ft_strcmp_minishell(words[i - 1], "<") == 0 ||
 							ft_strcmp_minishell(words[i - 1], ">>") == 0 ||
 							ft_strcmp_minishell(words[i - 1], "<<") == 0)))
 			token = new_token(TYPE_CMD, words[i]);
+		else if(i > 0 && ft_strcmp_minishell(words[i - 1], ">") == 0)
+			token = new_token(TYPE_F_OUT, words[i]);
 		else
 			token = new_token(TYPE_ARG, words[i]);
 		if (!head)
@@ -87,10 +73,9 @@ t_token *tokenize_input(char *input)
 			curr->next = token;
 			curr = token;
 		}
-		// printf("decoupage : %s\n", words[i]);
 		i++;
 	}
 	ft_free_tab(words);
-	ft_free_tokens(head);
+	// ft_free_tokens(head);
 	return (head);
 }

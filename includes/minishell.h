@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/15 11:55:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/18 14:28:25 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef enum e_token_type
 	TYPE_REDIR_IN,		// "<"
 	TYPE_DELIMITATOR,	// "<<"
 	TYPE_REDIR_APPEND,	// ">>"
+	TYPE_F_OUT,
 	// TYPE_BUILTIN,
 	// TYPE_HEREDOC,
 	// TYPE_EOF
@@ -61,18 +62,20 @@ typedef struct s_sigset
 
 typedef struct s_command
 {
-	int					nb_pipes; //ATTENTION
-	char				*command;			// e.g. "cat test.txt"
-	char				**command_arg;		// e.g. "cat"
-	char				*command_path;		// e.g. /usr/bin/cat/
-	char				*redir_out_filename; 
+	int					nb_pipes;
+	char				*command;	// e.g. "cat test.txt"
+	char				**command_arg;	// e.g. "cat"
+	char				*command_path;	// e.g. /usr/bin/cat/
 	int					fd[2];
+	int					fd_out;	// rjouter un pointeur *
 	struct s_token		*token;
-	struct	s_command	*next;	// Pointer to the next command
+	struct s_command	*next;	// Pointeur vers la commande suivante
 } t_command;
 
-
 /***********MAIN***********/
+
+void	ft_set_args_and_paths(t_command *current, char **envp);
+
 
 
 /***********BUILTINS***********/
@@ -93,6 +96,8 @@ int			child_process(t_command *current, char **envp);
 t_token		*tokenize_input(char *input);
 char		*ft_check_paths(char **envp, char *args);
 void		execve_fd(t_command *current, char **envp);
+
+// void execve_fd(t_command *current, t_e_token_type e_type, char **envp);
 
 
 
