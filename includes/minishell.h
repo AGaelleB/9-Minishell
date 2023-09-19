@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 11:41:01 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:43:24 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef enum e_token_type
 	TYPE_REDIR_APPEND, // 5		// ">>"
 	TYPE_DELIMITATOR, // 6		// "<<"
 	TYPE_F_OUT, // 7
+	TYPE_F_IN, // 8
+
 	// TYPE_BUILTIN,
 	// TYPE_HEREDOC,
 	// TYPE_EOF
