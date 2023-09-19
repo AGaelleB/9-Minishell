@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 10:52:43 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/19 12:57:18 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int main(int ac, char **av, char **envp)
 			continue;
 
 		new_commands = get_command(input);
-		print_commands_and_tokens(new_commands);
+		// print_commands_and_tokens(new_commands);
 		
 		count_and_set_pipes(input, new_commands);
 		if(new_commands != NULL)
@@ -66,7 +66,7 @@ int main(int ac, char **av, char **envp)
 
 /*
 										A CORRIGER :
-
+mhoy
 a faire : redirections 
 
 

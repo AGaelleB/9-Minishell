@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 11:02:14 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/19 12:59:29 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ t_command	*get_command(char *input)
 
 		new_cmd->token_head = tokenize_input(new_cmd->command); // tokenize la commande actuelle
 		// new_cmd->next = NULL;
-
-		
 		if (!new_cmd->command)
 		{
 			perror("Failed to duplicate command string");
@@ -60,10 +58,6 @@ t_command	*get_command(char *input)
 		}
 		i++;
 	}
-
-
-
-	
 	ft_free_tab(command);
 	return (head);
 }
@@ -76,40 +70,29 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
 }
 
-int	child_process(t_command *current, char **envp)
+
+int child_process(t_command *current, char **envp)
 {
-	if (current->fd[0] != -1)
+	printf("Current fd_in: %d, fd_out: %d\n\n", current->fd_in, current->fd_out);
+	if (current->fd_in != -1)
 	{
-		dup2(current->fd[0], 0);
-		close(current->fd[0]);
-	}
-	// if (current->fd_out != 1)
-	// {
-	// 	dup2(current->fd_out, 1);
-	// 	close(current->fd_out);
-	// }
-	if (current->fd[1] != -1)
-	{
-		dup2(current->fd[1], 1);
-		close(current->fd[1]);
+		if (dup2(current->fd_in, 0) == -1)
+		{
+			perror("dup2 fd_in");
+			exit(EXIT_FAILURE);
+		}
+		close(current->fd_in);
 	}
 
-/////////////////////////////////////////
-	// if (current->fd_out != 1)
-	// {
-	// 	dup2(current->fd_out, 1);
-	// 	close(current->fd_out);
-	// }
-/////////////////////////////////////////
-
-
-	// close(current->fd[0]); // a deplacer dans le child ? 
-	// dup2(current->fd_in, 0); // a deplacer dans le child ? 
-	// if (current->next) // a deplacer dans le child ? 
-	// 	dup2(current->fd[1], 1); // a deplacer dans le child ? 
-	// close(current->fd[1]); // a deplacer dans le child ? 
-
-
+	if (current->fd_out != -1)
+	{
+		if (dup2(current->fd_out, 1) == -1)
+		{
+			perror("dup2 fd_out");
+			exit(EXIT_FAILURE);
+		}
+		close(current->fd_out);
+	}
 	ft_set_args_and_paths(current, envp);
 	if (current->command_path == NULL)
 	{
