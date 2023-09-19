@@ -1,68 +1,23 @@
-je possede deux fonction qui parse ma commande en plusieurs blocs nommés command, command_arg, split_value, type.
-finalement ils font un pue la meme chose split value et command_agrc stock la command mot par mot,
-je voudrais arriver a un resultat qui fusionne ces deux fonctions.
+il semblerait que la fonction qui tokenize ne split pas bien sur les espaces et associe a un type: 0 les espaces alors qu ils ne devraient pas etre associes.
+comment resoudre ce probleme ?
 
-cat celine.txt | rev | wc > test.txt
 
-je veux;
-dans la liste chainée dans command:  (jai deja ce resultat dans la fonction get_command)
-command 0: cat celine.txt
-command 1: rev
-command 2: wc > test.txt
 
-a linterieur des ces command utiliser les token pour avoir les arguments detaillés:
-command_arg : cat, type: 0
-command_arg : celine.txt, type: 1
-command_arg : |, type: 2
-command_arg : rev, type: 0
-command_arg : |, type: 2
-command_arg : wc, type: 0
-command_arg : >, type: 3
-command_arg : txt.txt, type: 7
-
-on ne veut plus forcement avoir split_value.
-Si ce nest pas necessaire, est plus simple de remanier les structures existantes pour n'en avoir plus qu'une ?
 
 typedef enum e_token_type
 {
-	TYPE_CMD,
-	TYPE_ARG,
-	TYPE_SEPARATOR,
-	TYPE_REDIR_OUT,		// ">"
-	TYPE_REDIR_IN,		// "<"
-	TYPE_DELIMITATOR,	// "<<"
-	TYPE_REDIR_APPEND,	// ">>"
-	TYPE_F_OUT,
+	TYPE_CMD, // 0				// cat 			de cat celine.txt
+	TYPE_ARG, // 1				// celine.txt 	de cat celine.txt
+	TYPE_SEPARATOR, // 2		// "|" 
+	TYPE_REDIR_OUT, // 3		// ">"
+	TYPE_REDIR_IN, // 4			// "<"
+	TYPE_DELIMITATOR, // 5		// "<<"
+	TYPE_REDIR_APPEND, // 6		// ">>"
+	TYPE_F_OUT, // 7
 	// TYPE_BUILTIN,
 	// TYPE_HEREDOC,
 	// TYPE_EOF
 } t_e_token_type;
-
-typedef struct s_token
-{
-	t_e_token_type		type;
-	char				*split_value; // e.g. "cat"
-	struct s_token		*next;
-	struct s_token		*before;
-} t_token;
-
-typedef struct s_sigset
-{
-
-} t_sigset;
-
-typedef struct s_command
-{
-	int					nb_pipes;
-	char				*command;	// e.g. "cat test.txt"
-	char				**command_arg;	// e.g. "cat"
-	char				*command_path;	// e.g. /usr/bin/cat/
-	int					fd[2];
-	int					fd_out;
-	struct s_token		*token;
-	struct s_command	*next;	// Pointeur vers la commande suivante
-} t_command;
-
 
 t_token *new_token(t_e_token_type e_type, char *split_value)
 {
@@ -75,7 +30,7 @@ t_token *new_token(t_e_token_type e_type, char *split_value)
 	token->type = e_type;
 	token->split_value = ft_strdup(split_value);  // Remember to free this later!
 	token->next = (NULL);
-	printf("value : %s, type: %d\n", token->split_value, token->type);
+	// printf("value : %s, type: %d\n", token->split_value, token->type);
 
 
 	return (token);
@@ -112,8 +67,10 @@ t_token *tokenize_input(char *input)
 							ft_strcmp_minishell(words[i - 1], ">>") == 0 ||
 							ft_strcmp_minishell(words[i - 1], "<<") == 0)))
 			token = new_token(TYPE_CMD, words[i]);
+		
 		else if(i > 0 && ft_strcmp_minishell(words[i - 1], ">") == 0)
 			token = new_token(TYPE_F_OUT, words[i]);
+		
 		else
 			token = new_token(TYPE_ARG, words[i]);
 		if (!head)
@@ -133,90 +90,137 @@ t_token *tokenize_input(char *input)
 	return (head);
 }
 
-t_command	*get_command(char *input)
-{
-	t_command	*head;
-	t_command	*current;
-	t_command	*new_cmd;
-	char		**command;
-	int			i;
 
-	head = NULL;
-	current = NULL;
-	command = split_string(input, '|');
-	i = 0;
-	while(command[i])
+./minishell
+minishell$> cat test.txt | rev | rev  | wc -l > coucou | rev
+Command 0: cat test.txt 
+        command_arg: cat, type: 0 			// type 0
+        command_arg: test.txt, type: 1		// type 1
+
+Command 1:  rev 
+        command_arg: , type: 0				// ? correspond au espaces " " ?
+        command_arg: rev, type: 1			// type 0
+
+Command 2:  rev  
+        command_arg: , type: 0				// ? correspond au espaces " " ? 
+        command_arg: rev, type: 1			// type 0
+        command_arg: , type: 1				// ? 
+
+Command 3:  wc -l > coucou 
+        command_arg: , type: 0				// ? correspond au espaces " " ?
+        command_arg: wc, type: 1			// type 0
+        command_arg: -l, type: 1			// type 0
+        command_arg: >, type: 3				// type 3
+        command_arg: coucou, type: 7		// type 7
+
+Command 4:  rev
+        command_arg: , type: 0				// ? correspond au espaces " " ?
+        command_arg: rev, type: 1			// type 0
+
+
+
+autre exemple : 
+
+./minishell
+minishell$>  cat test.txt |             rev | rev                 | wc -l >             coucou | rev
+Command 0:  cat test.txt 
+        command_arg: , type: 0
+        command_arg: cat, type: 1
+        command_arg: test.txt, type: 1
+
+Command 1:              rev 
+        command_arg: , type: 0
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: rev, type: 1
+
+Command 2:  rev                 
+        command_arg: , type: 0
+        command_arg: rev, type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+
+Command 3:  wc -l >             coucou 
+        command_arg: , type: 0
+        command_arg: wc, type: 1
+        command_arg: -l, type: 1
+        command_arg: >, type: 3
+        command_arg: , type: 7
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: , type: 1
+        command_arg: coucou, type: 1
+
+Command 4:  rev
+        command_arg: , type: 0
+        command_arg: rev, type: 1
+
+
+
+
+int state = TYPE_CMD;  // Start by expecting a command initially
+
+while (words[i])
+{
+	if (is_empty_or_space(words[i]))
 	{
-		new_cmd = malloc(sizeof(t_command));
-		if (!new_cmd)
-		{
-			perror("Failed to allocate memory for new command");
-			ft_free_tab(command);
-			exit(1);
-		}
-		new_cmd->command = NULL;
-		new_cmd->command = ft_strdup(command[i]);
-		printf("command %d: %s\n", i, new_cmd->command);
-		if (!new_cmd->command)
-		{
-			perror("Failed to duplicate command string");
-			ft_free_tab(command);
-			exit(1);
-		}
-		new_cmd->next = NULL;
-		if (!head)
-		{
-			head = new_cmd;
-			current = head;
-		}
-		else
-		{
-			current->next = new_cmd;
-			current = new_cmd;
-		}
 		i++;
+		continue;
 	}
-	ft_free_tab(command);
-	return (head);
-}
 
-
-int main(int ac, char **av, char **envp)
-{
-	char		*input;
-	int			builtin_status;
-	t_command	*new_commands;
-	
-	new_commands = NULL;
-	signal(SIGINT, ft_signal_ctrl_C);
-	signal(SIGQUIT, SIG_IGN);
-	while (1)
+	token = NULL;
+	if (ft_strcmp_minishell(words[i], "|") == 0)
 	{
-		input = readline("minishell$> ");
-		ft_builtin_ctrl_D(input);
-		builtin_status = ft_all_builtins_exit(input);
-		if (builtin_status == 1)
-		{
-			free(input);
-			exit(0);
-		}
-		else if (builtin_status == 2)
-			continue;
-		new_commands = get_command(input);
-		count_and_set_pipes(input, new_commands);
-		if(new_commands != NULL)
-		{
-			new_commands->token = tokenize_input(input);
-			// printf("%s\n %d\n\n", new_commands->token->split_value, new_commands->token->type);
-			// if(new_commands->token != NULL)
-				execve_fd(new_commands, envp);
-		}
-		add_history(input);
-		ft_free_current(new_commands);
-		free(input);
+		token = new_token(TYPE_SEPARATOR, words[i]);
+		state = TYPE_CMD;  // Expect a command next
 	}
-	(void)ac;
-	(void)av;
-	(void)envp;
-	return (0);
+	else if (ft_strcmp_minishell(words[i], ">") == 0)
+	{
+		token = new_token(TYPE_REDIR_OUT, words[i]);
+		state = TYPE_F_OUT;  // Expect a filename next
+	}
+	// ... handle other redirection symbols similarly ...
+	else if (state == TYPE_CMD)
+	{
+		token = new_token(TYPE_CMD, words[i]);
+		state = TYPE_ARG;  // Expect arguments next
+	}
+	else
+	{
+		token = new_token(TYPE_ARG, words[i]);
+	}
+
+	// ... rest of your code ...
 }

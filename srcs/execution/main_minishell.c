@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/18 14:28:15 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/19 10:52:43 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,14 @@ int main(int ac, char **av, char **envp)
 		}
 		else if (builtin_status == 2)
 			continue;
+
 		new_commands = get_command(input);
+		print_commands_and_tokens(new_commands);
+		
 		count_and_set_pipes(input, new_commands);
 		if(new_commands != NULL)
 		{
-			new_commands->token = tokenize_input(input);
+			// new_commands->token = tokenize_input(input);
 			// printf("%s\n %d\n\n", new_commands->token->split_value, new_commands->token->type);
 			// if(new_commands->token != NULL)
 				execve_fd(new_commands, envp);

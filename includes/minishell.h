@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/18 14:38:19 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:41:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,27 @@
 # include "../includes/get_next_line.h"
 # include "../includes/libft.h"
 
+# define RESET "\033[0m"
+# define BLACK "\033[30m"
+# define RED "\033[31m"
+# define GREEN "\033[32m"
+# define YELLOW "\033[33m"
+# define BLUE "\033[34m"
+# define MAGENTA "\033[35m"
+# define CYAN "\033[36m"
+# define WHITE "\033[37m"
+
 
 typedef enum e_token_type
 {
-	TYPE_CMD,
-	TYPE_ARG,
-	TYPE_SEPARATOR,
-	TYPE_REDIR_OUT,		// ">"
-	TYPE_REDIR_IN,		// "<"
-	TYPE_DELIMITATOR,	// "<<"
-	TYPE_REDIR_APPEND,	// ">>"
-	TYPE_F_OUT,
+	TYPE_CMD, // 0				// cat 			de cat celine.txt
+	TYPE_ARG, // 1				// celine.txt 	de cat celine.txt
+	TYPE_SEPARATOR, // 2		// "|" 
+	TYPE_REDIR_OUT, // 3		// ">"
+	TYPE_REDIR_IN, // 4			// "<"
+	TYPE_REDIR_APPEND, // 5		// ">>"
+	TYPE_DELIMITATOR, // 6		// "<<"
+	TYPE_F_OUT, // 7
 	// TYPE_BUILTIN,
 	// TYPE_HEREDOC,
 	// TYPE_EOF
@@ -69,14 +79,33 @@ typedef struct s_command
 	char				*command_path;	// e.g. /usr/bin/cat/
 	int					fd[2];
 	int					fd_out;
-	struct s_token		*token;
+	int					fd_in; // NEW
+	struct s_token		*token_head; // Pointeur vers le premier token de cette commande
 	struct s_command	*next;	// Pointeur vers la commande suivante
 } t_command;
 
-/***********MAIN***********/
 
+
+// typedef struct s_command
+// {
+// 	int					nb_pipes;
+// 	char				*command;	// e.g. "cat test.txt"
+// 	char				**command_arg;	// e.g. "cat"
+// 	char				*command_path;	// e.g. /usr/bin/cat/
+// 	int					fd[2];
+// 	int					fd_out;
+// 	int					fd_in; // NEW
+// 	struct s_token		*token;
+// 	struct s_command	*next;	// Pointeur vers la commande suivante
+// } t_command;
+
+
+
+void print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *current, char **envp);
 
+
+/***********MAIN***********/
 
 
 /***********BUILTINS***********/
@@ -124,5 +153,7 @@ char		**split_string(const char *str, char delimiter);
 
 void		count_and_set_pipes(char *input, t_command *command);
 void		close_fd();
+int			is_empty_or_space(char *str);
+
 
 #endif

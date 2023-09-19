@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/18 16:09:31 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:00:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 si < prendre argc passé avant comme infile fd[0]
 si > prendre argc passé apres comme outfile fd[1]
 */
+
+
+
+
 
 int	redirect_file_out(t_command **cmd, t_token *cur)
 {
@@ -39,8 +43,10 @@ int	open_fd(t_command **cmdl)
 {
 	t_token	*cur;
 
-	cur = (*cmdl)->token;
+	cur = (*cmdl)->token_head;
+	(*cmdl)->fd_in = -1;
 	(*cmdl)->fd_out = -1;
+	
 	while (cur)
 	{
 		if (cur->type == TYPE_REDIR_OUT)
@@ -59,13 +65,13 @@ void execve_fd(t_command *current, char **envp)
 	t_command	*command;
 	pid_t		pid;
 	pid_t		*child_pids;
-	int			infile;
 	int			num_children;
+	// int			infile;
 	int			index;
 	int			i;
 
 	command = current;
-	infile = 0;
+	current->fd_in = 0;
 	num_children = 0;
 	index = 0;
 	i = -1;
@@ -91,11 +97,11 @@ void execve_fd(t_command *current, char **envp)
 		child_pids[index++] = pid;
 		if (pid == 0) // Child
 		{
-			close(current->fd[0]);
-			dup2(infile, 0);
-			if (current->next)
-				dup2(current->fd[1], 1);
-			close(current->fd[1]);
+			close(current->fd[0]); // a deplacer dans le child ? 
+			dup2(current->fd_in, 0); // a deplacer dans le child ? 
+			if (current->next) // a deplacer dans le child ? 
+				dup2(current->fd[1], 1); // a deplacer dans le child ? 
+			close(current->fd[1]); // a deplacer dans le child ? 
 			close_fd();
 			if(child_process(current, envp) == 127)
 			{
@@ -108,10 +114,9 @@ void execve_fd(t_command *current, char **envp)
 			close(current->fd[1]);
 			if(current->fd_out)
 				close(current->fd_out);
-			if (infile != 0)
-				close(infile);
-			infile = current->fd[0];
-			
+			if (current->fd_in != 0)
+				close(current->fd_in);
+			current->fd_in = current->fd[0];
 		}
 		else
 		{
@@ -129,8 +134,8 @@ void execve_fd(t_command *current, char **envp)
 	}
 	signal(SIGINT, ft_signal_ctrl_C);
 	free(child_pids);
-	if (infile != 0)
-		close(infile);
+	if (current->fd_in != 0)
+		close(current->fd_in);
 }
 
 // RAYAN

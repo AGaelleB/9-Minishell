@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 09:42:11 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:02:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ t_command	*get_command(char *input)
 		}
 		new_cmd->command = NULL;
 		new_cmd->command = ft_strdup(command[i]);
-		printf("command %d: %s\n", i, new_cmd->command);
+		// printf("command %d: %s\n", i, new_cmd->command);
+
+		new_cmd->token_head = tokenize_input(new_cmd->command); // tokenize la commande actuelle
+		// new_cmd->next = NULL;
+
+		
 		if (!new_cmd->command)
 		{
 			perror("Failed to duplicate command string");
@@ -55,6 +60,10 @@ t_command	*get_command(char *input)
 		}
 		i++;
 	}
+
+
+
+	
 	ft_free_tab(command);
 	return (head);
 }
@@ -92,6 +101,14 @@ int	child_process(t_command *current, char **envp)
 	// 	close(current->fd_out);
 	// }
 /////////////////////////////////////////
+
+
+	// close(current->fd[0]); // a deplacer dans le child ? 
+	// dup2(current->fd_in, 0); // a deplacer dans le child ? 
+	// if (current->next) // a deplacer dans le child ? 
+	// 	dup2(current->fd[1], 1); // a deplacer dans le child ? 
+	// close(current->fd[1]); // a deplacer dans le child ? 
+
 
 	ft_set_args_and_paths(current, envp);
 	if (current->command_path == NULL)
