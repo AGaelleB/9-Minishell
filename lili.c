@@ -1,4 +1,28 @@
-pourquoi je seg fault sur cette commande: minishell$> cat celine.txt | grep L > coucou.txt 
+je possede deux fonction qui parse ma commande en plusieurs blocs nommés command, command_arg, split_value, type.
+finalement ils font un pue la meme chose split value et command_agrc stock la command mot par mot,
+je voudrais arriver a un resultat qui fusionne ces deux fonctions.
+
+cat celine.txt | rev | wc > test.txt
+
+je veux;
+dans la liste chainée dans command:  (jai deja ce resultat dans la fonction get_command)
+command 0: cat celine.txt
+command 1: rev
+command 2: wc > test.txt
+
+a linterieur des ces command utiliser les token pour avoir les arguments detaillés:
+command_arg : cat, type: 0
+command_arg : celine.txt, type: 1
+command_arg : |, type: 2
+command_arg : rev, type: 0
+command_arg : |, type: 2
+command_arg : wc, type: 0
+command_arg : >, type: 3
+command_arg : txt.txt, type: 7
+
+on ne veut plus forcement avoir split_value.
+Si ce nest pas necessaire, est plus simple de remanier les structures existantes pour n'en avoir plus qu'une ?
+
 typedef enum e_token_type
 {
 	TYPE_CMD,
@@ -8,6 +32,7 @@ typedef enum e_token_type
 	TYPE_REDIR_IN,		// "<"
 	TYPE_DELIMITATOR,	// "<<"
 	TYPE_REDIR_APPEND,	// ">>"
+	TYPE_F_OUT,
 	// TYPE_BUILTIN,
 	// TYPE_HEREDOC,
 	// TYPE_EOF
@@ -18,6 +43,7 @@ typedef struct s_token
 	t_e_token_type		type;
 	char				*split_value; // e.g. "cat"
 	struct s_token		*next;
+	struct s_token		*before;
 } t_token;
 
 typedef struct s_sigset
@@ -27,13 +53,14 @@ typedef struct s_sigset
 
 typedef struct s_command
 {
-	int					nb_pipes; //ATTENTION
-	char				*command;			// e.g. "cat test.txt"
-	char				**command_arg;		// e.g. "cat"
-	char				*command_path;		// e.g. /usr/bin/cat/
+	int					nb_pipes;
+	char				*command;	// e.g. "cat test.txt"
+	char				**command_arg;	// e.g. "cat"
+	char				*command_path;	// e.g. /usr/bin/cat/
 	int					fd[2];
+	int					fd_out;
 	struct s_token		*token;
-	struct	s_command	*next;	// Pointer to the next command
+	struct s_command	*next;	// Pointeur vers la commande suivante
 } t_command;
 
 
@@ -48,6 +75,8 @@ t_token *new_token(t_e_token_type e_type, char *split_value)
 	token->type = e_type;
 	token->split_value = ft_strdup(split_value);  // Remember to free this later!
 	token->next = (NULL);
+	printf("value : %s, type: %d\n", token->split_value, token->type);
+
 
 	return (token);
 }
@@ -58,13 +87,11 @@ t_token *tokenize_input(char *input)
 	t_token		*head;
 	t_token		*curr;
 	t_token		*token;
-	t_command	*command;
 	int			i;
 
 	words = split_string(input, ' ');
 	head = NULL;
 	curr = NULL;
-	command = NULL;
 	i = 0;
 	while (words[i])
 	{
@@ -72,14 +99,7 @@ t_token *tokenize_input(char *input)
 		if (ft_strcmp_minishell(words[i], "|") == 0)
 			token = new_token(TYPE_SEPARATOR, words[i]);
 		else if (ft_strcmp_minishell(words[i], ">") == 0)
-		{
 			token = new_token(TYPE_REDIR_OUT, words[i]);
-			if (words[i + 1])
-			{
-				command->redir_out_filename = ft_strdup(words[i + 1]);
-				i++;
-			}
-		}
 		else if (ft_strcmp_minishell(words[i], "<") == 0)
 			token = new_token(TYPE_REDIR_IN, words[i]);
 		else if (ft_strcmp_minishell(words[i], ">>") == 0)
@@ -88,11 +108,12 @@ t_token *tokenize_input(char *input)
 			token = new_token(TYPE_REDIR_APPEND, words[i]);
 		else if (i == 0 ||
 				(i > 0 && (ft_strcmp_minishell(words[i - 1], "|") == 0 ||
-							ft_strcmp_minishell(words[i - 1], ">") == 0 ||
 							ft_strcmp_minishell(words[i - 1], "<") == 0 ||
 							ft_strcmp_minishell(words[i - 1], ">>") == 0 ||
 							ft_strcmp_minishell(words[i - 1], "<<") == 0)))
 			token = new_token(TYPE_CMD, words[i]);
+		else if(i > 0 && ft_strcmp_minishell(words[i - 1], ">") == 0)
+			token = new_token(TYPE_F_OUT, words[i]);
 		else
 			token = new_token(TYPE_ARG, words[i]);
 		if (!head)
@@ -105,142 +126,97 @@ t_token *tokenize_input(char *input)
 			curr->next = token;
 			curr = token;
 		}
-		// printf("decoupage : %s\n", words[i]);
 		i++;
 	}
 	ft_free_tab(words);
-	ft_free_tokens(head);
+	// ft_free_tokens(head);
 	return (head);
 }
 
-int	child_process(t_command *current, char **envp)
+t_command	*get_command(char *input)
 {
-	if (current->fd[0] != -1)
-	{
-		dup2(current->fd[0], 0);
-		close(current->fd[0]);
-	}
-	if (current->fd[1] != -1)
-	{
-		dup2(current->fd[1], 1);
-		close(current->fd[1]);
-	}
-	ft_set_args_and_paths(current, envp);
-	if (current->command_path == NULL)
-	{
-		write(2, "minishell: command not found: ", 31);
-		write(2, current->command_arg[0], ft_strlen(current->command_arg[0]));
-		write(2, "\n", 1);
-		ft_free_tab(current->command_arg);
-		ft_free_current(current);
-		return (127);
-	}
-	else if (execve(current->command_path, current->command_arg, envp) == -1)
-	{
-		perror("Error");
-		exit(-1);
-	}
-	return (0);
-}
-
-
-void open_fd_pipe(t_command *current, int infile)
-{
-	close(current->fd[0]);
-	dup2(infile, 0);
-	if (current->next)
-		dup2(current->fd[1], 1);
-	close(current->fd[1]);
-	close_fd();
-}
-
-void open_fd_redir_out(t_command *current, int infile, char *filename)
-
-{
-	int fd_out = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-
-
-	// printf ()	
-	close(current->fd[0]);
-	dup2(infile, 0);
-	if (current->next)
-		dup2(current->fd[1], 1);
-	else
-		dup2(fd_out, 1);
-	close(current->fd[1]);
-	close_fd();
-}
-
-void execve_fd(t_command *current, char **envp)
-{
-	t_command	*command;
-	pid_t		pid;
-	pid_t		*child_pids;
-	int			infile;
-	int			num_children;
-	int			index;
+	t_command	*head;
+	t_command	*current;
+	t_command	*new_cmd;
+	char		**command;
 	int			i;
 
-	command = current;
-	infile = 0;
-	num_children = 0;
-	index = 0;
-	i = -1;
-	while (current)
+	head = NULL;
+	current = NULL;
+	command = split_string(input, '|');
+	i = 0;
+	while(command[i])
 	{
-		num_children++;
-		current = current->next;
-	}
-	current = command;
-	child_pids = malloc(num_children * sizeof(pid_t));
-	if (!child_pids)
-		exit(1);
-	while (current)
-	{
-		if (pipe(current->fd) == -1)
+		new_cmd = malloc(sizeof(t_command));
+		if (!new_cmd)
 		{
-			perror("pipe");
-			free(child_pids);
+			perror("Failed to allocate memory for new command");
+			ft_free_tab(command);
 			exit(1);
 		}
-		pid = fork();
-		child_pids[index++] = pid;
-		if (pid == 0) // Child
+		new_cmd->command = NULL;
+		new_cmd->command = ft_strdup(command[i]);
+		printf("command %d: %s\n", i, new_cmd->command);
+		if (!new_cmd->command)
 		{
-			if(TYPE_DELIMITATOR)
-				open_fd_pipe(current, infile);
-			if(TYPE_REDIR_OUT)
-				open_fd_redir_out(current, infile, command->redir_out_filename);
-
-			if(child_process(current, envp) == 127)
-			{
-				free(child_pids);
-				exit(127);
-			}
+			perror("Failed to duplicate command string");
+			ft_free_tab(command);
+			exit(1);
 		}
-		else if (pid > 0) // Parent
+		new_cmd->next = NULL;
+		if (!head)
 		{
-			close(current->fd[1]);
-			if (infile != 0)
-				close(infile);
-			infile = current->fd[0];
+			head = new_cmd;
+			current = head;
 		}
 		else
 		{
-			perror("fork");
-			free(child_pids);
-			exit(1);
+			current->next = new_cmd;
+			current = new_cmd;
 		}
-		current = current->next;
+		i++;
 	}
-	signal(SIGINT, SIG_IGN);
-	while (i < command->nb_pipes)
-	{
-		++i;
-		waitpid(child_pids[i], NULL, 0);
-	}
+	ft_free_tab(command);
+	return (head);
+}
+
+
+int main(int ac, char **av, char **envp)
+{
+	char		*input;
+	int			builtin_status;
+	t_command	*new_commands;
+	
+	new_commands = NULL;
 	signal(SIGINT, ft_signal_ctrl_C);
-	free(child_pids);
-	if (infile != 0)
-		close(infile);
+	signal(SIGQUIT, SIG_IGN);
+	while (1)
+	{
+		input = readline("minishell$> ");
+		ft_builtin_ctrl_D(input);
+		builtin_status = ft_all_builtins_exit(input);
+		if (builtin_status == 1)
+		{
+			free(input);
+			exit(0);
+		}
+		else if (builtin_status == 2)
+			continue;
+		new_commands = get_command(input);
+		count_and_set_pipes(input, new_commands);
+		if(new_commands != NULL)
+		{
+			new_commands->token = tokenize_input(input);
+			// printf("%s\n %d\n\n", new_commands->token->split_value, new_commands->token->type);
+			// if(new_commands->token != NULL)
+				execve_fd(new_commands, envp);
+		}
+		add_history(input);
+		ft_free_current(new_commands);
+		free(input);
+	}
+	(void)ac;
+	(void)av;
+	(void)envp;
+	return (0);
 }

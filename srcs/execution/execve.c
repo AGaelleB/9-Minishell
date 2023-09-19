@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/18 14:01:03 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/19 09:42:11 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_command	*get_command(char *input)
 		}
 		new_cmd->command = NULL;
 		new_cmd->command = ft_strdup(command[i]);
+		printf("command %d: %s\n", i, new_cmd->command);
 		if (!new_cmd->command)
 		{
 			perror("Failed to duplicate command string");
@@ -73,11 +74,25 @@ int	child_process(t_command *current, char **envp)
 		dup2(current->fd[0], 0);
 		close(current->fd[0]);
 	}
+	// if (current->fd_out != 1)
+	// {
+	// 	dup2(current->fd_out, 1);
+	// 	close(current->fd_out);
+	// }
 	if (current->fd[1] != -1)
 	{
 		dup2(current->fd[1], 1);
 		close(current->fd[1]);
 	}
+
+/////////////////////////////////////////
+	// if (current->fd_out != 1)
+	// {
+	// 	dup2(current->fd_out, 1);
+	// 	close(current->fd_out);
+	// }
+/////////////////////////////////////////
+
 	ft_set_args_and_paths(current, envp);
 	if (current->command_path == NULL)
 	{

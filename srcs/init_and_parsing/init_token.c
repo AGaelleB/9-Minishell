@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/18 14:27:16 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/18 16:14:40 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_token *new_token(t_e_token_type e_type, char *split_value)
 	token->type = e_type;
 	token->split_value = ft_strdup(split_value);  // Remember to free this later!
 	token->next = (NULL);
+	printf("value : %s, type: %d\n", token->split_value, token->type);
 
 
 	return (token);
