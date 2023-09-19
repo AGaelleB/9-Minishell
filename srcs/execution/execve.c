@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 12:59:29 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:35:08 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,18 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 }
 
 
-int child_process(t_command *current, char **envp)
+int	child_process(t_command *current, char **envp)
 {
-	printf("Current fd_in: %d, fd_out: %d\n\n", current->fd_in, current->fd_out);
-	if (current->fd_in != -1)
+	// printf("%sCurrent fd_in: %d%s, %sfd_out: %d%s\n\n",BLUE, current->fd[0], RESET, MAGENTA, current->fd[1], RESET);
+	if (current->fd[0] != -1)
 	{
-		if (dup2(current->fd_in, 0) == -1)
-		{
-			perror("dup2 fd_in");
-			exit(EXIT_FAILURE);
-		}
-		close(current->fd_in);
+		dup2(current->fd[0], 0);
+		close(current->fd[0]);
 	}
-
-	if (current->fd_out != -1)
+	if (current->fd[1] != -1)
 	{
-		if (dup2(current->fd_out, 1) == -1)
-		{
-			perror("dup2 fd_out");
-			exit(EXIT_FAILURE);
-		}
-		close(current->fd_out);
+		dup2(current->fd[1], 1);
+		close(current->fd[1]);
 	}
 	ft_set_args_and_paths(current, envp);
 	if (current->command_path == NULL)

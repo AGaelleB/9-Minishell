@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 13:06:06 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/19 15:35:27 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,39 +17,22 @@ si < prendre argc passé avant comme infile fd[0]
 si > prendre argc passé apres comme outfile fd[1]
 */
 
-// int	redirect_file_out(t_command **cmd, t_token *cur)
-// {
-// 	char	*filename;
-
-// 	if ((*cmd)->fd_out != 1)
-// 		close((*cmd)->fd_out);
-// 	filename = cur->next->split_value;
-// 	// printf("%s\n", filename); //printf
-// 	(*cmd)->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-// 	// printf("(*cmd)->fd_out : %d\n", (*cmd)->fd_out); //printf
-// 	if ((*cmd)->fd_out == -1)
-// 	{
-// 		perror(filename);
-// 		return (-1);
-// 	}
-// 	return (0);
-// }
-
-int redirect_file_out(t_command **cmd, t_token *cur)
+int	redirect_file_out(t_command **cmd, t_token *cur)
 {
-    char *filename;
+	char	*filename;
 
-    if ((*cmd)->fd_out != 1)
-        close((*cmd)->fd_out);
-
-    filename = cur->next->split_value;
-    (*cmd)->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-    if ((*cmd)->fd_out == -1)
-    {
-        perror(filename);
-        return (-1);
-    }
-    return (0);
+	if ((*cmd)->fd_out != 1)
+		close((*cmd)->fd_out);
+	filename = cur->next->split_value;
+	// printf("%s\n", filename); //printf
+	(*cmd)->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	// printf("(*cmd)->fd_out : %d\n", (*cmd)->fd_out); //printf
+	if ((*cmd)->fd_out == -1)
+	{
+		perror(filename);
+		return (-1);
+	}
+	return (0);
 }
 
 int    open_fd(t_command **cmdl)
@@ -59,8 +42,8 @@ int    open_fd(t_command **cmdl)
 	cur = (*cmdl)->token_head;
 
 	// Initialisation des valeurs par défaut
-	(*cmdl)->fd_in = 0; 
-	(*cmdl)->fd_out = 1;
+	// (*cmdl)->fd_in = 0; 
+	// (*cmdl)->fd_out = 1;
 	
 	while (cur)
 	{
@@ -78,18 +61,21 @@ int    open_fd(t_command **cmdl)
 
 void execve_fd(t_command *current, char **envp)
 {
-	t_command    *command;
-	pid_t        pid;
-	pid_t        *child_pids;
-	int            num_children;
-	int            index;
-	int            i;
+	t_command	*command;
+	pid_t		pid;
+	pid_t		*child_pids;
+	int			infile;
+	int			num_children;
+	int			index;
+	int			fd;
+	int			i;
 
 	command = current;
-	current->fd_in = 0;
+	infile = 0;
 	num_children = 0;
 	index = 0;
 	i = -1;
+	fd = 3;
 	while (current)
 	{
 		num_children++;
@@ -101,7 +87,6 @@ void execve_fd(t_command *current, char **envp)
 		exit(1);
 	while (current)
 	{
-		open_fd(&current);
 		if (pipe(current->fd) == -1)
 		{
 			perror("pipe");
@@ -112,20 +97,29 @@ void execve_fd(t_command *current, char **envp)
 		child_pids[index++] = pid;
 		if (pid == 0) // Child
 		{
-			// Si une commande suivante existe, alors nous avons un pipe, utilisez fd_out de l'enfant pour écrire dans le pipe
-			if (current->next) 
-				current->fd_out = current->fd[1];
 			close(current->fd[0]);
-			close_fd();
-			child_process(current, envp);
+			dup2(infile, 0);
+			if (current->next)
+				dup2(current->fd[1], 1);
+			close(current->fd[1]);
+			// Brute force close of stray file descriptors in the child
+			while (fd < 100)
+			{
+				close(fd);
+				fd++;
+			}
+			if(child_process(current, envp) == 127)
+			{
+				free(child_pids);
+				exit(127);
+			}
 		}
 		else if (pid > 0) // Parent
 		{
 			close(current->fd[1]);
-			if(current->next)  // Si une commande suivante existe, alors fd_in de cette commande doit lire depuis le pipe
-				current->next->fd_in = current->fd[0];
-			if(current->fd_out != 1)
-				close(current->fd_out);
+			if (infile != 0)
+				close(infile);
+			infile = current->fd[0];
 		}
 		else
 		{
@@ -135,13 +129,18 @@ void execve_fd(t_command *current, char **envp)
 		}
 		current = current->next;
 	}
-	// Gestion des signaux et attente des fils
 	signal(SIGINT, SIG_IGN);
-	for (i = 0; i < num_children; i++)
+	while (i < command->nb_pipes)
+	{
+		++i;
 		waitpid(child_pids[i], NULL, 0);
+	}
 	signal(SIGINT, ft_signal_ctrl_C);
 	free(child_pids);
+	if (infile != 0)
+		close(infile);
 }
+
 
 // RAYAN
 // 	int status;
