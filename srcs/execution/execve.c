@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 15:35:08 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/20 14:04:23 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,12 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 	current->command_arg = NULL;
 	current->command_path = NULL;
 	current->command_arg = ft_split(current->command, ' ');
+	// printf("arguments 000 : %s\n", current->command_arg[0]);
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
 }
 
-
 int	child_process(t_command *current, char **envp)
 {
-	// printf("%sCurrent fd_in: %d%s, %sfd_out: %d%s\n\n",BLUE, current->fd[0], RESET, MAGENTA, current->fd[1], RESET);
-	if (current->fd[0] != -1)
-	{
-		dup2(current->fd[0], 0);
-		close(current->fd[0]);
-	}
-	if (current->fd[1] != -1)
-	{
-		dup2(current->fd[1], 1);
-		close(current->fd[1]);
-	}
 	ft_set_args_and_paths(current, envp);
 	if (current->command_path == NULL)
 	{
@@ -99,5 +88,4 @@ int	child_process(t_command *current, char **envp)
 		perror("Error");
 		exit(-1);
 	}
-	return (0);
 }

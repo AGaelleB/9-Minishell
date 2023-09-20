@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/09/19 11:41:14 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/20 14:05:48 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void count_and_set_pipes(char *input, t_command *command)
 	command->nb_pipes = count;
 }
 
-void close_fd()
+void	ft_close_fd()
 {
-	int			fd;
-	
+	int	fd;
+
 	fd = 3;
 	while (fd < 100)
 	{

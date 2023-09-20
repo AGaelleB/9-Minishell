@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 15:35:27 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/20 14:05:42 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,44 +17,36 @@ si < prendre argc passé avant comme infile fd[0]
 si > prendre argc passé apres comme outfile fd[1]
 */
 
-int	redirect_file_out(t_command **cmd, t_token *cur)
+int	redirect_file_out(t_command *current, t_token *token)
 {
 	char	*filename;
 
-	if ((*cmd)->fd_out != 1)
-		close((*cmd)->fd_out);
-	filename = cur->next->split_value;
-	// printf("%s\n", filename); //printf
-	(*cmd)->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	// printf("(*cmd)->fd_out : %d\n", (*cmd)->fd_out); //printf
-	if ((*cmd)->fd_out == -1)
+	if (current->fd_out != 1)
+		close(current->fd_out);
+	filename = token->next->split_value;
+	current->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (current->fd_out == -1)
 	{
+		write(1, "minishell: ", 12);
 		perror(filename);
-		return (-1);
+		exit(-1);
 	}
 	return (0);
 }
 
-int    open_fd(t_command **cmdl)
+int	open_fd(t_command *command)
 {
-	t_token    *cur;
+	t_token	*token;
 
-	cur = (*cmdl)->token_head;
-
-	// Initialisation des valeurs par défaut
-	// (*cmdl)->fd_in = 0; 
-	// (*cmdl)->fd_out = 1;
-	
-	while (cur)
+	token = command->token_head;
+	while (token)
 	{
-		if (cur->type == TYPE_REDIR_OUT)
+		if (token->type == TYPE_REDIR_OUT)
 		{
-			if (redirect_file_out(cmdl, cur) == -1)
+			if (redirect_file_out(command, token) == -1)
 				return (-1);
 		}
-		// Ajoutez d'autres conditions pour gérer d'autres types de redirections
-		// ...
-		cur = cur->next;
+		token = token->next;
 	}
 	return (0);
 }
@@ -67,7 +59,6 @@ void execve_fd(t_command *current, char **envp)
 	int			infile;
 	int			num_children;
 	int			index;
-	int			fd;
 	int			i;
 
 	command = current;
@@ -75,7 +66,6 @@ void execve_fd(t_command *current, char **envp)
 	num_children = 0;
 	index = 0;
 	i = -1;
-	fd = 3;
 	while (current)
 	{
 		num_children++;
@@ -95,18 +85,30 @@ void execve_fd(t_command *current, char **envp)
 		}
 		pid = fork();
 		child_pids[index++] = pid;
-		if (pid == 0) // Child
+		current->fd_in = current->fd[0];
+		current->fd_out = current->fd[1];
+		if (pid == 0)
 		{
-			close(current->fd[0]);
+			close(current->fd_in);
 			dup2(infile, 0);
 			if (current->next)
-				dup2(current->fd[1], 1);
-			close(current->fd[1]);
-			// Brute force close of stray file descriptors in the child
-			while (fd < 100)
+				dup2(current->fd_out, 1);
+			close(current->fd_out);
+			ft_close_fd();
+			if (current->fd_in != -1)
 			{
-				close(fd);
-				fd++;
+				dup2(current->fd_in, 0);
+				close(current->fd_in);
+			}
+			if (current->fd_out != -1)
+			{
+				dup2(current->fd_out, 1);
+				close(current->fd_out);
+			}
+			if (open_fd(current) == 0)
+			{
+				dup2(current->fd_out, 1);
+				close(current->fd_out);
 			}
 			if(child_process(current, envp) == 127)
 			{
@@ -114,12 +116,12 @@ void execve_fd(t_command *current, char **envp)
 				exit(127);
 			}
 		}
-		else if (pid > 0) // Parent
+		else if (pid > 0)
 		{
-			close(current->fd[1]);
+			close(current->fd_out);
 			if (infile != 0)
 				close(infile);
-			infile = current->fd[0];
+			infile = current->fd_in;
 		}
 		else
 		{
@@ -127,7 +129,7 @@ void execve_fd(t_command *current, char **envp)
 			free(child_pids);
 			exit(1);
 		}
-		current = current->next;
+		current = current->next; 
 	}
 	signal(SIGINT, SIG_IGN);
 	while (i < command->nb_pipes)
@@ -140,7 +142,6 @@ void execve_fd(t_command *current, char **envp)
 	if (infile != 0)
 		close(infile);
 }
-
 
 // RAYAN
 // 	int status;

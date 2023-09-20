@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 12:11:13 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/20 14:05:25 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ char		*ft_strjoin_minishell(char *s1, char *s2);
 char		**split_string(const char *str, char delimiter);
 
 void		count_and_set_pipes(char *input, t_command *command);
-void		close_fd();
+void		ft_close_fd();
 int			is_empty_or_space(char *str);
 
 

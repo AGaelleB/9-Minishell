@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:16:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/02/16 12:25:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/20 12:17:33 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,25 @@ static unsigned int	ft_countwords(char const *s, char c)
 	return (count);
 }
 
-char	**ft_split(char const *s, char c)
+char **ft_split(char const *s, char c)
 {
-	char			**tab;
-	unsigned int	nb_words;
-	unsigned int	i;
+	char **tab;
+	unsigned int nb_words;
+	unsigned int i;
 
 	if (s == 0)
 		return (NULL);
+
+	// Vérifiez si le caractère '>' est présent
+	char *stopChar = ft_strchr(s, '>');
+	if (stopChar != NULL)
+		*stopChar = '\0';  // Remplacez temporairement par une fin de chaîne
+
 	nb_words = ft_countwords(s, c);
 	tab = malloc((nb_words + 1) * sizeof(char *));
 	if (tab == 0)
 		return (0);
+
 	tab[nb_words] = 0;
 	if (nb_words > 0)
 	{
@@ -117,5 +124,37 @@ char	**ft_split(char const *s, char c)
 		}
 		ft_filltab(tab, s, c);
 	}
+	// Restaurez le caractère '>' si nécessaire
+	if (stopChar != NULL)
+		*stopChar = '>';
+
 	return (tab);
 }
+
+// char	**ft_split(char const *s, char c)
+// {
+// 	char			**tab;
+// 	unsigned int	nb_words;
+// 	unsigned int	i;
+
+// 	if (s == 0)
+// 		return (NULL);
+// 	nb_words = ft_countwords(s, c);
+// 	tab = malloc((nb_words + 1) * sizeof(char *));
+// 	if (tab == 0)
+// 		return (0);
+// 	tab[nb_words] = 0;
+// 	if (nb_words > 0)
+// 	{
+// 		if (ft_alloctxt(tab, s, c) == 0)
+// 		{
+// 			i = 0;
+// 			while (tab[i])
+// 				free(tab[i++]);
+// 			free(tab);
+// 			return (0);
+// 		}
+// 		ft_filltab(tab, s, c);
+// 	}
+// 	return (tab);
+// }
