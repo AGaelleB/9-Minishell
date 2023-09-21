@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:16:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/20 12:17:33 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:27:16 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,33 +53,50 @@ static int	ft_alloctxt(char **tab, const char *s, char c)
 	return (1);
 }
 
-static void	ft_filltab(char **tab, const char *s, char c)
+static void    ft_filltab(char **tab, const char *s, char c)
 {
-	int	i;
-	int	j;
+	int    i;
+	int    j;
 
 	i = 0;
 	while (*s && tab[i])
 	{
-		while (*s && ft_separateur(*s, c) == 1)
-			s++;
+		if (*s == '<')  // si on trouve '<', ignorer ce caractère et l'argument suivant
+		{
+			s++;  // ignorer '<'
+			while (*s && *s != ' ' && ft_separateur(*s, c) == 0) // ignorer l'argument suivant
+				s++;
+		}
+		
 		j = 0;
+		while (*s && ft_separateur(*s, c) == 1)  // ignorer les séparateurs
+			s++;
 		while (*s && ft_separateur(*s, c) == 0)
+		{
 			tab[i][j++] = *(s++);
+		}
 		i++;
 	}
 }
 
-static unsigned int	ft_countwords(char const *s, char c)
+static unsigned int    ft_countwords(char const *s, char c)
 {
-	int	count;
-	int	i;
+	int    count;
+	int    i;
 
 	i = 0;
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] && ft_separateur(s[i], c) == 0)
+		if (s[i] == '<') // si on trouve '<', ignorer ce caractère et l'argument suivant
+		{
+			i++; // ignorer '<'
+			if(s[i] == ' ')
+				i++;
+			while (s[i] && s[i] != ' ' && ft_separateur(s[i], c) == 0) // ignorer l'argument suivant
+				i++;
+		}
+		else if (s[i] && ft_separateur(s[i], c) == 0)
 		{
 			count++;
 			i++;
@@ -92,17 +109,18 @@ static unsigned int	ft_countwords(char const *s, char c)
 	return (count);
 }
 
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	char **tab;
-	unsigned int nb_words;
-	unsigned int i;
+	char			**tab;
+	char			*stopChar;
+	unsigned int	nb_words;
+	unsigned int	i;
 
 	if (s == 0)
 		return (NULL);
 
 	// Vérifiez si le caractère '>' est présent
-	char *stopChar = ft_strchr(s, '>');
+	stopChar = ft_strchr(s, '>');
 	if (stopChar != NULL)
 		*stopChar = '\0';  // Remplacez temporairement par une fin de chaîne
 

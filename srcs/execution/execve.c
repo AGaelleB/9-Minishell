@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/20 14:04:23 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:39:35 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,5 @@ int	child_process(t_command *current, char **envp)
 		perror("Error");
 		exit(-1);
 	}
+	return (0);
 }

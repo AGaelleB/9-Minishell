@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/20 10:46:07 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:47:02 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ t_token *tokenize_input(char *input)
 			token = new_token(TYPE_REDIR_IN, words[i]);
 			state = TYPE_F_IN;  // expect an output file next
 		}
-		// else if (ft_strcmp_minishell(words[i], ">>") == 0)
-		// {
-		// 	token = new_token(TYPE_REDIR_APPEND, words[i]);
-		// 	state = TYPE_F_OUT;  // expect an output file next
-		// }
+		else if (ft_strcmp_minishell(words[i], ">>") == 0)
+		{
+			token = new_token(TYPE_REDIR_APPEND, words[i]);
+			state = TYPE_F_OUT;  // expect an output file next
+		}
 		// else if (ft_strcmp_minishell(words[i], "<<") == 0)
 		// {
 		// 	token = new_token(TYPE_DELIMITATOR, words[i]);
@@ -84,6 +84,11 @@ t_token *tokenize_input(char *input)
 		else if (state == TYPE_F_OUT)
 		{
 			token = new_token(TYPE_F_OUT, words[i]);
+			state = TYPE_ARG;  // switch back to argument state
+		}
+		else if (state == TYPE_F_IN)
+		{
+			token = new_token(TYPE_F_IN, words[i]);
 			state = TYPE_ARG;  // switch back to argument state
 		}
 		else

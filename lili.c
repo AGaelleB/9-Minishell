@@ -1,16 +1,24 @@
-peux tu me montrer pourquoi je ne narrive pas a renvoyer la sortie de la commande "cat celine.txt | wc > test.txt" dans le fichier test.txt.
+sais tu dou peut venir mon bad address:
 
+minishell$> echo hello < celine.txt world
+Error: Bad address
 
-void	close_fds()
+int	redirect_file_in(t_command *current, t_token *token)
 {
-	int	fd;
+	char	*filename;
 
-	fd = 3;
-	while (fd < 100)
+	if (current->fd_in != 0)
+		close(current->fd_in);
+	filename = token->next->split_value;
+	// printf("filemane : %s\n", filename);
+	current->fd_in = open(filename, O_RDONLY, 0444);
+	if (current->fd_in == -1)
 	{
-		close(fd);
-		fd++;
+		write(1, "minishell: ", 12);
+		perror(filename);
+		exit(-1);
 	}
+	return (0);
 }
 
 int	redirect_file_out(t_command *current, t_token *token)
@@ -20,17 +28,33 @@ int	redirect_file_out(t_command *current, t_token *token)
 	if (current->fd_out != 1)
 		close(current->fd_out);
 	filename = token->next->split_value;
-	// printf("%s\n", filename); //printf
 	current->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	// dup2(current->fd_out, 1);
-	// printf("current->fd_out : %d\n", current->fd_out); //printf
 	if (current->fd_out == -1)
 	{
+		write(1, "minishell: ", 12);
 		perror(filename);
-		return (-1);
+		exit(-1);
 	}
 	return (0);
 }
+
+int	redirect_append_file_out(t_command *current, t_token *token)
+{
+	char	*filename;
+
+	if (current->fd_out != 1)
+		close(current->fd_out);
+	filename = token->next->split_value;
+	current->fd_out = open(filename, O_APPEND | O_WRONLY, 0644);
+	if (current->fd_out == -1)
+	{
+		write(1, "minishell: ", 12);
+		perror(filename);
+		exit(-1);
+	}
+	return (0);
+}
+
 
 int	open_fd(t_command *command)
 {
@@ -39,10 +63,34 @@ int	open_fd(t_command *command)
 	token = command->token_head;
 	while (token)
 	{
+		// printf("open_fd\n");
+		if (token->type == TYPE_REDIR_IN)
+		{
+			// printf("TYPE_REDIR_IN\n");
+			if (redirect_file_in(command, token) == 0)
+			{
+				dup2(command->fd_in, 0);
+				close(command->fd_in);
+				// printf("fini\n");
+			}
+		}
 		if (token->type == TYPE_REDIR_OUT)
 		{
-			if (redirect_file_out(command, token) == -1)
-				return (-1);
+			// printf("TYPE_REDIR_OUT\n");
+			if (redirect_file_out(command, token) == 0)
+			{
+				dup2(command->fd_out, 1);
+				close(command->fd_out);
+			}
+		}
+		if (token->type == TYPE_REDIR_APPEND)
+		{
+			// printf("TYPE_REDIR_OUT\n");
+			if (redirect_append_file_out(command, token) == 0)
+			{
+				dup2(command->fd_out, 1);
+				close(command->fd_out);
+			}
 		}
 		token = token->next;
 	}
@@ -83,16 +131,16 @@ void execve_fd(t_command *current, char **envp)
 		}
 		pid = fork();
 		child_pids[index++] = pid;
-		current->fd_in = current->fd[0]; // init apres la creation des pipes
+		current->fd_in = current->fd[0];
 		current->fd_out = current->fd[1];
-		if (pid == 0) // Child
+		if (pid == 0)
 		{
 			close(current->fd_in);
 			dup2(infile, 0);
 			if (current->next)
 				dup2(current->fd_out, 1);
 			close(current->fd_out);
-			close_fd();
+			ft_close_fd();
 			if (current->fd_in != -1)
 			{
 				dup2(current->fd_in, 0);
@@ -103,37 +151,16 @@ void execve_fd(t_command *current, char **envp)
 				dup2(current->fd_out, 1);
 				close(current->fd_out);
 			}
-			if (open_fd(current) == 0)
+			open_fd(current);
+			// printf("current->fd_in = %d \n", current->fd_in);
+			// printf("current->fd_out = %d \n\n", current->fd_out);
+			if(child_process(current, envp) == 127)
 			{
-				dup2(current->fd_out, 1);
-				close(current->fd_out);
-			}
-			ft_set_args_and_paths(current, envp);
-			////////////////////////////
-			// int j = 0;
-			// while(current->command_arg[j])
-			// {
-			// 	printf("arguments %d : %s\n", j, current->command_arg[j]);
-			// 	j++;
-			// }
-			// printf("%sfd_out: %d%s\n\n", MAGENTA, current->fd_out, RESET);
-			///////////////////////////
-			if (current->command_path == NULL)
-			{
-				write(2, "minishell: command not found: ", 31);
-				write(2, current->command_arg[0], ft_strlen(current->command_arg[0]));
-				write(2, "\n", 1);
-				ft_free_tab(current->command_arg);
-				ft_free_current(current);
-				// return (127);
-			}
-			else if (execve(current->command_path, current->command_arg, envp) == -1)
-			{
-				perror("Error");
-				exit(-1);
+				free(child_pids);
+				exit(127);
 			}
 		}
-		else if (pid > 0) // Parent
+		else if (pid > 0)
 		{
 			close(current->fd_out);
 			if (infile != 0)

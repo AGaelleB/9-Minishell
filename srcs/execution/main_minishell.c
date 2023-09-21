@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/19 15:31:31 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/21 09:32:13 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,18 @@ int main(int ac, char **av, char **envp)
 	return (0);
 }
 
+
 /*
 										A CORRIGER :
-mhoy
-a faire : redirections 
 
+avec cette cmd on a de temps en temps le message d erreur "srcs: Is a directory" mais pas a tous les coups
+cat celine.txt | rev  > tesssssssst.txt > a > b > srcs > d > e > f > g > h > fiiiin | ls  > lsss
 
-seg fault:
-minishell$> cat celine.txt | txt.txt
-[1]    2038653 segmentation fault (core dumped)  ./minishell
+devrait effectuer la redirection mais ca ne le fait pas car on split sur les espaces
+minishell$> ls> coucou
+minishell$> ls >coucou
+minishell$> ls > coui>coucou
+pour fix -> modifier la facon de tokenizer en parcouarnt word[i] et en regardant si ca comprend un ">"
+
 
 */
