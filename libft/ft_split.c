@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:16:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/20 15:27:16 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:50:10 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,7 @@ static unsigned int    ft_countwords(char const *s, char c)
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] == '<') // si on trouve '<', ignorer ce caractère et l'argument suivant
-		{
-			i++; // ignorer '<'
-			if(s[i] == ' ')
-				i++;
-			while (s[i] && s[i] != ' ' && ft_separateur(s[i], c) == 0) // ignorer l'argument suivant
-				i++;
-		}
-		else if (s[i] && ft_separateur(s[i], c) == 0)
+		if (s[i] && ft_separateur(s[i], c) == 0)
 		{
 			count++;
 			i++;
@@ -123,7 +115,20 @@ char	**ft_split(char const *s, char c)
 	stopChar = ft_strchr(s, '>');
 	if (stopChar != NULL)
 		*stopChar = '\0';  // Remplacez temporairement par une fin de chaîne
+	
+	
+	stopChar = ft_strchr(s, '<');
+	if (stopChar != NULL)
+		*stopChar = '\0';  // Remplacez temporairement par une fin de chaîne
 
+	// if (ft_strchr(s, '<') != NULL) // si on trouve '<', ignorer ce caractère et l'argument suivant
+	// {
+	// 	i++; // ignorer '<'
+	// 	if(s[i] == ' ')
+	// 		i++;
+	// 	while (s[i] && s[i] != ' ' && ft_separateur(s[i], c) == 0) // ignorer l'argument suivant
+	// 		i++;
+	// }
 	nb_words = ft_countwords(s, c);
 	tab = malloc((nb_words + 1) * sizeof(char *));
 	if (tab == 0)
@@ -145,6 +150,8 @@ char	**ft_split(char const *s, char c)
 	// Restaurez le caractère '>' si nécessaire
 	if (stopChar != NULL)
 		*stopChar = '>';
+	if (stopChar != NULL)
+		*stopChar = '<';
 
 	return (tab);
 }

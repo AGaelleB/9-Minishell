@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 12:22:09 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:39:37 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	redirect_file_in(t_command *current, t_token *token) // <
 	if (current->fd_in != 0)
 		close(current->fd_in);
 	filename = token->next->split_value;
-	printf("filemane : %s\n", filename);
-	printf("%scurrent->fd_in AVANT %d%s\n", YELLOW, current->fd_in, RESET);
+	// printf("filemane : %s\n", filename);
+	// printf("%scurrent->fd_in AVANT %d%s\n", YELLOW, current->fd_in, RESET);
 	current->fd_in = open(filename, O_RDONLY);
-	printf("%scurrent->fd_in APRES %d%s\n", YELLOW, current->fd_in, RESET);
+	// printf("%scurrent->fd_in APRES %d%s\n", YELLOW, current->fd_in, RESET);
 	if (current->fd_in == -1)
 	{
 		write(1, "minishell: ", 12);
@@ -44,9 +44,9 @@ int	redirect_file_out(t_command *current, t_token *token) // >
 	if (current->fd_out != 1)
 		close(current->fd_out);
 	filename = token->next->split_value;
-	printf("%scurrent->fd_out AVANT %d%s\n", GREEN, current->fd_out, RESET);
+	// printf("%scurrent->fd_out AVANT %d%s\n", GREEN, current->fd_out, RESET);
 	current->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	printf("%scurrent->fd_out APRES %d%s\n", GREEN, current->fd_out, RESET);
+	// printf("%scurrent->fd_out APRES %d%s\n", GREEN, current->fd_out, RESET);
 	if (current->fd_out == -1)
 	{
 		write(1, "minishell: ", 12);
@@ -63,9 +63,9 @@ int	redirect_append_file_out(t_command *current, t_token *token) // >>
 	if (current->fd_out != 1)
 		close(current->fd_out);
 	filename = token->next->split_value;
-	printf("%scurrent->fd_out AVANT %d%s\n", BLUE, current->fd_out, RESET);
+	// printf("%scurrent->fd_out AVANT %d%s\n", BLUE, current->fd_out, RESET);
 	current->fd_out = open(filename, O_APPEND | O_WRONLY, 0644);
-	printf("%scurrent->fd_out AVANT %d%s\n", BLUE, current->fd_out, RESET);
+	// printf("%scurrent->fd_out AVANT %d%s\n", BLUE, current->fd_out, RESET);
 	if (current->fd_out == -1)
 	{
 		write(1, "minishell: ", 12);
@@ -90,7 +90,7 @@ int	open_fd(t_command *command)
 			{
 				dup2(command->fd_in, 0);
 				close(command->fd_in);
-				printf("***** fin de TYPE_REDIR_IN *****\n");
+				// printf("***** fin de TYPE_REDIR_IN *****\n");
 			}
 		}
 		if (token->type == TYPE_REDIR_OUT)

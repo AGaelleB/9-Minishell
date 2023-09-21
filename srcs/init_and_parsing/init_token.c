@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 09:45:34 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:18:20 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,32 @@ t_token *tokenize_input(char *input)
 		else if (ft_strcmp_minishell(words[i], "<") == 0)
 		{
 			token = new_token(TYPE_REDIR_IN, words[i]);
-			state = TYPE_F_IN;  // expect an output file next
+			state = TYPE_F_IN;
 		}
 		else if (ft_strcmp_minishell(words[i], ">>") == 0)
 		{
 			token = new_token(TYPE_REDIR_APPEND, words[i]);
-			state = TYPE_F_OUT;  // expect an output file next
+			state = TYPE_F_OUT;
 		}
 		else if (ft_strcmp_minishell(words[i], "<<") == 0)
 		{
-			token = new_token(TYPE_DELIMITATOR, words[i]);
-			state = TYPE_F_IN;  // expect an output file next
+			token = new_token(TYPE_HEREDOC, words[i]);
+			state = TYPE_EOF;
 		}
-		else if (state == TYPE_F_OUT)
+		else if (state == TYPE_F_OUT) // > // >>
 		{
 			token = new_token(TYPE_F_OUT, words[i]);
-			state = TYPE_ARG;  // switch back to argument state
+			state = TYPE_ARG;
 		}
-		else if (state == TYPE_F_IN)
+		else if (state == TYPE_F_IN) // <
 		{
 			token = new_token(TYPE_F_IN, words[i]);
-			state = TYPE_ARG;  // switch back to argument state
+			state = TYPE_ARG;
+		}
+		else if (state == TYPE_EOF) // <<
+		{
+			token = new_token(TYPE_EOF, words[i]);
+			state = TYPE_ARG;
 		}
 		else
 			token = new_token(TYPE_ARG, words[i]);

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/20 14:05:25 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:14:02 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,12 @@ typedef enum e_token_type
 	TYPE_REDIR_OUT, // 3		// ">"
 	TYPE_REDIR_IN, // 4			// "<"
 	TYPE_REDIR_APPEND, // 5		// ">>"
-	TYPE_DELIMITATOR, // 6		// "<<"
+	TYPE_HEREDOC, // 6			// "<<" <<eof 
 	TYPE_F_OUT, // 7
 	TYPE_F_IN, // 8
+	TYPE_EOF, // 9				// eof
 
 	// TYPE_BUILTIN,
-	// TYPE_HEREDOC,
-	// TYPE_EOF
 } t_e_token_type;
 
 typedef struct s_token
