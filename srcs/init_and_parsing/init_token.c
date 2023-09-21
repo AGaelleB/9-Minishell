@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/20 15:47:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/21 09:45:34 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 // Fonction utilitaire pour vérifier si une chaîne est vide ou composée uniquement d'espaces
-
 
 t_token *new_token(t_e_token_type e_type, char *split_value)
 {
@@ -76,11 +75,11 @@ t_token *tokenize_input(char *input)
 			token = new_token(TYPE_REDIR_APPEND, words[i]);
 			state = TYPE_F_OUT;  // expect an output file next
 		}
-		// else if (ft_strcmp_minishell(words[i], "<<") == 0)
-		// {
-		// 	token = new_token(TYPE_DELIMITATOR, words[i]);
-		// 	state = TYPE_F_OUT;  // expect an output file next
-		// }
+		else if (ft_strcmp_minishell(words[i], "<<") == 0)
+		{
+			token = new_token(TYPE_DELIMITATOR, words[i]);
+			state = TYPE_F_IN;  // expect an output file next
+		}
 		else if (state == TYPE_F_OUT)
 		{
 			token = new_token(TYPE_F_OUT, words[i]);

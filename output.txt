@@ -1,0 +1,5 @@
+Je vais execve dans le child_process
+[35mcurrent->command_path /usr/bin/echo
+[0m[35marguments 0 : echo[0m
+[35marguments 1 : test1[0m
+[35marguments 2 : (null)[0m

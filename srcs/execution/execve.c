@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/20 15:39:35 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/21 12:26:23 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_command	*get_command(char *input)
 	current = NULL;
 	command = split_string(input, '|');
 	i = 0;
+
 	while(command[i])
 	{
 		new_cmd = malloc(sizeof(t_command));
@@ -74,6 +75,19 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 int	child_process(t_command *current, char **envp)
 {
 	ft_set_args_and_paths(current, envp);
+
+	///////////////////////////////////////////////////////////////////////////////////
+	printf("Je vais execve dans le child_process\n");
+		printf("%scurrent->command_path %s\n%s", MAGENTA, current->command_path,RESET);
+		
+		int i = 0;
+		while(current->command[i])
+		{
+			printf("%sarguments %d : %s%s\n", MAGENTA, i, current->command_arg[i], RESET);
+			i++;
+		}
+	////////////////////////////////////////////////////////////////////////////////////
+		
 	if (current->command_path == NULL)
 	{
 		write(2, "minishell: command not found: ", 31);
@@ -88,5 +102,6 @@ int	child_process(t_command *current, char **envp)
 		perror("Error");
 		exit(-1);
 	}
+	printf("J'ai execve dans le child_process\n");
 	return (0);
 }
