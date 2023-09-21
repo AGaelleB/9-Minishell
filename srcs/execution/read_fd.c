@@ -6,16 +6,12 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 13:39:37 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/21 15:57:06 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
-si < prendre argc passé avant comme infile fd[0]
-si > prendre argc passé apres comme outfile fd[1]
-*/
 
 int	redirect_file_in(t_command *current, t_token *token) // <
 {
@@ -24,10 +20,7 @@ int	redirect_file_in(t_command *current, t_token *token) // <
 	if (current->fd_in != 0)
 		close(current->fd_in);
 	filename = token->next->split_value;
-	// printf("filemane : %s\n", filename);
-	// printf("%scurrent->fd_in AVANT %d%s\n", YELLOW, current->fd_in, RESET);
 	current->fd_in = open(filename, O_RDONLY);
-	// printf("%scurrent->fd_in APRES %d%s\n", YELLOW, current->fd_in, RESET);
 	if (current->fd_in == -1)
 	{
 		write(1, "minishell: ", 12);
@@ -44,9 +37,7 @@ int	redirect_file_out(t_command *current, t_token *token) // >
 	if (current->fd_out != 1)
 		close(current->fd_out);
 	filename = token->next->split_value;
-	// printf("%scurrent->fd_out AVANT %d%s\n", GREEN, current->fd_out, RESET);
 	current->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	// printf("%scurrent->fd_out APRES %d%s\n", GREEN, current->fd_out, RESET);
 	if (current->fd_out == -1)
 	{
 		write(1, "minishell: ", 12);
@@ -63,9 +54,7 @@ int	redirect_append_file_out(t_command *current, t_token *token) // >>
 	if (current->fd_out != 1)
 		close(current->fd_out);
 	filename = token->next->split_value;
-	// printf("%scurrent->fd_out AVANT %d%s\n", BLUE, current->fd_out, RESET);
 	current->fd_out = open(filename, O_APPEND | O_WRONLY, 0644);
-	// printf("%scurrent->fd_out AVANT %d%s\n", BLUE, current->fd_out, RESET);
 	if (current->fd_out == -1)
 	{
 		write(1, "minishell: ", 12);
@@ -75,6 +64,34 @@ int	redirect_append_file_out(t_command *current, t_token *token) // >>
 	return (0);
 }
 
+void	ft_append_str(char **original, char *new_str)
+{
+	char	*temp;
+	
+	if (new_str == NULL)
+		return;
+	if (*original == NULL)
+		*original = ft_strdup(new_str);
+	else
+	{
+		temp = *original;
+		*original = malloc(ft_strlen(temp) + ft_strlen(new_str) + 1);
+		if (*original == NULL)
+			return;
+		strcpy(*original, temp); // same as strjoin //forbiden
+		strcat(*original, new_str); // same as strjoin //forbiden
+		free(temp);
+	}
+}
+
+char *read_line()
+{
+	char *input;
+
+	input = readline("> ");
+	return(input);
+}
+
 int	open_fd(t_command *command)
 {
 	t_token	*token;
@@ -82,20 +99,36 @@ int	open_fd(t_command *command)
 	token = command->token_head;
 	while (token)
 	{
-		// printf("open_fd\n");
+		if (token->type == TYPE_HEREDOC)
+		{
+			char *line;
+			char *delimiter;						// Assuming next token is the delimiter
+			char *content;
+
+			delimiter = token->next->split_value;
+			content = ft_strdup("");
+			while (1)
+			{
+				line = readline("> ");					// Implement a function to read a line from user //mettra un readline("> ")
+				if (ft_strcmp_minishell(line, delimiter) == 0)
+					break;
+				// Append line to content
+				// You need to implement append_str function
+				ft_append_str(&content, line);
+				ft_append_str(&content, "\n");			// Add a newline character
+			}
+			command->heredoc_content = content;
+		}
 		if (token->type == TYPE_REDIR_IN)
 		{
-			// printf("TYPE_REDIR_IN\n");
 			if (redirect_file_in(command, token) == 0)
 			{
 				dup2(command->fd_in, 0);
 				close(command->fd_in);
-				// printf("***** fin de TYPE_REDIR_IN *****\n");
 			}
 		}
 		if (token->type == TYPE_REDIR_OUT)
 		{
-			// printf("TYPE_REDIR_OUT\n");
 			if (redirect_file_out(command, token) == 0)
 			{
 				dup2(command->fd_out, 1);
@@ -104,7 +137,6 @@ int	open_fd(t_command *command)
 		}
 		if (token->type == TYPE_REDIR_APPEND)
 		{
-			// printf("TYPE_REDIR_OUT\n");
 			if (redirect_append_file_out(command, token) == 0)
 			{
 				dup2(command->fd_out, 1);
@@ -171,15 +203,11 @@ void execve_fd(t_command *current, char **envp)
 				close(current->fd_out);
 			}
 			open_fd(current);
-			// printf("current->fd_in = %d \n", current->fd_in);
-			// printf("current->fd_out = %d \n\n", current->fd_out);
 			if(child_process(current, envp) == 127)
 			{
-				printf("tesssssssssssst\n");
 				free(child_pids);
 				exit(127);
 			}
-			printf("ICIIIIIIIIIIIII\n");
 		}
 		else if (pid > 0)
 		{

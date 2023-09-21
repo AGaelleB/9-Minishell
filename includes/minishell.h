@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 14:14:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/21 15:52:52 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_command
 	int					fd[2];
 	int					fd_out;
 	int					fd_in; // NEW
+	char				*heredoc_content;
 	struct s_token		*token_head; // Pointeur vers le premier token de cette commande
 	struct s_command	*next;	// Pointeur vers la commande suivante
 } t_command;
@@ -119,6 +120,7 @@ int			ft_is_all_space(char *input);
 
 /***********EXECUTION***********/
 t_command	*get_command(char *input);
+void		ft_append_str(char **original, char *new_str);
 int			child_process(t_command *current, char **envp);
 
 
