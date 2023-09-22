@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 15:57:06 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 11:09:59 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,32 +64,112 @@ int	redirect_append_file_out(t_command *current, t_token *token) // >>
 	return (0);
 }
 
-void	ft_append_str(char **original, char *new_str)
-{
-	char	*temp;
+// void	fill_heredoc(char **original, char *new_str)
+// {
+// 	char	*temp;
 	
-	if (new_str == NULL)
-		return;
-	if (*original == NULL)
-		*original = ft_strdup(new_str);
-	else
-	{
-		temp = *original;
-		*original = malloc(ft_strlen(temp) + ft_strlen(new_str) + 1);
-		if (*original == NULL)
-			return;
-		strcpy(*original, temp); // same as strjoin //forbiden
-		strcat(*original, new_str); // same as strjoin //forbiden
-		free(temp);
-	}
+// 	if (new_str == NULL)
+// 		return;
+// 	if (*original == NULL)
+// 		*original = ft_strdup(new_str);
+// 	else
+// 	{
+// 		temp = *original;
+// 		*original = malloc(ft_strlen(temp) + ft_strlen(new_str) + 1);
+// 		if (*original == NULL)
+// 			return;
+// 		strcpy(*original, temp); // same as strjoin //forbiden
+// 		strcat(*original, new_str); // same as strjoin //forbiden
+// 		free(temp);
+// 	}
+// }
+
+int	aleatori_char(void)
+{
+	char	buff[4];
+	int		nbr;
+	int		fd;
+
+	fd = open("/dev/random", O_RDONLY);
+	if (fd < -1)
+		return (-1);
+	read(fd, buff, 4);
+	nbr = *(int *)buff;
+	if (nbr < 0)
+		nbr++;
+	if (nbr < 0)
+		nbr = nbr * (-1);
+	return ('a' + nbr % 26);
 }
 
-char *read_line()
+char	*create_file_name(void)
 {
-	char *input;
+	char	*file_name;
+	int		i;
 
-	input = readline("> ");
-	return(input);
+	i = 0;
+	file_name = malloc(sizeof(char) * 11);
+	file_name[10] = '\0';
+	while (i < 10)
+	{
+		file_name[i] = (char)aleatori_char();
+		i++;
+	}
+	return (file_name);
+}
+
+int	write_in_fd(int fd, char *delimiter)
+{
+	char	*line;
+
+	while (1)
+	{
+		line = readline("> ");
+		if (line == NULL)
+			return (45);
+		if (ft_strcmp_minishell(line, delimiter) == 0)
+			break;
+		// if (str[0] != '\0') // A FAIRE
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+	}
+	free(line);
+	return (0);
+}
+
+int	redirect_heredoc(t_command *current, t_token *token) // >>
+{
+	char *delimiter;
+	char *file_name;
+	int fd;
+
+	file_name = NULL;
+	fd = -1;
+	delimiter = token->next->split_value;
+	if (fd == -1)
+	{
+		if(file_name)
+			free(file_name);
+		file_name = create_file_name();
+		fd = open(file_name, O_CREAT | O_EXCL | O_RDWR, 0644);
+	}
+	write_in_fd(fd, delimiter);
+	fd = open(file_name, O_RDONLY);
+	current->fd_in = fd;
+	if (current->file_name != NULL)
+	{
+		unlink(current->file_name);
+		free(current->file_name);
+	}
+	if (current->fd_in == -1)
+	{
+		write(1, "minishell: ", 12);
+		perror("EOF");
+		exit(-1);
+	}
+	current->file_name = file_name;
+	return (0);
 }
 
 int	open_fd(t_command *command)
@@ -101,23 +181,11 @@ int	open_fd(t_command *command)
 	{
 		if (token->type == TYPE_HEREDOC)
 		{
-			char *line;
-			char *delimiter;						// Assuming next token is the delimiter
-			char *content;
-
-			delimiter = token->next->split_value;
-			content = ft_strdup("");
-			while (1)
+			if (redirect_heredoc(command, token) == 0)
 			{
-				line = readline("> ");					// Implement a function to read a line from user //mettra un readline("> ")
-				if (ft_strcmp_minishell(line, delimiter) == 0)
-					break;
-				// Append line to content
-				// You need to implement append_str function
-				ft_append_str(&content, line);
-				ft_append_str(&content, "\n");			// Add a newline character
+				dup2(command->fd_in, 0);
+				close(command->fd_in);
 			}
-			command->heredoc_content = content;
 		}
 		if (token->type == TYPE_REDIR_IN)
 		{

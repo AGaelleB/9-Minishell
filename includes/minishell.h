@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 15:52:52 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 11:05:43 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_command
 	int					fd[2];
 	int					fd_out;
 	int					fd_in; // NEW
-	char				*heredoc_content;
+	char				*file_name;
 	struct s_token		*token_head; // Pointeur vers le premier token de cette commande
 	struct s_command	*next;	// Pointeur vers la commande suivante
 } t_command;
@@ -139,14 +139,13 @@ void		ft_signal_ctrl_C (int sig);
 void		block_signal(int signal);
 
 
-
 /***********UTILS***********/
 void		ft_print_error(char *str);
 
 void		ft_free_tab(char **tab);
-void		ft_free_all_cmd(t_command *command);
-void		ft_free_tokens(t_token *head);
 void		ft_free_current(t_command *current);
+void		free_file_name(char *file_name);
+
 
 int			ft_strchr_slash(char *str, char c);
 int			ft_strncmp_minishell(char *s1, char *s2, int n);
@@ -157,6 +156,7 @@ char		**split_string(const char *str, char delimiter);
 void		count_and_set_pipes(char *input, t_command *command);
 void		ft_close_fd();
 int			is_empty_or_space(char *str);
+
 
 
 #endif

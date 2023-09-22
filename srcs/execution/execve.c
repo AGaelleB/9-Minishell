@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 13:38:38 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 11:10:17 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	child_process(t_command *current, char **envp)
 		// 	i++;
 		// }
 	////////////////////////////////////////////////////////////////////////////////////
-		
+	free_file_name(current->file_name);
 	if (current->command_path == NULL)
 	{
 		write(2, "minishell: command not found: ", 31);

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 14:16:23 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 11:07:00 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int main(int ac, char **av, char **envp)
 			continue;
 
 		new_commands = get_command(input);
-		print_commands_and_tokens(new_commands);
+		// print_commands_and_tokens(new_commands);
 		
 		count_and_set_pipes(input, new_commands);
 		if(new_commands != NULL)
