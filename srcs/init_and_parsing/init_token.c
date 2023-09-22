@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 14:18:20 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:14:49 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ t_token *new_token(t_e_token_type e_type, char *split_value)
 	token->split_value = ft_strdup(split_value);  // Remember to free this later!
 	token->next = (NULL);
 	// printf("value : %s, type: %d\n", token->split_value, token->type);
-
-
 	return (token);
 }
 
@@ -38,13 +36,13 @@ t_token *tokenize_input(char *input)
 	t_token		*curr;
 	t_token		*token;
 	int			i;
-	int			state = TYPE_CMD;  // Start with the command state
+	int			state;
 
-	words = split_string(input, ' ');
+	i = 0;
 	head = NULL;
 	curr = NULL;
-	i = 0;
-
+	state = TYPE_CMD;
+	words = split_string(input, ' ');
 	while (words[i])
 	{
 		if (is_empty_or_space(words[i]))
@@ -52,9 +50,7 @@ t_token *tokenize_input(char *input)
 			i++;
 			continue;
 		}
-
 		token = NULL;
-
 		if (state == TYPE_CMD)
 		{
 			token = new_token(TYPE_CMD, words[i]);
@@ -111,7 +107,6 @@ t_token *tokenize_input(char *input)
 
 		i++;
 	}
-
 	ft_free_tab(words);
-	return head;
+	return (head);
 }

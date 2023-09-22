@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 11:07:00 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:29:22 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int main(int ac, char **av, char **envp)
 		builtin_status = ft_all_builtins_exit(input);
 		if (builtin_status == 1)
 		{
+			// ft_free_tokens(new_commands->token_head);
 			free(input);
 			exit(0);
 		}
@@ -48,13 +49,10 @@ int main(int ac, char **av, char **envp)
 		
 		count_and_set_pipes(input, new_commands);
 		if(new_commands != NULL)
-		{
-			// new_commands->token = tokenize_input(input);
-			// printf("%s\n %d\n\n", new_commands->token->split_value, new_commands->token->type);
-			// if(new_commands->token != NULL)
-				execve_fd(new_commands, envp);
-		}
+			execve_fd(new_commands, envp);
 		add_history(input);
+		printf("FIN DU MAIN \n\n");
+		ft_free_tokens(new_commands->token_head);
 		ft_free_current(new_commands);
 		free(input);
 	}

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 11:09:59 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:18:30 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,7 @@ int	redirect_heredoc(t_command *current, t_token *token) // >>
 	write_in_fd(fd, delimiter);
 	fd = open(file_name, O_RDONLY);
 	current->fd_in = fd;
-	if (current->file_name != NULL)
-	{
-		unlink(current->file_name);
-		free(current->file_name);
-	}
+	free_file_name(current->file_name);
 	if (current->fd_in == -1)
 	{
 		write(1, "minishell: ", 12);
@@ -300,6 +296,7 @@ void execve_fd(t_command *current, char **envp)
 	}
 	signal(SIGINT, ft_signal_ctrl_C);
 	free(child_pids);
+	// ft_free_tokens(command->token_head);
 	if (infile != 0)
 		close(infile);
 }

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 11:05:43 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:26:58 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,6 @@ typedef struct s_command
 	struct s_command	*next;	// Pointeur vers la commande suivante
 } t_command;
 
-
-
-// typedef struct s_command
-// {
-// 	int					nb_pipes;
-// 	char				*command;	// e.g. "cat test.txt"
-// 	char				**command_arg;	// e.g. "cat"
-// 	char				*command_path;	// e.g. /usr/bin/cat/
-// 	int					fd[2];
-// 	int					fd_out;
-// 	int					fd_in; // NEW
-// 	struct s_token		*token;
-// 	struct s_command	*next;	// Pointeur vers la commande suivante
-// } t_command;
-
-
-
 void print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *current, char **envp);
 
@@ -145,6 +128,7 @@ void		ft_print_error(char *str);
 void		ft_free_tab(char **tab);
 void		ft_free_current(t_command *current);
 void		free_file_name(char *file_name);
+void		ft_free_tokens(t_token *head);
 
 
 int			ft_strchr_slash(char *str, char c);

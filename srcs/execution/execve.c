@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 11:10:17 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:10:12 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,13 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 	current->command_arg = NULL;
 	current->command_path = NULL;
 	current->command_arg = ft_split(current->command, ' ');
-	// printf("arguments 000 : %s\n", current->command_arg[0]);
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
 }
 
 int	child_process(t_command *current, char **envp)
 {
+	// free_file_name(current->file_name);
 	ft_set_args_and_paths(current, envp);
-
-	///////////////////////////////////////////////////////////////////////////////////
-	// printf("Je vais execve dans le child_process\n");
-		// printf("%scurrent->command_path %s\n%s", MAGENTA, current->command_path,RESET);
-		
-		// int i = 0;
-		// while(current->command[i])
-		// {
-		// 	printf("%sarguments %d : %s%s\n", MAGENTA, i, current->command_arg[i], RESET);
-		// 	i++;
-		// }
-	////////////////////////////////////////////////////////////////////////////////////
-	free_file_name(current->file_name);
 	if (current->command_path == NULL)
 	{
 		write(2, "minishell: command not found: ", 31);
