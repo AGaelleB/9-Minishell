@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 14:10:12 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:43:07 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ t_command	*get_command(char *input)
 		}
 		new_cmd->command = NULL;
 		new_cmd->command = ft_strdup(command[i]);
-		// printf("command %d: %s\n", i, new_cmd->command);
-
-		new_cmd->token_head = tokenize_input(new_cmd->command); // tokenize la commande actuelle
-		// new_cmd->next = NULL;
+		new_cmd->token_head = tokenize_input(new_cmd->command);
 		if (!new_cmd->command)
 		{
 			perror("Failed to duplicate command string");
@@ -73,7 +70,6 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 
 int	child_process(t_command *current, char **envp)
 {
-	// free_file_name(current->file_name);
 	ft_set_args_and_paths(current, envp);
 	if (current->command_path == NULL)
 	{

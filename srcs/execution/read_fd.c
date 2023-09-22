@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 14:18:30 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:45:25 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,6 @@ int	redirect_append_file_out(t_command *current, t_token *token) // >>
 	return (0);
 }
 
-// void	fill_heredoc(char **original, char *new_str)
-// {
-// 	char	*temp;
-	
-// 	if (new_str == NULL)
-// 		return;
-// 	if (*original == NULL)
-// 		*original = ft_strdup(new_str);
-// 	else
-// 	{
-// 		temp = *original;
-// 		*original = malloc(ft_strlen(temp) + ft_strlen(new_str) + 1);
-// 		if (*original == NULL)
-// 			return;
-// 		strcpy(*original, temp); // same as strjoin //forbiden
-// 		strcat(*original, new_str); // same as strjoin //forbiden
-// 		free(temp);
-// 	}
-// }
-
 int	aleatori_char(void)
 {
 	char	buff[4];
@@ -129,7 +109,10 @@ int	write_in_fd(int fd, char *delimiter)
 			return (45);
 		if (ft_strcmp_minishell(line, delimiter) == 0)
 			break;
-		// if (str[0] != '\0') // A FAIRE
+		// if (str[0] != '\0') // A FAIRE !!!
+		// {
+			// permet de supprimer le file creer, avec l'environement
+		// }
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
@@ -296,7 +279,6 @@ void execve_fd(t_command *current, char **envp)
 	}
 	signal(SIGINT, ft_signal_ctrl_C);
 	free(child_pids);
-	// ft_free_tokens(command->token_head);
 	if (infile != 0)
 		close(infile);
 }

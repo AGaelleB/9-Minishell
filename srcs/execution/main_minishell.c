@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 14:29:22 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:47:04 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 
 int main(int ac, char **av, char **envp)
 {
+	t_command	*new_commands;
 	char		*input;
 	int			builtin_status;
-	t_command	*new_commands;
 	
 	new_commands = NULL;
 	signal(SIGINT, ft_signal_ctrl_C);
@@ -37,7 +37,6 @@ int main(int ac, char **av, char **envp)
 		builtin_status = ft_all_builtins_exit(input);
 		if (builtin_status == 1)
 		{
-			// ft_free_tokens(new_commands->token_head);
 			free(input);
 			exit(0);
 		}
@@ -51,8 +50,7 @@ int main(int ac, char **av, char **envp)
 		if(new_commands != NULL)
 			execve_fd(new_commands, envp);
 		add_history(input);
-		printf("FIN DU MAIN \n\n");
-		ft_free_tokens(new_commands->token_head);
+		ft_free_struct(new_commands, new_commands->token_head);
 		ft_free_current(new_commands);
 		free(input);
 	}
@@ -66,6 +64,12 @@ int main(int ac, char **av, char **envp)
 /*
 										A CORRIGER :
 
+leaks lors de lexit apres avoir effectué une commande 
+on doit boucle une premiere fois sur current pour avancé dans nos commandes pour ensuite free dans chaque commandes la tokenisation effectuée:
+split_value avec "cat" et le token entier, cest ici que ce situe le probleme dinvalid read size
+
+
+
 avec cette cmd on a de temps en temps le message d erreur "srcs: Is a directory" mais pas a tous les coups
 cat celine.txt | rev  > tesssssssst.txt > a > b > srcs > d > e > f > g > h > fiiiin | ls  > lsss
 
@@ -75,5 +79,6 @@ minishell$> ls >coucou
 minishell$> ls > coui>coucou
 pour fix -> modifier la facon de tokenizer en parcouarnt word[i] et en regardant si ca comprend un ">"
 
+voir si besoin de ferme mieux :	// free_file_name(current->file_name);
 
 */

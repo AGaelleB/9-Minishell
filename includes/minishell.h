@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 14:26:58 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:48:36 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,10 @@ typedef enum e_token_type
 	TYPE_REDIR_OUT, // 3		// ">"
 	TYPE_REDIR_IN, // 4			// "<"
 	TYPE_REDIR_APPEND, // 5		// ">>"
-	TYPE_HEREDOC, // 6			// "<<" <<eof 
+	TYPE_HEREDOC, // 6			// "<<"
 	TYPE_F_OUT, // 7
 	TYPE_F_IN, // 8
 	TYPE_EOF, // 9				// eof
-
-	// TYPE_BUILTIN,
 } t_e_token_type;
 
 typedef struct s_token
@@ -64,13 +62,7 @@ typedef struct s_token
 	t_e_token_type		type;
 	char				*split_value; // e.g. "cat"
 	struct s_token		*next;
-	struct s_token		*before;
 } t_token;
-
-typedef struct s_sigset
-{
-
-} t_sigset;
 
 typedef struct s_command
 {
@@ -80,10 +72,10 @@ typedef struct s_command
 	char				*command_path;	// e.g. /usr/bin/cat/
 	int					fd[2];
 	int					fd_out;
-	int					fd_in; // NEW
+	int					fd_in;
 	char				*file_name;
-	struct s_token		*token_head; // Pointeur vers le premier token de cette commande
-	struct s_command	*next;	// Pointeur vers la commande suivante
+	struct s_token		*token_head;
+	struct s_command	*next;
 } t_command;
 
 void print_commands_and_tokens(t_command *head);
@@ -107,14 +99,10 @@ void		ft_append_str(char **original, char *new_str);
 int			child_process(t_command *current, char **envp);
 
 
-
 /***********INIT_AND_PARSING***********/
 t_token		*tokenize_input(char *input);
 char		*ft_check_paths(char **envp, char *args);
 void		execve_fd(t_command *current, char **envp);
-
-// void execve_fd(t_command *current, t_e_token_type e_type, char **envp);
-
 
 
 /***********SIGNALS***********/
@@ -129,7 +117,7 @@ void		ft_free_tab(char **tab);
 void		ft_free_current(t_command *current);
 void		free_file_name(char *file_name);
 void		ft_free_tokens(t_token *head);
-
+void		ft_free_struct(t_command *current, t_token *head);
 
 int			ft_strchr_slash(char *str, char c);
 int			ft_strncmp_minishell(char *s1, char *s2, int n);

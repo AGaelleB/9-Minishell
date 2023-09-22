@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 14:32:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:40:35 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,26 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
-void	ft_free_tokens(t_token *head)
+void	ft_free_struct(t_command *current, t_token *head) //modif ici
 {
 	t_token *tmp;
 
-	printf("JE VAIS FREE \n\n");
-	while (head)
+	tmp = NULL;
+	while (current)
 	{
-		tmp = head;
-		printf("%s\n", tmp->split_value);
-		free(tmp->split_value);
-		free(tmp);
-		head = head->next;
+		head = current->token_head;
+		if(head != NULL)
+		{
+			while (head)
+			{
+				tmp = head;
+				free(tmp->split_value);
+				// if(tmp != NULL)
+					free(tmp); //ICI
+				head = head->next;
+			}
+		}
+		current = current->next;
 	}
 }
 

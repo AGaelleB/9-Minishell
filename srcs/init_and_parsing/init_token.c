@@ -6,13 +6,11 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 14:14:49 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:43:51 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// Fonction utilitaire pour vérifier si une chaîne est vide ou composée uniquement d'espaces
 
 t_token *new_token(t_e_token_type e_type, char *split_value)
 {
@@ -104,7 +102,6 @@ t_token *tokenize_input(char *input)
 			curr->next = token;
 			curr = token;
 		}
-
 		i++;
 	}
 	ft_free_tab(words);
