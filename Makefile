@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
+#    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/09/21 14:34:35 by bfresque         ###   ########.fr        #
+#    Updated: 2023/09/26 11:40:17 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,15 @@ SRCS = srcs/execution/main_minishell.c \
 	srcs/builtins/builtins_exit.c \
 	srcs/execution/execve.c \
 	srcs/execution/read_fd.c \
+	srcs/execution/single_quote.c \
 	srcs/init_and_parsing/init_token.c \
+	srcs/init_and_parsing/init_quote.c \
 	srcs/init_and_parsing/path.c \
 	srcs/signals/signal_exit.c \
 	srcs/utils/libft_modify.c \
 	srcs/utils/free.c \
 	srcs/utils/error.c \
 	srcs/utils/utils.c \
-	# srcs/execution/open_fd_cmd.c \
 
 SRC_LIBFT = libft/ft_atoi.c \
 	libft/ft_bzero.c \

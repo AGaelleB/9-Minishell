@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 16:48:36 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:12:56 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdbool.h>
 
 # include "../includes/ft_printf.h"
 # include "../includes/get_next_line.h"
@@ -42,6 +43,20 @@
 # define CYAN "\033[36m"
 # define WHITE "\033[37m"
 
+typedef enum e_quote
+{
+	NONE,
+	SINGLE,
+	DOUBLE,
+	BACKSLASH,
+	END
+}	t_e_quote;
+
+typedef struct s_quote 
+{
+	char	*str;
+	struct	s_quote  *next;
+} t_quote;
 
 typedef enum e_token_type
 {
@@ -75,12 +90,16 @@ typedef struct s_command
 	int					fd_in;
 	char				*file_name;
 	struct s_token		*token_head;
+	struct s_quote		*quote_head;
 	struct s_command	*next;
 } t_command;
 
 void print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *current, char **envp);
 
+void	ft_cat_list_quote(t_quote *substr_list);
+t_quote	*parse_input(char *input);
+void print_t_quote(t_quote *quote);
 
 /***********MAIN***********/
 
@@ -99,10 +118,13 @@ void		ft_append_str(char **original, char *new_str);
 int			child_process(t_command *current, char **envp);
 
 
+
 /***********INIT_AND_PARSING***********/
 t_token		*tokenize_input(char *input);
 char		*ft_check_paths(char **envp, char *args);
 void		execve_fd(t_command *current, char **envp);
+
+int			verif_nb_single_quote(char *str);
 
 
 /***********SIGNALS***********/
@@ -128,7 +150,7 @@ char		**split_string(const char *str, char delimiter);
 void		count_and_set_pipes(char *input, t_command *command);
 void		ft_close_fd();
 int			is_empty_or_space(char *str);
-
-
+int			ft_isspace(int c);
+char		*concat_strings(char *s1, char *s2);
 
 #endif

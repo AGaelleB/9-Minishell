@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/09/22 11:01:31 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:12:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,41 @@ int is_empty_or_space(char *str)
 
 	while (str[i])
 	{
-		if (!isspace((unsigned char)str[i]))
+		if (!ft_isspace((unsigned char)str[i]))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
+int	ft_isspace(int c)
+{
+	if (c == ' ')
+		return (1);
+	return (0);
+}
+
+char	*concat_strings(char *s1, char *s2)
+{
+	char	*concatenated;
+	
+	if (!s1 && !s2)
+		return (NULL);
+	
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+
+	concatenated = malloc(ft_strlen(s1) + ft_strlen(s2) + 1); // +1 pour le caractère de fin de chaîne '\0'
+	if (!concatenated)
+		exit(1);
+	
+	strcpy(concatenated, s1); // ATTENTION A RE CODER
+	strcat(concatenated, s2); // ATTENTION A RE CODER
+
+	return (concatenated);
+}
 
 /////////////////////////////////////////////////////////////////////////
 void print_commands_and_tokens(t_command *head)
@@ -76,4 +104,18 @@ void print_commands_and_tokens(t_command *head)
 		current_cmd = current_cmd->next;
 		printf("\n");  // Just to separate different commands
 	}
+}
+
+
+void print_t_quote(t_quote *quote)
+{
+	t_quote *temp = quote;
+
+	// while (temp)
+	// {
+		printf("%slist->str : %s%s\n", MAGENTA, temp->str, RESET);
+
+		// temp = temp->next;
+		// printf("\n");  // Just to separate different commands
+	// }
 }

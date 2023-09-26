@@ -1,18 +1,47 @@
-still not working, redirect_file_out and redirect_append_file_out are working well put redirect_file_in no.
-I don't understand why fot redirect_file_out and redirect_append_file_out it's woking, the scurrent->fd_out change well, but for redirect_file_in, the current->fd_in is unchanged and seems to be block a current->fd_in = 3 
+minishell$> e'c'ho ' '        test
+substr_list->str : e
+command : e
 
-./minishell 
-minishell$> cat < test.txt 
-TYPE_REDIR_IN
-filemane : test.txt
-current->fd_in AVANT 3
-current->fd_in APRES 3
-fini
-Error: Bad address
-minishell$> echo bonjour >> test.txt 
-current->fd_out AVANT 4
-current->fd_out AVANT 3
-minishell$> echo bjr > test.txt 
-current->fd_out AVANT 4
-current->fd_out APRES 3
-minishell$> 
+substr_list->str : c
+command : ec
+
+substr_list->str : ho
+command : echo
+
+substr_list->str :  
+command : echo 
+
+substr_list->str :         test
+command : echo         test
+
+OK ici ca fontionne 
+
+minishell$> 'echo' test
+substr_list->str : echo
+command : echo
+
+substr_list->str : 
+command : echo
+
+substr_list->str : test
+command : echotest
+
+Faux, ici je devrai avoir : command : echo test
+
+minishell$> 'echo' te's't
+substr_list->str : echo
+command : echo
+
+substr_list->str : 
+command : echo
+
+substr_list->str : te
+command : echote
+
+substr_list->str : s
+command : echotes
+
+substr_list->str : t
+command : echotest
+
+Faux, ici je devrai avoir : command : echo test
