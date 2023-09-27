@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/26 16:13:02 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:50:48 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,27 @@ t_quote	*add_str_to_list(t_quote *list, char *str)
 }
 
 //3. Crée une Fonction pour Parcourir l'Entrée et Construire la Liste de Sous-chaînes
-t_quote	*parse_input(char *input)
+t_quote	*parse_input_quote(char *input, char **envp)
 {
 	t_quote	*substr_list;
 	char	*start;
-	bool	in_single_quote;
+	bool	flag_open_quote;
+	bool	flag_separator = true;
 	
 	substr_list = NULL;
 	start = input;
-	in_single_quote = false;
-
-	bool is_start = true;
-
+	flag_open_quote = false;
 	while (*input)
 	{
 		if (*input == '\'')
 		{
-			if (in_single_quote == true)
+			if (flag_open_quote == true)
 			{
 				// end of quote
 				*input = '\0';
 				substr_list = add_str_to_list(substr_list, start);
 				start = input + 1;
-				in_single_quote = false;
+				flag_open_quote = false;
 			}
 			else
 			{
@@ -69,48 +67,66 @@ t_quote	*parse_input(char *input)
 					substr_list = add_str_to_list(substr_list, start);
 				}
 				start = input + 1;
-				in_single_quote = true;
+				flag_open_quote = true;
 			}
 		}
-		else
+		else if (!flag_open_quote && ft_isspace(*input)) 
 		{
-			if (ft_isspace(*input))
-			{
-				if (!is_start)
-				{ // Si l'espace n'est pas au début, on le traite comme un séparateur
-					*input = '\0';
-					substr_list = add_str_to_list(substr_list, start);
-					start = input + 1;
-					is_start = true;
-				}
+			if (!flag_separator)
+			{ // Si l'espace n'est pas au début, on le traite comme un séparateur
+				*input = '\0';
+				substr_list = add_str_to_list(substr_list, start);
+				start = input + 1;
+				flag_separator = true;
 			}
 			else
-				is_start = false;
+				flag_separator = false;
 		}
 		input++;
 	}
-	if (!is_start || in_single_quote)
+	if (start != input)
 		substr_list = add_str_to_list(substr_list, start);
 	
+	ft_cat_list_quote(substr_list, envp);
+
 	return (substr_list);
 }
 
-void ft_cat_list_quote(t_quote *substr_list)
+void ft_cat_list_quote(t_quote *substr_list, char **envp)
 {
-	char	*command;
-	char	*temp;
-	
+	t_command	*new_commands;
+	char		*command;
+	char		*temp;
+
+	new_commands = NULL;
 	command = NULL;
 	temp = NULL;
 	while (substr_list)
 	{
-		temp = concat_strings(command, substr_list->str);
+		temp = ft_strjoin(command, substr_list->str);
 		free(command);
 		command = temp;
 		printf("%ssubstr_list->str : %s%s\n", MAGENTA, substr_list->str, RESET); // PRINT
 		printf("%scommand : %s%s\n\n", GREEN, command, RESET); // PRINT
 		substr_list = substr_list->next;
 	}
-	// use command - get command ?
+	new_commands = get_command(command);
+	count_and_set_pipes(command, new_commands);
+	if(new_commands != NULL)
+		execve_fd(new_commands, envp);
 	free(command);
 }
+
+
+/*
+On execute et ne doit pas s executer :
+echo' test'
+echo' 'test
+
+
+On reagit mal :
+echo test ls
+	-> on a tout de collé
+
+
+*/

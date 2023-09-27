@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/09/26 16:12:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:42:40 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,6 @@ int	ft_isspace(int c)
 	if (c == ' ')
 		return (1);
 	return (0);
-}
-
-char	*concat_strings(char *s1, char *s2)
-{
-	char	*concatenated;
-	
-	if (!s1 && !s2)
-		return (NULL);
-	
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
-
-	concatenated = malloc(ft_strlen(s1) + ft_strlen(s2) + 1); // +1 pour le caractère de fin de chaîne '\0'
-	if (!concatenated)
-		exit(1);
-	
-	strcpy(concatenated, s1); // ATTENTION A RE CODER
-	strcat(concatenated, s2); // ATTENTION A RE CODER
-
-	return (concatenated);
 }
 
 /////////////////////////////////////////////////////////////////////////

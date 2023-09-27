@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/26 16:12:56 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:55:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ typedef struct s_command
 void print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *current, char **envp);
 
-void	ft_cat_list_quote(t_quote *substr_list);
-t_quote	*parse_input(char *input);
+void ft_cat_list_quote(t_quote *substr_list, char **envp);
+t_quote	*parse_input_quote(char *input, char **envp);
 void print_t_quote(t_quote *quote);
 
 /***********MAIN***********/
@@ -151,6 +151,5 @@ void		count_and_set_pipes(char *input, t_command *command);
 void		ft_close_fd();
 int			is_empty_or_space(char *str);
 int			ft_isspace(int c);
-char		*concat_strings(char *s1, char *s2);
 
 #endif

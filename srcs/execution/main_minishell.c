@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/26 15:17:59 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:50:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@
 
 int main(int ac, char **av, char **envp)
 {
-	t_command	*new_commands;
 	char		*input;
 	int			builtin_status;
-	
-	new_commands = NULL;
+
+	if (ac != 1)
+		return (printf("run ./minishell without arg\n"));
+	if (!envp[0])
+		return (printf("env is missing\n"));
 	signal(SIGINT, ft_signal_ctrl_C);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -42,34 +44,19 @@ int main(int ac, char **av, char **envp)
 		}
 		else if (builtin_status == 2)
 			continue;
-
 		if (verif_nb_single_quote(input) != 0)
 		{
 			printf("minishell: miss quote\n");
 			free(input);
 			continue;
 		}
-
-		new_commands = get_command(input);
-		// print_commands_and_tokens(new_commands); // PRINT
-		
-		count_and_set_pipes(input, new_commands);
-		
-////////////////////////////////////////////////////////////////////////
-		t_quote *substr_list = parse_input(input);
-		ft_cat_list_quote(substr_list);
-/////////////////////////////////////////////////////////////////////////
-		
-		if(new_commands != NULL)
-			execve_fd(new_commands, envp);
 		add_history(input);
-		ft_free_struct(new_commands, new_commands->token_head);
-		ft_free_current(new_commands);
+		parse_input_quote(input, envp);
+		// ft_free_struct(new_commands, new_commands->token_head);
+		// ft_free_current(new_commands);
 		free(input);
 	}
-	(void)ac;
 	(void)av;
-	(void)envp;
 	return (0);
 }
 

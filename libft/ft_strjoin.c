@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:18:18 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/02/03 11:57:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:43:18 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@ chaîne, résultat de la concaténation de s1 et s2.
 
 #include "../includes/libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	size_t	size_s1;
 	size_t	size_s2;
 
-	if (s1 == 0 || s2 == 0)
+	if (!s1 && !s2)
 		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
 	size_s1 = ft_strlen(s1);
 	size_s2 = ft_strlen(s2);
 	str = malloc(sizeof(*str) * (size_s1 + size_s2 + 1));
