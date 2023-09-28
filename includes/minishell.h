@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/27 13:55:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/28 16:19:05 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@
 # define MAGENTA "\033[35m"
 # define CYAN "\033[36m"
 # define WHITE "\033[37m"
+
+# define SINGLE_QUOTE	'\''
+# define DOUBLE_QUOTE	'\"'
 
 typedef enum e_quote
 {
@@ -99,7 +102,12 @@ void	ft_set_args_and_paths(t_command *current, char **envp);
 
 void ft_cat_list_quote(t_quote *substr_list, char **envp);
 t_quote	*parse_input_quote(char *input, char **envp);
+
+
 void print_t_quote(t_quote *quote);
+void	ft_all_builtins_verif(t_command *current);
+
+
 
 /***********MAIN***********/
 
@@ -107,9 +115,12 @@ void print_t_quote(t_quote *quote);
 /***********BUILTINS***********/
 int			ft_builtin_write_exit(char *input);
 void		ft_builtin_ctrl_D(char *input);
-int			ft_all_builtins_exit(char *input);
+int			ft_all_builtins(char *input);
 int			ft_builtin_enter(char *input);
 int			ft_is_all_space(char *input);
+
+int			ft_builtin_echo(char *str);
+int			ft_builtin_pwd();
 
 
 /***********EXECUTION***********/

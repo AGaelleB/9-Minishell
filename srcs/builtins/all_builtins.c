@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/15 09:45:23 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/28 16:29:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_all_builtins_exit(char *input)
+int	ft_all_builtins(char *input)
 {
 	if (ft_builtin_enter(input) != 0)
 		return (2);
@@ -23,3 +23,26 @@ int	ft_all_builtins_exit(char *input)
 	return (0);
 }
 
+
+void	ft_all_builtins_verif(t_command *current)
+{
+	int	cmd_count;
+
+	cmd_count = 0;
+	while (current)
+	{
+		// printf("%sCommand %d: %s%s\n", GREEN, cmd_count, current->command, RESET);
+		
+		if (ft_strncmp(current->command, "pwd", 3) == 0)
+			ft_builtin_pwd();
+		if (ft_strncmp(current->command, "echo", 4) == 0)
+		{
+			current->command_arg = ft_split(current->command, '\'');
+			ft_builtin_echo(current->command);
+			// exit (-1);
+		}
+		cmd_count++;
+		current = current->next;
+		printf("\n");  // Just to separate different commands
+	}
+}

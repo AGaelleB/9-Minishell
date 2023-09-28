@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/09/26 11:40:17 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/09/28 14:49:12 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,9 @@ OBJ_DIR_LIBFT = libft/obj_libft
 
 SRCS = srcs/execution/main_minishell.c \
 	srcs/builtins/all_builtins.c \
+	srcs/builtins/builtin_cd.c \
+	srcs/builtins/builtin_echo.c \
+	srcs/builtins/builtin_pwd.c \
 	srcs/builtins/builtins_exit.c \
 	srcs/execution/execve.c \
 	srcs/execution/read_fd.c \

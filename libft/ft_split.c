@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:16:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/21 13:50:10 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/28 12:22:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static int	ft_alloctxt(char **tab, const char *s, char c)
 	return (1);
 }
 
-static void    ft_filltab(char **tab, const char *s, char c)
+static void	ft_filltab(char **tab, const char *s, char c)
 {
-	int    i;
-	int    j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (*s && tab[i])
@@ -79,10 +79,10 @@ static void    ft_filltab(char **tab, const char *s, char c)
 	}
 }
 
-static unsigned int    ft_countwords(char const *s, char c)
+static unsigned int	ft_countwords(char const *s, char c)
 {
-	int    count;
-	int    i;
+	int	count;
+	int	i;
 
 	i = 0;
 	count = 0;
@@ -156,30 +156,3 @@ char	**ft_split(char const *s, char c)
 	return (tab);
 }
 
-// char	**ft_split(char const *s, char c)
-// {
-// 	char			**tab;
-// 	unsigned int	nb_words;
-// 	unsigned int	i;
-
-// 	if (s == 0)
-// 		return (NULL);
-// 	nb_words = ft_countwords(s, c);
-// 	tab = malloc((nb_words + 1) * sizeof(char *));
-// 	if (tab == 0)
-// 		return (0);
-// 	tab[nb_words] = 0;
-// 	if (nb_words > 0)
-// 	{
-// 		if (ft_alloctxt(tab, s, c) == 0)
-// 		{
-// 			i = 0;
-// 			while (tab[i])
-// 				free(tab[i++]);
-// 			free(tab);
-// 			return (0);
-// 		}
-// 		ft_filltab(tab, s, c);
-// 	}
-// 	return (tab);
-// }
