@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/29 16:15:42 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/29 16:25:23 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,50 +79,24 @@ char	**parse_input_quote(char *input)
 	return (args);
 }
 
+
 /*
-On stock correctement avec nos espaces les valeurs dans substr_list->str
-on voudrait l utiliser pour les execution mais on y arrive pas
-est-ce qu on est obligé d'utiliser des double ** ?
-est-ce que ca va nous poser probleme l utilisation de notre split ? 
-	on ne peut pas split sur les simple quote car on les retire 
+TO DO DE LUNDI: 
+
+1- implementer le builtin echo
+
+2- corriger les probleme d espaces qui fait que les commandes sont collés genre :
+cat celine.txt | rev > out
+on a : cat celine.txt|rev>out
+
+3- veirfier les free valgrind etc
 */
 
 
 /*
-On execute et ne doit pas s executer :
-echo' test'
-echo' 'test
-
-On reagit mal :
-echo test ls
-	-> on a tout de collé
-echo ' 'ls
-	-> on devrait afficher l'espace devant le "ls"
-echo 'debut              fin'       test
-	-> on doit avoir "debut              fin test"
-minishell$> echo 1 2 3 4 5
-	-> on doit avoir "1 2 3 4 5
-
-
-
-
 cassé chez Rayan : 
 ec'h'o     t'rst'
 	-> on doit avoir "trst"
 ec'h'o'   ' t'rst'
 	-> on doit avoir "echo   : command not found"
-
-
-
-
-shell:
-bash-5.1$ ec'h'o' ' t'rst'
-bash: echo : command not found
-bash-5.1$ ec'h'o ' ' t'rst'
-  trst
-bash-5.1$ ec'h'o ' 't'rst'
- trst
-bash-5.1$ ec'h'o' 't'rst'
-bash: echo trst: command not found
-
 */

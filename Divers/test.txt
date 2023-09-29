@@ -1,0 +1,30 @@
+TEST
+
+
+*** TEST DES SINGLES QUOTES : ***
+
+bash-5.1$ echo' test'
+bash: echo test: command not found
+
+bash-5.1$ echo' 'test
+bash: echo test: command not found
+
+bash-5.1$ echo test ls
+test ls
+
+bash-5.1$ echo ' 'ls
+ ls
+
+bash-5.1$ echo 'debut              fin'       test
+debut              fin test
+
+bash-5.1$  echo 1 2 3 4 5
+1 2 3 4 5
+
+bash-5.1$ ec'h'o     t'rst'
+trst
+
+bash-5.1$ ec'h'o'   ' t'rst'
+bash: echo   : command not found
+
+
