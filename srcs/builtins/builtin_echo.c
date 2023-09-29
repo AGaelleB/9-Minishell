@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 11:18:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/28 16:26:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:38:45 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_builtin_echo(char *str)
 {
-	printf("*****notre echo*****\n");
+	printf("***** NOTRE ECHO *****\n");
 	int	i;
 	// int	y;
 	// str++;

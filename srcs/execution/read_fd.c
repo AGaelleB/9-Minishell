@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 16:45:25 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:39:59 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,7 @@ void execve_fd(t_command *current, char **envp)
 				dup2(current->fd_out, 1);
 				close(current->fd_out);
 			}
+			ft_set_args_and_paths(current, envp); // Définir les arguments et le chemin avant d'appeler child_process.
 			open_fd(current);
 			if(child_process(current, envp) == 127)
 			{

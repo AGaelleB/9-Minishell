@@ -6,109 +6,72 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/28 16:50:53 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:49:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-t_quote	*add_str_to_list(t_quote *list, char *str)
+int count_args(char *input)
 {
-	t_quote	*new_list_str;
-	t_quote	*temp;
+	int		count;
+	bool	in_quote;
+	bool	was_space; // pour compter le premier mot même s'il n'y a pas d'espace devant
 	
-	new_list_str = malloc(sizeof(t_quote));
-	if (!new_list_str)
-		exit(1);
-	
-	new_list_str->str = str;
-	new_list_str->next = NULL;
-	if (!list)
-		return (new_list_str);
-	
-	temp = list;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new_list_str;
-
-	// printf("%snew_list_str->str: %s%s\n", CYAN, new_list_str->str, RESET); // PRINT
-
-	return (list);
-}
-
-t_quote	*parse_input_quote(char *input, char **envp)
-{
-	t_quote	*substr_list;
-	char	*start;
-	bool	flag_open_quote;
-	
-	substr_list = NULL;
-	start = input;
-	flag_open_quote = false;
+	count = 0;
+	in_quote = false;
+	was_space = true; 
 	while (*input)
 	{
 		if (*input == '\'')
+			in_quote = !in_quote;
+		if (!in_quote && *input == ' ')
+			was_space = true;
+		else if (was_space)
 		{
-			if (flag_open_quote == true)
-			{
-				*input = '\0';
-				substr_list = add_str_to_list(substr_list, start);
-				start = input + 1;
-				flag_open_quote = false;
-			}
-			else
-			{
-				if (start != input)
-				{
-					*input = '\0';
-					substr_list = add_str_to_list(substr_list, start);
-				}
-				start = input + 1;
-				flag_open_quote = true;
-			}
+			count++;
+			was_space = false;
 		}
 		input++;
 	}
-	if (start != input)
-		substr_list = add_str_to_list(substr_list, start);
-	ft_cat_list_quote(substr_list, envp);
-	return (substr_list);
+	return (count);
 }
 
-void ft_cat_list_quote(t_quote *substr_list, char **envp)
+char	**parse_input_quote(char *input)
 {
-	t_command	*new_commands;
-	char		*command;
-	char		*temp;
-
-	new_commands = NULL;
-	command = NULL;
-	temp = NULL;
+	int		arg_count;
+	char	*temp_input;
+	bool	in_quote;
+	char	**args;
+	int		idx;
 	
-	int i = 0;
-	while (substr_list)
+	arg_count = count_args(input);
+	args = malloc((arg_count + 1) * sizeof(char *));
+	if (!args)
+		return (NULL);
+	temp_input = input;
+	in_quote = false;
+	idx = 0; // Utilisez une variable d'index différente
+	while (*input)
 	{
-		temp = ft_strjoin(command, substr_list->str);
-		free(command);
-		command = temp;
-
-		printf("%ssubstr_list->str[%d] : %s%s\n", MAGENTA, i, substr_list->str, RESET); // PRINT
-		// printf("%scommand : %s%s\n", MAGENTA, command, RESET); // PRINT
-		substr_list = substr_list->next;
-		// i++;
+		if (*input == '\'')
+			in_quote = !in_quote;
+		if ((!in_quote && *input == ' ') || *(input + 1) == '\0')
+		{
+			if (*(input + 1) == '\0' && *input != ' ')
+				input++;
+			*input = '\0';
+			if (*temp_input != '\0') 
+				args[idx++] = strdup(temp_input); // Utilisez idx au lieu de arg_count
+			temp_input = input + 1;
+		}
+		input++;
 	}
-	new_commands = get_command(command);
-	count_and_set_pipes(command, new_commands);
-	
-	ft_all_builtins_verif(new_commands);
-
-	print_commands_and_tokens(new_commands);
-	if(new_commands != NULL)
-		execve_fd(new_commands, envp);
-
-	free(command);
+	args[idx] = '\0';
+	return (args);
 }
+
+
 
 /*
 On stock correctement avec nos espaces les valeurs dans substr_list->str
@@ -116,7 +79,6 @@ on voudrait l utiliser pour les execution mais on y arrive pas
 est-ce qu on est obligé d'utiliser des double ** ?
 est-ce que ca va nous poser probleme l utilisation de notre split ? 
 	on ne peut pas split sur les simple quote car on les retire 
-
 */
 
 
