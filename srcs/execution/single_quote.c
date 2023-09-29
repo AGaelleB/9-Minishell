@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/29 15:49:36 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/29 16:15:42 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,38 +40,44 @@ int count_args(char *input)
 char	**parse_input_quote(char *input)
 {
 	int		arg_count;
-	char	*temp_input;
 	bool	in_quote;
 	char	**args;
 	int		idx;
-	
+	char	*arg;
+	int		arg_idx;
+
 	arg_count = count_args(input);
 	args = malloc((arg_count + 1) * sizeof(char *));
 	if (!args)
 		return (NULL);
-	temp_input = input;
 	in_quote = false;
-	idx = 0; // Utilisez une variable d'index différente
+	idx = 0;
+	
 	while (*input)
 	{
-		if (*input == '\'')
-			in_quote = !in_quote;
-		if ((!in_quote && *input == ' ') || *(input + 1) == '\0')
+		arg = malloc(strlen(input) + 1);
+		if (!arg)
+			return (NULL);
+		arg_idx = 0;
+		while (*input && (in_quote || *input != ' '))
 		{
-			if (*(input + 1) == '\0' && *input != ' ')
-				input++;
-			*input = '\0';
-			if (*temp_input != '\0') 
-				args[idx++] = strdup(temp_input); // Utilisez idx au lieu de arg_count
-			temp_input = input + 1;
+			if (*input == '\'')
+				in_quote = !in_quote;
+			else
+				arg[arg_idx++] = *input;
+			input++;
 		}
-		input++;
+		arg[arg_idx] = '\0';
+		if (arg_idx > 0)
+			args[idx++] = arg;
+		else
+			free(arg);
+		while (*input == ' ')
+			input++; // Skip spaces
 	}
-	args[idx] = '\0';
+	args[idx] = NULL;
 	return (args);
 }
-
-
 
 /*
 On stock correctement avec nos espaces les valeurs dans substr_list->str

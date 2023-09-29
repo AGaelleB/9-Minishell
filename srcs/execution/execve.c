@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/29 15:50:26 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/29 16:12:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,17 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 	current->command_arg = NULL;
 	current->command_path = NULL;
 	current->command_arg = parse_input_quote(current->command); // Use parse_input_quote here
-	int i = 0;
-	while(current->command_arg[i])
-	{
-		printf("%scommand_arg[%d] = %s%s\n", MAGENTA, i, current->command_arg[i], RESET);
-		i++;
-	}
+	// int i = 0;
+	// while(current->command_arg[i])
+	// {
+	// 	printf("%scommand_arg[%d] = %s%s\n", GREEN, i, current->command_arg[i], RESET);
+	// 	i++;
+	// }
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
 }
 
 int	child_process(t_command *current, char **envp)
 {
-	printf("***** CHILD PROCESS *****\n");
 	if (current->command_path == NULL)
 	{
 		write(2, "minishell: command not found: ", 31);

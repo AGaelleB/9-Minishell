@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/28 16:29:14 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/09/29 16:14:24 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ void	ft_all_builtins_verif(t_command *current)
 		
 		if (ft_strncmp(current->command, "pwd", 3) == 0)
 			ft_builtin_pwd();
-		if (ft_strncmp(current->command, "echo", 4) == 0)
-		{
-			current->command_arg = ft_split(current->command, '\'');
-			ft_builtin_echo(current->command);
-			// exit (-1);
-		}
+		// if (ft_strncmp(current->command, "echo", 4) == 0)
+		// {
+		// 	current->command_arg = ft_split(current->command, '\'');
+		// 	ft_builtin_echo(current->command);
+		// 	// exit (-1);
+		// }
 		cmd_count++;
 		current = current->next;
-		printf("\n");  // Just to separate different commands
+		// printf("\n");  // Just to separate different commands
 	}
 }
