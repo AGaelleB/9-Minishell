@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 14:58:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:41:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 int main(int ac, char **av, char **envp)
 {
+	t_command	*new_commands;
 	char		*input;
 	int			builtin_status;
 	if (ac != 1)
@@ -54,14 +55,12 @@ int main(int ac, char **av, char **envp)
 		// ft_free_struct(new_commands, new_commands->token_head);
 		// ft_free_current(new_commands);
 
-		t_command *new_commands = get_command(input);
+		new_commands = get_command(input);
 		count_and_set_pipes(input, new_commands);
 		// ft_all_builtins_verif(new_commands);
-
 		// print_commands_and_tokens(new_commands); // PRINT
 		if(new_commands != NULL)
 			execve_fd(new_commands, envp);
-		
 		free(input);
 	}
 	(void)av;
@@ -86,19 +85,5 @@ minishell$> ls > coui>coucou
 pour fix -> modifier la facon de tokenizer en parcouarnt word[i] et en regardant si ca comprend un ">"
 
 voir si besoin de ferme mieux :	// free_file_name(current->file_name);
-
-
-SINGLE QUOTE : 
-
-bash-5.1$ 'ech'o' c'oucou
-bash: echo coucou: command not found
-
-bash-5.1$ 'ech'o     '  '  coucou
-   coucou
-   
-bash-5.1$ 'ech'o     '    c'oucou
-    coucou
-
-
 
 */

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 15:08:17 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:17:19 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void execve_fd(t_command *current, char **envp)
 			}
 
 			ft_set_args_and_paths(current, envp); // Définir les arguments et le chemin avant d'appeler child_process.
-			print_commands_and_tokens(current);
+			// print_commands_and_tokens(current); // PRINT
+			open_fd(current);
 			ft_all_builtins_verif(current);
 
-			open_fd(current);
 			if(child_process(current, envp) == 127)
 			{
 				free(child_pids);

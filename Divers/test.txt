@@ -27,6 +27,11 @@ trst
 bash-5.1$ ec'h'o'   ' t'rst'
 bash: echo   : command not found
 
+bash-5.1$ 'ech'o' c'oucou
+bash: echo coucou: command not found
+
+bash-5.1$ 'ech'o     '  '  coucou
+   coucou
 
 *** ECHO -n : ***
 

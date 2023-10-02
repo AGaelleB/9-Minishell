@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 10:17:05 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:32:08 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_all_builtins_verif(t_command *current)
 		{
 			if (current->command_path != NULL)
 			{
-				ft_builtin_echo(current->command_arg);
+				ft_builtin_echo_fd(current->command_arg);
 				exit (0);
 			}
 		}

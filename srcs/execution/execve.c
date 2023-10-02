@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 15:28:20 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:36:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,15 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 {
 	current->command_arg = NULL;
 	current->command_path = NULL;
-	current->command_arg = parse_input_quote(current->command); // Use parse_input_quote here
-	// current->command_arg = ft_split(current->command, ' ');
-	int i = 0;
-	while(current->command_arg[i])
-	{
-		printf("%scommand_arg[%d] = %s%s\n", GREEN, i, current->command_arg[i], RESET);
-		i++;
-	}
+	current->command_arg = parse_input_quote(current->command);
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
-	// ft_all_builtins_verif(current);
 
+	// int i = 0;
+	// while(current->command_arg[i])
+	// {
+	// 	printf("%scommand_arg[%d] = %s%s\n", GREEN, i, current->command_arg[i], RESET);
+	// 	i++;
+	// }
 }
 
 int	child_process(t_command *current, char **envp)

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 13:23:32 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:09:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	**parse_input_quote(char *input)
 	int		idx;
 	char	*arg;
 	int		arg_idx;
+	char	*stopChar;
+
 
 	arg_count = count_args(input);
 	args = malloc((arg_count + 1) * sizeof(char *));
@@ -53,6 +55,13 @@ char	**parse_input_quote(char *input)
 	in_quote = false;
 	idx = 0;
 	
+	stopChar = ft_strchr(input, '>');
+	if (stopChar != NULL)
+		*stopChar = '\0';
+	stopChar = ft_strchr(input, '<');
+	if (stopChar != NULL)
+		*stopChar = '\0';
+
 	while (*input)
 	{
 		arg = malloc(ft_strlen(input) + 1);
@@ -76,6 +85,12 @@ char	**parse_input_quote(char *input)
 			input++; // Skip spaces
 	}
 	args[idx] = NULL;
+
+	if (stopChar != NULL)
+		*stopChar = '>';
+	if (stopChar != NULL)
+		*stopChar = '<';
+
 	return (args);
 }
 
