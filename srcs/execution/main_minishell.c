@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 09:50:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 13:08:23 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int ac, char **av, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		input = readline("minishell$> ");
+		input = readline("😈 minishell$> ");
 		// input = readline("😈🔥 MINIHELL I HATE YOU🔥😈$> ");
 		ft_builtin_ctrl_D(input);
 		builtin_status = ft_all_builtins(input);

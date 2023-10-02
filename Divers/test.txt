@@ -28,3 +28,22 @@ bash-5.1$ ec'h'o'   ' t'rst'
 bash: echo   : command not found
 
 
+*** ECHO -n : ***
+
+bash-5.1$ echo -n -n -nnnn -nnnnabc
+-nnnnabcbash-5.1$ 
+
+bash-5.1$ echo -n blabla
+blablabash-5.1$ 
+
+minishell$> echo -a -nnn -er -nnnnnn -nae -nnn  bonjour
+-a -nnn -er -nnnnnn -nae -nnn bonjour
+
+bash-5.1$ echo -nnnn -n -nnnq ghg 'gfdgd' ' a       f'
+-nnnq ghg gfdgd  a       fbash-5.1$
+
+bash-5.1$ echo -n' 'test
+-n test
+
+bash-5.1$ echo -nnna
+-nnna

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 10:23:24 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 11:19:44 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	**parse_input_quote(char *input)
 /*
 TO DO DE LUNDI: 
 
-1- implementer le builtin echo
+1- implementer le builtin echo + fd
 
 2- corriger les probleme d espaces qui fait que les commandes sont collés genre :
 cat celine.txt | rev > out
@@ -107,4 +107,8 @@ ec'h'o     t'rst'
 	-> on doit avoir "trst"
 ec'h'o'   ' t'rst'
 	-> on doit avoir "echo   : command not found"
+
+echo -n -a -nnn -er -nnnnnn -nae -nnn  bonjour
+	-> -a -nnn -er -nnnnnn -nae -nnn  bonjourminishell$> 
+	
 */
