@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/29 16:25:23 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 10:23:24 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**parse_input_quote(char *input)
 	
 	while (*input)
 	{
-		arg = malloc(strlen(input) + 1);
+		arg = malloc(ft_strlen(input) + 1);
 		if (!arg)
 			return (NULL);
 		arg_idx = 0;
@@ -89,7 +89,15 @@ TO DO DE LUNDI:
 cat celine.txt | rev > out
 on a : cat celine.txt|rev>out
 
-3- veirfier les free valgrind etc
+3- verifier les free valgrind etc
+
+
+
+minishell$> cat celine.txt    |    echo bjr    >  test.txt
+minishell$> cat test.txt 
+bjr > test.txt
+
+
 */
 
 

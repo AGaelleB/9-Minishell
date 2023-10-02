@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/29 16:12:35 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 10:00:47 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 	// 	i++;
 	// }
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
+	ft_all_builtins_verif(current);
+
 }
 
 int	child_process(t_command *current, char **envp)

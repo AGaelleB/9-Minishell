@@ -6,35 +6,31 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 11:18:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/29 16:12:56 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 10:21:06 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_builtin_echo(char *str)
+int	ft_builtin_echo(char **tab)
 {
 	int	i;
-	// int	y;
-	// str++;
-	// y = 0;
-	i = 0;
+	int	j;
 
-	// if((str[i] == 'e') && (str[i + 1] == 'c') && (str[i + 2] == 'h') && (str[i + 3] == 'o'))
-	// {
-	// 	i = 5;
-	// }
-
-	while (str[i])
+	i = 1;
+	j = 0;
+	while (tab[i])
 	{
-		printf("%c", str[i]);
-		// if (str[i + 1])
-		// 	printf(" ");
+		while (tab[i][j])
+		{
+			printf("%c", tab[i][j]);
+			j++;
+		}
+		printf(" ");
+		j = 0;
 		i++;
 	}
-	// if (y == 0)
-		printf("\n");
-	// exit(0);
+	printf("\n");
 	return (0);
 }
 
