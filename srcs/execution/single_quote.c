@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 11:19:44 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 13:23:32 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ on a : cat celine.txt|rev>out
 minishell$> cat celine.txt    |    echo bjr    >  test.txt
 minishell$> cat test.txt 
 bjr > test.txt
-
-
 */
 
 

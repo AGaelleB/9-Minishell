@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 10:00:23 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:11:47 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,19 @@ char		*ft_check_paths(char **envp, char *args);
 void		execve_fd(t_command *current, char **envp);
 
 int			verif_nb_single_quote(char *str);
+
+/***********REDIRECTIONS***********/
+int			redirect_file_in(t_command *current, t_token *token);
+int			redirect_file_out(t_command *current, t_token *token);
+int			redirect_append_file_out(t_command *current, t_token *token);
+
+int			aleatori_char(void);
+char		*create_file_name(void);
+int			write_in_fd(int fd, char *delimiter);
+int			redirect_heredoc(t_command *current, t_token *token);
+
+int			open_fd(t_command *command);
+
 
 
 /***********SIGNALS***********/

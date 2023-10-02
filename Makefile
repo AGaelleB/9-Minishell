@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/09/28 14:49:12 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/10/02 15:09:28 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,9 @@ SRCS = srcs/execution/main_minishell.c \
 	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/init_quote.c \
 	srcs/init_and_parsing/path.c \
+	srcs/redirections/redirect_file_in_and_out.c \
+	srcs/redirections/redirect_heredoc.c \
+	srcs/redirections/redirect_open_fd.c \
 	srcs/signals/signal_exit.c \
 	srcs/utils/libft_modify.c \
 	srcs/utils/free.c \

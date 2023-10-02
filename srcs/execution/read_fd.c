@@ -6,194 +6,11 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/29 15:39:59 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:08:17 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
-int	redirect_file_in(t_command *current, t_token *token) // <
-{
-	char	*filename;
-
-	if (current->fd_in != 0)
-		close(current->fd_in);
-	filename = token->next->split_value;
-	current->fd_in = open(filename, O_RDONLY);
-	if (current->fd_in == -1)
-	{
-		write(1, "minishell: ", 12);
-		perror(filename);
-		exit(-1);
-	}
-	return (0);
-}
-
-int	redirect_file_out(t_command *current, t_token *token) // >
-{
-	char	*filename;
-
-	if (current->fd_out != 1)
-		close(current->fd_out);
-	filename = token->next->split_value;
-	current->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (current->fd_out == -1)
-	{
-		write(1, "minishell: ", 12);
-		perror(filename);
-		exit(-1);
-	}
-	return (0);
-}
-
-int	redirect_append_file_out(t_command *current, t_token *token) // >>
-{
-	char	*filename;
-
-	if (current->fd_out != 1)
-		close(current->fd_out);
-	filename = token->next->split_value;
-	current->fd_out = open(filename, O_APPEND | O_WRONLY, 0644);
-	if (current->fd_out == -1)
-	{
-		write(1, "minishell: ", 12);
-		perror(filename);
-		exit(-1);
-	}
-	return (0);
-}
-
-int	aleatori_char(void)
-{
-	char	buff[4];
-	int		nbr;
-	int		fd;
-
-	fd = open("/dev/random", O_RDONLY);
-	if (fd < -1)
-		return (-1);
-	read(fd, buff, 4);
-	nbr = *(int *)buff;
-	if (nbr < 0)
-		nbr++;
-	if (nbr < 0)
-		nbr = nbr * (-1);
-	return ('a' + nbr % 26);
-}
-
-char	*create_file_name(void)
-{
-	char	*file_name;
-	int		i;
-
-	i = 0;
-	file_name = malloc(sizeof(char) * 11);
-	file_name[10] = '\0';
-	while (i < 10)
-	{
-		file_name[i] = (char)aleatori_char();
-		i++;
-	}
-	return (file_name);
-}
-
-int	write_in_fd(int fd, char *delimiter)
-{
-	char	*line;
-
-	while (1)
-	{
-		line = readline("> ");
-		if (line == NULL)
-			return (45);
-		if (ft_strcmp_minishell(line, delimiter) == 0)
-			break;
-		// if (str[0] != '\0') // A FAIRE !!!
-		// {
-			// permet de supprimer le file creer, avec l'environement
-		// }
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
-	free(line);
-	return (0);
-}
-
-int	redirect_heredoc(t_command *current, t_token *token) // >>
-{
-	char *delimiter;
-	char *file_name;
-	int fd;
-
-	file_name = NULL;
-	fd = -1;
-	delimiter = token->next->split_value;
-	if (fd == -1)
-	{
-		if(file_name)
-			free(file_name);
-		file_name = create_file_name();
-		fd = open(file_name, O_CREAT | O_EXCL | O_RDWR, 0644);
-	}
-	write_in_fd(fd, delimiter);
-	fd = open(file_name, O_RDONLY);
-	current->fd_in = fd;
-	free_file_name(current->file_name);
-	if (current->fd_in == -1)
-	{
-		write(1, "minishell: ", 12);
-		perror("EOF");
-		exit(-1);
-	}
-	current->file_name = file_name;
-	return (0);
-}
-
-int	open_fd(t_command *command)
-{
-	t_token	*token;
-
-	token = command->token_head;
-	while (token)
-	{
-		if (token->type == TYPE_HEREDOC)
-		{
-			if (redirect_heredoc(command, token) == 0)
-			{
-				dup2(command->fd_in, 0);
-				close(command->fd_in);
-			}
-		}
-		if (token->type == TYPE_REDIR_IN)
-		{
-			if (redirect_file_in(command, token) == 0)
-			{
-				dup2(command->fd_in, 0);
-				close(command->fd_in);
-			}
-		}
-		if (token->type == TYPE_REDIR_OUT)
-		{
-			if (redirect_file_out(command, token) == 0)
-			{
-				dup2(command->fd_out, 1);
-				close(command->fd_out);
-			}
-		}
-		if (token->type == TYPE_REDIR_APPEND)
-		{
-			if (redirect_append_file_out(command, token) == 0)
-			{
-				dup2(command->fd_out, 1);
-				close(command->fd_out);
-			}
-		}
-		token = token->next;
-	}
-	return (0);
-}
 
 void execve_fd(t_command *current, char **envp)
 {
@@ -249,7 +66,11 @@ void execve_fd(t_command *current, char **envp)
 				dup2(current->fd_out, 1);
 				close(current->fd_out);
 			}
+
 			ft_set_args_and_paths(current, envp); // Définir les arguments et le chemin avant d'appeler child_process.
+			print_commands_and_tokens(current);
+			ft_all_builtins_verif(current);
+
 			open_fd(current);
 			if(child_process(current, envp) == 127)
 			{
