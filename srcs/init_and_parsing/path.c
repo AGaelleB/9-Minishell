@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/18 10:39:45 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/03 12:24:07 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ char	*ft_check_paths(char **envp, char *args)
 	if (valid_path != NULL)
 		return (valid_path);
 	valid_path = ft_check_relative_paths(envp, args);
+	printf("valid_path = %s\n", valid_path);
 	return (valid_path);
 }

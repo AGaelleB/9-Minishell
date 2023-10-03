@@ -66,3 +66,6 @@ test
 
 bash-5.1$ echo test'>'oups
 test>oups
+
+bash-5.1$ cat celine.txt | echo 'coucou>t'est>a>b>>c
+   -> ici on doit renvoyer dans le fichier 'c' "coucou>test"

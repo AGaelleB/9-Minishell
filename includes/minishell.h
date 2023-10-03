@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 17:58:26 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/03 11:13:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char	**parse_input_quote(char *input);
 
 void	print_t_quote(t_quote *quote);
 void	ft_all_builtins_verif(t_command *current);
+char	**split_string_token(char *str, char **delimiters);
 
 
 /***********MAIN***********/

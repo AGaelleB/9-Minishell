@@ -6,11 +6,66 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/03 10:01:10 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/03 15:08:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char *add_spaces_around_redirections(char *input)
+{
+	char	*new_input;
+	int		i;
+	int		j;
+	int		new_len;
+	bool	single_quote;
+
+	i = 0;
+	new_len = ft_strlen(input);
+	single_quote = false;
+	// echo 'coucou>te'st
+	while(input[i])
+	{
+		if(input[i] == '>' || input[i] == '<')
+			new_len += 2; // adding space before and after the character
+		i++;
+	}
+	// create a new string with the calculated length
+	new_input = (char *)malloc(sizeof(char) * (new_len + 1));
+	if(!new_input)
+	{
+		perror("malloc");
+		return (NULL);
+	}
+	// copy the original string into the new string, adding spaces as needed
+	i = 0;
+	j = 0;
+	while(input[i])
+	{
+		if(input[i] == '\'')
+			single_quote = !single_quote;
+		if((!single_quote) && (input[i] == '>' || input[i] == '<'))
+		{
+			new_input[j] = ' ';
+			j++;
+			new_input[j] = input[i];
+			j++;
+			if(input[i + 1] == input[i]) // checking for ">>" or "<<"
+			{
+				new_input[j] = input[i + 1];
+				i++; // skip the next character
+				j++;
+			}
+			new_input[j] = ' ';
+		}
+		else
+			new_input[j] = input[i];
+		i++;
+		j++;
+	}
+	new_input[j] = '\0';
+	return (new_input);
+}
 
 t_command	*get_command(char *input)
 {
@@ -35,8 +90,12 @@ t_command	*get_command(char *input)
 			exit(1);
 		}
 		new_cmd->command = NULL;
-		new_cmd->command = ft_strdup(command[i]);
+		// new_cmd->command = ft_strdup(command[i]);
+		// new_cmd->token_head = tokenize_input(new_cmd->command);
+
+		new_cmd->command = add_spaces_around_redirections(command[i]);
 		new_cmd->token_head = tokenize_input(new_cmd->command);
+		
 		if (!new_cmd->command)
 		{
 			perror("Failed to duplicate command string");
@@ -60,11 +119,21 @@ t_command	*get_command(char *input)
 	return (head);
 }
 
+// cat celine.txt | wc>out>a
+
 void	ft_set_args_and_paths(t_command *current, char **envp)
 {
 	current->command_arg = NULL;
 	current->command_path = NULL;
 	current->command_arg = parse_input_quote(current->command);
+
+	// int	i = 0;
+	// while (current->command_arg[i] == NULL)
+	// 	i++;
+	
+	// printf("%s i = %d%s\n", GREEN, i, RESET);
+	// printf("%scommand_arg[%d] = %s%s\n", GREEN, i, current->command_arg[i], RESET);
+	
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
 
 	// int i = 0;

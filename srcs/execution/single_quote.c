@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 18:02:32 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/03 14:21:26 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int count_args(char *input)
 	
 	count = 0;
 	in_quote = false;
-	was_space = true; 
+	was_space = true;
 	while (*input)
 	{
 		if (*input == '\'')
@@ -36,62 +36,6 @@ int count_args(char *input)
 	}
 	return (count);
 }
-
-// char	**parse_input_quote(char *input)
-// {
-// 	int		arg_count;
-// 	bool	in_quote;
-// 	char	**args;
-// 	int		idx;
-// 	char	*arg;
-// 	int		arg_idx;
-// 	char	*stopChar;
-
-// 	arg_count = count_args(input);
-// 	args = malloc((arg_count + 1) * sizeof(char *));
-// 	if (!args)
-// 		return (NULL);
-// 	in_quote = false;
-// 	idx = 0;
-
-// 	stopChar = ft_strchr(input, '>');
-// 	if (stopChar != NULL)
-// 		*stopChar = '\0';
-// 	stopChar = ft_strchr(input, '<');
-// 	if (stopChar != NULL)
-// 		*stopChar = '\0';
-
-// 	while (*input)
-// 	{
-// 		arg = malloc(ft_strlen(input) + 1);
-// 		if (!arg)
-// 			return (NULL);
-// 		arg_idx = 0;
-// 		while (*input && (in_quote || *input != ' '))
-// 		{
-// 			if (*input == '\'')
-// 				in_quote = !in_quote;
-// 			else
-// 				arg[arg_idx++] = *input;
-// 			input++;
-// 		}
-// 		arg[arg_idx] = '\0';
-// 		if (arg_idx > 0)
-// 			args[idx++] = arg;
-// 		else
-// 			free(arg);
-// 		while (*input == ' ')
-// 			input++;
-// 	}
-// 	args[idx] = NULL;
-
-// 	if (stopChar != NULL)
-// 		*stopChar = '>';
-// 	if (stopChar != NULL)
-// 		*stopChar = '<';
-
-// 	return (args);
-// }
 
 char **parse_input_quote(char *input)
 {
@@ -134,6 +78,14 @@ char **parse_input_quote(char *input)
 		while (*input == ' ')
 			input++;
 	}
+	
+	// int i = 0;
+	// while(args[i])
+	// {
+	// 	printf("%sargs[%d] = %s%s\n", BLUE, i, args[i], RESET);
+	// 	i++;
+	// }	
+
 	args[idx] = NULL;
 	return (args);
 }
@@ -142,15 +94,8 @@ char **parse_input_quote(char *input)
 /*
 TO DO DE LUNDI:
 
-1- modifier notre fonction de tokenization pour prendre en compte les singles quotes
-TYPE_SINGLE_QUOTE
-
-2- corriger les problemes d espaces qui fait que les commandes sont collés genre :
+1- corriger les problemes d espaces qui fait que les commandes sont collés genre :
 cat celine.txt | rev>out
-
-gerer le parsing du token
-bash-5.1$ echo 'test > coucou'
-test > coucou
 
 gerer la redir en debut de cmd :
 > coucou echo test

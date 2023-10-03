@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/03 10:00:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/03 15:57:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,54 @@ t_token *new_token(t_e_token_type e_type, char *split_value)
 	return (token);
 }
 
+void add_token_to_list(t_token **head, t_token **tail, t_token *new_tok) 
+{
+	if (!*head) 
+	{
+		*head = new_tok;
+		*tail = *head;
+	} 
+	else 
+	{
+		(*tail)->next = new_tok;
+		*tail = new_tok;
+	}
+}
+
 t_token *tokenize_input(char *input)
 {
-	char		**words;
 	t_token		*head;
 	t_token		*curr;
 	t_token		*token;
+	char		**words;
 	int			i;
 	int			state;
 	bool		flag_single_quote;
+	char		*delimiters[6];
 
 	i = 0;
 	head = NULL;
 	curr = NULL;
 	state = TYPE_CMD;
-	words = split_string(input, ' ');
 	flag_single_quote = false;
+	delimiters[0] = " ";
+	delimiters[1] = "<";
+	delimiters[2] = ">>";
+	delimiters[3] = "<<";
+	delimiters[4] = ">";
+	delimiters[5] = NULL;
+	words = split_string_token(input, delimiters);
+
 	while (words[i])
 	{
+		printf("words[%d]: %s\n", i, words[i]);
+		i++;
+	}
+	i = 0;
+
+	while (words[i])
+	{
+		flag_single_quote = !flag_single_quote;
 		if (is_empty_or_space(words[i]))
 		{
 			i++;
@@ -58,21 +88,23 @@ t_token *tokenize_input(char *input)
 		}
 		else if (*words[i] == '\'')
 		{
+			printf("%sflag_single_quote %d%s\n", YELLOW, flag_single_quote, RESET);
 			flag_single_quote = !flag_single_quote;
+			printf("%sflag_single_quote %d%s\n", GREEN, flag_single_quote, RESET);
 			token = new_token(TYPE_ARG, words[i]);
 			state = TYPE_ARG;
 		}
-		else if ((flag_single_quote == 0) && (ft_strcmp_minishell(words[i], ">") == 0))
+		else if ((flag_single_quote) && (ft_strcmp_minishell(words[i], ">") == 0))
 		{
 			token = new_token(TYPE_REDIR_OUT, words[i]);
 			state = TYPE_F_OUT;
 		}
-		else if ((flag_single_quote == 0) && (ft_strcmp_minishell(words[i], "<") == 0))
+		else if ((flag_single_quote) && (ft_strcmp_minishell(words[i], "<") == 0))
 		{
 			token = new_token(TYPE_REDIR_IN, words[i]);
 			state = TYPE_F_IN;
 		}
-		else if ((flag_single_quote == 0) && (ft_strcmp_minishell(words[i], ">>") == 0))
+		else if ((flag_single_quote) && (ft_strcmp_minishell(words[i], ">>") == 0))
 		{
 			token = new_token(TYPE_REDIR_APPEND, words[i]);
 			state = TYPE_F_OUT;
@@ -102,17 +134,9 @@ t_token *tokenize_input(char *input)
 			token = new_token(TYPE_ARG, words[i]);
 			state = TYPE_ARG; //
 		}
-		if (!head)
-		{
-			head = token;
-			curr = head;
-		}
-		else
-		{
-			curr->next = token;
-			curr = token;
-		}
+		add_token_to_list(&head, &curr, token);
 		i++;
+		// printf("%stoken->type = %d%s\n", MAGENTA, token->type, RESET); ////////
 	}
 	ft_free_tab(words);
 	return (head);
