@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/22 16:43:51 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/03 10:00:38 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ t_token *tokenize_input(char *input)
 	t_token		*token;
 	int			i;
 	int			state;
+	bool		flag_single_quote;
 
 	i = 0;
 	head = NULL;
 	curr = NULL;
 	state = TYPE_CMD;
 	words = split_string(input, ' ');
+	flag_single_quote = false;
 	while (words[i])
 	{
 		if (is_empty_or_space(words[i]))
@@ -54,22 +56,28 @@ t_token *tokenize_input(char *input)
 			token = new_token(TYPE_CMD, words[i]);
 			state = TYPE_ARG;
 		}
-		else if (ft_strcmp_minishell(words[i], ">") == 0)
+		else if (*words[i] == '\'')
+		{
+			flag_single_quote = !flag_single_quote;
+			token = new_token(TYPE_ARG, words[i]);
+			state = TYPE_ARG;
+		}
+		else if ((flag_single_quote == 0) && (ft_strcmp_minishell(words[i], ">") == 0))
 		{
 			token = new_token(TYPE_REDIR_OUT, words[i]);
 			state = TYPE_F_OUT;
 		}
-		else if (ft_strcmp_minishell(words[i], "<") == 0)
+		else if ((flag_single_quote == 0) && (ft_strcmp_minishell(words[i], "<") == 0))
 		{
 			token = new_token(TYPE_REDIR_IN, words[i]);
 			state = TYPE_F_IN;
 		}
-		else if (ft_strcmp_minishell(words[i], ">>") == 0)
+		else if ((flag_single_quote == 0) && (ft_strcmp_minishell(words[i], ">>") == 0))
 		{
 			token = new_token(TYPE_REDIR_APPEND, words[i]);
 			state = TYPE_F_OUT;
 		}
-		else if (ft_strcmp_minishell(words[i], "<<") == 0)
+		else if (ft_strcmp_minishell(words[i], "<<") == 0) // utiliser le bool ?? 
 		{
 			token = new_token(TYPE_HEREDOC, words[i]);
 			state = TYPE_EOF;
@@ -90,8 +98,10 @@ t_token *tokenize_input(char *input)
 			state = TYPE_ARG;
 		}
 		else
+		{
 			token = new_token(TYPE_ARG, words[i]);
-
+			state = TYPE_ARG; //
+		}
 		if (!head)
 		{
 			head = token;

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 16:33:44 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 17:03:47 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	redirect_file_out(t_command *current, t_token *token) // >
 
 	if (current->fd_out != 1)
 		close(current->fd_out);
-	filename = token->next->split_value;
+	filename = token->next->split_value; //
+	// if (token->next == NULL)
+	// 	filename = token->split_value;
 	current->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (current->fd_out == -1)
 	{

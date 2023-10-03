@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 16:31:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/02 17:58:26 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,14 @@ typedef enum e_token_type
 	TYPE_CMD, // 0				// cat 			de cat celine.txt
 	TYPE_ARG, // 1				// celine.txt 	de cat celine.txt
 	TYPE_SEPARATOR, // 2		// "|" 
-	TYPE_REDIR_OUT, // 3		// ">"
-	TYPE_REDIR_IN, // 4			// "<"
-	TYPE_REDIR_APPEND, // 5		// ">>"
-	TYPE_HEREDOC, // 6			// "<<"
-	TYPE_F_OUT, // 7
-	TYPE_F_IN, // 8
-	TYPE_EOF, // 9				// eof
+	TYPE_SINGLE_QUOTE, // 3		// ' '
+	TYPE_REDIR_OUT, // 4		// ">"
+	TYPE_REDIR_IN, // 5			// "<"
+	TYPE_REDIR_APPEND, // 6		// ">>"
+	TYPE_HEREDOC, // 7			// "<<"
+	TYPE_F_OUT, // 8
+	TYPE_F_IN, // 9
+	TYPE_EOF, // 10				// eof
 } t_e_token_type;
 
 typedef struct s_token
