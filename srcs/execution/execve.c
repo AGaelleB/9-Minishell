@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/03 15:08:13 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/04 14:44:59 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ char *add_spaces_around_redirections(char *input)
 	return (new_input);
 }
 
-t_command	*get_command(char *input)
+t_command	*get_command(char *input, char **envp)
 {
+	// printf("*** get_command ***\n");
 	t_command	*head;
 	t_command	*current;
 	t_command	*new_cmd;
@@ -90,12 +91,8 @@ t_command	*get_command(char *input)
 			exit(1);
 		}
 		new_cmd->command = NULL;
-		// new_cmd->command = ft_strdup(command[i]);
-		// new_cmd->token_head = tokenize_input(new_cmd->command);
-
 		new_cmd->command = add_spaces_around_redirections(command[i]);
-		new_cmd->token_head = tokenize_input(new_cmd->command);
-		
+		new_cmd->token_head = tokenize_input(new_cmd->command, envp);
 		if (!new_cmd->command)
 		{
 			perror("Failed to duplicate command string");
@@ -119,30 +116,36 @@ t_command	*get_command(char *input)
 	return (head);
 }
 
-// cat celine.txt | wc>out>a
-
 void	ft_set_args_and_paths(t_command *current, char **envp)
 {
+	// printf("*** ft_set_args_and_paths ***\n");
 	current->command_arg = NULL;
 	current->command_path = NULL;
+
+	printf("%scurrent->command = %s%s\n", GREEN, current->command, RESET);
 	current->command_arg = parse_input_quote(current->command);
 
-	// int	i = 0;
+//////////////////////
+	int i = 0;
+	while(current->command_arg[i])
+	{
+		printf("%scommand_arg[%d] = %s%s\n", GREEN, i, current->command_arg[i], RESET);
+		i++;
+	}
+	printf("\n");
+/////////////////////
+
+	
+	// i = 0;
 	// while (current->command_arg[i] == NULL)
 	// 	i++;
 	
 	// printf("%s i = %d%s\n", GREEN, i, RESET);
 	// printf("%scommand_arg[%d] = %s%s\n", GREEN, i, current->command_arg[i], RESET);
-	
-	current->command_path = ft_check_paths(envp, current->command_arg[0]);
-
-	// int i = 0;
-	// while(current->command_arg[i])
-	// {
-	// 	printf("%scommand_arg[%d] = %s%s\n", GREEN, i, current->command_arg[i], RESET);
-	// 	i++;
-	// }
+	current->command_path = ft_check_paths(envp, current->command_arg[0]); // bug ici pour redir au debut
 }
+
+
 
 int	child_process(t_command *current, char **envp)
 {

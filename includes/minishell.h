@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/03 11:13:36 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:50:57 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +127,16 @@ int			ft_builtin_pwd();
 
 
 /***********EXECUTION***********/
-t_command	*get_command(char *input);
+// t_command	*get_command(char *input);
+t_command	*get_command(char *input, char **envp);
 void		ft_append_str(char **original, char *new_str);
 int			child_process(t_command *current, char **envp);
 
 
 
 /***********INIT_AND_PARSING***********/
-t_token		*tokenize_input(char *input);
+// t_token		*tokenize_input(char *input);
+t_token 	*tokenize_input(char *input, char **envp);
 char		*ft_check_paths(char **envp, char *args);
 void		execve_fd(t_command *current, char **envp);
 

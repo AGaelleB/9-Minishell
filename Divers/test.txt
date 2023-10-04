@@ -53,14 +53,13 @@ bash-5.1$ echo -n' 'test
 bash-5.1$ echo -nnna
 -nnna
 
-*************************************
 bash-5.1$ echo 'test > oups'
 test > oups
 
 bash-5.1$ echo 'test>oups'
 test>oups
 
-bash-5.1$ echo test>oups // a faire
+bash-5.1$ echo test>oups
 bash-5.1$ cat oups 
 test
 
