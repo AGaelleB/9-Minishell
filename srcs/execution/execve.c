@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/04 14:44:59 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 12:01:48 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,30 +118,34 @@ t_command	*get_command(char *input, char **envp)
 
 void	ft_set_args_and_paths(t_command *current, char **envp)
 {
-	// printf("*** ft_set_args_and_paths ***\n");
 	current->command_arg = NULL;
 	current->command_path = NULL;
 
-	printf("%scurrent->command = %s%s\n", GREEN, current->command, RESET);
+	// printf("%scurrent->command = %s%s\n\n", GREEN, current->command, RESET);
 	current->command_arg = parse_input_quote(current->command);
 
 //////////////////////
-	int i = 0;
-	while(current->command_arg[i])
-	{
-		printf("%scommand_arg[%d] = %s%s\n", GREEN, i, current->command_arg[i], RESET);
-		i++;
-	}
-	printf("\n");
+	// int i = 0;
+	// while(current->command_arg[i])
+	// {
+	// 	printf("%s\ncommand_arg[%d] = %s%s", YELLOW, i, current->command_arg[i], RESET);
+	// 	i++;
+	// }
+	// printf("\n");
 /////////////////////
 
-	
 	// i = 0;
-	// while (current->command_arg[i] == NULL)
+	// while(current->command_arg[i] == NULL)
 	// 	i++;
-	
-	// printf("%s i = %d%s\n", GREEN, i, RESET);
-	// printf("%scommand_arg[%d] = %s%s\n", GREEN, i, current->command_arg[i], RESET);
+	// printf("%s*** command_arg[%d] = %s%s ***\n", GREEN, i, current->command_arg[i], RESET);
+
+	// printf("%s*** command_arg[0] = %s ***%s\n", GREEN, current->command_arg[0], RESET);
+	// printf("%s*** command_arg[1] = %s ***%s\n", GREEN, current->command_arg[1], RESET);
+	// printf("%s*** command_arg[2] = %s%s ***\n", GREEN, current->command_arg[2], RESET);
+	// printf("%s*** command_arg[3] = %s%s ***\n", GREEN, current->command_arg[3], RESET);
+	// printf("%s*** command_arg[4] = %s%s ***\n", GREEN, current->command_arg[4], RESET);
+	// printf("%s*** command_arg[5] = %s%s ***\n", GREEN, current->command_arg[5], RESET);
+
 	current->command_path = ft_check_paths(envp, current->command_arg[0]); // bug ici pour redir au debut
 }
 

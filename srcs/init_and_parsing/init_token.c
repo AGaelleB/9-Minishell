@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/04 14:46:59 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 12:01:26 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,15 @@ t_token *tokenize_input(char *input, char **envp)
 	delimiters[5] = NULL;
 	words = split_string_token(input, delimiters);
 
-	while (words[i])
-	{
-		printf("words[%d]: %s\n", i, words[i]);
-		i++;
-	}
-	i = 0;
+	// while (words[i])
+	// {
+	// 	printf("words[%d]: %s\n", i, words[i]);
+	// 	i++;
+	// }
+	// i = 0;
 
 	while (words[i])
 	{
-		// flag_single_quote = !flag_single_quote;
 		if (is_empty_or_space(words[i]))
 		{
 			i++;
@@ -107,7 +106,6 @@ t_token *tokenize_input(char *input, char **envp)
 			free(path);
 		}
 
-		
 		// if (state == TYPE_CMD)
 		// {
 		// 	token = new_token(TYPE_CMD, words[i]);
@@ -161,7 +159,7 @@ t_token *tokenize_input(char *input, char **envp)
 		}
 		add_token_to_list(&head, &curr, token);
 		i++;
-		printf("%stoken->type = %d%s\n", MAGENTA, token->type, RESET); ////////
+		// printf("%stoken->type = %d%s\n\n", MAGENTA, token->type, RESET); ////////
 	}
 	ft_free_tab(words);
 	return (head);

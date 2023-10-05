@@ -1,6 +1,5 @@
 TEST
 
-
 *** TEST DES SINGLES QUOTES : ***
 
 bash-5.1$ echo' test'
@@ -33,7 +32,7 @@ bash: echo coucou: command not found
 bash-5.1$ 'ech'o     '  '  coucou
    coucou
 
-*** ECHO -n : ***
+   *** ECHO -n : ***
 
 bash-5.1$ echo -n -n -nnnn -nnnnabc
 -nnnnabcbash-5.1$ 
@@ -68,3 +67,19 @@ test>oups
 
 bash-5.1$ cat celine.txt | echo 'coucou>t'est>a>b>>c
    -> ici on doit renvoyer dans le fichier 'c' "coucou>test"
+
+
+   *** TEST DES REDIRECTIONS : ***
+
+bash-5.1$            >a>   b>c   cat '  '   celine.txt
+cat: '  ': No such file or directory
+   -> doit aussi renvoyer le cat dans le fichier 
+
+bash-5.1$ > a > b cat celine.txt
+   -> doit renvoyer le cat dans le fichier 
+
+bash-5.1$ >a>b cat celine.txt
+   -> doit renvoyer le cat dans le fichier 
+
+bash-5.1$ >a>>b cat celine.txt
+    -> doit renvoyer le cat dans le fichier a la suite du texte deja present

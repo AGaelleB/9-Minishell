@@ -1,100 +1,75 @@
-t_token *tokenize_input(char *input)
+Notre fonction est recursive pour retirer tous les chevrons et les arguments qui debutent notre commande. 
+
+Notre probleme est que la fonction "is_redir_at_beginning" renvoie 'i' sans avoir fait sa recursivité des le premier tour. 
+
+int	is_redir_at_beginning(char *input, int i)
 {
-	t_token		*head;
-	t_token		*curr;
-	t_token		*token;
-	char		**words;
-	int			i;
-	int			state;
-	bool		flag_single_quote;
-	char		*delimiters[6];
 
-	i = 0;
-	head = NULL;
-	curr = NULL;
-	state = TYPE_CMD;
-	flag_single_quote = false;
-	delimiters[0] = " ";
-	delimiters[1] = "<";
-	delimiters[2] = ">>";
-	delimiters[3] = "<<";
-	delimiters[4] = ">";
-	delimiters[5] = NULL;
-	words = split_string_token(input, delimiters);
-
-	while (words[i])
-	{
-		printf("words[%d]: %s\n", i, words[i]);
+	while (input[i] == ' ')
 		i++;
-	}
-	i = 0;
 
-	while (words[i])
+	if (input[i] == '>' || input[i] == '<' || (input[i] == '>' && input[i + 1] == '>'))
 	{
-		// flag_single_quote = !flag_single_quote;
-		if (is_empty_or_space(words[i]))
-		{
+		if (input[i] == '>' || input[i] == '<')
 			i++;
-			continue;
-		}
-		token = NULL;
-		if (state == TYPE_CMD)
-		{
-			token = new_token(TYPE_CMD, words[i]);
-			state = TYPE_ARG;
-		}
-		else if (*words[i] == '\'')
-		{
-			// printf("%sflag_single_quote %d%s\n", YELLOW, flag_single_quote, RESET);
-			flag_single_quote = !flag_single_quote;
-			// printf("%sflag_single_quote %d%s\n", GREEN, flag_single_quote, RESET);
-			token = new_token(TYPE_ARG, words[i]);
-			state = TYPE_ARG;
-		}
-		else if ((!flag_single_quote) && (ft_strcmp_minishell(words[i], ">") == 0))
-		{
-			token = new_token(TYPE_REDIR_OUT, words[i]);
-			state = TYPE_F_OUT;
-		}
-		else if ((!flag_single_quote) && (ft_strcmp_minishell(words[i], "<") == 0))
-		{
-			token = new_token(TYPE_REDIR_IN, words[i]);
-			state = TYPE_F_IN;
-		}
-		else if ((!flag_single_quote) && (ft_strcmp_minishell(words[i], ">>") == 0))
-		{
-			token = new_token(TYPE_REDIR_APPEND, words[i]);
-			state = TYPE_F_OUT;
-		}
-		else if (ft_strcmp_minishell(words[i], "<<") == 0) // utiliser le bool ?? 
-		{
-			token = new_token(TYPE_HEREDOC, words[i]);
-			state = TYPE_EOF;
-		}
-		else if (state == TYPE_F_OUT) // > // >>
-		{
-			token = new_token(TYPE_F_OUT, words[i]);
-			state = TYPE_ARG;
-		}
-		else if (state == TYPE_F_IN) // <
-		{
-			token = new_token(TYPE_F_IN, words[i]);
-			state = TYPE_ARG;
-		}
-		else if (state == TYPE_EOF) // <<
-		{
-			token = new_token(TYPE_EOF, words[i]);
-			state = TYPE_ARG;
-		}
 		else
+			i += 2;
+		while (input[i] == ' ')
+			i++;
+		while (input[i] != ' ')
 		{
-			token = new_token(TYPE_ARG, words[i]);
-			state = TYPE_ARG; //
+			printf("input[i] = %c\n", input[i]);
+			i++;
 		}
-		add_token_to_list(&head, &curr, token);
-		i++;
-		// printf("%stoken->type = %d%s\n", MAGENTA, token->type, RESET); ////////
+		is_redir_at_beginning(input, i);
 	}
-	ft_free_tab(words);
-	return (head);
+	return (i);
 }
+
+char **parse_input_quote(char *input)
+{
+	bool	in_quote;
+	int		arg_count;
+	int		arg_idx;
+	int		idx;
+	char	**args;
+	char	*arg;
+	int		i;
+
+	i = 0;
+	i = is_redir_at_beginning(input, i);
+	printf("i = %d\n", i);
+	arg_count = count_args(input);
+	args = malloc((arg_count + 1) * sizeof(char *));
+	in_quote = false;
+	idx = 0;
+	if (!args)
+		return (NULL);
+	while (input[i])
+	{
+		arg = malloc(ft_strlen(input) + 1);
+		if (!arg)
+			return (NULL);
+		arg_idx = 0;
+		while (input[i] && (in_quote || (input[i] != ' ' && input[i] != '>' && input[i] != '<')))
+		{
+			if (input[i] == '\'')
+				in_quote = !in_quote;
+			else
+				arg[arg_idx++] = input[i];
+			i++;
+		}
+		if ((!in_quote) && (input[i] == '>' || input[i] == '<'))
+			break;
+		arg[arg_idx] = '\0';
+		if (arg_idx > 0)
+			args[idx++] = arg;
+		else
+			free(arg);
+		while (input[i] == ' ')
+			i++;
+	}
+	args[idx] = NULL;
+	return (args);
+}
+

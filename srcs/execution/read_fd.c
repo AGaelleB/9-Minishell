@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/04 11:10:58 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 12:00:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void execve_fd(t_command *current, char **envp)
 			}
 
 			ft_set_args_and_paths(current, envp); // Définir les arguments et le chemin avant d'appeler child_process.
-			print_commands_and_tokens(current); // PRINT
+			// print_commands_and_tokens(current); // PRINT
 			open_fd(current);
 			ft_all_builtins_verif(current);
 
