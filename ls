@@ -1,0 +1,15 @@
+a
+b
+c
+celine.txt
+Divers
+includes
+libft
+lili.c
+ls
+Makefile
+minishell
+objs_minishell
+README.md
+srcs
+test.txt

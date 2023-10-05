@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 16:29:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:38:31 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,8 @@ int main(int ac, char **av, char **envp)
 		}
 		else if (builtin_status == 2)
 			continue;
-		if (verif_nb_single_quote(input) != 0)
-		{
-			printf("minishell: miss quote\n");
-			free(input);
+		if (verif_nb_quote(input) != 0)
 			continue;
-		}
 		add_history(input);
 		new_commands = get_command(input, envp);
 		count_and_set_pipes(input, new_commands);

@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/05 16:31:34 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/10/05 17:02:02 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRCS_BUILTINS = srcs/builtins/all_builtins.c \
 	srcs/builtins/builtin_pwd.c \
 	srcs/builtins/builtins_exit.c \
 
-SRCS_INIT_AND_PARSING = srcs/init_and_parsing/init_token.c \
+SRCS_INIT_AND_PARSING = srcs/init_and_parsing/count_args_quotes.c \
+	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/init_quote.c \
 	srcs/init_and_parsing/path.c \
 

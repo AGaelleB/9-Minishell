@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 15:50:32 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:44:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token *new_token(t_e_token_type e_type, char *split_value)
+t_token	*new_token(t_e_token_type e_type, char *split_value)
 {
 	t_token *token;
 
@@ -27,7 +27,7 @@ t_token *new_token(t_e_token_type e_type, char *split_value)
 	return (token);
 }
 
-void add_token_to_list(t_token **head, t_token **tail, t_token *new_tok) 
+void	add_token_to_list(t_token **head, t_token **tail, t_token *new_tok) 
 {
 	if (!*head) 
 	{
@@ -39,28 +39,6 @@ void add_token_to_list(t_token **head, t_token **tail, t_token *new_tok)
 		(*tail)->next = new_tok;
 		*tail = new_tok;
 	}
-}
-
-bool contains_single_quote(char *str)
-{
-	while (*str)
-	{
-		if (*str == '\'')
-			return true;
-		str++;
-	}
-	return false;
-}
-
-bool contains_double_quote(char *str)
-{
-	while (*str)
-	{
-		if (*str == '"')
-			return true;
-		str++;
-	}
-	return false;
 }
 
 t_token *tokenize_input(char *input, char **envp)
@@ -103,7 +81,6 @@ t_token *tokenize_input(char *input, char **envp)
 		}
 		token = NULL;
 		char *path = NULL;
-		// (void)envp; 
 
 		if (words[i] != NULL)
 			path = ft_check_paths(envp, words[i]);

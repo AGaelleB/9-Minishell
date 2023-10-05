@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 17:03:47 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 17:07:34 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,26 @@ int	redirect_append_file_out(t_command *current, t_token *token) // >>
 		exit(-1);
 	}
 	return (0);
+}
+
+int	is_redir_at_beginning(char *input, int i)
+{
+	while (input[i] == ' ')
+		i++;
+	if ((input[i] == '>') || (input[i] == '<')
+		|| (input[i] == '>' && input[i + 1] == '>')
+		|| (input[i] == '<' && input[i + 1] == '<'))
+	{
+		if ((input[i] == '>' && input[i + 1] == '>')
+			|| (input[i] == '<' && input[i + 1] == '<'))
+			i += 2;
+		else if (input[i] == '>' || input[i] == '<')
+			i++;
+		while (input[i] == ' ')
+			i++;
+		while (input[i] != ' ')
+			i++;
+		return (is_redir_at_beginning(input, i));
+	}
+	return (i);
 }

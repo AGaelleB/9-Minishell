@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 14:37:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 17:07:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@
 
 # define SUCCESS	0
 # define FAILURE	1
+
+
+typedef struct s_parser
+{
+	char	**args;
+	int		i;
+	int		idx;
+	bool	in_quote;
+} t_parser;
+
 
 typedef struct s_quote 
 {
@@ -117,7 +127,6 @@ int			ft_builtin_echo_fd(char **tab);
 int			ft_builtin_pwd_fd(int fd);
 
 /***********EXECUTION***********/
-// t_command	*get_command(char *input);
 t_command	*get_command(char *input, char **envp);
 void		ft_append_str(char **original, char *new_str);
 int			child_process(t_command *current, char **envp);
@@ -125,17 +134,23 @@ int			child_process(t_command *current, char **envp);
 
 
 /***********INIT_AND_PARSING***********/
-// t_token		*tokenize_input(char *input);
+int			count_args_single_quotes(char *input);
+int			countcount_args_double_quotes_args(char *input);
+
+int			verif_nb_quote(char *input);
+bool		contains_single_quote(char *str);
+bool		contains_double_quote(char *str);
+
 t_token 	*tokenize_input(char *input, char **envp);
 char		*ft_check_paths(char **envp, char *args);
 void		execve_fd(t_command *current, char **envp);
 
-int			verif_nb_single_quote(char *str);
 
 /***********REDIRECTIONS***********/
 int			redirect_file_in(t_command *current, t_token *token);
 int			redirect_file_out(t_command *current, t_token *token);
 int			redirect_append_file_out(t_command *current, t_token *token);
+int			is_redir_at_beginning(char *input, int i);
 
 int			aleatori_char(void);
 char		*create_file_name(void);
@@ -143,7 +158,6 @@ int			write_in_fd(int fd, char *delimiter);
 int			redirect_heredoc(t_command *current, t_token *token);
 
 int			open_fd(t_command *command);
-
 
 
 /***********SIGNALS***********/
