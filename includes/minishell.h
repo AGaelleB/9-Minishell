@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/04 11:50:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 14:37:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,6 @@
 
 # define SUCCESS	0
 # define FAILURE	1
-
-typedef enum e_quote
-{
-	NONE,
-	SINGLE,
-	DOUBLE,
-	BACKSLASH,
-	END
-}	t_e_quote;
 
 typedef struct s_quote 
 {
@@ -123,8 +114,7 @@ int			ft_builtin_enter(char *input);
 int			ft_is_all_space(char *input);
 
 int			ft_builtin_echo_fd(char **tab);
-int			ft_builtin_pwd();
-
+int			ft_builtin_pwd_fd(int fd);
 
 /***********EXECUTION***********/
 // t_command	*get_command(char *input);

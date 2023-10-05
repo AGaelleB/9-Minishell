@@ -6,11 +6,11 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 12:49:58 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:29:50 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 // char	*return_input(char *input) // truc de rayan
 // {
@@ -52,15 +52,16 @@ int main(int ac, char **av, char **envp)
 			continue;
 		}
 		add_history(input);
-		// ft_free_struct(new_commands, new_commands->token_head);
-		// ft_free_current(new_commands);
-
 		new_commands = get_command(input, envp);
 		count_and_set_pipes(input, new_commands);
 		// ft_all_builtins_verif(new_commands);
 		// print_commands_and_tokens(new_commands); // PRINT
 		if(new_commands != NULL)
 			execve_fd(new_commands, envp);
+
+		// ft_free_tab(new_commands->command_arg);
+		ft_free_struct(new_commands, new_commands->token_head);
+		ft_free_current(new_commands);
 		free(input);
 	}
 	(void)av;
@@ -69,6 +70,14 @@ int main(int ac, char **av, char **envp)
 
 
 /*
+
+										TO DO :
+supprimer les files crees avec EOF lors de la gestion de l'env
+faire d autres test sur les EOF
+commencer les leaks 
+
+
+
 										A CORRIGER :
 verifier les free valgrind etc
 leaks lors de lexit apres avoir effectué une commande 
@@ -76,8 +85,6 @@ on doit boucle une premiere fois sur current pour avancé dans nos commandes pou
 split_value avec "cat" et le token entier, cest ici que ce situe le probleme dinvalid read size
 
 voir si besoin de ferme mieux :	// free_file_name(current->file_name);
-
-
 
 
 ************************************************************

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 12:38:30 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:50:32 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ bool contains_single_quote(char *str)
 	while (*str)
 	{
 		if (*str == '\'')
+			return true;
+		str++;
+	}
+	return false;
+}
+
+bool contains_double_quote(char *str)
+{
+	while (*str)
+	{
+		if (*str == '"')
 			return true;
 		str++;
 	}

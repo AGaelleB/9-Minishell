@@ -1,5 +1,5 @@
 TEST
-
+tableaux excel : https://github.com/Kwevan/42-Tests
 
 
 *** TEST DES SINGLES QUOTES : ***
@@ -96,6 +96,10 @@ bash-5.1$ >a>>b echo voila un travail bien fait > c
 bash-5.1$ cat celine.txt | rev > test.txt > a > srcs > fin | ls  > ls
 bash: srcs: Is a directory
 
+
+
+
+
    *** TEST DES HEREDOC : ***
 
 minishell$> grep m << EOF
@@ -109,4 +113,63 @@ je suis maman
 je suis maraine
 je suis mancho
 
+tester de faire une CTRL-D dans une EOF et voir si ca leak
 
+
+///////////
+
+list test : https://github.com/vladou-hopscott/minishell/wiki/Testing-commands
+
+bash: cat << del
+> $USER
+> del
+vnafissi
+
+bash: cat << "del"
+> $USER
+> del
+$USER
+
+bash: cat << ''del
+> $USER
+> del
+$USER
+
+bash: cat << del
+> "$USER"''
+> del
+"vnafissi"''
+
+bash: cat << del
+> '$USER'"$USER"
+> del
+'vnafissi'"vnafissi"
+
+bash: cat << del
+> $USER$USER
+> del
+vnafissivnafissi
+
+bash: cat << del
+> $USER1$USER
+> del
+vnafissi
+
+bash: cat << del
+> $USERIII
+> del
+
+bash: cat << $USER
+> vnafissi
+> $USER
+vnafissi
+
+bash: cat << $USER
+> coucou
+> $USER
+coucou
+
+bash: cat << "$USER"
+> coucou
+> $USER
+coucou

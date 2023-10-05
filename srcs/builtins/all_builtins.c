@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 16:32:08 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 14:14:41 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	ft_all_builtins_verif(t_command *current)
 		// printf("%sCommand %d: %s%s\n", GREEN, cmd_count, current->command, RESET);
 		
 		if (ft_strncmp(current->command, "pwd", 3) == 0)
-			ft_builtin_pwd();
+		{
+			ft_builtin_pwd_fd(STDOUT_FILENO);
+			exit (0);
+		}
 		if (ft_strncmp(current->command, "echo", 4) == 0)
 		{
 			if (current->command_path != NULL)

@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/02 15:09:28 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/10/05 16:31:34 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,32 +16,38 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g3
 
-OBJ_DIR_MINISHELL = srcs/obj_minishell
+OBJ_DIR_MINISHELL = objs_minishell
 
 OBJ_DIR_LIBFT = libft/obj_libft
 
-SRCS = srcs/execution/main_minishell.c \
-	srcs/builtins/all_builtins.c \
+SRCS_EXECUTION = srcs/main_minishell.c \
+	srcs/execution/double_quote.c \
+	srcs/execution/execve.c \
+	srcs/execution/read_fd.c \
+	srcs/execution/single_quote.c \
+
+SRCS_BUILTINS = srcs/builtins/all_builtins.c \
 	srcs/builtins/builtin_cd.c \
 	srcs/builtins/builtin_echo.c \
 	srcs/builtins/builtin_pwd.c \
 	srcs/builtins/builtins_exit.c \
-	srcs/execution/execve.c \
-	srcs/execution/read_fd.c \
-	srcs/execution/single_quote.c \
-	srcs/init_and_parsing/init_token.c \
+
+SRCS_INIT_AND_PARSING = srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/init_quote.c \
 	srcs/init_and_parsing/path.c \
-	srcs/redirections/redirect_file_in_and_out.c \
+
+SRCS_REDIRECTIONS = srcs/redirections/redirect_file_in_and_out.c \
 	srcs/redirections/redirect_heredoc.c \
 	srcs/redirections/redirect_open_fd.c \
-	srcs/signals/signal_exit.c \
-	srcs/utils/libft_modify.c \
+
+SRCS_SIGNALS = srcs/signals/signal_exit.c \
+
+SRCS_UTILS = srcs/utils/libft_modify.c \
 	srcs/utils/free.c \
 	srcs/utils/error.c \
 	srcs/utils/utils.c \
 
-SRC_LIBFT = libft/ft_atoi.c \
+SRCS_LIBFT = libft/ft_atoi.c \
 	libft/ft_bzero.c \
 	libft/ft_calloc.c \
 	libft/ft_isalnum.c \
@@ -76,7 +82,7 @@ SRC_LIBFT = libft/ft_atoi.c \
 	libft/ft_tolower.c \
 	libft/ft_toupper.c \
 
-SRC_LIBFT_BONUS = libft/ft_lstadd_back.c \
+SRCS_LIBFT_BONUS = libft/ft_lstadd_back.c \
 	libft/ft_lstadd_front.c \
 	libft/ft_lstclear.c \
 	libft/ft_lstdelone.c \
@@ -98,9 +104,14 @@ SRCS_PRINTF = libft/ft_printf/ft_printf.c \
 	libft/ft_printf/ft_print_u.c \
 	libft/ft_printf/ft_print_x.c \
 
-OBJS = $(SRCS:%.c=$(OBJ_DIR_MINISHELL)/%.o) \
-		$(SRC_LIBFT:%.c=$(OBJ_DIR_LIBFT)/%.o) \
-		$(SRC_LIBFT_BONUS:%.c=$(OBJ_DIR_LIBFT)/%.o) \
+OBJS = $(SRCS_EXECUTION:%.c=$(OBJ_DIR_MINISHELL)/%.o) \
+		$(SRCS_BUILTINS:%.c=$(OBJ_DIR_MINISHELL)/%.o) \
+		$(SRCS_INIT_AND_PARSING:%.c=$(OBJ_DIR_MINISHELL)/%.o) \
+		$(SRCS_REDIRECTIONS:%.c=$(OBJ_DIR_MINISHELL)/%.o) \
+		$(SRCS_SIGNALS:%.c=$(OBJ_DIR_MINISHELL)/%.o) \
+		$(SRCS_UTILS:%.c=$(OBJ_DIR_MINISHELL)/%.o) \
+		$(SRCS_LIBFT:%.c=$(OBJ_DIR_LIBFT)/%.o) \
+		$(SRCS_LIBFT_BONUS:%.c=$(OBJ_DIR_LIBFT)/%.o) \
 		$(SRCS_GNL:%.c=$(OBJ_DIR_LIBFT)/%.o) \
 		$(SRCS_PRINTF:%.c=$(OBJ_DIR_LIBFT)/%.o) \
 

@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 12:44:55 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 14:48:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int count_args(char *input)
+int	count_args(char *input)
 {
 	int		count;
 	bool	in_quote;
@@ -42,14 +42,13 @@ int	is_redir_at_beginning(char *input, int i)
 	while (input[i] == ' ')
 		i++;
 
-	if (input[i] == '>' || input[i] == '<' || (input[i] == '>' && input[i + 1] == '>'))
+	if ((input[i] == '>') || (input[i] == '<')
+		|| (input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<'))
 	{
-		// printf("i = %d\n", i);
-		if (input[i] == '>' && input[i + 1] == '>')
+		if ((input[i] == '>' && input[i + 1] == '>') || (input[i] == '<' && input[i + 1] == '<'))
 			i += 2;
 		else if (input[i] == '>' || input[i] == '<')
 			i++;
-		// printf("%si = %d%s\n",MAGENTA, i, RESET);
 		while (input[i] == ' ')
 			i++;
 		while (input[i] != ' ')
@@ -59,7 +58,7 @@ int	is_redir_at_beginning(char *input, int i)
 	return (i);
 }
 
-char **parse_input_quote(char *input)
+char	**parse_input_quote(char *input)
 {
 	bool	in_quote;
 	int		arg_count;
@@ -102,5 +101,6 @@ char **parse_input_quote(char *input)
 			i++;
 	}
 	args[idx] = NULL;
+	// free(arg);
 	return (args);
 }

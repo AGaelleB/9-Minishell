@@ -2,7 +2,7 @@
 
 ## CHECK LEAKS :
 sans readline leaks : 
-valgrind --leak-check=full --show-leak-kinds=all --memcheck:suppressions=./.minishell.supp ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --memcheck:suppressions=./.minishell.supp ./minishell
 
 ## TO DO LIST :
 https://trello.com/b/HVYpBej1/minishell-42
