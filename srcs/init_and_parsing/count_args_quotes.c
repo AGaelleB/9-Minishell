@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:01:04 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 17:02:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 17:29:58 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_args_single_quotes(char *input)
 	return (count);
 }
 
-int	countcount_args_double_quotes_args(char *input)
+int	count_args_double_quotes_args(char *input)
 {
 	int		count;
 	bool	in_quote;

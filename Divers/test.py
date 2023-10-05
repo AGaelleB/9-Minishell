@@ -62,6 +62,16 @@ test > oups
 bash-5.1$ echo 'test>oups'
 test>oups
 
+bash-5.1$ echo 'tes't>oups ///////////////////// WARNING
+bash-5.1$ cat oups 
+test
+
+///////////////////////
+minishell$>  cat celine.txt | echo 'coucou>t'est>a>b>>olalala
+minishell$>  cat celine.txt | echo 'coucout'est>a>b>>olalala
+coucoutest
+//////////////////////
+
 bash-5.1$ echo test>oups
 bash-5.1$ cat oups 
 test

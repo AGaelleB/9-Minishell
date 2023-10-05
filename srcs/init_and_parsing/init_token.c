@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 16:44:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 17:57:48 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,142 +14,123 @@
 
 t_token	*new_token(t_e_token_type e_type, char *split_value)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-
 	token->type = e_type;
-	token->split_value = ft_strdup(split_value);  // Remember to free this later!
+	token->split_value = ft_strdup(split_value); // Remember to free this later!
 	token->next = (NULL);
 	// printf("value : %s, type: %d\n", token->split_value, token->type);
 	return (token);
 }
 
-void	add_token_to_list(t_token **head, t_token **tail, t_token *new_tok) 
+void	add_token_to_list(t_token **head, t_token **tail, t_token *new_tok)
 {
-	if (!*head) 
+	if (!*head)
 	{
 		*head = new_tok;
 		*tail = *head;
-	} 
-	else 
+	}
+	else
 	{
 		(*tail)->next = new_tok;
 		*tail = new_tok;
 	}
 }
 
-t_token *tokenize_input(char *input, char **envp)
+void	init_tokenizer(t_tokenizer *tz, char *input)
 {
-	t_token		*head;
-	t_token		*curr;
-	t_token		*token;
-	char		**words;
-	int			i;
-	int			state;
-	bool		flag_single_quote;
-	char		*delimiters[6];
-
-	i = 0;
-	head = NULL;
-	curr = NULL;
-	state = TYPE_CMD;
-	flag_single_quote = false;
-	delimiters[0] = " ";
-	delimiters[1] = ">>";
-	delimiters[2] = "<<";
-	delimiters[3] = "<";
-	delimiters[4] = ">";
-	delimiters[5] = NULL;
-	words = split_string_token(input, delimiters);
-
-	// while (words[i])
-	// {
-	// 	printf("words[%d]: %s\n", i, words[i]);
-	// 	i++;
-	// }
-	// i = 0;
-
-	while (words[i])
-	{
-		if (is_empty_or_space(words[i]))
-		{
-			i++;
-			continue;
-		}
-		token = NULL;
-		char *path = NULL;
-
-		if (words[i] != NULL)
-			path = ft_check_paths(envp, words[i]);
-		// printf("		words[%d] = %s\n", i, words[i]);
-		// printf("		path = %s\n", path);
-		if (path != NULL) //  state == TYPE_CMD)
-		{
-			// printf("PAS NULL\n");
-			token = new_token(TYPE_CMD, words[i]);
-			state = TYPE_ARG;
-			free(path);
-		}
-
-		// if (state == TYPE_CMD)
-		// {
-		// 	token = new_token(TYPE_CMD, words[i]);
-		// 	state = TYPE_ARG;
-		// }
-		else if (contains_single_quote(words[i]))
-		{
-			flag_single_quote = !flag_single_quote;
-			token = new_token(TYPE_ARG, words[i]);
-			state = TYPE_ARG;
-		}
-		else if ((!flag_single_quote) && (ft_strcmp_minishell(words[i], "<<") == 0))
-		{
-			token = new_token(TYPE_HEREDOC, words[i]);
-			state = TYPE_EOF;
-		}
-		else if ((!flag_single_quote) && (ft_strcmp_minishell(words[i], ">>") == 0))
-		{
-			token = new_token(TYPE_REDIR_APPEND, words[i]);
-			state = TYPE_F_OUT;
-		}
-		else if ((!flag_single_quote) && (ft_strcmp_minishell(words[i], ">") == 0))
-		{
-			token = new_token(TYPE_REDIR_OUT, words[i]);
-			state = TYPE_F_OUT;
-		}
-		else if ((!flag_single_quote) && (ft_strcmp_minishell(words[i], "<") == 0))
-		{
-			token = new_token(TYPE_REDIR_IN, words[i]);
-			state = TYPE_F_IN;
-		}
-		else if (state == TYPE_F_OUT) // > // >>
-		{
-			token = new_token(TYPE_F_OUT, words[i]);
-			state = TYPE_ARG;
-		}
-		else if (state == TYPE_F_IN) // <
-		{
-			token = new_token(TYPE_F_IN, words[i]);
-			state = TYPE_ARG;
-		}
-		else if (state == TYPE_EOF) // <<
-		{
-			token = new_token(TYPE_EOF, words[i]);
-			state = TYPE_ARG;
-		}
-		else
-		{
-			token = new_token(TYPE_ARG, words[i]);
-			state = TYPE_ARG; //
-		}
-		add_token_to_list(&head, &curr, token);
-		i++;
-		// printf("%stoken->type = %d%s\n", MAGENTA, token->type, RESET); ////////
-	}
-	ft_free_tab(words);
-	return (head);
+	tz->i = 0;
+	tz->head = NULL;
+	tz->curr = NULL;
+	tz->state = TYPE_CMD; // -1
+	tz->flag_single_quote = false;
+	tz->delimiters[0] = " ";
+	tz->delimiters[1] = ">>";
+	tz->delimiters[2] = "<<";
+	tz->delimiters[3] = "<";
+	tz->delimiters[4] = ">";
+	tz->delimiters[5] = NULL;
+	tz->words = split_string_token(input, tz->delimiters);
 }
 
+t_token	*handle_cmd_token(t_tokenizer *tz, char **envp)
+{
+	char	*path;
+
+	path = ft_check_paths(envp, tz->words[tz->i]);
+	if (path)
+	{
+		tz->token = new_token(TYPE_CMD, tz->words[tz->i]);
+		tz->state = TYPE_ARG;
+		free(path);
+	}
+	return (tz->token);
+}
+
+t_token	*handle_redir_tokens(t_tokenizer *tz)
+{
+	if (ft_strcmp_minishell(tz->words[tz->i], "<<") == 0)
+		tz->token = new_token(TYPE_HEREDOC, tz->words[tz->i]);
+	else if (ft_strcmp_minishell(tz->words[tz->i], ">>") == 0)
+		tz->token = new_token(TYPE_REDIR_APPEND, tz->words[tz->i]);
+	else if (ft_strcmp_minishell(tz->words[tz->i], ">") == 0)
+		tz->token = new_token(TYPE_REDIR_OUT, tz->words[tz->i]);
+	else if (ft_strcmp_minishell(tz->words[tz->i], "<") == 0)
+		tz->token = new_token(TYPE_REDIR_IN, tz->words[tz->i]);
+	return (tz->token);
+}
+
+t_token	*handle_arg_token(t_tokenizer *tz)
+{
+	if (tz->state == TYPE_F_OUT || tz->state == TYPE_F_IN
+		|| tz->state == TYPE_EOF)
+		tz->token = new_token(tz->state, tz->words[tz->i]);
+	else
+		tz->token = new_token(TYPE_ARG, tz->words[tz->i]);
+	tz->state = TYPE_ARG;
+	return (tz->token);
+}
+
+t_token	*handle_quote_token(t_tokenizer *tz)
+{
+	tz->flag_single_quote = !tz->flag_single_quote;
+	tz->token = new_token(TYPE_ARG, tz->words[tz->i]);
+	tz->state = TYPE_ARG;
+	return (tz->token);
+}
+
+t_token	*create_token(t_tokenizer *tz, char **envp)
+{
+	tz->token = NULL;
+	if (tz->words[tz->i] != NULL && !tz->token)
+		tz->token = handle_cmd_token(tz, envp);
+	if (contains_single_quote(tz->words[tz->i]) && !tz->token)
+		tz->token = handle_quote_token(tz);
+	printf("%stz->flag_single_quote = %d%s\n", YELLOW, tz->flag_single_quote, RESET);
+	if (!tz->flag_single_quote && !tz->token)
+		tz->token = handle_redir_tokens(tz);
+	if (!tz->token)
+		tz->token = handle_arg_token(tz);
+	return (tz->token);
+}
+
+t_token	*tokenize_input(char *input, char **envp)
+{
+	t_tokenizer	tz;
+
+	init_tokenizer(&tz, input);
+	while (tz.words[tz.i])
+	{
+		if (!is_empty_or_space(tz.words[tz.i]))
+		{
+			tz.token = create_token(&tz, envp);
+			add_token_to_list(&tz.head, &tz.curr, tz.token);
+		}
+		tz.i++;
+	}
+	ft_free_tab(tz.words);
+	return (tz.head);
+}

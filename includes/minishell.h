@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 17:07:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 17:19:43 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,18 @@ typedef struct s_token
 	char				*split_value; // e.g. "cat"
 	struct s_token		*next;
 } t_token;
+
+typedef struct s_tokenizer
+{
+	t_token		*head;
+	t_token		*curr;
+	t_token		*token;
+	char		**words;
+	char		*delimiters[6];
+	int			i;
+	int			state;
+	bool		flag_single_quote;
+} t_tokenizer;
 
 typedef struct s_command
 {
