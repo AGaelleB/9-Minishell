@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/04 11:16:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/05 12:49:58 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int main(int ac, char **av, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		// input = readline("minishell$> ");
-		input = readline("😈🔥 MINIHELL$> ");
+		input = readline("minishell$> ");
+		// input = readline("😈🔥 MINIHELL$> ");
 		ft_builtin_ctrl_D(input);
 		builtin_status = ft_all_builtins(input);
 		if (builtin_status == 1)
@@ -70,20 +70,25 @@ int main(int ac, char **av, char **envp)
 
 /*
 										A CORRIGER :
-
+verifier les free valgrind etc
 leaks lors de lexit apres avoir effectué une commande 
 on doit boucle une premiere fois sur current pour avancé dans nos commandes pour ensuite free dans chaque commandes la tokenisation effectuée:
 split_value avec "cat" et le token entier, cest ici que ce situe le probleme dinvalid read size
 
-avec cette cmd on a de temps en temps le message d erreur "srcs: Is a directory" mais pas a tous les coups
-cat celine.txt | rev  > tesssssssst.txt > a > b > srcs > d > e > f > g > h > fiiiin | ls  > lsss
-
-devrait effectuer la redirection mais ca ne le fait pas car on split sur les espaces
-minishell$> ls> coucou
-minishell$> ls >coucou
-minishell$> ls > coui>coucou
-pour fix -> modifier la facon de tokenizer en parcouarnt word[i] et en regardant si ca comprend un ">"
-
 voir si besoin de ferme mieux :	// free_file_name(current->file_name);
+
+
+
+
+************************************************************
+cassé chez Rayan : 
+ec'h'o     t'rst'
+	-> on doit avoir "trst"
+ec'h'o'   ' t'rst'
+	-> on doit avoir "echo   : command not found"
+
+echo -n -a -nnn -er -nnnnnn -nae -nnn  bonjour
+	-> -a -nnn -er -nnnnnn -nae -nnn  bonjourminishell$> 
+************************************************************
 
 */

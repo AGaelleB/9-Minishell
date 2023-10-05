@@ -1,5 +1,7 @@
 TEST
 
+
+
 *** TEST DES SINGLES QUOTES : ***
 
 bash-5.1$ echo' test'
@@ -31,6 +33,8 @@ bash: echo coucou: command not found
 
 bash-5.1$ 'ech'o     '  '  coucou
    coucou
+
+
 
    *** ECHO -n : ***
 
@@ -69,6 +73,8 @@ bash-5.1$ cat celine.txt | echo 'coucou>t'est>a>b>>c
    -> ici on doit renvoyer dans le fichier 'c' "coucou>test"
 
 
+
+
    *** TEST DES REDIRECTIONS : ***
 
 bash-5.1$            >a>   b>c   cat '  '   celine.txt
@@ -83,3 +89,24 @@ bash-5.1$ >a>b cat celine.txt
 
 bash-5.1$ >a>>b cat celine.txt
     -> doit renvoyer le cat dans le fichier a la suite du texte deja present
+
+bash-5.1$ >a>>b echo voila un travail bien fait > c
+    -> doit renvoyer le echo dans le fichier 'c'
+
+bash-5.1$ cat celine.txt | rev > test.txt > a > srcs > fin | ls  > ls
+bash: srcs: Is a directory
+
+   *** TEST DES HEREDOC : ***
+
+minishell$> grep m << EOF
+> je suis maman
+> tu es papa
+> je suis maraine
+> je suis tonton
+> je suis mancho
+> EOF
+je suis maman
+je suis maraine
+je suis mancho
+
+
