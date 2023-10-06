@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 10:44:53 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 16:42:47 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/06 15:19:22 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,45 @@ int	verif_nb_quote(char *input)
 
 bool	contains_single_quote(char *str)
 {
+	int	nb_quotes;
+
+	nb_quotes = 0;
 	while (*str)
 	{
 		if (*str == '\'')
-			return (true);
+			nb_quotes++;
 		str++;
 	}
-	return (false);
+	if ((nb_quotes != 0) && (nb_quotes % 2 != 0))
+		return (true);
+	else
+		return (false);
 }
+
+// bool	contains_double_quote(char *str)
+// {
+// 	while (*str)
+// 	{
+// 		if (*str == '"')
+// 			return (true);
+// 		str++;
+// 	}
+// 	return (false);
+// }
 
 bool	contains_double_quote(char *str)
 {
+	int	nb_quotes;
+
+	nb_quotes = 0;
 	while (*str)
 	{
 		if (*str == '"')
-			return (true);
+			nb_quotes++;
 		str++;
 	}
-	return (false);
+	if ((nb_quotes != 0) && (nb_quotes % 2 != 0))
+		return (true);
+	else
+		return (false);
 }

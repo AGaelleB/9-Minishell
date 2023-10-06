@@ -62,15 +62,24 @@ test > oups
 bash-5.1$ echo 'test>oups'
 test>oups
 
-bash-5.1$ echo 'tes't>oups ///////////////////// WARNING
+bash-5.1$ echo 'tes't>oups
 bash-5.1$ cat oups 
 test
 
-///////////////////////
+bash-5.1$ echo -nnnn -n -nnnq ghg 'gfdgd'>' a       f'  //////////////////// WARNING WARNING
+   -> ici on doit renvoyer dans le fichier 'a       f'  "-nnnq ghg gfdgd"
+
+bash-5.1$ echo 'je casse'>'tonshell'  //////////////////// WARNING WARNING
+   -> ici on doit renvoyer dans le fichier 'tonshell' (sans single quote)  "je casse"
+
+bash-5.1$ echo 'je casse'>'ton shell'  //////////////////// WARNING WARNING
+   -> ici on doit renvoyer dans le fichier 'tonshell' (sans single quote)  "je casse"
+
 minishell$>  cat celine.txt | echo 'coucou>t'est>a>b>>olalala
+   -> ici on doit renvoyer dans le fichier 'olalala' "coucou>test" en append
+
 minishell$>  cat celine.txt | echo 'coucout'est>a>b>>olalala
-coucoutest
-//////////////////////
+   -> ici on doit renvoyer dans le fichier 'olalala' "coucoutest" en append
 
 bash-5.1$ echo test>oups
 bash-5.1$ cat oups 
@@ -82,6 +91,8 @@ test>oups
 bash-5.1$ cat celine.txt | echo 'coucou>t'est>a>b>>c
    -> ici on doit renvoyer dans le fichier 'c' "coucou>test"
 
+bash-5.1$ echo t'est >'> olalala
+   -> ici on doit renvoyer dans le fichier 'olalala' "test >"
 
 
 

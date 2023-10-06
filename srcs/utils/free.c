@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 14:33:31 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/06 16:00:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
-void	ft_free_struct(t_command *current, t_token *head) //modif ici
+void	ft_free_struct(t_command *current, t_token *head)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = NULL;
 	while (current)
 	{
 		head = current->token_head;
-		if(head != NULL)
+		if (head != NULL)
 		{
 			while (head)
 			{
 				tmp = head;
 				free(tmp->split_value);
-				// if(tmp != NULL)
-					free(tmp); //ICI
+				// if(tmp != NULL) Problme de l'invalid read size ??
+				free(tmp); //ICI
 				head = head->next;
 			}
 		}
@@ -50,7 +50,7 @@ void	ft_free_struct(t_command *current, t_token *head) //modif ici
 
 void	ft_free_current(t_command *current)
 {
-	t_command *tmp;
+	t_command	*tmp;
 
 	tmp = NULL;
 	while (current)
@@ -72,4 +72,11 @@ void	free_file_name(char *file_name)
 		free(file_name);
 		ft_close_fd();
 	}
+}
+
+void	cleanup(pid_t *child_pids, int infile)
+{
+	free(child_pids);
+	if (infile != 0)
+		close(infile);
 }

@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/09/27 13:42:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/06 17:49:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void count_and_set_pipes(char *input, t_command *command)
+void	count_and_set_pipes(char *input, t_command *command)
 {
 	int	count;
 	int	i;
@@ -28,7 +28,7 @@ void count_and_set_pipes(char *input, t_command *command)
 	command->nb_pipes = count;
 }
 
-void	ft_close_fd()
+void	ft_close_fd(void)
 {
 	int	fd;
 
@@ -40,10 +40,11 @@ void	ft_close_fd()
 	}
 }
 
-int is_empty_or_space(char *str)
+int	is_empty_or_space(char *str)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (str[i])
 	{
 		if (!ft_isspace((unsigned char)str[i]))
@@ -82,18 +83,4 @@ void print_commands_and_tokens(t_command *head)
 		current_cmd = current_cmd->next;
 		printf("\n");  // Just to separate different commands
 	}
-}
-
-
-void print_t_quote(t_quote *quote)
-{
-	t_quote *temp = quote;
-
-	// while (temp)
-	// {
-		printf("%slist->str : %s%s\n", MAGENTA, temp->str, RESET);
-
-		// temp = temp->next;
-		// printf("\n");  // Just to separate different commands
-	// }
 }

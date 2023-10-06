@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 15:05:41 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/06 15:28:48 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	write_in_fd(int fd, char *delimiter)
 		if (line == NULL)
 			return (45);
 		if (ft_strcmp_minishell(line, delimiter) == 0)
-			break;
+			break ;
 		// if (str[0] != '\0') // A FAIRE !!!
 		// {
 			// permet de supprimer le file creer, avec l'environement
@@ -69,18 +69,18 @@ int	write_in_fd(int fd, char *delimiter)
 	return (0);
 }
 
-int	redirect_heredoc(t_command *current, t_token *token) // >>
+int	redirect_heredoc(t_command *current, t_token *token)
 {
-	char *delimiter;
-	char *file_name;
-	int fd;
+	char	*delimiter;
+	char	*file_name;
+	int		fd;
 
 	file_name = NULL;
 	fd = -1;
 	delimiter = token->next->split_value;
 	if (fd == -1)
 	{
-		if(file_name)
+		if (file_name)
 			free(file_name);
 		file_name = create_file_name();
 		fd = open(file_name, O_CREAT | O_EXCL | O_RDWR, 0644);
@@ -91,8 +91,7 @@ int	redirect_heredoc(t_command *current, t_token *token) // >>
 	free_file_name(current->file_name);
 	if (current->fd_in == -1)
 	{
-		write(1, "minishell: ", 12);
-		perror("EOF");
+		perror("minishell: EOF");
 		exit(-1);
 	}
 	current->file_name = file_name;

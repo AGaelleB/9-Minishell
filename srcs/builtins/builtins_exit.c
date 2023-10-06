@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/13 15:41:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/06 15:11:47 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_builtin_write_exit(char *input)
 {
-	char *str;
+	char	*str;
 
 	str = ft_strtrim(input, " ");
 	if (ft_strcmp_minishell(str, "exit") == 0)
@@ -37,7 +37,7 @@ int	ft_builtin_enter(char *input)
 	return (0);
 }
 
-int ft_is_all_space(char *input)
+int	ft_is_all_space(char *input)
 {
 	int	i;
 
@@ -52,9 +52,9 @@ int ft_is_all_space(char *input)
 	return (1);
 }
 
-void	ft_builtin_ctrl_D(char *input)
+void	ft_builtin_ctrl_d(char *input)
 {
-	if (!input) 
+	if (!input)
 	{
 		write(1, "exit\n", 5);
 		exit(0);

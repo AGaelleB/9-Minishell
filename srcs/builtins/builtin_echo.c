@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 11:18:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/02 16:41:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/06 15:17:12 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ int	ft_builtin_echo_fd(char **tab)
 {
 	int	i;
 	int	j;
-	int	flag_option;
 
 	i = 1;
-	flag_option = 0;
+	j = 0;
 	while (tab[i] && ft_strncmp(tab[i], "-n", 2) == 0)
 	{
 		j = 2;
@@ -27,7 +26,6 @@ int	ft_builtin_echo_fd(char **tab)
 			j++;
 		if (tab[i][j] != '\0')
 			break ;
-		flag_option = 1;
 		i++;
 	}
 	while (tab[i])
@@ -37,7 +35,7 @@ int	ft_builtin_echo_fd(char **tab)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}
-	if (!flag_option)
+	if (j == 0)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }

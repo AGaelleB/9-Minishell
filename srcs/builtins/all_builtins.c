@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 14:14:41 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/06 11:56:28 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	ft_all_builtins(char *input)
 	return (0);
 }
 
-
 void	ft_all_builtins_verif(t_command *current)
 {
 	int	cmd_count;
@@ -32,7 +31,6 @@ void	ft_all_builtins_verif(t_command *current)
 	while (current)
 	{
 		// printf("%sCommand %d: %s%s\n", GREEN, cmd_count, current->command, RESET);
-		
 		if (ft_strncmp(current->command, "pwd", 3) == 0)
 		{
 			ft_builtin_pwd_fd(STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 16:38:31 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/06 15:29:40 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int main(int ac, char **av, char **envp)
 		return (printf("run ./minishell without arg\n"));
 	if (!envp[0])
 		return (printf("env is missing\n"));
-	signal(SIGINT, ft_signal_ctrl_C);
+	signal(SIGINT, ft_builtin_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		input = readline("minishell$> ");
 		// input = readline("😈🔥 MINIHELL$> ");
-		ft_builtin_ctrl_D(input);
+		ft_builtin_ctrl_d(input);
 		builtin_status = ft_all_builtins(input);
 		if (builtin_status == 1)
 		{

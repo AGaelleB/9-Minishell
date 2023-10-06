@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 12:00:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/06 15:24:37 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,9 @@ char	*ft_check_relative_paths(char **envp, char *args)
 
 char	*ft_check_paths(char **envp, char *args)
 {
-	// printf("*** DEBUT ft_check_paths ***\n");
-
-	// printf("%sft_check_paths args =  %s%s\n", RED, args, RESET);
 	char	*valid_path;
+	// printf("%sft_check_paths args =  %s%s\n", RED, args, RESET);
+
 	valid_path = ft_check_absolute_path(args);
 	if (valid_path != NULL)
 		return (valid_path);
