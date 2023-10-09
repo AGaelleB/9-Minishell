@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:30:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/09 10:40:53 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,19 @@ void	exit_with_error(char *message, pid_t *child_pids)
 	perror(message);
 	free(child_pids);
 	exit(1);
+}
+
+int	check_valid_identifier(char c)
+{
+	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
+		|| c == '\'' || c == '\"' || c == ' ' || c == ',' || c == '.'
+		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
+		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
+		|| c == '~' || c == ';'
+		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*')
+	{
+		return (1);
+	}
+	else
+		return (0);
 }

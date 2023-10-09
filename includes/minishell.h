@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 17:48:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/09 10:17:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,7 @@ void		block_signal(int signal);
 /***********UTILS***********/
 void		ft_print_error(char *str);
 void		exit_with_error(char *message, pid_t *child_pids);
+int			check_valid_identifier(char c);
 
 void		ft_free_tab(char **tab);
 void		ft_free_struct(t_command *current, t_token *head);
