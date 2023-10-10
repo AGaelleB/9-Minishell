@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/09 10:17:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:38:50 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_tokenizer
 	int			i;
 	int			state;
 	bool		flag_single_quote;
+	bool		flag_double_quote;
 } t_tokenizer;
 
 typedef struct s_command
@@ -177,7 +178,9 @@ int			countcount_args_double_quotes_args(char *input);
 t_token		*handle_cmd_token(t_tokenizer *tz, char **envp);
 t_token		*handle_redir_tokens(t_tokenizer *tz);
 t_token		*handle_arg_token(t_tokenizer *tz);
-t_token		*handle_quote_token(t_tokenizer *tz);
+t_token		*handle_single_quote_token(t_tokenizer *tz);
+t_token		*handle_double_quote_token(t_tokenizer *tz);
+
 
 int			verif_nb_quote(char *input);
 bool		contains_single_quote(char *str);

@@ -1,5 +1,7 @@
 # 9-Minishell
 
+https://docs.google.com/spreadsheets/d/1Df8ad8bNuCy5BGgMCzzcW5pYk6Ofmn4RdCJJ7OnYvs4/edit?pli=1#gid=0
+
 ## CHECK LEAKS :
 sans readline leaks : 
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --memcheck:suppressions=./.minishell.supp ./minishell

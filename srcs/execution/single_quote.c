@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/05 17:07:28 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:31:21 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*allocate_and_copy(char *input, int *i, bool *in_quote, int *arg_idx)
 	while (input[*i] && (*in_quote
 			|| (input[*i] != ' ' && input[*i] != '>' && input[*i] != '<')))
 	{
-		if (input[*i] == '\'')
+		if (input[*i] == '\'' || input[*i] == '"')
 			*in_quote = !*in_quote;
 		else
 			arg[(*arg_idx)++] = input[*i];

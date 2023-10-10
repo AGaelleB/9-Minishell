@@ -3,24 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_file_in_and_out.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/09 11:50:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:07:48 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	verif_file_name(t_token *token)
+char	*clean_file_name(t_token *token)
 {
-	if(check_valid_identifier(token->next->split_value[0]) == 1)
+	// bool in_quote;
+	char *file_name;
+	t_token *temp;
+	int i;
+	int y;
+	
+	i = 0;
+	y = 0;
+	// in_quote = false;
+	file_name = NULL;
+	temp = token->next;
+	printf("je suis rentre\n");
+	// while(temp)
+	// {
+		// printf("1ere boucle\n");
+		while(temp->split_value[i])
+		{
+			printf("2me boucle\n");
+			if (temp->split_value[i] == '\'' || temp->split_value[i] == '"')
+			{
+				printf("IF ??\n");
+				i++;
+			}
+			printf("j'associe\n");
+			file_name[y] = temp->split_value[i];
+			printf("jai associe\n");
+			i++;
+			y++;
+		}
+		printf("evolution file_name %s\n", file_name);
+		// temp = temp->next;
+	// }
+	return (file_name);
+}
+
+char	*verif_file_name(t_token *token)
+{
+	printf("token avant %s\n", token->next->split_value);
+	char *file_name;
+	file_name = clean_file_name(token);
+	printf("token APRES %s\n", file_name);
+	if(check_valid_identifier(file_name[0]) == 1)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
-		ft_putchar_fd(token->next->split_value[0], 2);
+		ft_putchar_fd(file_name[0], 2);
 		ft_putstr_fd("\n", 2);
 		exit(-1);
 	}
+	return (file_name);
 }
 
 int	redirect_file_out(t_command *current, t_token *token)
@@ -29,8 +71,8 @@ int	redirect_file_out(t_command *current, t_token *token)
 
 	if (current->fd_out != 1)
 		close(current->fd_out);
-	verif_file_name(token);
-	filename = token->next->split_value;
+	filename = verif_file_name(token);
+	// filename = token->next->split_value;
 	current->fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (current->fd_out == -1)
 	{

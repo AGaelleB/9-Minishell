@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_quote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 10:44:53 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:19:22 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:39:32 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,6 @@ bool	contains_single_quote(char *str)
 	else
 		return (false);
 }
-
-// bool	contains_double_quote(char *str)
-// {
-// 	while (*str)
-// 	{
-// 		if (*str == '"')
-// 			return (true);
-// 		str++;
-// 	}
-// 	return (false);
-// }
 
 bool	contains_double_quote(char *str)
 {

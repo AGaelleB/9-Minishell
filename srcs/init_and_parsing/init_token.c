@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:40:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:39:44 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	init_tokenizer(t_tokenizer *tz, char *input)
 	tz->curr = NULL;
 	tz->state = TYPE_CMD; // -1
 	tz->flag_single_quote = false;
+	tz->flag_double_quote = false;
 	tz->delimiters[0] = " ";
 	tz->delimiters[1] = ">>";
 	tz->delimiters[2] = "<<";
@@ -62,8 +63,10 @@ t_token	*create_token(t_tokenizer *tz, char **envp)
 	if (tz->words[tz->i] != NULL && !tz->token)
 		tz->token = handle_cmd_token(tz, envp);
 	if (contains_single_quote(tz->words[tz->i]) && !tz->token)
-		tz->token = handle_quote_token(tz);
-	if (!tz->flag_single_quote && !tz->token)
+		tz->token = handle_single_quote_token(tz);
+	else if (contains_double_quote(tz->words[tz->i]) && !tz->token)
+		tz->token = handle_double_quote_token(tz);
+	if (!tz->flag_single_quote && !tz->flag_double_quote && !tz->token)
 		tz->token = handle_redir_tokens(tz);
 	if (!tz->token)
 		tz->token = handle_arg_token(tz);

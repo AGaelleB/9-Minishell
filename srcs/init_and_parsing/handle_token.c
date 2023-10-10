@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:21:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:23:58 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:38:25 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,17 @@ t_token	*handle_arg_token(t_tokenizer *tz)
 	return (tz->token);
 }
 
-t_token	*handle_quote_token(t_tokenizer *tz)
+t_token	*handle_single_quote_token(t_tokenizer *tz)
 {
 	tz->flag_single_quote = !tz->flag_single_quote;
+	tz->token = new_token(TYPE_ARG, tz->words[tz->i]);
+	tz->state = TYPE_ARG;
+	return (tz->token);
+}
+
+t_token	*handle_double_quote_token(t_tokenizer *tz)
+{
+	tz->flag_double_quote = !tz->flag_double_quote;
 	tz->token = new_token(TYPE_ARG, tz->words[tz->i]);
 	tz->state = TYPE_ARG;
 	return (tz->token);

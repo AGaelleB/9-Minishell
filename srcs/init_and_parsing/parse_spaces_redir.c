@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_spaces_redir.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:15:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:23:48 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:41:56 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ char	*copy_with_spaces(char *input, char *new_input)
 {
 	int		i;
 	int		j;
-	bool	single_quote;
+	bool	quote;
 
 	i = 0;
 	j = 0;
-	single_quote = false;
+	quote = false;
 	while (input[i])
 	{
-		if (input[i] == '\'')
-			single_quote = !single_quote;
-		if ((!single_quote) && (input[i] == '>' || input[i] == '<'))
+		if (input[i] == '\'' || input[i] == '"')
+			quote = !quote;
+		if ((!quote) && (input[i] == '>' || input[i] == '<'))
 		{
 			new_input[j++] = ' ';
 			new_input[j++] = input[i];
