@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 12:45:36 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:05:56 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_token
 	t_e_token_type		type;
 	char				*split_value; // e.g. "cat"
 	struct s_token		*next;
-	struct s_command	*command;
+	char				*command;
 
 } t_token;
 
@@ -201,9 +201,9 @@ char		*add_spaces_around_redirections(char *input);
 
 
 /***********REDIRECTIONS***********/
-int			redirect_file_in(t_command *current, t_token *token);
-int			redirect_file_out(t_command *current, t_token *token);
-int			redirect_append_file_out(t_command *current, t_token *token);
+int			redirect_file_in(t_command *current, t_token *token, t_token *token_head);
+int			redirect_file_out(t_command *current, t_token *token, t_token *token_head);
+int			redirect_append_file_out(t_command *current, t_token *token, t_token *token_head);
 int			is_redir_at_beginning(char *input, int i);
 
 int			aleatori_char(void);
@@ -223,6 +223,8 @@ void		block_signal(int signal);
 void		ft_print_error(char *str);
 void		exit_with_error(char *message, pid_t *child_pids);
 int			check_valid_identifier(char c);
+int			check_valid_caractere_filename(char c);
+
 
 void		ft_free_tab(char **tab);
 void		ft_free_struct(t_command *current, t_token *head);

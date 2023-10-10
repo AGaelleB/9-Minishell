@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:15:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 11:41:56 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:35:31 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*copy_with_spaces(char *input, char *new_input)
 	quote = false;
 	while (input[i])
 	{
-		if (input[i] == '\'' || input[i] == '"')
+		if (input[i] == '\'' || input[i] == '\"')
 			quote = !quote;
 		if ((!quote) && (input[i] == '>' || input[i] == '<'))
 		{

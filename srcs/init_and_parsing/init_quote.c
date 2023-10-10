@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 10:44:53 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 11:39:32 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:35:27 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	verif_nb_double_quote(char *str)
 	count_quote = 0;
 	while (str[i])
 	{
-		if (str[i] == '"')
+		if (str[i] == '\"')
 			count_quote++;
 		i++;
 	}
@@ -86,7 +86,7 @@ bool	contains_double_quote(char *str)
 	nb_quotes = 0;
 	while (*str)
 	{
-		if (*str == '"')
+		if (*str == '\"')
 			nb_quotes++;
 		str++;
 	}

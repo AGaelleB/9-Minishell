@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count_args_quotes.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:01:04 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:19:07 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:34:21 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	count_args_double_quotes_args(char *input)
 	was_space = true;
 	while (*input)
 	{
-		if (*input == '"')
+		if (*input == '\"')
 			in_quote = !in_quote;
 		if (!in_quote && *input == ' ')
 			was_space = true;

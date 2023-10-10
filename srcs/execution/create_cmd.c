@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:09:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:08:14 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_command	*create_new_cmd(char *command_str, char **envp)
 	}
 	new_cmd->command = add_spaces_around_redirections(command_str);
 	new_cmd->token_head = tokenize_input(new_cmd->command, envp);
+	new_cmd->token_head->command = add_spaces_around_redirections(command_str);
 	if (!new_cmd->command)
 	{
 		perror("Failed to duplicate command string");
