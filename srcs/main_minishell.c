@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:29:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:40:13 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,18 @@ int main(int ac, char **av, char **envp)
 /*
 
 										TO DO :
+
+ajouté le texte aprés le file de redirection dans le file 
+exemple: echo joli, > test beau 
+cat test: joli,beau
+
+gerer le fait qui'il puisse y avoir plusieurs fichier comportant des quote avant/apres la commande 
+exemple: > "a" > "hello" > 'b' > c cat celine.txt
+modifier la ligne token->current pour avamcer apres y etre passse
+
+
+
+										
 supprimer les files crees avec EOF lors de la gestion de l'env
 faire d autres test sur les EOF
 commencer les leaks 
