@@ -6,11 +6,22 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 12:07:48 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:55:13 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	add_space_file_name(t_command *current)
+{
+	printf("jy suis ??\n");
+	if(current == NULL)
+		printf("current null ??\n");
+	if(current->command == NULL)
+		printf("  commande null ??\n");
+	printf("curent :%s\n", current->command);
+	return(0);
+}
 
 char	*clean_file_name(t_token *token)
 {
@@ -18,43 +29,45 @@ char	*clean_file_name(t_token *token)
 	char *file_name;
 	t_token *temp;
 	int i;
-	int y;
+	int j;
+	int k;
 	
 	i = 0;
-	y = 0;
+	j = 0;
+	k = 0;
 	// in_quote = false;
-	file_name = NULL;
+	file_name = malloc(sizeof(char*)*(1000));
 	temp = token->next;
-	printf("je suis rentre\n");
-	// while(temp)
-	// {
-		// printf("1ere boucle\n");
-		while(temp->split_value[i])
+	while(temp)
+	{
+		while(temp->split_value[i] != '\0')
 		{
-			printf("2me boucle\n");
 			if (temp->split_value[i] == '\'' || temp->split_value[i] == '"')
-			{
-				printf("IF ??\n");
 				i++;
+			if(k == 1)
+			{	
+				k = 0;
+				file_name[j] = ' ';
+				j++;
 			}
-			printf("j'associe\n");
-			file_name[y] = temp->split_value[i];
-			printf("jai associe\n");
+			k = add_space_file_name(token->command);
+			file_name[j] = temp->split_value[i];
 			i++;
-			y++;
+			j++;
 		}
-		printf("evolution file_name %s\n", file_name);
-		// temp = temp->next;
-	// }
+		i = 0;
+		k++;
+		temp = temp->next;
+	}
 	return (file_name);
 }
 
 char	*verif_file_name(t_token *token)
 {
-	printf("token avant %s\n", token->next->split_value);
+	printf("file name before%s\n", token->next->split_value);
 	char *file_name;
 	file_name = clean_file_name(token);
-	printf("token APRES %s\n", file_name);
+	printf("file name after%s\n", file_name);
 	if(check_valid_identifier(file_name[0]) == 1)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token ", 2);

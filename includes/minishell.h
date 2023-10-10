@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 11:38:50 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:45:36 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@
 # define FAILURE	1
 
 
+typedef struct s_command			t_command;
+
 typedef struct s_parser
 {
 	char	**args;
@@ -88,6 +90,8 @@ typedef struct s_token
 	t_e_token_type		type;
 	char				*split_value; // e.g. "cat"
 	struct s_token		*next;
+	struct s_command	*command;
+
 } t_token;
 
 
