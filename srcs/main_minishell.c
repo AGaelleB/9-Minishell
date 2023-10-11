@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 10:28:28 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 12:11:11 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ int main(int ac, char **av, char **envp)
 			continue;
 		add_history(input);
 		new_commands = get_command(input, envp);
+		if(new_commands == NULL)
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token \'", 2);
+			ft_putchar_fd(input[0], 2);
+			ft_putstr_fd("\'\n", 2);
+			free (input);
+			continue;
+		}
 		count_and_set_pipes(input, new_commands);
 		// ft_all_builtins_verif(new_commands);
 		// print_commands_and_tokens(new_commands); // PRINT

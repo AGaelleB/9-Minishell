@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 15:08:14 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 12:11:59 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ t_command	*get_command(char *input, char **envp)
 	i = 0;
 	while (command[i])
 	{
+		if(ft_strcmp_minishell(command[i], "") == 0)
+			return (NULL);
 		new_cmd = create_new_cmd(command[i], envp);
 		append_new_cmd(&head, new_cmd);
 		i++;
