@@ -6,78 +6,16 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 18:05:32 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 09:56:32 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// char    *epur_filename(t_token *token_head)
-// {
-//     char *file_name;
-//     int i;
-//     int j;
-//     bool in_quote;
-
-//     i = 0;
-//     j = 0;
-//     file_name = NULL;
-//     in_quote = false;
-//     file_name = malloc(sizeof(char) * 1000);  // Notez que c'est sizeof(char) ici, pas sizeof(char*)
-//     if (!file_name)
-//         return NULL;  // Gestion d'erreur en cas de malloc échoué
-    
-//     while(token_head->command[i] != '>')
-//         i++;
-//     // Je suppose que vous voulez avancer jusqu'au prochain guillemet ?
-//     while(token_head->command[i] != '\'' && token_head->command[i] != '\"')
-//         i++;
-    
-//     // Boucle principale
-//     while(token_head->command[i])
-//     {
-//         if (token_head->command[i] == '>' || token_head->command[i] == '<')
-//             break;
-        
-//         // basculer in_quote si on est à un caractère de guillemet
-//         if (token_head->command[i] == '\'' || token_head->command[i] == '\"')
-//             in_quote = !in_quote;
-        
-//         // on ne considère le caractère courant que si nous ne sommes pas dans une citation
-//         if (!in_quote)
-//         {
-//             // Vous pouvez décider ici si vous souhaitez inclure ou exclure les caractères non cités
-//             file_name[j] = token_head->command[i];
-//             j++;
-//         }
-//         i++;
-//     }
-//     file_name[j] = '\0';  // terminer la chaîne avec un null-terminator
-    
-//     char *tempo;
-//     tempo = malloc(sizeof(char) * 1000);  // A nouveau, c'est sizeof(char)
-//     if (!tempo)
-//     {
-//         free(file_name); // Libérer file_name pour éviter une fuite de mémoire
-//         return NULL;  // Gestion d'erreur en cas de malloc échoué
-//     }
-    
-//     j = 0;
-//     while(token_head->command[i])
-//     {
-//         tempo[j] = token_head->command[i];
-//         i++;
-//         j++;
-//     }
-//     tempo[j] = '\0';  // s'assurer que la chaîne est terminée
-    
-//     token_head->command = tempo;
-//     return(file_name);
-// }
-
 char	*epur_filename(t_token *token_head)
 {
 	char *file_name;
+	char *tempo;
 	int i;
 	int j;
 	bool in_quote;
@@ -111,7 +49,7 @@ char	*epur_filename(t_token *token_head)
 			i++;
 		if (!double_quote && (token_head->command[i] == '\''))
 			i++;
-		if(double_quote && in_quote) //lorsque lon est plus dans des quotes alors
+		if(!double_quote && !in_quote)
 		{
 			printf("coucou\n");
 			break;
@@ -121,8 +59,7 @@ char	*epur_filename(t_token *token_head)
 		j++;
 	}
 	file_name[j] = '\0';
-	char *tempo;
-	tempo=malloc(sizeof(char*)*(1000));;
+	tempo = malloc(sizeof(char*)*(1000));;
 	j = 0;
 	while(token_head->command[i])
 	{
