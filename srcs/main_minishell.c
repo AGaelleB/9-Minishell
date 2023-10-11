@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 12:11:11 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:45:41 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,30 @@
 // 		return (inp);
 // 	inp = input;
 // }
+
+
+int check_syntax_errors(char *input)
+{
+	char *ptr = input;
+	int pipe_found = 0;
+
+
+	ptr = input;
+	pipe_found = 0;
+	while (*ptr)
+	{
+		if (*ptr == '|')
+		{
+			if (pipe_found) // Si un '|' précédent a été trouvé, retourne l'erreur
+				return (1);
+			pipe_found = 1; // Sinon, met à jour le flag
+		}
+		else if (*ptr != ' ') // Si un caractère différent de '|' et ' ' est trouvé, réinitialise le flag
+			pipe_found = 0;
+		ptr++; // Passez au prochain caractère
+	}
+	return (0); // Aucune erreur trouvée
+}
 
 int main(int ac, char **av, char **envp)
 {
@@ -48,12 +72,16 @@ int main(int ac, char **av, char **envp)
 		if (verif_nb_quote(input) != 0)
 			continue;
 		add_history(input);
+		if (check_syntax_errors(input))
+		{
+			ft_putstr_fd("1 minishell: syntax error command required after \'||\'\n", 2);
+			free(input);
+			continue;
+		}
 		new_commands = get_command(input, envp);
 		if(new_commands == NULL)
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token \'", 2);
-			ft_putchar_fd(input[0], 2);
-			ft_putstr_fd("\'\n", 2);
+			ft_putstr_fd("2 minishell: syntax error near unexpected token \'|\'\n", 2);
 			free (input);
 			continue;
 		}

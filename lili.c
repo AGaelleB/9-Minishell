@@ -1,136 +1,77 @@
-pourquoi je n'imprime pas la ligne: 	printf("curent :%s\n", current->command);
+ca ne marche pas ou est mon erreur ? 
 
-mon shell :
-minishell$> echo "cououc" > "ton            shell"
-OUI ??
+minishell$> ls || 
+minishell: syntax error command required after '||'
+minishell$> ls |     | 
+minishell: syntax error command required after '|'
+minishell: syntax error command required after '|'
 
-ma strcuct :
-typedef struct s_command			t_command;
 
-typedef struct s_parser
+int check_syntax_errors(char *input)
 {
-	char	**args;
-	int		i;
-	int		idx;
-	bool	in_quote;
-} t_parser;
-
-
-typedef struct s_quote 
-{
-	char	*str;
-	char	**args;
-	struct	s_quote  *next;
-} t_quote;
-
-typedef enum e_token_type
-{
-	TYPE_CMD, // 0				// cat 			de cat celine.txt
-	TYPE_ARG, // 1				// celine.txt 	de cat celine.txt
-	TYPE_SEPARATOR, // 2		// "|" 
-	TYPE_SINGLE_QUOTE, // 3		// ' '
-	TYPE_REDIR_OUT, // 4		// ">"
-	TYPE_REDIR_IN, // 5			// "<"
-	TYPE_REDIR_APPEND, // 6		// ">>"
-	TYPE_HEREDOC, // 7			// "<<"
-	TYPE_F_OUT, // 8
-	TYPE_F_IN, // 9
-	TYPE_EOF, // 10				// eof
-	TYPE_FILENAME, // 11			
-
-} t_e_token_type;
-
-typedef struct s_token
-{
-	t_e_token_type		type;
-	char				*split_value; // e.g. "cat"
-	struct s_token		*next;
-	struct s_command	*command;
-
-} t_token;
-
-
-typedef struct s_split_token
-{
-	int					i;
-	int					j;
-	int					start;
-	int					delim_len;
-	int					len_to_copy;
-} t_split_token;
-
-typedef struct s_tokenizer
-{
-	t_token		*head;
-	t_token		*curr;
-	t_token		*token;
-	char		**words;
-	char		*delimiters[6];
-	int			i;
-	int			state;
-	bool		flag_single_quote;
-	bool		flag_double_quote;
-} t_tokenizer;
-
-typedef struct s_command
-{
-	int					nb_pipes;
-	char				*command;	// e.g. "cat test.txt"
-	char				**command_arg;	// e.g. "cat"
-	char				*command_path;	// e.g. /usr/bin/cat/
-	int					fd[2];
-	int					fd_out;
-	int					fd_in;
-	char				*file_name;
-	struct s_token		*token_head;
-	struct s_quote		*quote_head;
-	struct s_command	*next;
-} t_command;
-
-mon code :
-
-int	add_space_file_name(t_command *current)
-{
-	printf("OUI ??\n");
-	printf("curent :%s\n", current->command);
-	return(0);
+    // Vérifiez si "||" ou " | | " existe dans la chaîne d'entrée
+    char *ptr = input;
+    while ((ptr = strstr(ptr, "|")))
+    {
+        if (*(ptr + 1) == '|' || ( *(ptr + 1) == ' ' && *(ptr + 2) == '|'))
+            return 1; // Erreur: "||" ou " | | " trouvé
+        ptr++; // Passez au prochain caractère après "|"
+    }
+    return 0; // Aucune erreur trouvée
 }
 
-char	*clean_file_name(t_token *token)
+
+int main(int ac, char **av, char **envp)
 {
-	// bool in_quote;
-	char *file_name;
-	t_token *temp;
-	int i;
-	int j;
-	int k;
-	
-	i = 0;
-	j = 0;
-	k = 0;
-	// in_quote = false;
-	file_name = malloc(sizeof(char*)*(1000));
-	temp = token->next;
-	while(temp)
+	t_command	*new_commands;
+	char		*input;
+	int			builtin_status;
+	if (ac != 1)
+		return (printf("run ./minishell without arg\n"));
+	if (!envp[0])
+		return (printf("env is missing\n"));
+	signal(SIGINT, ft_builtin_ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
+	while (1)
 	{
-		while(temp->split_value[i] != '\0')
+		input = readline("minishell$> ");
+		// input = readline("😈🔥 MINIHELL$> ");
+		ft_builtin_ctrl_d(input);
+		builtin_status = ft_all_builtins(input);
+		if (builtin_status == 1)
 		{
-			if (temp->split_value[i] == '\'' || temp->split_value[i] == '"')
-				i++;
-			if(k == 1)
-			{	
-				k = 0;
-				file_name[j] = ' ';
-				j++;
-			}
-			add_space_file_name(token->command);
-			file_name[j] = temp->split_value[i];
-			i++;
-			j++;
+			free(input);
+			exit(0);
 		}
-		i = 0;
-		k++;
-		temp = temp->next;
+		else if (builtin_status == 2)
+			continue;
+		if (verif_nb_quote(input) != 0)
+			continue;
+		add_history(input);
+        if (check_syntax_errors(input))
+        {
+            ft_putstr_fd("minishell: syntax error command required after '||'\n", 2);
+            free(input);
+            continue;
+        }
+		new_commands = get_command(input, envp);
+		if(new_commands == NULL)
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token \'|\'\n", 2);
+			free (input);
+			continue;
+		}
+		count_and_set_pipes(input, new_commands);
+		// ft_all_builtins_verif(new_commands);
+		// print_commands_and_tokens(new_commands); // PRINT
+		if(new_commands != NULL)
+			execve_fd(new_commands, envp);
+
+		// ft_free_tab(new_commands->command_arg);
+		ft_free_struct(new_commands, new_commands->token_head);
+		ft_free_current(new_commands);
+		free(input);
 	}
-	return (file_name);
+	(void)av;
+	return (0);
 }

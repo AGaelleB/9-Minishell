@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 12:11:59 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:45:46 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@ t_command	*create_new_cmd(char *command_str, char **envp)
 		exit(1);
 	}
 	new_cmd->command = add_spaces_around_redirections(command_str);
-	new_cmd->token_head = tokenize_input(new_cmd->command, envp);
-	new_cmd->token_head->command = add_spaces_around_redirections(command_str);
 	if (!new_cmd->command)
 	{
 		perror("Failed to duplicate command string");
 		exit(1);
 	}
+	new_cmd->token_head = tokenize_input(new_cmd->command, envp);
+	if (new_cmd->token_head != NULL)
+		new_cmd->token_head->command = add_spaces_around_redirections(command_str);
+	else
+		ft_putstr_fd("3 minishell: syntax error command required after \'|\'\n", 2);
 	new_cmd->next = NULL;
 	return (new_cmd);
 }

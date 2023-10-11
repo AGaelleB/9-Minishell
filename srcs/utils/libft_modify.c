@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:16:28 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:42:16 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:43:20 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,3 +75,28 @@ char	*ft_strjoin_minishell(char *s1, char *s2)
 	dest[i + j] = '\0';
 	return (dest);
 }
+
+
+/* char	*ft_strstr(const char *str, const char *substr)
+{
+	const char	*start_str;
+	const char	*start_substr;
+	
+	if (!str || !substr)
+		return (NULL);
+	while (*str)
+	{
+		start_str = str;
+		start_substr = substr;
+		while (*str && *start_substr && *str == *start_substr)
+		{
+			str++;
+			start_substr++;
+		}
+		if (!*start_substr)
+			return ((char *)start_str);
+		str = start_str + 1;
+	}
+	return (NULL);
+}
+ */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 16:05:56 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 13:49:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,8 @@ int			ft_strchr_slash(char *str, char c);
 int			ft_strncmp_minishell(char *s1, char *s2, int n);
 int			ft_strcmp_minishell(char *s1, char *s2);
 char		*ft_strjoin_minishell(char *s1, char *s2);
-char		**split_string(const char *str, char delimiter);
+// char		*ft_strstr(const char *str, const char *substr);
+
 
 int			is_delimiter(char *str, char **delimiters, int *delim_len);
 int			count_split_tokens_str(char *str, char **delimiters);
@@ -250,5 +251,7 @@ void		count_and_set_pipes(char *input, t_command *command);
 void		ft_close_fd(void);
 int			is_empty_or_space(char *str);
 int			ft_isspace(int c);
+
+char		**split_string(const char *str, char delimiter);
 
 #endif
