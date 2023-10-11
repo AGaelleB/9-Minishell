@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_open_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:07:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 16:05:27 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 17:39:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	redirect_file_in_open_fd(t_command *command,
 	}
 }
 
-void	redirect_file_out_open_fd(t_command *command, 
+void	redirect_file_out_open_fd(t_command *command,
 	t_token *token, t_token *token_head)
 {
 	if (token->type == TYPE_REDIR_OUT)

@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "random": "c",
-        "system_error": "c"
+        "system_error": "c",
+        "minishell.h": "c"
     }
 }

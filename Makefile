@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/06 17:46:19 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/10/11 17:31:06 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,9 @@ OBJ_DIR_MINISHELL = objs_minishell
 OBJ_DIR_LIBFT = libft/obj_libft
 
 SRCS_EXECUTION = srcs/main_minishell.c \
-	srcs/execution/create_cmd.c \
-	srcs/execution/double_quote.c \
 	srcs/execution/execve.c \
+	srcs/execution/handle_quotes.c \
 	srcs/execution/read_fd.c \
-	srcs/execution/single_quote.c \
 
 SRCS_BUILTINS = srcs/builtins/all_builtins.c \
 	srcs/builtins/builtin_cd.c \
@@ -37,19 +35,23 @@ SRCS_BUILTINS = srcs/builtins/all_builtins.c \
 	srcs/builtins/builtins_exit.c \
 
 SRCS_INIT_AND_PARSING = srcs/init_and_parsing/count_args_quotes.c \
+	srcs/init_and_parsing/create_cmd.c \
 	srcs/init_and_parsing/handle_token.c \
 	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/init_quote.c \
 	srcs/init_and_parsing/path.c \
 	srcs/init_and_parsing/parse_spaces_redir.c \
 
-SRCS_REDIRECTIONS = srcs/redirections/redirect_file_in_and_out.c \
+SRCS_REDIRECTIONS = srcs/redirections/epur_filename.c \
+	srcs/redirections/redirect_at_beginning.c \
+	srcs/redirections/redirect_file_in_and_out.c \
 	srcs/redirections/redirect_heredoc.c \
 	srcs/redirections/redirect_open_fd.c \
 
 SRCS_SIGNALS = srcs/signals/signal_exit.c \
 
-SRCS_UTILS = srcs/utils/error.c \
+SRCS_UTILS = srcs/utils/check_syntax.c \
+	srcs/utils/error.c \
 	srcs/utils/free_bis.c \
 	srcs/utils/free.c \
 	srcs/utils/libft_modify.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 15:59:06 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:08:34 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exit_with_error(char *message, pid_t *child_pids)
 	exit(1);
 }
 
-int	check_valid_identifier(char c)
+/* int	check_valid_identifier(char c)
 {
 	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
 		|| c == '\'' || c == '\"' || c == ',' || c == '.'
@@ -44,16 +44,4 @@ int	check_valid_identifier(char c)
 	}
 	else
 		return (0);
-}
-
-int	check_valid_caractere_filename(char c)
-{
-	if (c == '|' || c == '<' || c == '>' || c == '#'
-			|| c == '(' || c == ')' || c == '!' || c == ';'
-			|| c == '?' || c == '&' || c == '*' || c == '\\')
-	{
-		return (1);
-	}
-	else
-		return (0);
-}
+} */

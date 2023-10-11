@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 13:49:01 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/11 17:29:31 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ char	**parse_input_quote(char *input);
 void	ft_all_builtins_verif(t_command *current);
 char	**split_string_token(char *str, char **delimiters);
 
-char *extract_filename(const char *input);
+// char *extract_filename(const char *input);
 
 
 /***********MAIN***********/
@@ -201,6 +201,10 @@ char		*add_spaces_around_redirections(char *input);
 
 
 /***********REDIRECTIONS***********/
+char		*epur_filename(t_token *token_head);
+
+int			is_redir_at_beginning(char *input, int i);
+
 int			redirect_file_in(t_command *current, t_token *token, t_token *token_head);
 int			redirect_file_out(t_command *current, t_token *token, t_token *token_head);
 int			redirect_append_file_out(t_command *current, t_token *token, t_token *token_head);
@@ -220,10 +224,14 @@ void		block_signal(int signal);
 
 
 /***********UTILS***********/
+int			check_valid_caractere_filename(char c);
+int			check_syntax_errors(char *input);
+int			pipe_syntax_errors(char *input);
+
+
 void		ft_print_error(char *str);
 void		exit_with_error(char *message, pid_t *child_pids);
-int			check_valid_identifier(char c);
-int			check_valid_caractere_filename(char c);
+// int			check_valid_identifier(char c);
 
 
 void		ft_free_tab(char **tab);

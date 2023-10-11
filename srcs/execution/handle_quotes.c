@@ -1,19 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   single_quote.c                                     :+:      :+:    :+:   */
+/*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 10:56:09 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:59:25 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+void	handle_quotes(char *input, int *i,
+	bool *double_quote, bool *single_quote)
+{
+	if (input[*i] == '\"' && !*single_quote)
+	{
+		*double_quote = !*double_quote;
+		(*i)++;
+	}
+	else if (input[*i] == '\'' && !*double_quote)
+	{
+		*single_quote = !*single_quote;
+		(*i)++;
+	}
+}
+
 /*Fonction 1: Allocation de l'argument et copie des caractères*/
-char	*allocate_and_copy(char *input, int *i, bool *in_quote, int *arg_idx)
+char	*allocate_and_copy(char *input, int *i, int *arg_idx)
 {
 	char	*arg;
 	bool	double_quote;
@@ -25,25 +40,12 @@ char	*allocate_and_copy(char *input, int *i, bool *in_quote, int *arg_idx)
 	if (!arg)
 		return (NULL);
 	*arg_idx = 0;
-	while (input[*i] && (*in_quote
-			|| (input[*i] != ' ' && input[*i] != '>' && input[*i] != '<')))
+	while (input[*i])
 	{
-		if (input[*i] == '\"')
-			double_quote = !double_quote;
-		if (input[*i] == '\'')
-			single_quote = !single_quote;
-		if (!single_quote && (input[*i] == '\"'))
-		{
-			(*i)++;
-			if (input[*i] == '\'')
-				single_quote = !single_quote;
-		}
-		if (!double_quote && (input[*i] == '\''))
-		{
-			(*i)++;
-			if (input[*i] == '\"')
-				double_quote = !double_quote;
-		}
+		handle_quotes(input, i, &double_quote, &single_quote);
+		if ((input[*i] == ' ' || input[*i] == '>' || input[*i] == '<')
+			&& !double_quote && !single_quote)
+			break ;
 		arg[(*arg_idx)++] = input[*i];
 		(*i)++;
 	}
@@ -64,7 +66,7 @@ char	**copy_argument(char *input, t_parser *parser)
 	char	*arg;
 	int		arg_idx;
 
-	arg = allocate_and_copy(input, &(parser->i), &(parser->in_quote), &arg_idx);
+	arg = allocate_and_copy(input, &(parser->i), &arg_idx);
 	if (!arg)
 		return (NULL);
 	if (arg_idx > 0)

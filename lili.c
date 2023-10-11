@@ -1,77 +1,56 @@
-ca ne marche pas ou est mon erreur ? 
 
-minishell$> ls || 
-minishell: syntax error command required after '||'
-minishell$> ls |     | 
-minishell: syntax error command required after '|'
-minishell: syntax error command required after '|'
-
-
-int check_syntax_errors(char *input)
+char	*epur_filename(t_token *token_head)
 {
-    // Vérifiez si "||" ou " | | " existe dans la chaîne d'entrée
-    char *ptr = input;
-    while ((ptr = strstr(ptr, "|")))
-    {
-        if (*(ptr + 1) == '|' || ( *(ptr + 1) == ' ' && *(ptr + 2) == '|'))
-            return 1; // Erreur: "||" ou " | | " trouvé
-        ptr++; // Passez au prochain caractère après "|"
-    }
-    return 0; // Aucune erreur trouvée
-}
+	char *file_name;
+	char *tempo;
+	int i;
+	int j;
+	bool in_quote;
+	bool double_quote;
+	size_t cmd_len;
 
+	i = 0;
+	j = 0;
+	file_name = NULL;
+	in_quote = false;
+	double_quote = false;
+	cmd_len = ft_strlen(token_head->command);
 
-int main(int ac, char **av, char **envp)
-{
-	t_command	*new_commands;
-	char		*input;
-	int			builtin_status;
-	if (ac != 1)
-		return (printf("run ./minishell without arg\n"));
-	if (!envp[0])
-		return (printf("env is missing\n"));
-	signal(SIGINT, ft_builtin_ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
-	while (1)
+	file_name = malloc((cmd_len + 1) * sizeof(char));
+	if (!file_name)
+		return (NULL);
+	// file_name = malloc(sizeof(char*)*(1000));
+	while(token_head->command[i] != '>')
+		i++;
+	while((token_head->command[i] != '\'') && (token_head->command[i] != '\"'))
+		i++;
+	while(token_head->command[i])
 	{
-		input = readline("minishell$> ");
-		// input = readline("😈🔥 MINIHELL$> ");
-		ft_builtin_ctrl_d(input);
-		builtin_status = ft_all_builtins(input);
-		if (builtin_status == 1)
-		{
-			free(input);
-			exit(0);
-		}
-		else if (builtin_status == 2)
-			continue;
-		if (verif_nb_quote(input) != 0)
-			continue;
-		add_history(input);
-        if (check_syntax_errors(input))
-        {
-            ft_putstr_fd("minishell: syntax error command required after '||'\n", 2);
-            free(input);
-            continue;
-        }
-		new_commands = get_command(input, envp);
-		if(new_commands == NULL)
-		{
-			ft_putstr_fd("minishell: syntax error near unexpected token \'|\'\n", 2);
-			free (input);
-			continue;
-		}
-		count_and_set_pipes(input, new_commands);
-		// ft_all_builtins_verif(new_commands);
-		// print_commands_and_tokens(new_commands); // PRINT
-		if(new_commands != NULL)
-			execve_fd(new_commands, envp);
-
-		// ft_free_tab(new_commands->command_arg);
-		ft_free_struct(new_commands, new_commands->token_head);
-		ft_free_current(new_commands);
-		free(input);
+		if (token_head->command[i] == '>' || token_head->command[i] == '<')
+			break;
+		if (token_head->command[i] == '\'')
+			in_quote = !in_quote;
+		if (token_head->command[i] == '\"')
+			double_quote = !double_quote;
+		if (!in_quote && (token_head->command[i] == '\"'))
+			i++;
+		if (!double_quote && (token_head->command[i] == '\''))
+			i++;
+		if(!double_quote && !in_quote)
+			break;
+		file_name[j] = token_head->command[i];
+		i++;
+		j++;
 	}
-	(void)av;
-	return (0);
+	file_name[j] = '\0';
+	tempo = malloc(sizeof(char*)*(1000));;
+	j = 0;
+	while(token_head->command[i])
+	{
+		tempo[j] = token_head->command[i];
+		i++;
+		j++;
+	}
+	token_head->command = tempo;
+	return(file_name);
 }
