@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 09:56:32 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:36:03 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ char	*epur_filename(t_token *token_head)
 		if (!double_quote && (token_head->command[i] == '\''))
 			i++;
 		if(!double_quote && !in_quote)
-		{
-			printf("coucou\n");
 			break;
-		}
 		file_name[j] = token_head->command[i];
 		i++;
 		j++;
@@ -144,7 +141,10 @@ int	redirect_append_file_out(t_command *current, t_token *token, t_token *token_
 }
 
 int	is_redir_at_beginning(char *input, int i)
-{
+{ 
+	bool	in_quote;
+
+	in_quote = false;
 	while (input[i] == ' ')
 		i++;
 	if ((input[i] == '>') || (input[i] == '<')
@@ -158,6 +158,17 @@ int	is_redir_at_beginning(char *input, int i)
 			i++;
 		while (input[i] == ' ')
 			i++;
+		if(input[i] == '\'' || input[i] == '\"')
+		{
+			in_quote = !in_quote;
+			i++;
+		}
+		while(in_quote)
+		{
+			if(input[i] == '\'' || input[i] == '\"')
+				in_quote = !in_quote;
+			i++;
+		}
 		while (input[i] != ' ')
 			i++;
 		return (is_redir_at_beginning(input, i));

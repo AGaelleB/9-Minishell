@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_builtins.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 11:56:28 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:32:02 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ int	ft_all_builtins(char *input)
 		return (1);
 	if (ft_is_all_space(input) != 0)
 		return (2);
+	if (ft_strcmp_minishell(input, "\"\"") == 0
+			|| ft_strcmp_minishell(input, "\'\'") == 0)
+	{
+		printf("minishell: : command not found\n");
+		free(input);
+		return (2);
+	}
 	return (0);
 }
 

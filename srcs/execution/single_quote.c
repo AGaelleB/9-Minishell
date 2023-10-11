@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 15:35:06 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:56:09 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
 char	*allocate_and_copy(char *input, int *i, bool *in_quote, int *arg_idx)
 {
 	char	*arg;
+	bool	double_quote;
+	bool	single_quote;
 
+	double_quote = false;
+	single_quote = false;
 	arg = malloc(ft_strlen(input) + 1);
 	if (!arg)
 		return (NULL);
@@ -24,10 +28,23 @@ char	*allocate_and_copy(char *input, int *i, bool *in_quote, int *arg_idx)
 	while (input[*i] && (*in_quote
 			|| (input[*i] != ' ' && input[*i] != '>' && input[*i] != '<')))
 	{
-		if (input[*i] == '\'' || input[*i] == '\"')
-			*in_quote = !*in_quote;
-		else
-			arg[(*arg_idx)++] = input[*i];
+		if (input[*i] == '\"')
+			double_quote = !double_quote;
+		if (input[*i] == '\'')
+			single_quote = !single_quote;
+		if (!single_quote && (input[*i] == '\"'))
+		{
+			(*i)++;
+			if (input[*i] == '\'')
+				single_quote = !single_quote;
+		}
+		if (!double_quote && (input[*i] == '\''))
+		{
+			(*i)++;
+			if (input[*i] == '\"')
+				double_quote = !double_quote;
+		}
+		arg[(*arg_idx)++] = input[*i];
 		(*i)++;
 	}
 	arg[*arg_idx] = '\0';
