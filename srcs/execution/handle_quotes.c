@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 16:59:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:53:21 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ char	**parse_input_quote(char *input)
 	int			arg_count;
 
 	parser.i = is_redir_at_beginning(input, 0);
-	arg_count = count_args_single_quotes(input);
-	parser.args = malloc((arg_count + 1) * sizeof(char *));
+	arg_count = count_args_single_quotes(input); //compter les doubles ?
+	parser.args = malloc((arg_count + 1) * sizeof(char *)); //probleme de malloc des doubles ?
 	parser.in_quote = false;
 	parser.idx = 0;
 	if (!parser.args)

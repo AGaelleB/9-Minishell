@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 11:39:44 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:59:48 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token	*new_token(t_e_token_type e_type, char *split_value)
 	token->type = e_type;
 	token->split_value = ft_strdup(split_value); // Remember to free this later!
 	token->next = (NULL);
-	// printf("value : %s | type: %d\n", token->split_value, token->type);
+	printf("value : %s | type: %d\n", token->split_value, token->type);
 	return (token);
 }
 
@@ -46,6 +46,7 @@ void	init_tokenizer(t_tokenizer *tz, char *input)
 	tz->head = NULL;
 	tz->curr = NULL;
 	tz->state = TYPE_CMD; // -1
+	tz->cmd_processed = false;
 	tz->flag_single_quote = false;
 	tz->flag_double_quote = false;
 	tz->delimiters[0] = " ";
@@ -60,6 +61,11 @@ void	init_tokenizer(t_tokenizer *tz, char *input)
 t_token	*create_token(t_tokenizer *tz, char **envp)
 {
 	tz->token = NULL;
+	if (tz->state == TYPE_F_OUT || tz->state == TYPE_F_IN)
+	{
+		tz->token = handle_arg_token(tz);
+		return tz->token;
+	}
 	if (tz->words[tz->i] != NULL && !tz->token)
 		tz->token = handle_cmd_token(tz, envp);
 	if (contains_single_quote(tz->words[tz->i]) && !tz->token)

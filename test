@@ -1,0 +1,3 @@
+current->command_arg[0] : echo
+current->command_arg[1] : joli
+joli

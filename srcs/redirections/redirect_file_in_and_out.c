@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_file_in_and_out.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 17:25:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:38:02 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,40 +85,3 @@ int	redirect_append_file_out(t_command *current,
 	}
 	return (0);
 }
-
-/* int	is_redir_at_beginning(char *input, int i)
-{
-	bool	in_quote;
-
-	in_quote = false;
-	while (input[i] == ' ')
-		i++;
-	if ((input[i] == '>') || (input[i] == '<')
-		|| (input[i] == '>' && input[i + 1] == '>')
-		|| (input[i] == '<' && input[i + 1] == '<'))
-	{
-		if ((input[i] == '>' && input[i + 1] == '>')
-			|| (input[i] == '<' && input[i + 1] == '<'))
-			i += 2;
-		else if (input[i] == '>' || input[i] == '<')
-			i++;
-		while (input[i] == ' ')
-			i++;
-		if(input[i] == '\'' || input[i] == '\"')
-		{
-			in_quote = !in_quote;
-			i++;
-		}
-		while(in_quote)
-		{
-			if(input[i] == '\'' || input[i] == '\"')
-				in_quote = !in_quote;
-			i++;
-		}
-		while (input[i] != ' ')
-			i++;
-		return (is_redir_at_beginning(input, i));
-	}
-	return (i);
-}
- */

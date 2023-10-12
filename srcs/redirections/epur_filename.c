@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   epur_filename.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:04:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 17:38:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/12 09:37:28 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,6 @@ static char	*extract_filename(char *cmd, int *i)
 	file_name[j] = '\0';
 	return (file_name);
 }
-
-/* static char	*update_command(char *cmd, int i)
-{
-	int		j;
-	char	*tempo;
-
-	tempo = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
-	if (!tempo)
-		return (NULL);
-	j = 0;
-	while (cmd[i])
-		tempo[j++] = cmd[i++];
-	tempo[j] = '\0';
-	return (tempo);
-} */
 
 static char	*update_command(char *cmd, int *i)
 {

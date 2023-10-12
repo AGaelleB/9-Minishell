@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 17:29:31 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:57:21 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_tokenizer
 	char		*delimiters[6];
 	int			i;
 	int			state;
+	bool		cmd_processed;
 	bool		flag_single_quote;
 	bool		flag_double_quote;
 } t_tokenizer;
@@ -177,7 +178,7 @@ int			execve_process(t_command *current, char **envp);
 
 /***********INIT_AND_PARSING***********/
 int			count_args_single_quotes(char *input);
-int			countcount_args_double_quotes_args(char *input);
+int			count_args_double_quotes_args(char *input);
 
 t_token		*handle_cmd_token(t_tokenizer *tz, char **envp);
 t_token		*handle_redir_tokens(t_tokenizer *tz);
