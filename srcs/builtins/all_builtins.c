@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 11:00:01 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:11:03 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,22 @@ char	**put_args_in_tab(t_command *current)
 	int i;
 
 	i = 0;
-	tab = NULL;
+	tab = malloc(sizeof(char) * (ft_strlen(current->command) + 1));
+	if (!tab)
+		return (NULL);
 	token = current->token_head;
-	while(token)
+	while (token)
 	{
-		printf("IN FONTION TAB = value : %s | type: %d\n", token->split_value, token->type);
-		if(token->type == 1)
+		// printf("IN FONTION TAB = value : %s | type: %d\n", token->split_value, token->type);
+		if (token->type == 1)
 		{
-			// printf("IF ?\n");
 			tab[i] = token->split_value;
 			i++;
-			// printf("fonction tab[%d] : %s\n", i, tab[i]);
 		}
-		// printf("PASSÉ\n");
 		token = token->next;
 	}
-	return(tab);
+	tab[i] = '\0';
+	return (tab);
 }
 
 void	ft_all_builtins_verif(t_command *current)
@@ -76,12 +76,12 @@ void	ft_all_builtins_verif(t_command *current)
 			if (current->command_path != NULL)
 			{
 				char **tab = put_args_in_tab(current);
-				int i = 0;
-				while(tab[i])
-				{
-					printf("tab[%d] : %s\n", i, tab[i]);
-					i++;
-				}
+				// int i = 0;
+				// while(tab[i])
+				// {
+				// 	printf("tab[%d] : %s\n", i, tab[i]);
+				// 	i++;
+				// }
 				ft_builtin_echo_fd(tab);
 				exit (0);
 			}
