@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 10:57:21 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:04:01 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,7 @@ int			ft_strcmp_minishell(char *s1, char *s2);
 char		*ft_strjoin_minishell(char *s1, char *s2);
 // char		*ft_strstr(const char *str, const char *substr);
 
+char		**split_command_on_pipe(char *input);
 
 int			is_delimiter(char *str, char **delimiters, int *delim_len);
 int			count_split_tokens_str(char *str, char **delimiters);

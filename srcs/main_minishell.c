@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 15:16:53 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:44:53 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,27 @@ int main(int ac, char **av, char **envp)
 										TO DO :
 
 ajouté le texte aprés le file de redirection dans le file 
-exemple: echo joli, > test beau 
-cat test: joli,beau
+exemple: echo joli, > test "    beau"
+cat test: joli, beau
+
+minishell$> echo test > "out file" test1
+value : echo | type: 0
+value : test | type: 1
+value : > | type: 4
+value : "out | type: 8
+value : file" | type: 1
+value : test1 | type: 1
+
+res : test file" test1
+
+minishell$> echo "test" > out "beau"
+value : echo | type: 0
+value : "test" | type: 1
+value : > | type: 4
+value : out | type: 8
+value : "beau" | type: 1
+
+res : "test" "beau"
 
 gerer le fait qui'il puisse y avoir plusieurs fichier comportant des quote avant/apres la commande 
 exemple: > "a" > "hello" > 'b' > c cat celine.txt

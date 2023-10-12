@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 11:49:55 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:26:26 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 	current->command_path = NULL;
 	current->command_arg = parse_input_quote(current->command);
 
-/* 	int i = 0;
+	int i = 0;
 	while(current->command_arg[i])
 	{
 		printf("%s\ncommand_arg[%d] = %s%s", YELLOW, i, current->command_arg[i], RESET);
 		i++;
 	}
-	printf("\n"); */
-
+	printf("%s\n PATH command_arg[0] = %s%s", GREEN, current->command_arg[0], RESET);
+	printf("\n");
 	current->command_path = ft_check_paths(envp, current->command_arg[0]);
 }
 

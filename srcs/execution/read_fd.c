@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 09:40:32 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:26:20 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	handle_child_process(t_process_data *data)
 		dup2(data->current->fd_out, 1);
 		close(data->current->fd_out);
 	}
-	ft_set_args_and_paths(data->current, data->envp);
-	// print_commands_and_tokens(current); // PRINT
 	open_fd(data->current);
 	ft_all_builtins_verif(data->current);
+	ft_set_args_and_paths(data->current, data->envp);
+	// print_commands_and_tokens(current); // PRINT
 	if (execve_process(data->current, data->envp) == 127)
 		exit(127);
 }

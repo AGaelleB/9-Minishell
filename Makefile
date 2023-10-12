@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
+#    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/11 17:31:06 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/10/12 14:59:57 by bfresque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRCS_UTILS = srcs/utils/check_syntax.c \
 	srcs/utils/free_bis.c \
 	srcs/utils/free.c \
 	srcs/utils/libft_modify.c \
+	srcs/utils/split_command_on_pipe.c \
 	srcs/utils/split_string_token_utils.c \
 	srcs/utils/split_string_token.c \
 	srcs/utils/split_string.c \

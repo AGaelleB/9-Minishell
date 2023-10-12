@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 15:02:41 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/12 14:58:27 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_command	*append_new_cmd(t_command **head, t_command *new_cmd)
 	return (current);
 }
 
-t_command	*get_command(char *input, char **envp)
+t_command *get_command(char *input, char **envp)
 {
 	t_command	*head;
 	t_command	*new_cmd;
@@ -62,7 +62,7 @@ t_command	*get_command(char *input, char **envp)
 	int			i;
 
 	head = NULL;
-	command = split_string(input, '|');
+	command = split_command_on_pipe(input);
 	i = 0;
 	while (command[i])
 	{
