@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 10:21:14 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:01:38 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_execve(t_command *cur, pid_t **childs_pids)
 		exit(1);
 }
 
-void	ft_set_args_and_paths(t_command *current, char **envp)
+void	ft_set_args_and_paths(t_command *current, t_env *env)
 {
 	current->command_arg = NULL;
 	current->command_path = NULL;
@@ -41,10 +41,10 @@ void	ft_set_args_and_paths(t_command *current, char **envp)
 	// }
 	// printf("%s\n PATH command_arg[0] = %s%s", GREEN, current->command_arg[0], RESET);
 	// printf("\n");
-	current->command_path = ft_check_paths(envp, current->command_arg[0]);
+	current->command_path = ft_check_paths(env->cpy_env, current->command_arg[0]);
 }
 
-int	execve_process(t_command *current, char **envp)
+int	execve_process(t_command *current, t_env *env)
 {
 	if (current->command_path == NULL)
 	{
@@ -57,7 +57,7 @@ int	execve_process(t_command *current, char **envp)
 		return (127);
 	}
 	// (void)envp;
-	else if (execve(current->command_path, current->command_arg, envp) == -1)
+	else if (execve(current->command_path, current->command_arg, env->cpy_env) == -1)
 	{
 		perror("Error");
 		exit(-1);

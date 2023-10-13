@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 10:56:56 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:11:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@
 
 typedef struct s_command			t_command;
 
+typedef struct s_env
+{
+	char				**cpy_env;
+	char				*str;
+	struct s_env		*next;
+} t_env;
+
 typedef struct s_parser
 {
 	char	**args;
@@ -59,7 +66,6 @@ typedef struct s_parser
 	int		idx;
 	bool	in_quote;
 } t_parser;
-
 
 typedef struct s_quote 
 {
@@ -93,7 +99,6 @@ typedef struct s_token
 	char				*command;
 
 } t_token;
-
 
 typedef struct s_split_token
 {
@@ -145,10 +150,10 @@ typedef struct s_process_data
 } t_process_data;
 
 void	print_commands_and_tokens(t_command *head);
-void	ft_set_args_and_paths(t_command *current, char **envp);
+void	ft_set_args_and_paths(t_command *current, t_env *env);
 char	**parse_input_quote(char *input);
 
-void	ft_all_builtins_verif(t_command *current);
+void	ft_all_builtins_verif(t_command *current, t_env	*env_bis, char **envp);
 char	**split_string_token(char *str, char **delimiters);
 
 // char *extract_filename(const char *input);
@@ -164,8 +169,14 @@ int			ft_all_builtins(char *input);
 int			ft_builtin_enter(char *input);
 int			ft_is_all_space(char *input);
 
+void		ft_builtin_env(t_env	*env);
+void		cpy_env(t_env	*env, char **envp);
+
+
 int			ft_builtin_echo_fd(char **tab);
 int			ft_builtin_pwd_fd(int fd);
+
+void		ft_builtin_unset(char **args, t_env *env);
 
 /***********EXECUTION***********/
 t_command	*create_new_cmd(char *command_str, char **envp);
@@ -173,7 +184,7 @@ t_command	*append_new_cmd(t_command **head, t_command *new_cmd);
 t_command	*get_command(char *input, char **envp);
 
 void		init_execve(t_command *cur, pid_t **childs_pids);
-int			execve_process(t_command *current, char **envp);
+int			execve_process(t_command *current, t_env *env);
 
 
 /***********INIT_AND_PARSING***********/

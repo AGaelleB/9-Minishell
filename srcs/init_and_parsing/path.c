@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:24:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:23:48 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,19 @@ char	**ft_get_paths(char **envp)
 {
 	char	*path;
 	char	**all_paths;
+	int		i;
 
+	i = 0;
 	path = NULL;
 	all_paths = NULL;
-	while (*envp)
+	while (envp[i])
 	{
-		if (ft_strncmp_minishell("PATH=", *envp, 5) == 0)
+		if (ft_strncmp_minishell("PATH=", envp[i], 5) == 0)
 		{
-			path = &((*envp)[5]);
+			path = &((envp[i])[5]);
 			break ;
 		}
-		envp++;
+		i++;
 	}
 	if (path == NULL)
 		return (NULL);

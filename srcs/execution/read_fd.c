@@ -3,17 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 14:26:20 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:11:39 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_child_process(t_process_data *data)
+void	handle_child_process(t_process_data *data, char **envp)
 {
+	t_env	*env_bis;
+
+	env_bis = (t_env *)malloc(sizeof(t_env));
+	if (!env_bis)
+		return ;
 	close(data->current->fd_in);
 	dup2(data->infile, 0);
 	if (data->current->next)
@@ -31,10 +36,10 @@ void	handle_child_process(t_process_data *data)
 		close(data->current->fd_out);
 	}
 	open_fd(data->current);
-	ft_all_builtins_verif(data->current);
-	ft_set_args_and_paths(data->current, data->envp);
+	ft_all_builtins_verif(data->current, env_bis, envp);
+	ft_set_args_and_paths(data->current, env_bis);
 	// print_commands_and_tokens(current); // PRINT
-	if (execve_process(data->current, data->envp) == 127)
+	if (execve_process(data->current, env_bis) == 127)
 		exit(127);
 }
 
@@ -60,10 +65,10 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 	signal(SIGINT, ft_builtin_ctrl_c);
 }
 
-void	handle_all_process(t_process_data *data)
+void	handle_all_process(t_process_data *data, char **envp)
 {
 	if (data->pid == 0)
-		handle_child_process(data);
+		handle_child_process(data, envp);
 	else if (data->pid > 0)
 		handle_parent_process(data);
 	else
@@ -88,7 +93,7 @@ void	execve_fd(t_command *current, char **envp)
 		data.child_pids[data.index++] = data.pid;
 		data.current->fd_in = data.current->fd[0];
 		data.current->fd_out = data.current->fd[1];
-		handle_all_process(&data);
+		handle_all_process(&data, envp);
 		data.current = data.current->next;
 	}
 	wait_for_children(data.command, data.child_pids);

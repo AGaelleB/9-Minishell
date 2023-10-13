@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 09:54:08 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:24:42 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 int main(int ac, char **av, char **envp)
 {
 	t_command	*new_commands;
+	t_env		*env_bis;
 	char		*input;
 
+	env_bis = (t_env *)malloc(sizeof(t_env));
+	if (!env_bis)
+		return (NULL);
 	if (ac != 1)
 		return (printf("run ./minishell without arg\n"));
 	if (!envp[0])
@@ -35,6 +39,7 @@ int main(int ac, char **av, char **envp)
 		add_history(input);
 		if (pipe_syntax_errors(input) == -1)
 			continue;
+		cpy_env(env_bis, envp);
 		new_commands = get_command(input, envp);
 		count_and_set_pipes(input, new_commands);
 		// print_commands_and_tokens(new_commands); // PRINT
