@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 15:18:49 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 10:21:14 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int	execve_process(t_command *current, char **envp)
 		ft_free_current(current);
 		return (127);
 	}
-	(void)envp;
-	// else if (execve(current->command_path, current->command_arg, envp) == -1)
-	// {
-	// 	perror("Error");
-	// 	exit(-1);
-	// }
+	// (void)envp;
+	else if (execve(current->command_path, current->command_arg, envp) == -1)
+	{
+		perror("Error");
+		exit(-1);
+	}
 	return (0);
 }

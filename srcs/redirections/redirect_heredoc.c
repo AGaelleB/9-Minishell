@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 15:28:48 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:52:40 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,3 +97,20 @@ int	redirect_heredoc(t_command *current, t_token *token)
 	current->file_name = file_name;
 	return (0);
 }
+
+
+/* 
+	<<EOF ls
+	> ^C
+	ferme heredoc et ne fait rien 
+	
+	<<EOF ls
+	> ^D
+	ferme heredoc et exec ls
+
+	<<EOF <<EOF cat
+	doit ouvrir les deux EOF mais ne doit print que le dernier
+
+	<celine.txt <<EOF cat
+	ne doit cat que EOF :doit reagir comme <celine.txt <lili.c cat
+ */

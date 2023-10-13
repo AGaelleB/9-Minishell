@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 15:57:52 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 10:14:43 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,48 @@ void	ft_skip_spaces(char *input, int *i)
 }
 
 /*Fonction 2: Allocation de l'argument et copie des caractères*/
-char	*ft_allocate_and_copy(char *input, int *i, int *arg_idx)
+// char	*ft_allocate_and_copy(char *input, int *i, int *arg_idx)
+// {
+// 	char	*arg;
+// 	bool	double_quote;
+// 	bool	single_quote;
+
+// 	double_quote = false;
+// 	single_quote = false;
+// 	arg = malloc(ft_strlen(input) + 1);
+// 	if (!arg)
+// 		return (NULL);
+// 	*arg_idx = 0;
+// 	while (input[*i])
+// 	{
+// 		ft_handle_quotes(input, i, &double_quote, &single_quote);
+// 		if ((input[*i] == ' ' || input[*i] == '>' || input[*i] == '<') && !double_quote && !single_quote)
+// 		{
+// 			(*i)++;
+// 			ft_skip_spaces(input, i);
+// 			while (input[*i] && input[*i] != ' ' && input[*i] != '>' && input[*i] != '<')
+// 			{
+// 				if (input[*i] == '\'' || input[*i] == '\"')
+// 					break;
+// 				(*i)++;
+// 			}
+// 			ft_skip_spaces(input, i);
+// 			break ;
+// 		}
+// 		arg[(*arg_idx)++] = input[*i];
+// 		(*i)++;
+// 	}
+// 	arg[*arg_idx] = '\0';
+// 	return (arg);
+// }
+
+//      echo "cou       cou" > out dit le "   hib      OUUHHHHH"
+
+char    *ft_allocate_and_copy(char *input, int *i, int *arg_idx)
 {
-	char	*arg;
-	bool	double_quote;
-	bool	single_quote;
+	char    *arg;
+	bool    double_quote;
+	bool    single_quote;
 
 	double_quote = false;
 	single_quote = false;
@@ -69,29 +106,40 @@ char	*ft_allocate_and_copy(char *input, int *i, int *arg_idx)
 	if (!arg)
 		return (NULL);
 	*arg_idx = 0;
+
 	while (input[*i])
 	{
 		ft_handle_quotes(input, i, &double_quote, &single_quote);
 		if ((input[*i] == '>' || input[*i] == '<') && !double_quote && !single_quote)
 		{
-			(*i)++;
-			ft_skip_spaces(input, i);
-			while (input[*i] && input[*i] != ' ' && input[*i] != '>' && input[*i] != '<')
-			{
-				if (input[*i] == '\'' || input[*i] == '\"')
-					break;
-				(*i)++;
-			}
-			ft_skip_spaces(input, i);
-			continue;
+			break; // Stop copying when a redirection is encountered outside quotes
+		}
+		else if (input[*i] == ' ' && !double_quote && !single_quote)
+		{
+			break; // Stop copying when a space is encountered outside quotes
 		}
 		arg[(*arg_idx)++] = input[*i];
 		(*i)++;
 	}
 	arg[*arg_idx] = '\0';
+	ft_skip_spaces(input, i); // Skip spaces after an argument is copied
+
+	// If redirection is encountered, skip the filename after it
+	if (input[*i] == '>' || input[*i] == '<')
+	{
+		(*i)++; // skip the redirection character
+		ft_skip_spaces(input, i); // skip spaces after redirection
+		while (input[*i] && input[*i] != ' ' && input[*i] != '>' && input[*i] != '<')
+		{
+			if (input[*i] == '\'' || input[*i] == '\"')
+				break;
+			(*i)++;
+		}
+		ft_skip_spaces(input, i); // skip spaces after filename
+	}
+
 	return (arg);
 }
-
 
 /*Fonction 3: Copie d'un argument dans le tableau d'arguments*/
 char	**ft_copy_argument(char *input, t_parser *parser)
@@ -156,7 +204,7 @@ void	ft_all_builtins_verif(t_command *current)
 				// int i = 0;
 				// while(tab[i])
 				// {
-				// 	printf("tab[%d] : %s\n", i, tab[i]);
+				// 	printf("%stab[%d] : %s%s\n", GREEN, i, tab[i], RESET);
 				// 	i++;
 				// }
 				ft_builtin_echo_fd(tab);

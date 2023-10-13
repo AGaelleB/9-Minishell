@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 15:04:01 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:39:22 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ int			ft_all_builtins(char *input);
 int			ft_builtin_enter(char *input);
 int			ft_is_all_space(char *input);
 
+// int	ft_builtin_echo_fd(char *str);////////////////
 int			ft_builtin_echo_fd(char **tab);
 int			ft_builtin_pwd_fd(int fd);
 

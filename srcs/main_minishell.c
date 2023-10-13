@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 11:44:53 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:54:08 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int main(int ac, char **av, char **envp)
 /*
 
 										TO DO :
+
+EOF a faire
 
 ajouté le texte aprés le file de redirection dans le file 
 exemple: echo joli, > test "    beau"
