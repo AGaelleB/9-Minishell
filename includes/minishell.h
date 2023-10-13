@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 09:39:22 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 10:56:56 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ int			ft_all_builtins(char *input);
 int			ft_builtin_enter(char *input);
 int			ft_is_all_space(char *input);
 
-// int	ft_builtin_echo_fd(char *str);////////////////
 int			ft_builtin_echo_fd(char **tab);
 int			ft_builtin_pwd_fd(int fd);
 
@@ -178,6 +177,8 @@ int			execve_process(t_command *current, char **envp);
 
 
 /***********INIT_AND_PARSING***********/
+char		*ft_allocate_and_copy(char *input, int *i, int *arg_idx);
+
 int			count_args_single_quotes(char *input);
 int			count_args_double_quotes_args(char *input);
 
@@ -196,6 +197,10 @@ t_token		*new_token(t_e_token_type e_type, char *split_value);
 t_token 	*tokenize_input(char *input, char **envp);
 char		*ft_check_paths(char **envp, char *args);
 void		execve_fd(t_command *current, char **envp);
+
+char		**parse_input_quote_echo(char *input);
+void		skip_spaces_echo(char *input, int *i);
+void		handle_quotes_echo(char *input, int *i, bool *double_quote, bool *single_quote);
 
 int			calculate_new_len(char *input);
 char		*copy_with_spaces(char *input, char *new_input);

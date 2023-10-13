@@ -6,7 +6,7 @@
 #    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/12 14:59:57 by bfresque         ###   ########.fr        #
+#    Updated: 2023/10/13 10:52:58 by bfresque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,12 +34,14 @@ SRCS_BUILTINS = srcs/builtins/all_builtins.c \
 	srcs/builtins/builtin_unset.c \
 	srcs/builtins/builtins_exit.c \
 
-SRCS_INIT_AND_PARSING = srcs/init_and_parsing/count_args_quotes.c \
+SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
+	srcs/init_and_parsing/count_args_quotes.c \
 	srcs/init_and_parsing/create_cmd.c \
 	srcs/init_and_parsing/handle_token.c \
 	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/init_quote.c \
 	srcs/init_and_parsing/path.c \
+	srcs/init_and_parsing/parsing_echo.c \
 	srcs/init_and_parsing/parse_spaces_redir.c \
 
 SRCS_REDIRECTIONS = srcs/redirections/epur_filename.c \
