@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 14:58:27 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:35:23 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_command	*create_new_cmd(char *command_str, char **envp)
+t_command	*create_new_cmd(char *command_str, t_env *env)
 {
 	t_command	*new_cmd;
 
@@ -28,7 +28,7 @@ t_command	*create_new_cmd(char *command_str, char **envp)
 		perror("Failed to duplicate command string");
 		exit(1);
 	}
-	new_cmd->token_head = tokenize_input(new_cmd->command, envp);
+	new_cmd->token_head = tokenize_input(new_cmd->command, env);
 	if (new_cmd->token_head != NULL)
 		new_cmd->token_head->command = add_spaces_around_redirections(command_str);
 	new_cmd->next = NULL;
@@ -54,7 +54,7 @@ t_command	*append_new_cmd(t_command **head, t_command *new_cmd)
 	return (current);
 }
 
-t_command *get_command(char *input, char **envp)
+t_command *get_command(char *input, t_env *env)
 {
 	t_command	*head;
 	t_command	*new_cmd;
@@ -68,7 +68,7 @@ t_command *get_command(char *input, char **envp)
 	{
 		if(ft_strcmp_minishell(command[i], "") == 0)
 			return (NULL);
-		new_cmd = create_new_cmd(command[i], envp);
+		new_cmd = create_new_cmd(command[i], env);
 		append_new_cmd(&head, new_cmd);
 		i++;
 	}

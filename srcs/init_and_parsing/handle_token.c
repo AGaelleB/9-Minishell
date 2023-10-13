@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   handle_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:21:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 10:59:05 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:35:32 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*handle_cmd_token(t_tokenizer *tz, char **envp)
+t_token	*handle_cmd_token(t_tokenizer *tz, t_env *env)
 {
 	char	*path;
 
-	path = ft_check_paths(envp, tz->words[tz->i]);
+	path = ft_check_paths(env, tz->words[tz->i]);
 	if (path)
 	{
 		if (!tz->cmd_processed)

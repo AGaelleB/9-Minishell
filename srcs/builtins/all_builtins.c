@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 17:23:12 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:32:37 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_all_builtins(char *input)
 	return (0);
 }
 
-void	ft_all_builtins_verif(t_command *current, t_env	*env_bis, char **envp)
+void	ft_all_builtins_verif(t_command *current, t_env	*env_bis)
 {
 	int		cmd_count;
 	char	**tab;

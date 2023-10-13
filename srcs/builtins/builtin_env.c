@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:24 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 15:47:18 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:42:47 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	count_arg_tab(char **tab)
 	return (i);
 }
 
-void	cpy_env(t_env	*env, char **envp)
+void	cpy_env(t_env *env, char **envp)
 {
 	int		i;
 

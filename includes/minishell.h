@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 17:11:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:41:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *current, t_env *env);
 char	**parse_input_quote(char *input);
 
-void	ft_all_builtins_verif(t_command *current, t_env	*env_bis, char **envp);
+void	ft_all_builtins_verif(t_command *current, t_env	*env_bis);
 char	**split_string_token(char *str, char **delimiters);
 
 // char *extract_filename(const char *input);
@@ -170,8 +170,7 @@ int			ft_builtin_enter(char *input);
 int			ft_is_all_space(char *input);
 
 void		ft_builtin_env(t_env	*env);
-void		cpy_env(t_env	*env, char **envp);
-
+void		cpy_env(t_env *env, char **envp);
 
 int			ft_builtin_echo_fd(char **tab);
 int			ft_builtin_pwd_fd(int fd);
@@ -179,9 +178,9 @@ int			ft_builtin_pwd_fd(int fd);
 void		ft_builtin_unset(char **args, t_env *env);
 
 /***********EXECUTION***********/
-t_command	*create_new_cmd(char *command_str, char **envp);
+t_command	*create_new_cmd(char *command_str, t_env *env);
 t_command	*append_new_cmd(t_command **head, t_command *new_cmd);
-t_command	*get_command(char *input, char **envp);
+t_command	*get_command(char *input, t_env *env);
 
 void		init_execve(t_command *cur, pid_t **childs_pids);
 int			execve_process(t_command *current, t_env *env);
@@ -193,7 +192,7 @@ char		*ft_allocate_and_copy(char *input, int *i, int *arg_idx);
 int			count_args_single_quotes(char *input);
 int			count_args_double_quotes_args(char *input);
 
-t_token		*handle_cmd_token(t_tokenizer *tz, char **envp);
+t_token		*handle_cmd_token(t_tokenizer *tz, t_env *env);
 t_token		*handle_redir_tokens(t_tokenizer *tz);
 t_token		*handle_arg_token(t_tokenizer *tz);
 t_token		*handle_single_quote_token(t_tokenizer *tz);
@@ -205,9 +204,9 @@ bool		contains_single_quote(char *str);
 bool		contains_double_quote(char *str);
 
 t_token		*new_token(t_e_token_type e_type, char *split_value);
-t_token 	*tokenize_input(char *input, char **envp);
-char		*ft_check_paths(char **envp, char *args);
-void		execve_fd(t_command *current, char **envp);
+t_token 	*tokenize_input(char *input, t_env *env);
+char		*ft_check_paths(t_env *env, char *args);
+void		execve_fd(t_command *current, t_env *env);
 
 char		**parse_input_quote_echo(char *input);
 void		skip_spaces_echo(char *input, int *i);

@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 17:23:48 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:36:38 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**ft_get_paths(char **envp)
+char	**ft_get_paths(t_env *env)
 {
 	char	*path;
 	char	**all_paths;
@@ -21,11 +21,11 @@ char	**ft_get_paths(char **envp)
 	i = 0;
 	path = NULL;
 	all_paths = NULL;
-	while (envp[i])
+	while (env->cpy_env[i])
 	{
-		if (ft_strncmp_minishell("PATH=", envp[i], 5) == 0)
+		if (ft_strncmp_minishell("PATH=", env->cpy_env[i], 5) == 0)
 		{
-			path = &((envp[i])[5]);
+			path = &((env->cpy_env[i])[5]);
 			break ;
 		}
 		i++;
@@ -68,12 +68,12 @@ char	*find_valid_path(char **temp_path, char *args)
 	return (valid_path);
 }
 
-char	*ft_check_relative_paths(char **envp, char *args)
+char	*ft_check_relative_paths(t_env *env, char *args)
 {
 	char	**temp_path;
 	char	*valid_path;
 
-	temp_path = ft_get_paths(envp);
+	temp_path = ft_get_paths(env);
 	if (temp_path == NULL || (temp_path[0][0]) == 0)
 	{
 		write(2, "No such file or directory: ", 28);
@@ -91,7 +91,7 @@ char	*ft_check_relative_paths(char **envp, char *args)
 	return (NULL);
 }
 
-char	*ft_check_paths(char **envp, char *args)
+char	*ft_check_paths(t_env *env, char *args)
 {
 	char	*valid_path;
 	// printf("%sft_check_paths args =  %s%s\n", RED, args, RESET);
@@ -99,7 +99,7 @@ char	*ft_check_paths(char **envp, char *args)
 	valid_path = ft_check_absolute_path(args);
 	if (valid_path != NULL)
 		return (valid_path);
-	valid_path = ft_check_relative_paths(envp, args);
+	valid_path = ft_check_relative_paths(env, args);
 	// printf("valid_path = %s\n", valid_path);
 	return (valid_path);
 }

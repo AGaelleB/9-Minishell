@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 17:24:42 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:47:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int ac, char **av, char **envp)
 
 	env_bis = (t_env *)malloc(sizeof(t_env));
 	if (!env_bis)
-		return (NULL);
+		return (0);
 	if (ac != 1)
 		return (printf("run ./minishell without arg\n"));
 	if (!envp[0])
@@ -40,11 +40,11 @@ int main(int ac, char **av, char **envp)
 		if (pipe_syntax_errors(input) == -1)
 			continue;
 		cpy_env(env_bis, envp);
-		new_commands = get_command(input, envp);
+		new_commands = get_command(input, env_bis);
 		count_and_set_pipes(input, new_commands);
 		// print_commands_and_tokens(new_commands); // PRINT
 		if(new_commands != NULL)
-			execve_fd(new_commands, envp);
+			execve_fd(new_commands, env_bis);
 		// ft_free_tab(new_commands->command_arg);
 		ft_free_struct(new_commands, new_commands->token_head);
 		ft_free_current(new_commands);

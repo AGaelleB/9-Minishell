@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 14:02:29 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:35:58 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	init_tokenizer(t_tokenizer *tz, char *input)
 	tz->words = split_string_token(input, tz->delimiters);
 }
 
-t_token	*create_token(t_tokenizer *tz, char **envp)
+t_token	*create_token(t_tokenizer *tz, t_env *env)
 {
 	tz->token = NULL;
 	if (tz->state == TYPE_F_OUT || tz->state == TYPE_F_IN)
@@ -67,7 +67,7 @@ t_token	*create_token(t_tokenizer *tz, char **envp)
 		return tz->token;
 	}
 	if (tz->words[tz->i] != NULL && !tz->token)
-		tz->token = handle_cmd_token(tz, envp);
+		tz->token = handle_cmd_token(tz, env);
 	if (contains_single_quote(tz->words[tz->i]) && !tz->token)
 		tz->token = handle_single_quote_token(tz);
 	else if (contains_double_quote(tz->words[tz->i]) && !tz->token)
@@ -80,7 +80,7 @@ t_token	*create_token(t_tokenizer *tz, char **envp)
 	return (tz->token);
 }
 
-t_token	*tokenize_input(char *input, char **envp)
+t_token	*tokenize_input(char *input, t_env *env)
 {
 	t_tokenizer	tz;
 
@@ -89,7 +89,7 @@ t_token	*tokenize_input(char *input, char **envp)
 	{
 		if (!is_empty_or_space(tz.words[tz.i]))
 		{
-			tz.token = create_token(&tz, envp);
+			tz.token = create_token(&tz, env);
 			add_token_to_list(&tz.head, &tz.curr, tz.token);
 		}
 		tz.i++;
