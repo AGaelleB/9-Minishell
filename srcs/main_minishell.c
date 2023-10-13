@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 17:47:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 18:05:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main(int ac, char **av, char **envp)
 		return (printf("env is missing\n"));
 	signal(SIGINT, ft_builtin_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
+	copy_env(env_bis, envp);
 	while (1)
 	{
 		input = readline("minishell$> ");
@@ -39,7 +40,6 @@ int main(int ac, char **av, char **envp)
 		add_history(input);
 		if (pipe_syntax_errors(input) == -1)
 			continue;
-		cpy_env(env_bis, envp);
 		new_commands = get_command(input, env_bis);
 		count_and_set_pipes(input, new_commands);
 		// print_commands_and_tokens(new_commands); // PRINT

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:58:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 17:13:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 18:08:16 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@ void	ft_builtin_unset(char **args, t_env *env)
 		ft_putstr_fd("unset: not enough arguments\n", 2);
 		return ;
 	}
-	// i = 0;
-	// while (env->cpy_env[i])
-	// {
-	// 	ft_putstr_fd(env->cpy_env[i], STDOUT_FILENO);
-	// 	ft_putchar_fd('\n', STDOUT_FILENO);
-	// 	i++;
-	// }
 	while (args[arg_idx])
 	{
 		i = 0;
@@ -46,20 +39,22 @@ void	ft_builtin_unset(char **args, t_env *env)
 					env->cpy_env[i] = env->cpy_env[i + 1];
 					i++;
 				}
-				env->cpy_env[i] = NULL;
+				env->cpy_env[i] = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+				env->cpy_env[i + 1] = NULL;
 				break;
 			}
 			i++;
 		}
 		arg_idx++;
 	}
-	i = 0;
-	while (env->cpy_env[i])
-	{
-		ft_putstr_fd(env->cpy_env[i], STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		i++;
-	}
+	// i = 0;
+	// while (env->cpy_env[i])
+	// {
+	// 	ft_putstr_fd(env->cpy_env[i], STDOUT_FILENO);
+	// 	ft_putchar_fd('\n', STDOUT_FILENO);
+	// 	i++;
+	// }
+	// return (env);
 }
 
 /*

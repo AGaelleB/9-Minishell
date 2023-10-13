@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 17:41:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/13 18:08:37 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,12 +170,12 @@ int			ft_builtin_enter(char *input);
 int			ft_is_all_space(char *input);
 
 void		ft_builtin_env(t_env	*env);
-void		cpy_env(t_env *env, char **envp);
+void		copy_env(t_env *env, char **envp);
 
 int			ft_builtin_echo_fd(char **tab);
 int			ft_builtin_pwd_fd(int fd);
 
-void		ft_builtin_unset(char **args, t_env *env);
+void	ft_builtin_unset(char **args, t_env *env);
 
 /***********EXECUTION***********/
 t_command	*create_new_cmd(char *command_str, t_env *env);
