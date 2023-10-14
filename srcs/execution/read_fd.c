@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 17:34:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/14 11:33:35 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ void	handle_child_process(t_process_data *data, t_env *env)
 		close(data->current->fd_out);
 	}
 	open_fd(data->current);
-	ft_all_builtins_verif(data->current, env);
-	ft_set_args_and_paths(data->current, env);
+	// ft_all_builtins_verif(data->current, env);
+	// ft_set_args_and_paths(data->current, env);
 	// print_commands_and_tokens(current); // PRINT
 	if (execve_process(data->current, env) == 127)
 		exit(127);
+		
 }
 
 void	handle_parent_process(t_process_data *data)

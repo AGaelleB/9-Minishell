@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 17:43:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/14 12:08:34 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	ft_set_args_and_paths(t_command *current, t_env *env)
 
 int	execve_process(t_command *current, t_env *env)
 {
-	if (current->command_path == NULL)
+	if(ft_all_builtins_verif(current, env) == 1)
+		return(2);
+	ft_set_args_and_paths(current, env);
+	if ((current->command_path == NULL) && (!env->flag_error))
 	{
 		write(2, "minishell: ", 11);
 		write(2, current->command_arg[0], ft_strlen(current->command_arg[0]));
@@ -56,11 +59,11 @@ int	execve_process(t_command *current, t_env *env)
 		ft_free_current(current);
 		return (127);
 	}
-	// (void)env->cpy_env;
-	else if (execve(current->command_path, current->command_arg, env->cpy_env) == -1)
+	else if ((current->command_path) &&
+		(execve(current->command_path, current->command_arg, env->cpy_env) == -1))
 	{
 		perror("Error");
-		exit(-1);
+		return (-1);
 	}
 	return (0);
 }

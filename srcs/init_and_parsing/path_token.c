@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   path_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/14 12:05:02 by bfresque         ###   ########.fr       */
+/*   Created: 2023/10/14 11:54:09 by bfresque          #+#    #+#             */
+/*   Updated: 2023/10/14 12:09:35 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**ft_get_paths(t_env *env)
+char	**ft_get_paths_token(t_env *env)
 {
 	char	*path;
 	char	**all_paths;
@@ -36,7 +36,7 @@ char	**ft_get_paths(t_env *env)
 	return (all_paths);
 }
 
-char	*ft_check_absolute_path(char *args)
+char	*ft_check_absolute_path_token(char *args)
 {
 	if (ft_strchr_slash(args, '/') == 1)
 	{
@@ -48,7 +48,7 @@ char	*ft_check_absolute_path(char *args)
 	return (NULL);
 }
 
-char	*find_valid_path(char **temp_path, char *args)
+char	*find_valid_path_token(char **temp_path, char *args)
 {
 	char	*valid_path;
 	int		i;
@@ -68,22 +68,15 @@ char	*find_valid_path(char **temp_path, char *args)
 	return (valid_path);
 }
 
-char	*ft_check_relative_paths(t_env *env, char *args)
+char	*ft_check_relative_paths_token(t_env *env, char *args)
 {
 	char	**temp_path;
 	char	*valid_path;
 
-	temp_path = ft_get_paths(env);
+	temp_path = ft_get_paths_token(env);
 	if (temp_path == NULL || (temp_path[0][0]) == 0)
-	{
-		write(2, "No such file or directory: ", 28);
-		write(2, args, ft_strlen(args));
-		write(2, "\n", 1);
-		env->flag_error = true;
-		return (NULL); //ne pas retirer
-	}
-	env->flag_error = false;
-	valid_path = find_valid_path(temp_path, args);
+		return (NULL);
+	valid_path = find_valid_path_token(temp_path, args);
 	ft_free_tab(temp_path);
 	if (valid_path != NULL)
 	{
@@ -93,15 +86,13 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 	return (NULL);
 }
 
-char	*ft_check_paths(t_env *env, char *args)
+char	*ft_check_paths_token(t_env *env, char *args)
 {
 	char	*valid_path;
-	// printf("%sft_check_paths args =  %s%s\n", RED, args, RESET);
 
-	valid_path = ft_check_absolute_path(args);
+	valid_path = ft_check_absolute_path_token(args);
 	if (valid_path != NULL)
 		return (valid_path);
-	valid_path = ft_check_relative_paths(env, args);
-	// printf("valid_path = %s\n", valid_path);
+	valid_path = ft_check_relative_paths_token(env, args);
 	return (valid_path);
 }

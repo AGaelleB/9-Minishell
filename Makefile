@@ -6,7 +6,7 @@
 #    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/13 10:52:58 by bfresque         ###   ########.fr        #
+#    Updated: 2023/10/14 11:55:04 by bfresque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/handle_token.c \
 	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/init_quote.c \
+	srcs/init_and_parsing/path_token.c \
 	srcs/init_and_parsing/path.c \
 	srcs/init_and_parsing/parsing_echo.c \
 	srcs/init_and_parsing/parse_spaces_redir.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 18:08:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/14 12:19:00 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@
 # define SUCCESS	0
 # define FAILURE	1
 
+#define BUILTIN_EXECUTED 1
+#define BUILTIN_NOT_EXECUTED 0
+
 
 typedef struct s_command			t_command;
 
@@ -56,6 +59,7 @@ typedef struct s_env
 {
 	char				**cpy_env;
 	char				*str;
+	bool				flag_error;
 	struct s_env		*next;
 } t_env;
 
@@ -153,7 +157,7 @@ void	print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *current, t_env *env);
 char	**parse_input_quote(char *input);
 
-void	ft_all_builtins_verif(t_command *current, t_env	*env_bis);
+int		ft_all_builtins_verif(t_command *current, t_env	*env_bis);
 char	**split_string_token(char *str, char **delimiters);
 
 // char *extract_filename(const char *input);
@@ -205,6 +209,7 @@ bool		contains_double_quote(char *str);
 
 t_token		*new_token(t_e_token_type e_type, char *split_value);
 t_token 	*tokenize_input(char *input, t_env *env);
+char		*ft_check_paths_token(t_env *env, char *args);
 char		*ft_check_paths(t_env *env, char *args);
 void		execve_fd(t_command *current, t_env *env);
 
