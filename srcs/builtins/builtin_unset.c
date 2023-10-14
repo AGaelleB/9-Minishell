@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:58:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/14 10:48:08 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:30:24 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@ void	ft_builtin_unset(char **args, t_env *env)
 	int	arg_idx;
 
 	arg_idx = 1;
+	env->flag_path = false;
 	if (!args[1])
 	{
 		ft_putstr_fd("unset: not enough arguments\n", 2);
 		return ;
+	}
+	if(ft_strcmp_minishell(args[1], "PATH") == 0)
+	{
+		printf("flag ON\n");
+		env->flag_path = true;
 	}
 	while (args[arg_idx])
 	{

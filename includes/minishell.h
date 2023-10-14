@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/14 12:19:00 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:28:15 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_env
 	char				**cpy_env;
 	char				*str;
 	bool				flag_error;
+	bool				flag_bultins;
+	bool				flag_path;
 	struct s_env		*next;
 } t_env;
 
