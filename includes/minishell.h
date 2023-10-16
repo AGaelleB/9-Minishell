@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 16:03:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:52:51 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_env
 	char				**cpy_env;
 	char				*str;
 	bool				flag_error;
-	bool				flag_path;
+	bool				flag_builtin;
 	int					pwd_index;
 	int					oldpwd_index;
 	char				*path_to_change;
@@ -152,7 +152,7 @@ void	print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *current, t_env *env);
 char	**parse_input_quote(char *input);
 
-int		ft_all_builtins_verif(t_command *current, t_env	*env_bis);
+int		builtins_verif(t_command *current, t_env	*env_bis);
 char	**split_string_token(char *str, char **delimiters);
 
 // char *extract_filename(const char *input);
@@ -167,7 +167,7 @@ int			ft_builtin_cd(char **args, t_env *env);
 
 int			ft_builtin_write_exit(char *input);
 void		ft_builtin_ctrl_d(char *input);
-int			ft_all_builtins(char *input);
+int			error_input(char *input);
 int			ft_builtin_enter(char *input);
 int			ft_is_all_space(char *input);
 

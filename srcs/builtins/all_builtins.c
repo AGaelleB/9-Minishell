@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 15:59:01 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:48:23 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_all_builtins(char *input)
+int	error_input(char *input)
 {
 	if (ft_builtin_enter(input) != 0)
 		return (2);
@@ -33,7 +33,7 @@ int	ft_all_builtins(char *input)
 	return (0);
 }
 
-int	ft_all_builtins_verif(t_command *current, t_env	*env)
+int	builtins_verif(t_command *current, t_env	*env)
 {
 	int		cmd_count;
 	char	**tab;
@@ -60,5 +60,5 @@ int	ft_all_builtins_verif(t_command *current, t_env	*env)
 		cmd_count++;
 		current = current->next;
 	}
-	return(0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 16:14:22 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:17:47 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,36 @@ void	update_env_oldpwd(t_env *env)
 	free(current_pwd);
 }
 
-char	*get_home_directory(void)
+char	*ft_get_env(const char *name, t_env *env)
 {
-	return (getenv("HOME"));
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(name);
+	while (env->cpy_env[i])
+	{
+		if ((ft_strncmp(env->cpy_env[i], name, len) == 0)
+			&& (env->cpy_env[i][len] == '='))
+			return (&env->cpy_env[i][len + 1]);
+		i++;
+	}
+	return (NULL);
+}
+
+char	*get_home_directory(t_env *env)
+{
+	return (ft_get_env("HOME", env));
 }
 
 int	ft_builtin_cd(char **args, t_env *env)
 {
 	char	*home;
 
+	env->flag_builtin = true;
 	if (args[1] == NULL || ft_strcmp_minishell(args[1], "~") == 0)
 	{
-		home = get_home_directory();
+		home = get_home_directory(env);
 		if (!home)
 		{
 			write(2, "minishell: cd: HOME not set\n", 29);
