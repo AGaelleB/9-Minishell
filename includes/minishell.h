@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 11:18:40 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:54:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,6 @@
 # define CYAN "\033[36m"
 # define WHITE "\033[37m"
 
-# define SINGLE_QUOTE	'\''
-# define DOUBLE_QUOTE	'\"'
-
-# define SUCCESS	0
-# define FAILURE	1
-
-#define BUILTIN_EXECUTED 1
-#define BUILTIN_NOT_EXECUTED 0
-
-
 typedef struct s_command			t_command;
 
 typedef struct s_env
@@ -61,6 +51,8 @@ typedef struct s_env
 	char				*str;
 	bool				flag_error;
 	bool				flag_path;
+	int					pwd_index;
+	int					oldpwd_index;
 	struct s_env		*next;
 } t_env;
 
@@ -168,6 +160,9 @@ char	**split_string_token(char *str, char **delimiters);
 
 
 /***********BUILTINS***********/
+// void		ft_builtin_cd(char **args, t_env *env);
+int			ft_builtin_cd(char **args, t_env *env);
+
 int			ft_builtin_write_exit(char *input);
 void		ft_builtin_ctrl_d(char *input);
 int			ft_all_builtins(char *input);
@@ -180,7 +175,8 @@ void		copy_env(t_env *env, char **envp);
 int			ft_builtin_echo_fd(char **tab);
 int			ft_builtin_pwd_fd(int fd);
 
-void	ft_builtin_unset(char **args, t_env *env);
+void		ft_builtin_unset(char **args, t_env *env);
+
 
 /***********EXECUTION***********/
 t_command	*create_new_cmd(char *command_str, t_env *env);

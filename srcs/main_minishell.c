@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 11:18:34 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:49:29 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ int main(int ac, char **av, char **envp)
 					ft_builtin_unset(new_commands->command_arg, env_bis);
 				execve_fd(new_commands, env_bis);
 			}
+			if (ft_strncmp(new_commands->command, "cd ", 3) == 0)
+			{
+				ft_builtin_cd(new_commands->command_arg, env_bis);
+				// return (1);
+			}
 			// ft_free_tab(new_commands->command_arg);
 			ft_free_struct(new_commands, new_commands->token_head);
 			ft_free_current(new_commands);
@@ -71,7 +76,12 @@ int main(int ac, char **av, char **envp)
 /*
 
 										TO DO :
-isatty(0) a FAIRE ????? // ./minishell | ./minishell 
+unset PATH
+minishell$> /usr/bin/ls
+-> On execute pas pour le moment
+
+minishell$> |'l's
+[1]    915227 segmentation fault (core dumped)  ./minishell
 
 EOF a faire
 

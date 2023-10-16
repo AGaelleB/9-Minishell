@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_builtins.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 11:27:19 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:32:58 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,21 @@ int	ft_all_builtins_verif(t_command *current, t_env	*env)
 	while (current)
 	{
 		if (ft_strcmp_minishell(current->command, "pwd") == 0)
+		{
 			ft_builtin_pwd_fd(STDOUT_FILENO);
+			return (1);
+		}
 		if (ft_strncmp(current->command, "echo ", 5) == 0)
 		{
 			tab = parse_input_quote_echo(current->command);
 			ft_builtin_echo_fd(tab);
+			return (1);
 		}
 		if (ft_strcmp_minishell(current->command, "env") == 0)
+		{
 			ft_builtin_env(env);
+			return (1);
+		}
 		cmd_count++;
 		current = current->next;
 	}
