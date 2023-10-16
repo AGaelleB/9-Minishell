@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 10:18:41 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:24:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,29 @@ void	ft_set_args_and_paths(t_command *current, t_env *env)
 	current->command_path = ft_check_paths(env, current->command_arg[0]);
 }
 
+int	is_builtin(t_command *current)
+{
+	if (ft_strcmp_minishell(current->command_arg[0], "cd") == 0)
+		return (1);
+	if (ft_strcmp_minishell(current->command_arg[0], "echo") == 0)
+		return (1);
+	if (ft_strcmp_minishell(current->command_arg[0], "env") == 0)
+		return (1);
+	if (ft_strcmp_minishell(current->command_arg[0], "export") == 0)
+		return (1);
+	if (ft_strcmp_minishell(current->command_arg[0], "pwd") == 0)
+		return (1);
+	if (ft_strcmp_minishell(current->command_arg[0], "unset") == 0)
+		return (1);
+	return (0);
+}
+
+
 int	execve_process(t_command *current, t_env *env)
 {
 	ft_set_args_and_paths(current, env);
-	if ((current->command_path == NULL) && (!env->flag_error))
+	if ((current->command_path == NULL) && (!env->flag_error)
+		&& is_builtin(current) == 0)
 	{
 		write(2, "minishell: ", 11);
 		write(2, current->command_arg[0], ft_strlen(current->command_arg[0]));

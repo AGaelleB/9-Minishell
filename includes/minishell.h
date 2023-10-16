@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 15:54:10 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:03:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_env
 	bool				flag_path;
 	int					pwd_index;
 	int					oldpwd_index;
+	char				*path_to_change;
+	char				*new_directory;
 	struct s_env		*next;
 } t_env;
 
@@ -173,7 +175,7 @@ void		ft_builtin_env(t_env	*env);
 void		copy_env(t_env *env, char **envp);
 
 int			ft_builtin_echo_fd(char **tab);
-int			ft_builtin_pwd_fd(int fd);
+int			ft_builtin_pwd(int fd);
 
 void		ft_builtin_unset(char **args, t_env *env);
 
