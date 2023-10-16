@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:58:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/14 16:30:24 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:21:14 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ void	ft_builtin_unset(char **args, t_env *env)
 		return ;
 	}
 	if(ft_strcmp_minishell(args[1], "PATH") == 0)
-	{
-		printf("flag ON\n");
 		env->flag_path = true;
-	}
 	while (args[arg_idx])
 	{
 		i = 0;
@@ -52,14 +49,6 @@ void	ft_builtin_unset(char **args, t_env *env)
 		}
 		arg_idx++;
 	}
-	// i = 0;
-	// while (env->cpy_env[i])
-	// {
-	// 	ft_putstr_fd(env->cpy_env[i], STDOUT_FILENO);
-	// 	ft_putchar_fd('\n', STDOUT_FILENO);
-	// 	i++;
-	// }
-	// return (env);
 }
 
 /*

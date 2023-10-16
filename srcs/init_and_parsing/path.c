@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/14 12:05:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:25:40 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,14 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 	char	*valid_path;
 
 	temp_path = ft_get_paths(env);
-	if (temp_path == NULL || (temp_path[0][0]) == 0)
+	if ((temp_path == NULL || (temp_path[0][0]) == 0) && ft_strcmp_minishell(args, "unset") != 0)
 	{
-		write(2, "No such file or directory: ", 28);
+		write(2, "minishell: ", 12);
 		write(2, args, ft_strlen(args));
+		write(2, ": No such file or directory", 28);
 		write(2, "\n", 1);
 		env->flag_error = true;
-		return (NULL); //ne pas retirer
+		return (NULL);
 	}
 	env->flag_error = false;
 	valid_path = find_valid_path(temp_path, args);

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/14 16:28:56 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:18:41 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	ft_set_args_and_paths(t_command *current, t_env *env)
 
 int	execve_process(t_command *current, t_env *env)
 {
-	// if(ft_all_builtins_verif(current, env) == 1)
-		// return(2);
 	ft_set_args_and_paths(current, env);
 	if ((current->command_path == NULL) && (!env->flag_error))
 	{
