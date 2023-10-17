@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/10/17 14:26:43 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:28:48 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 				free(str);
 			}
 		}
-
 		arg[(*arg_idx)++] = input[*i];
 		(*i)++;
 	}

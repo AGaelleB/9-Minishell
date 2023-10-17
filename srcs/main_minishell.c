@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 14:08:06 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:23:12 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,48 +79,15 @@ int main(int ac, char **av, char **envp)
 
 										TO DO :
 
-probleme lorsque l'on exec un builtin (ceux le main) on ne peut plus exec dautres cmd apres
-exemple: unset HOME puis ls
-cd srcs puis ls
-										
-unset PATH
-minishell$> /usr/bin/ls
--> On execute pas pour le moment
+ cd ../../ | ls
+	-> doit exec le ls dans le lieu actuel
+	pour le moment on exec rien 
+	lors du passsage dans un pipe on repasse le flag buitin a false
 
 minishell$> |'l's
 [1]    915227 segmentation fault (core dumped)  ./minishell
 
 EOF a faire
-
-ajouté le texte aprés le file de redirection dans le file 
-exemple: echo joli, > test "    beau"
-cat test: joli, beau
-
-minishell$> echo test > "out file" test1
-value : echo | type: 0
-value : test | type: 1
-value : > | type: 4
-value : "out | type: 8
-value : file" | type: 1
-value : test1 | type: 1
-
-res : test file" test1
-
-minishell$> echo "test" > out "beau"
-value : echo | type: 0
-value : "test" | type: 1
-value : > | type: 4
-value : out | type: 8
-value : "beau" | type: 1
-
-res : "test" "beau"
-
-gerer le fait qui'il puisse y avoir plusieurs fichier comportant des quote avant/apres la commande 
-exemple: > "a" > "hello" > 'b' > c cat celine.txt
-modifier la ligne token->current pour avamcer apres y etre passse
-
-
-
 										
 supprimer les files crees avec EOF lors de la gestion de l'env
 faire d autres test sur les EOF
@@ -135,6 +102,10 @@ on doit boucle une premiere fois sur current pour avancé dans nos commandes pou
 split_value avec "cat" et le token entier, cest ici que ce situe le probleme dinvalid read size
 
 voir si besoin de ferme mieux :	// free_file_name(current->file_name);
+
+
+
+
 
 
 ************************************************************

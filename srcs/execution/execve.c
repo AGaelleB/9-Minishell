@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 16:53:35 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:13:02 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	is_builtin(t_command *current)
 int	execve_process(t_command *current, t_env *env)
 {
 	ft_set_args_and_paths(current, env);
+	if (env->flag_error)
+		exit(0);
 	if ((current->command_path == NULL) && (!env->flag_error)
 		&& is_builtin(current) == 0)
 	{
