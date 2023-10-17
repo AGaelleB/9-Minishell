@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 16:48:23 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:29:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	error_input(char *input)
 	return (0);
 }
 
-int	builtins_verif(t_command *current, t_env	*env)
+int	builtins_verif(t_command *current, t_env *env)
 {
 	int		cmd_count;
 	char	**tab;
@@ -48,8 +48,8 @@ int	builtins_verif(t_command *current, t_env	*env)
 		}
 		if (ft_strncmp(current->command, "echo ", 5) == 0)
 		{
-			tab = parse_input_quote_echo(current->command);
-			ft_builtin_echo_fd(tab);
+			tab = parse_input_quote_echo(env, current->command);
+			ft_builtin_echo(tab);
 			return (1);
 		}
 		if (ft_strcmp_minishell(current->command, "env") == 0)

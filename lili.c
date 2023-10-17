@@ -1,74 +1,65 @@
-int	ft_builtin_export(char **args, t_env *env)
+pourquoi jai ca comme erreur lors de lexec de ma commande:
+minishell$> echo $PATH
+coucou
+munmap_chunk(): invalid pointer
+
+
+char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 {
-	int		i;
-	int		arg_idx;
-	char	*str;
-	int		j;
-	int		k;
-	
-	i = 0;
-	j = 0;
-	k = 0;
-	arg_idx = 1;	
-	str = malloc(sizeof(char) * (ft_strlen(args[arg_idx]) + 1));
-	if (!str)
-		return (-1);
-	env->flag_builtin = true;
-	if (!args[1])
+	char	*arg;
+	bool	double_quote;
+	bool	single_quote;
+
+	double_quote = false;
+	single_quote = false;
+	arg = malloc(ft_strlen(input) + 1);
+	if (!(arg))
+		exit(EXIT_FAILURE); // Handle memory allocation failure
+	*arg_idx = 0;
+	while (input[*i])
 	{
-		while (env->cpy_env[i])
+		handle_quotes_echo(input, i, &double_quote, &single_quote);
+		if ((input[*i] == '>' || input[*i] == '<') && !double_quote
+			&& !single_quote)
+			break ;
+		else if (input[*i] == ' ' && !double_quote && !single_quote)
+			break ;
+		else if (input[*i] == '$' && !single_quote)
 		{
-			ft_putstr_fd("export ", STDOUT_FILENO);
-			ft_putstr_fd(env->cpy_env[i], STDOUT_FILENO);
-			ft_putchar_fd('\n', STDOUT_FILENO);
-			i++;
-		}
-		return (1);
-	}
-	while (args[arg_idx])
-	{
-		i = 0;
-		while (env->cpy_env[i])
-		{
-			j = 0;
-			k = 0;
-			while(args[arg_idx][j] != '=' && args[arg_idx][j])
+			char *str;
+			int j = 0;
+			int start = *i + 1; // +1 pour sauter le caractère '$'
+
+			while (input[*i] && input[*i] != ' ' && input[*i] != '\'' && input[*i] != '\"')
 			{
-				str[k] = args[arg_idx][j];
+				(*i)++;
 				j++;
-				k++;
 			}
-			str[k] = '\0';
-			if (ft_strncmp(env->cpy_env[i], str, ft_strlen(str)) == 0
-				&& env->cpy_env[i][ft_strlen(str)] == '=')
+
+			str = ft_substr(input, start, j); // Utilisez ft_substr pour extraire la variable de l'environnement
+			if (str)
 			{
-				free(env->cpy_env[i]);
-				while (env->cpy_env[i + 1])
+				char *value = env_var_exists(env, str);
+				j = 0;
+				if (value)
 				{
-					env->cpy_env[i] = env->cpy_env[i + 1];
-					i++;
+					while (value[j])
+					{
+						arg[(*arg_idx)++] = value[j];
+						j++;
+					}
+					printf("coucou\n");
+					free(value);
 				}
-				env->cpy_env[i] = args[arg_idx];
-				env->cpy_env[i + 1] = NULL;
 				free(str);
-				return (1);
 			}
-			i++;
 		}
-		arg_idx++;
+
+		arg[(*arg_idx)++] = input[*i];
+		(*i)++;
 	}
-	i = 0;
-	arg_idx = 1;
-	while (env->cpy_env[i])
-	{
-		if(env->cpy_env[i + 1] == NULL)
-		{
-			printf("arg : %s\n", args[arg_idx]);
-			env->cpy_env[i + 1] = args[arg_idx];
-			env->cpy_env[i + 2] = NULL;
-			return (1);
-		}
-		i++;
-	}
-	return (0);
+	arg[*arg_idx] = '\0';
+	skip_spaces_echo(input, i);
+	ft_skip_redirection_and_file(input, i);
+	return (arg);
 }

@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:49:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/10/13 11:06:25 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:31:34 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/* extention of ft_allocate_and_copy*/
-void	handle_quotes_echo(char *input, int *i,
-	bool *double_quote, bool *single_quote)
-{
-	if (input[*i] == '\"' && !*single_quote)
-	{
-		*double_quote = !*double_quote;
-		(*i)++;
-	}
-	else if (input[*i] == '\'' && !*double_quote)
-	{
-		*single_quote = !*single_quote;
-		(*i)++;
-	}
-}
 
 /*Fonction 1: Gestion des espaces après un argument*/
 void	skip_spaces_echo(char *input, int *i)
@@ -36,12 +20,12 @@ void	skip_spaces_echo(char *input, int *i)
 }
 
 /*Fonction 3: Copie d'un argument dans le tableau d'arguments*/
-char	**copy_argument_echo(char *input, t_parser *parser)
+char	**copy_argument_echo(t_env *env, t_parser *parser, char *input)
 {
 	char	*arg;
 	int		arg_idx;
 
-	arg = ft_allocate_and_copy(input, &(parser->i), &arg_idx);
+	arg = ft_allocate_and_copy(env, input, &(parser->i), &arg_idx);
 	if (!arg)
 		return (NULL);
 	if (arg_idx > 0)
@@ -53,7 +37,7 @@ char	**copy_argument_echo(char *input, t_parser *parser)
 }
 
 /*Fonction 4 (principale): Parse Input avec Quotes*/
-char	**parse_input_quote_echo(char *input)
+char	**parse_input_quote_echo(t_env *env, char *input)
 {
 	t_parser	parser;
 	int			arg_count;
@@ -67,7 +51,7 @@ char	**parse_input_quote_echo(char *input)
 		return (NULL);
 	while (input[parser.i])
 	{
-		parser.args = copy_argument_echo(input, &parser);
+		parser.args = copy_argument_echo(env,  &parser, input);
 		if (!parser.args)
 			return (NULL);
 	}

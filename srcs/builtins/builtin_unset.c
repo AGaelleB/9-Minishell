@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:58:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 16:53:35 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:54:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_builtin_unset(char **args, t_env *env)
 		ft_putstr_fd("unset: not enough arguments\n", 2);
 		return ;
 	}
-	// if(ft_strcmp_minishell(args[1], "PATH") == 0)
 	while (args[arg_idx])
 	{
 		i = 0;
@@ -35,7 +34,6 @@ void	ft_builtin_unset(char **args, t_env *env)
 				&& env->cpy_env[i][ft_strlen(args[arg_idx])] == '=')
 			{
 				free(env->cpy_env[i]);
-				// Shift all subsequent items up
 				while (env->cpy_env[i + 1])
 				{
 					env->cpy_env[i] = env->cpy_env[i + 1];

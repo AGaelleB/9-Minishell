@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 10:06:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:31:59 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void		copy_env(t_env *env, char **envp);
 
 int			ft_builtin_export(char **args, t_env *env);
 
-int			ft_builtin_echo_fd(char **tab);
+int			ft_builtin_echo(char **tab);
 int			ft_builtin_pwd(int fd);
 
 void		ft_builtin_unset(char **args, t_env *env);
@@ -192,7 +192,7 @@ int			execve_process(t_command *current, t_env *env);
 
 
 /***********INIT_AND_PARSING***********/
-char		*ft_allocate_and_copy(char *input, int *i, int *arg_idx);
+char		*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx);
 
 int			count_args_single_quotes(char *input);
 int			count_args_double_quotes_args(char *input);
@@ -214,7 +214,7 @@ char		*ft_check_paths_token(t_env *env, char *args);
 char		*ft_check_paths(t_env *env, char *args);
 void		execve_fd(t_command *current, t_env *env);
 
-char		**parse_input_quote_echo(char *input);
+char		**parse_input_quote_echo(t_env *env, char *input);
 void		skip_spaces_echo(char *input, int *i);
 void		handle_quotes_echo(char *input, int *i, bool *double_quote, bool *single_quote);
 

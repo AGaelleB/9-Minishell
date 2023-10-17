@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 11:18:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/13 11:16:26 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:56:57 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_builtin_echo_fd(char **tab)
+int	ft_builtin_echo(char **tab)
 {
 	int	i;
 	int	j;
