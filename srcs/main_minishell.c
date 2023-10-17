@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 15:23:12 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:34:59 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,9 @@ int main(int ac, char **av, char **envp)
 
 
 /*
-
 										TO DO :
 
- cd ../../ | ls
+cd ../../ | ls
 	-> doit exec le ls dans le lieu actuel
 	pour le moment on exec rien 
 	lors du passsage dans un pipe on repasse le flag buitin a false
@@ -87,23 +86,36 @@ int main(int ac, char **av, char **envp)
 minishell$> |'l's
 [1]    915227 segmentation fault (core dumped)  ./minishell
 
-EOF a faire
-										
-supprimer les files crees avec EOF lors de la gestion de l'env
-faire d autres test sur les EOF
-commencer les leaks 
 
+EOF à faire :
+	supprimer les files crees avec EOF lors de la gestion de l'env
+	voir si besoin de ferme mieux :	// free_file_name(current->file_name);
+	
+	voir la cmd <celine.txt <<EOF cat ne doit afficher que EOF
+	voir la cmd <<EOF1 <<EOF2 <<EOF3 cat ne doit afficher que le derneir EOF (EOF3) 
+		-> mais ouvre et ecrit dans tout les EOF a creer
+	
+	<<EOF ls
+	> ^C
+	ferme heredoc et ne fait rien 
+	
+	<<EOF ls
+	> ^D
+	ferme heredoc et exec ls
 
+	<<EOF <<EOF cat
+	doit ouvrir les deux EOF mais ne doit print que le dernier
+
+	<celine.txt <<EOF cat
+	ne doit cat que EOF :doit reagir comme <celine.txt <lili.c cat
+
+	faire d autres test sur les EOF
 
 										A CORRIGER :
 verifier les free valgrind etc
 leaks lors de lexit apres avoir effectué une commande 
 on doit boucle une premiere fois sur current pour avancé dans nos commandes pour ensuite free dans chaque commandes la tokenisation effectuée:
 split_value avec "cat" et le token entier, cest ici que ce situe le probleme dinvalid read size
-
-voir si besoin de ferme mieux :	// free_file_name(current->file_name);
-
-
 
 
 

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 15:13:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:30:37 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	execve_process(t_command *current, t_env *env)
 		ft_free_current(current);
 		return (127);
 	}
-	if(env->flag_builtin == true)
+	if(env->flag_builtin == true) // piste voir si la cmd est export cd ou unset et exit
 		exit(-1);
 	else if ((current->command_path) &&
 		(execve(current->command_path, current->command_arg, env->cpy_env) == -1))
