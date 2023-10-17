@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_and_cpy_parse_echo.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/10/17 12:44:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:26:43 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 
 	double_quote = false;
 	single_quote = false;
-	arg = malloc(ft_strlen(input) + 1010); //WARNING malloc FAUX
+	arg = malloc(sizeof(input) * 1000); //WARNING malloc FAUX
 	if (!(arg))
 		exit(EXIT_FAILURE); // Handle memory allocation failure
 	*arg_idx = 0;
@@ -108,15 +108,15 @@ char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 		{
 			char *str;
 			int j = 0;
-			if (input[*i] == '\"') //WARNING quote double FAUX
-				(*i)++;
+			// if (input[*i] == '\"') //WARNING quote double FAUX
+			// 	(*i)++;
 			int start = *i + 1; // +1 pour sauter le caractère '$'
-			while (input[*i] && input[*i] != ' ' && input[*i] != '\'' && input[*i] != '\"') 
+			while (input[*i] && input[*i] != ' ' && input[*i] != '\'' && input[*i] != '\"')
 			{
 				(*i)++;
-				j++;
+				if(input[*i] != '\"' && input[*i] != '\'')
+					j++;
 			}
-
 			str = ft_substr(input, start, j); // Utilisez ft_substr pour extraire la variable de l'environnement
 			if (str)
 			{
@@ -129,7 +129,6 @@ char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 						arg[(*arg_idx)++] = value[j];
 						j++;
 					}
-					printf("coucou\n");
 					free(value);
 				}
 				free(str);

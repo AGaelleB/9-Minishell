@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 09:56:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:08:06 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(int ac, char **av, char **envp)
 			new_commands = get_command(input, env_bis);
 			count_and_set_pipes(input, new_commands);
 			// print_commands_and_tokens(new_commands); // PRINT
-			if(new_commands != NULL)
+			if (new_commands != NULL)
 			{
 				env_bis->flag_builtin = false;
 				new_commands->command_arg = parse_input_quote(new_commands->command);
