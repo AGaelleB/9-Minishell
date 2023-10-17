@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:21:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/14 11:56:45 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:44:07 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_token	*handle_cmd_token(t_tokenizer *tz, t_env *env)
 {
 	char	*path;
-	
+
 	path = ft_check_paths_token(env, tz->words[tz->i]);
 	if (path)
 	{
@@ -63,7 +63,7 @@ t_token	*handle_arg_token(t_tokenizer *tz)
 		|| tz->state == TYPE_EOF)
 	{
 		tz->token = new_token(tz->state, tz->words[tz->i]);
-		tz->state = TYPE_ARG; // reset state to argument after assigning file type
+		tz->state = TYPE_ARG;
 	}
 	else
 		tz->token = new_token(TYPE_ARG, tz->words[tz->i]);

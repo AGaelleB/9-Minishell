@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 15:34:59 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:35:34 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ int main(int ac, char **av, char **envp)
 
 /*
 										TO DO :
+
+minishell$> unset PATH
+minishell$> cd Documents/
+minishell: cd: No such file or directory
+Broken si on unset le path
 
 cd ../../ | ls
 	-> doit exec le ls dans le lieu actuel

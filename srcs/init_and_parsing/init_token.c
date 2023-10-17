@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/14 12:06:09 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:44:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_token	*create_token(t_tokenizer *tz, t_env *env)
 	if (tz->state == TYPE_F_OUT || tz->state == TYPE_F_IN)
 	{
 		tz->token = handle_arg_token(tz);
-		return tz->token;
+		return (tz->token);
 	}
 	if (tz->words[tz->i] != NULL && !tz->token)
 		tz->token = handle_cmd_token(tz, env);

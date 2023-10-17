@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 11:53:51 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:03:28 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,6 @@ void	update_env_pwd(t_env *env, char *new_pwd)
 	{
 		free(env->cpy_env[env->pwd_index]);
 		env->cpy_env[env->pwd_index] = ft_strjoin("PWD=", new_pwd);
-	}
-}
-
-void	print_error_cd(t_env *env, int i)
-{
-	if (i == 1)
-	{
-		write(2, "minishell: cd: ", 15);
-		write(2, env->path_to_change, ft_strlen(env->path_to_change));
-		write(2, ": ", 2);
-		perror("");
-	}
-	if (i == 2)
-	{
-		update_env_pwd(env, env->new_directory);
-		free(env->new_directory);
 	}
 }
 

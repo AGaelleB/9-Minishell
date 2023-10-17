@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_and_cpy_parse_echo.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/10/17 14:28:48 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:42:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 /* extention of ft_allocate_and_copy*/
 void	handle_quotes_echo(char *input, int *i,
@@ -46,21 +45,7 @@ void	ft_skip_redirection_and_file(char *input, int *i)
 	}
 }
 
-	/* 
-	si on est sur un caractere $ et que on est pas dans une simple quote
-	
-	on va chercher la var de l'env correspondant
-	
-	si existant
-		on stock dans une str a partir du =
-		on passe largument sur lequel on est ($blabla) jusqua un ' '(espae)
-		et on imprime
-	
-	si non exitant 
-		on imprime telquel le mot ($blabla)
-	*/
-
-char *env_var_exists(t_env *env, char *var)
+char	*env_var_exists(t_env *env, char *var)
 {
 	int		i;
 	int		j;
@@ -76,14 +61,104 @@ char *env_var_exists(t_env *env, char *var)
 			str = ft_strdup(&env->cpy_env[i][j]);
 			if (!str)
 				return (NULL);
-			return (str);  // La variable existe et sa valeur est retournée
+			return (str); // La variable existe et sa valeur est retournée
 		}
 		i++;
 	}
-	return (NULL);  // La variable n'existe pas
+	return (NULL); // La variable n'existe pas
 }
 
-/*Fonction 2: Allocation de l'argument et copie des caractères*/
+char	*get_env_value(t_env *env, char *str)
+{
+	char	*value;
+
+	value = env_var_exists(env, str);
+	if (value)
+	{
+		free(str);
+		return (value);
+	}
+	free(str);
+	return (NULL);
+}
+
+void	append_env_value_to_arg(char *value, char *arg, int *arg_idx)
+{
+	int	j;
+
+	j = 0;
+	while (value && value[j])
+	{
+		arg[(*arg_idx)++] = value[j];
+		j++;
+	}
+	free(value);
+}
+
+void	handle_arg_value(t_env *env, char *input, int *i, char *arg, int *arg_idx)
+{
+	char	*str;
+	int		j;
+	int		start;
+
+	j = 0;
+	start = *i + 1;
+	while (input[*i] && input[*i] != ' ' && input[*i] != '\'' && input[*i] != '\"')
+	{
+		(*i)++;
+		if (input[*i] != '\"' && input[*i] != '\'')
+			j++;
+	}
+	str = ft_substr(input, start, j);
+	append_env_value_to_arg(get_env_value(env, str), arg, arg_idx);
+}
+
+char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
+{
+	char	*arg;
+	bool	double_quote;
+	bool	single_quote;
+
+	double_quote = false;
+	single_quote = false;
+	arg = malloc(sizeof(input) * 1000);
+	if (!arg)
+		exit(EXIT_FAILURE);
+	*arg_idx = 0;
+	while (input[*i])
+	{
+		handle_quotes_echo(input, i, &double_quote, &single_quote);
+		if ((input[*i] == '>' || input[*i] == '<') && !double_quote && !single_quote)
+			break;
+		else if (input[*i] == ' ' && !double_quote && !single_quote)
+			break;
+		else if (input[*i] == '$' && !single_quote)
+			handle_arg_value(env, input, i, arg, arg_idx);
+		arg[(*arg_idx)++] = input[*i];
+		(*i)++;
+	}
+	arg[*arg_idx] = '\0';
+	skip_spaces_echo(input, i);
+	ft_skip_redirection_and_file(input, i);
+	return (arg);
+}
+
+/* 
+si on est sur un caractere $ et que on est pas dans une simple quote
+
+on va chercher la var de l'env correspondant
+
+si existant
+	on stock dans une str a partir du =
+	on passe largument sur lequel on est ($blabla) jusqua un ' '(espae)
+	et on imprime
+
+si non exitant 
+	on imprime telquel le mot ($blabla)
+*/
+
+/*
+Fonction 2: Allocation de l'argument et copie des caractères
 char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 {
 	char	*arg;
@@ -142,3 +217,4 @@ char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 	ft_skip_redirection_and_file(input, i);
 	return (arg);
 }
+ */

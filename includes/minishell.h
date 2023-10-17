@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 12:31:59 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:43:08 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ typedef struct s_process_data
 } t_process_data;
 
 void	print_commands_and_tokens(t_command *head);
-void	ft_set_args_and_paths(t_command *current, t_env *env);
+void	ft_set_args_and_paths(t_command *cur, t_env *env);
 char	**parse_input_quote(char *input);
 
 int		builtins_verif(t_command *current, t_env	*env_bis);
@@ -163,6 +163,7 @@ char	**split_string_token(char *str, char **delimiters);
 
 /***********BUILTINS***********/
 // void		ft_builtin_cd(char **args, t_env *env);
+void		update_env_pwd(t_env *env, char *new_pwd);
 int			ft_builtin_cd(char **args, t_env *env);
 
 int			ft_builtin_write_exit(char *input);
@@ -188,7 +189,7 @@ t_command	*append_new_cmd(t_command **head, t_command *new_cmd);
 t_command	*get_command(char *input, t_env *env);
 
 void		init_execve(t_command *cur, pid_t **childs_pids);
-int			execve_process(t_command *current, t_env *env);
+int			execve_process(t_command *cur, t_env *env);
 
 
 /***********INIT_AND_PARSING***********/
@@ -220,7 +221,7 @@ void		handle_quotes_echo(char *input, int *i, bool *double_quote, bool *single_q
 
 int			calculate_new_len(char *input);
 char		*copy_with_spaces(char *input, char *new_input);
-char		*add_spaces_around_redirections(char *input);
+char		*add_spaces_around_redir(char *input);
 
 
 /***********REDIRECTIONS***********/
@@ -254,6 +255,7 @@ int			pipe_syntax_errors(char *input);
 
 void		ft_print_error(char *str);
 void		exit_with_error(char *message, pid_t *child_pids);
+void		print_error_cd(t_env *env, int i);
 // int			check_valid_identifier(char c);
 
 

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 11:10:32 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:37:51 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	add_var_env(t_env *env, char **args, int i, int arg_idx)
 	{
 		if (env->cpy_env[i + 1] == NULL)
 		{
-			printf("arg : %s\n", args[arg_idx]);
+			// printf("arg : %s\n", args[arg_idx]);
 			env->cpy_env[i + 1] = args[arg_idx];
 			env->cpy_env[i + 2] = NULL;
 			return (1);

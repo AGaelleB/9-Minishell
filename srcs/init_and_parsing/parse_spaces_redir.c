@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_spaces_redir.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:15:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/10 15:35:31 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:43:08 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*copy_with_spaces(char *input, char *new_input)
 	return (new_input);
 }
 
-char	*add_spaces_around_redirections(char *input)
+char	*add_spaces_around_redir(char *input)
 {
 	char	*new_input;
 	int		new_len;

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:08:08 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 15:10:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:47:47 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	check_valid_caractere_filename(char c)
 {
 	if (c == '|' || c == '<' || c == '>' || c == '#'
-			|| c == '(' || c == ')' || c == '!' || c == ';'
-			|| c == '?' || c == '&' || c == '*' || c == '\\')
+		|| c == '(' || c == ')' || c == '!' || c == ';'
+		|| c == '?' || c == '&' || c == '*' || c == '\\')
 	{
 		return (1);
 	}
@@ -24,11 +24,11 @@ int	check_valid_caractere_filename(char c)
 		return (0);
 }
 
-int check_syntax_errors(char *input)
+int	check_syntax_errors(char *input)
 {
 	char	*ptr;
 	int		pipe_found;
-	
+
 	ptr = input;
 	pipe_found = 0;
 	while (*ptr)
@@ -37,7 +37,7 @@ int check_syntax_errors(char *input)
 		{
 			if (pipe_found)
 				return (2); // Erreur: "||" trouvé
-			pipe_found = 1; 
+			pipe_found = 1;
 		}
 		else if (*ptr != ' ')
 		{
@@ -53,7 +53,7 @@ int check_syntax_errors(char *input)
 	return (0);
 }
 
-int pipe_syntax_errors(char *input)
+int	pipe_syntax_errors(char *input)
 {
 	int	syntax_error_code;
 
