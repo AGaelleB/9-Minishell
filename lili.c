@@ -1,54 +1,74 @@
-we have a problem we are using getenv to set HOME in ft_builtin_cd but we are working on a copy of our env (env->cpy_env)
-so we want to code ft_get_env to set home with our copy of env in the structure
-can you help us please and tell us step by step how to do it ?
-
-
-typedef struct s_env
+int	ft_builtin_export(char **args, t_env *env)
 {
-	char				**cpy_env;
-	char				*str;
-	bool				flag_error;
-	bool				flag_builtin;
-	int					pwd_index;
-	int					oldpwd_index;
-	char				*path_to_change;
-	char				*new_directory;
-	struct s_env		*next;
-} t_env;
-
-char	*get_home_directory(void)
-{
-	return (getenv("HOME"));
-}
-
-int	ft_builtin_cd(char **args, t_env *env)
-{
-	char	*home;
-
+	int		i;
+	int		arg_idx;
+	char	*str;
+	int		j;
+	int		k;
+	
+	i = 0;
+	j = 0;
+	k = 0;
+	arg_idx = 1;	
+	str = malloc(sizeof(char) * (ft_strlen(args[arg_idx]) + 1));
+	if (!str)
+		return (-1);
 	env->flag_builtin = true;
-	if (args[1] == NULL || ft_strcmp_minishell(args[1], "~") == 0)
+	if (!args[1])
 	{
-		printf("if ~\n");
-		home = get_home_directory();
-		printf("HOME : %s\n", home);
-		if (!home)
+		while (env->cpy_env[i])
 		{
-			printf("no home\n");
-			write(2, "minishell: cd: HOME not set\n", 29);
-			return (1);
+			ft_putstr_fd("export ", STDOUT_FILENO);
+			ft_putstr_fd(env->cpy_env[i], STDOUT_FILENO);
+			ft_putchar_fd('\n', STDOUT_FILENO);
+			i++;
 		}
-		env->path_to_change = home;
-	}
-	else
-		env->path_to_change = args[1];
-	update_env_oldpwd(env);
-	if (chdir(env->path_to_change) == -1)
-	{
-		print_error_cd(env, 1);
 		return (1);
 	}
-	env->new_directory = getcwd(NULL, 0);
-	if (env->new_directory)
-		print_error_cd(env, 2);
+	while (args[arg_idx])
+	{
+		i = 0;
+		while (env->cpy_env[i])
+		{
+			j = 0;
+			k = 0;
+			while(args[arg_idx][j] != '=' && args[arg_idx][j])
+			{
+				str[k] = args[arg_idx][j];
+				j++;
+				k++;
+			}
+			str[k] = '\0';
+			if (ft_strncmp(env->cpy_env[i], str, ft_strlen(str)) == 0
+				&& env->cpy_env[i][ft_strlen(str)] == '=')
+			{
+				free(env->cpy_env[i]);
+				while (env->cpy_env[i + 1])
+				{
+					env->cpy_env[i] = env->cpy_env[i + 1];
+					i++;
+				}
+				env->cpy_env[i] = args[arg_idx];
+				env->cpy_env[i + 1] = NULL;
+				free(str);
+				return (1);
+			}
+			i++;
+		}
+		arg_idx++;
+	}
+	i = 0;
+	arg_idx = 1;
+	while (env->cpy_env[i])
+	{
+		if(env->cpy_env[i + 1] == NULL)
+		{
+			printf("arg : %s\n", args[arg_idx]);
+			env->cpy_env[i + 1] = args[arg_idx];
+			env->cpy_env[i + 2] = NULL;
+			return (1);
+		}
+		i++;
+	}
 	return (0);
 }

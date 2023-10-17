@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 16:52:51 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:06:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ int			ft_is_all_space(char *input);
 
 void		ft_builtin_env(t_env	*env);
 void		copy_env(t_env *env, char **envp);
+
+int			ft_builtin_export(char **args, t_env *env);
 
 int			ft_builtin_echo_fd(char **tab);
 int			ft_builtin_pwd(int fd);

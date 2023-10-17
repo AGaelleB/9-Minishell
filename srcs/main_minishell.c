@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/16 17:07:36 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/17 09:56:06 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int main(int ac, char **av, char **envp)
 					ft_builtin_cd(new_commands->command_arg, env_bis);
 				else if (ft_strncmp(new_commands->command, "cd ", 3) == 0)
 					ft_builtin_cd(new_commands->command_arg, env_bis);
-				
+				else if (ft_strncmp(new_commands->command, "export", 6) == 0)
+					ft_builtin_export(new_commands->command_arg, env_bis);
 				execve_fd(new_commands, env_bis);
 			}
 			// ft_free_tab(new_commands->command_arg);
