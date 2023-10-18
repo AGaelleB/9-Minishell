@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/18 13:26:03 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:28:03 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,21 @@ void	ft_set_args_and_paths(t_command *cur, t_env *env)
 
 int	is_builtin(t_command *cur)
 {
-	if (ft_strcmp_minishell(cur->command_arg[0], "cd") == 0)
+	if ((ft_strcmp_minishell(cur->command_arg[0], "cd") == 0)
+		|| (ft_strncmp(cur->command_arg[0], "cd ", 3) == 0))
 		return (1);
-	if (ft_strcmp_minishell(cur->command_arg[0], "echo") == 0)
+	if ((ft_strcmp_minishell(cur->command, "echo") == 0)
+		|| (ft_strncmp(cur->command, "echo ", 5) == 0))
 		return (1);
-	if (ft_strcmp_minishell(cur->command_arg[0], "env") == 0)
+	if (ft_strcmp_minishell(cur->command, "env") == 0)
 		return (1);
-	if (ft_strcmp_minishell(cur->command_arg[0], "export") == 0)
+	if ((ft_strcmp_minishell(cur->command, "export") == 0)
+		|| (ft_strncmp(cur->command, "export ", 7) == 0))
 		return (1);
-	if (ft_strcmp_minishell(cur->command_arg[0], "pwd") == 0)
+	if (ft_strcmp_minishell(cur->command, "pwd") == 0)
 		return (1);
-	if (ft_strcmp_minishell(cur->command_arg[0], "unset") == 0)
+	if ((ft_strcmp_minishell(cur->command, "unset") == 0)
+		|| (ft_strncmp(cur->command, "unset ", 6) == 0))
 		return (1);
 	return (0);
 }
@@ -65,8 +69,7 @@ int	execve_process(t_command *cur, t_env *env)
 	ft_set_args_and_paths(cur, env);
 	if (env->flag_error)
 		exit(0);
-	if ((cur->command_path == NULL) && (!env->flag_error)
-		&& is_builtin(cur) == 0)
+	if ((cur->command_path == NULL) && is_builtin(cur) == 0)
 	{
 		write(2, "minishell: ", 11);
 		write(2, cur->command_arg[0], ft_strlen(cur->command_arg[0]));
@@ -76,8 +79,6 @@ int	execve_process(t_command *cur, t_env *env)
 		ft_free_current(cur);
 		return (127);
 	}
-	// if (env->flag_builtin == true) // piste voir si la cmd est export cd ou unset et exit
-	// 	exit(-1);
 	else if ((cur->command_path)
 		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))
 	{

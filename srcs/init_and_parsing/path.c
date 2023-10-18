@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 15:18:35 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:56:14 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 	char	*valid_path;
 
 	temp_path = ft_get_paths(env);
-	if ((temp_path == NULL || (temp_path[0][0]) == 0) && ft_strcmp_minishell(args, "unset") != 0)
+	if ((temp_path == NULL || (temp_path[0][0]) == 0)
+		&& (ft_strcmp_minishell(args, "unset") != 0)
+		&& (ft_strcmp_minishell(args, "export") != 0)) // pas top peut-etre a ameliorer
 	{
 		write(2, "minishell: ", 12);
 		write(2, args, ft_strlen(args));
@@ -97,12 +99,10 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 char	*ft_check_paths(t_env *env, char *args)
 {
 	char	*valid_path;
-	// printf("%sft_check_paths args =  %s%s\n", RED, args, RESET);
 
 	valid_path = ft_check_absolute_path(args);
 	if (valid_path != NULL)
 		return (valid_path);
 	valid_path = ft_check_relative_paths(env, args);
-	// printf("valid_path = %s\n", valid_path);
 	return (valid_path);
 }

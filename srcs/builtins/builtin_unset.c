@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:58:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 15:59:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:54:31 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ void	ft_builtin_unset(char **args, t_env *env)
 	arg_idx = 1;
 	env->flag_builtin = true;
 	if (!args[1])
-	{
-		ft_putstr_fd("unset: not enough arguments\n", 2);
 		return ;
-	}
 	while (args[arg_idx])
 	{
 		idx = find_env_var(env, args[arg_idx]);

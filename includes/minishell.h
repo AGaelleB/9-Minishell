@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 16:43:08 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:15:30 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_command
 	int					fd[2];
 	int					fd_out;
 	int					fd_in;
+	// int					nb_pipes;
 	char				*file_name;
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;

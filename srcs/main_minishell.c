@@ -6,11 +6,23 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/18 13:23:11 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:57:13 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void count_pipes(char *input, t_command *cmd) //doublons refaire appel a la fonction deja existante
+{
+	int count = 0;
+	while (*input)
+	{
+		if (*input == '|')
+			count++;
+		input++;
+	}
+	cmd->nb_pipes = count;
+}
 
 int main(int ac, char **av, char **envp)
 {
@@ -48,16 +60,37 @@ int main(int ac, char **av, char **envp)
 			// print_commands_and_tokens(new_commands); // PRINT
 			if (new_commands != NULL)
 			{
-				// env_bis->flag_builtin = false;
-				// new_commands->command_arg = parse_input_quote(new_commands->command);
-				// if (ft_strncmp(new_commands->command, "unset", 5) == 0)
-				// 	ft_builtin_unset(new_commands->command_arg, env_bis);
-				// else if (ft_strcmp_minishell(new_commands->command, "cd") == 0)
-				// 	ft_builtin_cd(new_commands->command_arg, env_bis);
-				// else if (ft_strncmp(new_commands->command, "cd ", 3) == 0)
-				// 	ft_builtin_cd(new_commands->command_arg, env_bis);
-				// else if (ft_strncmp(new_commands->command, "export", 6) == 0)
-				// 	ft_builtin_export(new_commands->command_arg, env_bis);
+				count_pipes(input, new_commands);
+				env_bis->flag_builtin = false;
+				new_commands->command_arg = parse_input_quote(new_commands->command);
+				if (ft_strncmp(new_commands->command, "unset", 5) == 0)
+				{
+					if(new_commands->nb_pipes != 0)
+						env_bis->flag_builtin = false;
+					else
+						ft_builtin_unset(new_commands->command_arg, env_bis);
+				}
+				else if (ft_strcmp_minishell(new_commands->command, "cd") == 0)
+				{
+					if(new_commands->nb_pipes != 0)
+						env_bis->flag_builtin = false;
+					else
+						ft_builtin_cd(new_commands->command_arg, env_bis);
+				}
+				else if (ft_strncmp(new_commands->command, "cd ", 3) == 0)
+				{
+					if(new_commands->nb_pipes != 0)
+						env_bis->flag_builtin = false;
+					else
+						ft_builtin_cd(new_commands->command_arg, env_bis);
+				}
+				else if (ft_strncmp(new_commands->command, "export ", 7) == 0)
+				{
+					if(new_commands->nb_pipes != 0)
+						env_bis->flag_builtin = false;
+					else
+						ft_builtin_export(new_commands->command_arg, env_bis);
+				}
 				execve_fd(new_commands, env_bis);
 			}
 			// ft_free_tab(new_commands->command_arg);
@@ -78,15 +111,6 @@ int main(int ac, char **av, char **envp)
 /*
 										TO DO :
 
-minishell$> unset PATH
-minishell$> cd Documents/
-minishell: cd: No such file or directory
-Broken si on unset le path
-
-cd ../../ | ls
-	-> doit exec le ls dans le lieu actuel
-	pour le moment on exec rien 
-	lors du passsage dans un pipe on repasse le flag buitin a false
 
 minishell$> |'l's
 [1]    915227 segmentation fault (core dumped)  ./minishell
@@ -117,11 +141,12 @@ EOF à faire :
 	faire d autres test sur les EOF
 
 										A CORRIGER :
+EXITSTATUS a faire; 
+
 verifier les free valgrind etc
 leaks lors de lexit apres avoir effectué une commande 
 on doit boucle une premiere fois sur current pour avancé dans nos commandes pour ensuite free dans chaque commandes la tokenisation effectuée:
 split_value avec "cat" et le token entier, cest ici que ce situe le probleme dinvalid read size
-
 
 
 
@@ -140,12 +165,3 @@ ls |
 ************************************************************
 
 */
-
-/* char	*return_input(char *input) // truc de rayan
-{
-	static char *inp;
-
-	if (input = NULL)
-		return (inp);
-	inp = input;
-} */
