@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 16:25:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:26:03 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	execve_process(t_command *cur, t_env *env)
 		ft_free_current(cur);
 		return (127);
 	}
-	if (env->flag_builtin == true) // piste voir si la cmd est export cd ou unset et exit
-		exit(-1);
+	// if (env->flag_builtin == true) // piste voir si la cmd est export cd ou unset et exit
+	// 	exit(-1);
 	else if ((cur->command_path)
 		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))
 	{

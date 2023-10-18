@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 16:35:34 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:23:11 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,16 @@ int main(int ac, char **av, char **envp)
 			// print_commands_and_tokens(new_commands); // PRINT
 			if (new_commands != NULL)
 			{
-				env_bis->flag_builtin = false;
-				new_commands->command_arg = parse_input_quote(new_commands->command);
-				if (ft_strncmp(new_commands->command, "unset", 5) == 0)
-					ft_builtin_unset(new_commands->command_arg, env_bis);
-				else if (ft_strcmp_minishell(new_commands->command, "cd") == 0)
-					ft_builtin_cd(new_commands->command_arg, env_bis);
-				else if (ft_strncmp(new_commands->command, "cd ", 3) == 0)
-					ft_builtin_cd(new_commands->command_arg, env_bis);
-				else if (ft_strncmp(new_commands->command, "export", 6) == 0)
-					ft_builtin_export(new_commands->command_arg, env_bis);
+				// env_bis->flag_builtin = false;
+				// new_commands->command_arg = parse_input_quote(new_commands->command);
+				// if (ft_strncmp(new_commands->command, "unset", 5) == 0)
+				// 	ft_builtin_unset(new_commands->command_arg, env_bis);
+				// else if (ft_strcmp_minishell(new_commands->command, "cd") == 0)
+				// 	ft_builtin_cd(new_commands->command_arg, env_bis);
+				// else if (ft_strncmp(new_commands->command, "cd ", 3) == 0)
+				// 	ft_builtin_cd(new_commands->command_arg, env_bis);
+				// else if (ft_strncmp(new_commands->command, "export", 6) == 0)
+				// 	ft_builtin_export(new_commands->command_arg, env_bis);
 				execve_fd(new_commands, env_bis);
 			}
 			// ft_free_tab(new_commands->command_arg);
