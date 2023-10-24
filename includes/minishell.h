@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 12:09:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:07:07 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ typedef struct s_command
 	// int					nb_pipes;
 	char				*file_name;
 	char				*heredoc;
+	char				**heredocs;  // tableau dynamique pour stocker les noms de fichiers heredoc
+	int					flag_chevron;
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;
 	struct s_command	*next;
@@ -156,6 +158,7 @@ char	**parse_input_quote(char *input);
 
 int		builtins_verif(t_command *current, t_env	*env_bis);
 char	**split_string_token(char *str, char **delimiters);
+t_token *handle_multiple_heredocs(t_command *current, t_token *token); // NEWWWW
 
 // char *extract_filename(const char *input);
 
@@ -240,7 +243,7 @@ int			aleatori_char(void);
 // char		*create_file_name(void);
 // char		*create_file_name(t_command *command);
 
-int			write_in_fd(int fd, char *delimiter);
+// int			write_in_fd(int fd, char *delimiter);
 // int			write_in_fd(int fd, char *delimiter, char *file_name);
 int			redirect_heredoc(t_command *current, t_token *token);
 
@@ -267,7 +270,7 @@ void		print_error_cd(t_env *env, int i);
 void		ft_free_tab(char **tab);
 void		ft_free_struct(t_command *current, t_token *head);
 void		ft_free_current(t_command *current);
-void		free_file_name(char *file_name);
+void		clean_heredoc_files(t_command *cur);
 
 void		cleanup(pid_t *child_pids, int infile);
 

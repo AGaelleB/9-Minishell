@@ -1,91 +1,127 @@
-Pourquoi lorsque le programme passe dans la fonction "execve" les données associées a ma structure t_command dans "heredoc" ne s'affiche plus 
+Cela s ameliore un peu, je n'ai plus que 3 fichiers temporaire en fin d execution mais le dernier heredoc ne saffiche plus correctement
+
+minishell$> cat << a << b << c
+Début de handle_multiple_heredocs
+Traitement du token heredoc : <<
+Délimiteur pour ce token : a
+Création du fichier heredoc : zkezxqpsvf
+Création du fichier heredoc : zkezxqpsvf
+> coucou a
+> a
+Traitement du token heredoc : <<
+Délimiteur pour ce token : b
+Création du fichier heredoc : jyqqhycysu
+Création du fichier heredoc : jyqqhycysu
+> coucou b
+> b
+Traitement du token heredoc : <<
+Délimiteur pour ce token : c
+Création du fichier heredoc : chvhgurcat
+Création du fichier heredoc : chvhgurcat
+> coucou c
+> c
+minishell$> 
 
 
+je veux : 
 
-typedef struct s_command
+minishell$>  cat << a << b << c
+> coucou a
+> a
+> coucou b
+> b
+> coucou c
+> c
+coucou c
+
+
+voici mes modifications :
+
+t_token	*handle_multiple_heredocs(t_command *current, t_token *token) // NEWWWW
 {
-	int					nb_pipes;
-	char				*command;	// e.g. "cat test.txt"
-	char				**command_arg;	// e.g. "cat"
-	char				*command_path;	// e.g. /usr/bin/cat/
-	int					fd[2];
-	int					fd_out;
-	int					fd_in;
-	// int					nb_pipes;
-	char				*file_name;
-	char				*heredoc;
-	struct s_token		*token_head;
-	struct s_quote		*quote_head;
-	struct s_command	*next;
-} t_command;
+    char	*delimiter;
+    int		fd;
 
-l'execution : 
+    printf("Début de handle_multiple_heredocs\n");
+
+    while (token && ft_strcmp_minishell(token->split_value, "<<") == 0)
+    {
+        printf("Traitement du token heredoc : %s\n", token->split_value);
+
+        delimiter = token->next->split_value;
+
+        printf("Délimiteur pour ce token : %s\n", delimiter);
+
+        if (current->heredoc)
+            free(current->heredoc);
+        current->heredoc = create_heredoc();
+        printf("Création du fichier heredoc : %s\n", current->heredoc);
+        fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
+
+        write_in_fd(fd, delimiter);
+        fd = open(current->heredoc, O_RDONLY);
+        current->fd_in = fd;
+
+        if (current->fd_in == -1)
+        {
+            perror("minishell: EOF");
+            exit(-1);
+        }
+
+        token = token->next->next;
+    }
+
+    // printf("Fin de handle_multiple_heredocs\n");
+    return(token); // ici
+}
 
 
-minishell$> cat << EOF
-CURRENT heredoc DEBUT = (null)
-WHILE execve_fd = (null)
-> test
-> end
-> EOF
-AAAAAAAAAAAAAAAAAAAAH = eazxrbuhol
-START execve_process = eazxrbuhol
-execve execve_process = eazxrbuhol
-test
-end
-
-TEMP heredoc MIDDLE = (null)
-CURRENT heredoc MIDDLE = (null)
-heredoc = (null)
-
-
-mon code :
-
-void	execve_fd(t_command *current, t_env *env)
+int	open_fd(t_command *command)
 {
-	t_process_data	data;
-	t_command *tmp = current; // test
+	t_token	*token;
+	t_token	*token_head;
 
-	printf("CURRENT heredoc DEBUT = %s\n", current->heredoc);
-
-	data.command = current;
-	data.current = current;
-	data.infile = 0;
-	data.index = 0;
-	init_execve(current, &(data.child_pids));
-	while (data.current)
+	token = command->token_head;
+	token_head = command->token_head;
+	while (token)
 	{
-		if (pipe(data.current->fd) == -1)
-			exit_with_error("pipe", data.child_pids);
-		data.pid = fork();
-		data.child_pids[data.index++] = data.pid;
-		data.current->fd_in = data.current->fd[0];
-		data.current->fd_out = data.current->fd[1];
-		handle_all_process(&data, env); // ici heredoc
-		printf("WHILE execve_fd = %s\n", data.current->heredoc);
-		data.current = data.current->next;
+		heredoc_open_fd(command, &token);
+		redirect_file_in_open_fd(command, token, token_head);
+		redirect_file_out_open_fd(command, token, token_head);
+		redirect_append_file_out_open_fd(command, token, token_head);
+		token = token->next;
 	}
+	// printf("open_fd = %s\n", command->heredoc);
+	return (0);
+}
 
-	wait_for_children(data.command, data.child_pids);
 
-	printf("\nTEMP heredoc MIDDLE = %s\n", tmp->heredoc);
-	printf("CURRENT heredoc MIDDLE = %s\n", current->heredoc);
 
+void clean_heredoc_files(t_command *cur)
+{
+	t_command *tmp = cur;
 	while (tmp)
 	{
-		printf("heredoc = %s\n", tmp->heredoc);
-		unlink(tmp->heredoc);
-		tmp->heredoc = NULL; // Set the pointer to NULL after freeing to avoid double free errors
+		if (tmp->heredoc)
+		{
+			printf("Tentative de suppression du fichier heredoc : %s\n", tmp->heredoc); // PRINNNT
+			unlink(tmp->heredoc);
+			free(tmp->heredoc);
+			tmp->heredoc = NULL;
+		}
 		tmp = tmp->next;
 	}
-
-	
-	cleanup(data.child_pids, data.infile);
 }
+
 
 int	execve_process(t_command *cur, t_env *env)
 {
-	printf("START execve_process = %s\n", cur->heredoc);
+	// free_file_name(cur->file_name); // ne marche pas
+	// unlink(cur->heredoc); // METTRE ICIII
+	// free(cur->file_name); // utile ? 
+
+	clean_heredoc_files(cur);
+	
 	ft_set_args_and_paths(cur, env);
 	if (env->flag_error || is_builtin(cur) == 2)
 		exit(0);
@@ -99,11 +135,43 @@ int	execve_process(t_command *cur, t_env *env)
 		ft_free_current(cur);
 		return (127);
 	}
-	else if ((cur->command_path) && printf("execve execve_process = %s\n", cur->heredoc)
+	else if ((cur->command_path)
 		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))
 	{
 		perror("Error");
 		return (-1);
 	}
+	return (0);
+}
+
+void heredoc_open_fd(t_command *command, t_token **token)
+{
+    if (*token && (*token)->type == TYPE_HEREDOC)
+    {
+        *token = handle_multiple_heredocs(command, *token);
+        if (command->fd_in != -1)
+        {
+            dup2(command->fd_in, 0);
+            close(command->fd_in);
+        }
+    }
+}
+
+int	open_fd(t_command *command)
+{
+	t_token	*token;
+	t_token	*token_head;
+
+	token = command->token_head;
+	token_head = command->token_head;
+	while (token)
+	{
+		heredoc_open_fd(command, &token);
+		redirect_file_in_open_fd(command, token, token_head);
+		redirect_file_out_open_fd(command, token, token_head);
+		redirect_append_file_out_open_fd(command, token, token_head);
+		token = token->next;
+	}
+	// printf("open_fd = %s\n", command->heredoc);
 	return (0);
 }

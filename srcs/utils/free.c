@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 12:09:14 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:07:04 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,17 @@ void	ft_free_current(t_command *current)
 	}
 }
 
-void	free_file_name(char *file_name)
+void	clean_heredoc_files(t_command *cur)
 {
-	if (file_name != NULL)
-	{
-		if (unlink(file_name) == -1)
-			perror("Error removing file");
-		free(file_name);
-		ft_close_fd();
+	int i = 0;
+	while (cur->heredocs && cur->heredocs[i]) {
+		// printf("Je supprime le heredoc : %s\n", cur->heredocs[i]);
+		unlink(cur->heredocs[i]);
+		free(cur->heredocs[i]);
+		i++;
 	}
+	free(cur->heredocs);
+	cur->heredocs = NULL;
 }
 
 void	cleanup(pid_t *child_pids, int infile)

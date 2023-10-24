@@ -6,22 +6,35 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:07:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 11:54:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:42:29 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	heredoc_open_fd(t_command *command, t_token *token)
+// void heredoc_open_fd(t_command *command, t_token *token)
+// {
+// 	if (token->type == TYPE_HEREDOC)
+// 	{
+// 		token = handle_multiple_heredocs(command, token);
+// 		if (command->fd_in != -1)
+// 		{
+// 			dup2(command->fd_in, 0);
+// 			close(command->fd_in);
+// 		}
+// 	}
+// }
+
+void heredoc_open_fd(t_command *command, t_token **token)
 {
-	if (token->type == TYPE_HEREDOC)
+	if (*token && (*token)->type == TYPE_HEREDOC)
 	{
-		if (redirect_heredoc(command, token) == 0)
+		*token = handle_multiple_heredocs(command, *token);
+		if (command->fd_in != -1)
 		{
 			dup2(command->fd_in, 0);
 			close(command->fd_in);
 		}
-		// printf("heredoc_open_fd  = %s\n", command->heredoc);
 	}
 }
 
@@ -73,12 +86,15 @@ int	open_fd(t_command *command)
 	token_head = command->token_head;
 	while (token)
 	{
-		heredoc_open_fd(command, token);
-		redirect_file_in_open_fd(command, token, token_head);
-		redirect_file_out_open_fd(command, token, token_head);
-		redirect_append_file_out_open_fd(command, token, token_head);
-		token = token->next;
+		if (token->type == TYPE_HEREDOC)
+			heredoc_open_fd(command, &token);
+		else
+		{
+			redirect_file_in_open_fd(command, token, token_head);
+			redirect_file_out_open_fd(command, token, token_head);
+			redirect_append_file_out_open_fd(command, token, token_head);
+			token = token->next;
+		}
 	}
-	// printf("open_fd = %s\n", command->heredoc);
 	return (0);
 }
