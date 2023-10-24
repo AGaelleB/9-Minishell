@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 16:00:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:09:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	free_file_name(char *file_name)
 {
 	if (file_name != NULL)
 	{
-		unlink(file_name);
+		if (unlink(file_name) == -1)
+			perror("Error removing file");
 		free(file_name);
 		ft_close_fd();
 	}

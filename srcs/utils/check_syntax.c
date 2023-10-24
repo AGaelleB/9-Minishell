@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:08:08 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 16:47:47 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/24 09:58:05 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,33 @@ int	check_syntax_errors(char *input)
 {
 	char	*ptr;
 	int		pipe_found;
+	int		i;
 
 	ptr = input;
 	pipe_found = 0;
-	while (*ptr)
+	i = 0;
+	while (ptr[i] == ' ')
+		i++;
+	if (ptr[i] >= input[i] && ptr[i] == '|')
 	{
-		if (*ptr == '|')
+		if (ptr[i + 1] == '|')
+			return (2);
+		return (1); // Erreur: commande commence avec '|'
+	}
+	i = 0;
+	while (ptr[i])
+	{
+		if (ptr[i] == '|')
 		{
 			if (pipe_found)
 				return (2); // Erreur: "||" trouvé
 			pipe_found = 1;
 		}
-		else if (*ptr != ' ')
-		{
+		else if (ptr[i] != ' ')
 			pipe_found = 0;
-		}
-		ptr++;
+		i++;
 	}
-	ptr = input + strlen(input) - 1;
+	ptr = input + ft_strlen(input) - 1;
 	while (ptr >= input && *ptr == ' ')
 		ptr--; 
 	if (ptr >= input && *ptr == '|')
@@ -60,13 +69,13 @@ int	pipe_syntax_errors(char *input)
 	syntax_error_code = check_syntax_errors(input);
 	if (syntax_error_code == 1)
 	{
-		ft_putstr_fd("minishell: syntax error command required after '|'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", 2);
 		free(input);
 		return (-1);
 	}
 	else if (syntax_error_code == 2)
 	{
-		ft_putstr_fd("minishell: syntax error command required after '||'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token '||'\n", 2);
 		free(input);
 		return (-1);
 	}

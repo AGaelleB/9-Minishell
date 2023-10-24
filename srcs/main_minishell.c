@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/18 16:57:13 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/24 10:00:09 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,6 @@ int main(int ac, char **av, char **envp)
 
 /*
 										TO DO :
-
-
-minishell$> |'l's
-[1]    915227 segmentation fault (core dumped)  ./minishell
-
 
 EOF à faire :
 	supprimer les files crees avec EOF lors de la gestion de l'env

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/18 16:28:03 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/24 14:16:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	ft_set_args_and_paths(t_command *cur, t_env *env)
 
 int	is_builtin(t_command *cur)
 {
+	if (ft_strcmp_minishell(cur->command, "exit") == 0)
+		return (2);
 	if ((ft_strcmp_minishell(cur->command_arg[0], "cd") == 0)
 		|| (ft_strncmp(cur->command_arg[0], "cd ", 3) == 0))
 		return (1);
@@ -66,8 +68,9 @@ int	is_builtin(t_command *cur)
 
 int	execve_process(t_command *cur, t_env *env)
 {
+	unlink(cur->heredoc); // METTRE ICIII
 	ft_set_args_and_paths(cur, env);
-	if (env->flag_error)
+	if (env->flag_error || is_builtin(cur) == 2)
 		exit(0);
 	if ((cur->command_path == NULL) && is_builtin(cur) == 0)
 	{

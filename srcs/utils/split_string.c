@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:42:22 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 16:15:53 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/24 09:50:16 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*allocate_and_copy_token(const char *str, int start, int end)
 		perror("malloc");
 		return (NULL);
 	}
-	strncpy(token, &str[start], len);
+	strncpy(token, &str[start], len); // FORBIDEN A CODER
 	token[len] = '\0';
 	return (token);
 }

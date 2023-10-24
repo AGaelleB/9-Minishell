@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:07:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/11 17:39:14 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/24 11:54:04 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	heredoc_open_fd(t_command *command, t_token *token)
 			dup2(command->fd_in, 0);
 			close(command->fd_in);
 		}
+		// printf("heredoc_open_fd  = %s\n", command->heredoc);
 	}
 }
 
@@ -78,5 +79,6 @@ int	open_fd(t_command *command)
 		redirect_append_file_out_open_fd(command, token, token_head);
 		token = token->next;
 	}
+	// printf("open_fd = %s\n", command->heredoc);
 	return (0);
 }

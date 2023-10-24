@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 15:33:57 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:15:40 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ int	aleatori_char(void)
 	return ('a' + nbr % 26);
 }
 
-char	*create_file_name(void)
+char	*create_heredoc(void)
 {
-	char	*file_name;
+	char	*heredoc;
 	int		i;
 
 	i = 0;
-	file_name = malloc(sizeof(char) * 11);
-	file_name[10] = '\0';
+	heredoc = malloc(sizeof(char) * 11);
+	heredoc[10] = '\0';
 	while (i < 10)
 	{
-		file_name[i] = (char)aleatori_char();
+		heredoc[i] = (char)aleatori_char();
 		i++;
 	}
-	return (file_name);
+	return (heredoc);
 }
 
 int	write_in_fd(int fd, char *delimiter)
@@ -57,10 +57,6 @@ int	write_in_fd(int fd, char *delimiter)
 			return (45);
 		if (ft_strcmp_minishell(line, delimiter) == 0)
 			break ;
-		// if (str[0] != '\0') // A FAIRE !!!
-		// {
-			// permet de supprimer le file creer, avec l'environement
-		// }
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
@@ -72,28 +68,43 @@ int	write_in_fd(int fd, char *delimiter)
 int	redirect_heredoc(t_command *current, t_token *token)
 {
 	char	*delimiter;
-	char	*file_name;
 	int		fd;
 
-	file_name = NULL;
 	fd = -1;
 	delimiter = token->next->split_value;
 	if (fd == -1)
 	{
-		if (file_name)
-			free(file_name);
-		file_name = create_file_name();
-		fd = open(file_name, O_CREAT | O_EXCL | O_RDWR, 0644);
+		if (current->heredoc)
+			free(current->heredoc);
+		current->heredoc = create_heredoc();
+		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
 	}
 	write_in_fd(fd, delimiter);
-	fd = open(file_name, O_RDONLY);
+	fd = open(current->heredoc, O_RDONLY);
 	current->fd_in = fd;
-	free_file_name(current->file_name);
 	if (current->fd_in == -1)
 	{
 		perror("minishell: EOF");
 		exit(-1);
 	}
-	current->file_name = file_name;
 	return (0);
 }
+
+
+/* 
+bash-5.1$ cat << UN << DEUX << TROIS
+> un
+> UN
+> deux
+> DEUX
+> trois
+> TROIS
+trois
+
+minishell$> cat << UN << DEUX << TROIS
+> un
+> UN
+> un
+> > un
+> un
+ */

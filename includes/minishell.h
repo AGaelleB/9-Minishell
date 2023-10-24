@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/18 15:15:30 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:09:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_command
 	int					fd_in;
 	// int					nb_pipes;
 	char				*file_name;
+	char				*heredoc;
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;
 	struct s_command	*next;
@@ -236,8 +237,11 @@ int			redirect_append_file_out(t_command *current, t_token *token, t_token *toke
 int			is_redir_at_beginning(char *input, int i);
 
 int			aleatori_char(void);
-char		*create_file_name(void);
+// char		*create_file_name(void);
+// char		*create_file_name(t_command *command);
+
 int			write_in_fd(int fd, char *delimiter);
+// int			write_in_fd(int fd, char *delimiter, char *file_name);
 int			redirect_heredoc(t_command *current, t_token *token);
 
 int			open_fd(t_command *command);
@@ -264,6 +268,7 @@ void		ft_free_tab(char **tab);
 void		ft_free_struct(t_command *current, t_token *head);
 void		ft_free_current(t_command *current);
 void		free_file_name(char *file_name);
+
 void		cleanup(pid_t *child_pids, int infile);
 
 void		free_tokens(char **tokens, int num);
