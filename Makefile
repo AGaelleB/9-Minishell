@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/17 11:41:10 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/10/25 10:04:21 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,6 +108,7 @@ SRCS_LIBFT_BONUS = libft/ft_lstadd_back.c \
 	libft/ft_lstmap.c \
 	libft/ft_lstnew.c \
 	libft/ft_lstsize.c \
+	libft/ft_realloc.c \
 
 SRCS_GNL = libft/GNL/get_next_line.c \
 	libft/GNL/get_next_line_utils.c \

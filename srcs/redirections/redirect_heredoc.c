@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 18:18:55 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:09:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,37 +68,32 @@ int	write_in_fd(int fd, char *delimiter)
 	return (0);
 }
 
-void add_to_heredocs_list(t_command *current, char *heredoc_name) // NEW
+void add_to_heredocs_list(t_command *current, char *heredoc_name)
 {
 	int	i;
 	
 	i = 0;
-	// Si c'est la 1er fois que l'on ajoute un heredoc, j'init le tableau
 	if (!current->heredocs)
 	{
-		current->heredocs = malloc(sizeof(char*) * 2);  // Espace pour un nom de fichier + NULL à la fin
+		current->heredocs = malloc(sizeof(char*) * 2);
 		if (!current->heredocs)
 			return ;
 		current->heredocs[0] = ft_strdup(heredoc_name);
 		current->heredocs[1] = NULL;
 		return ;
 	}
-	// Sinon, je trouve la taille actuelle du tableau
 	while (current->heredocs[i])
 		i++;
-	// Redimensionnons le tableau pour ajouter un nouvel élément
-	current->heredocs = realloc(current->heredocs, sizeof(char*) * (i + 2)); // Espace pour le nouvel élément + NULL à la fin
-	// REALLOC EST FORBIDEN
-
-	// Ajoutons le nouveau heredoc à la fin
+	current->heredocs = ft_realloc(current->heredocs, sizeof(char*) * (i + 1), sizeof(char*) * (i + 2));
 	current->heredocs[i] = ft_strdup(heredoc_name);
 	current->heredocs[i + 1] = NULL;
 }
 
-t_token	*handle_multiple_heredocs(t_command *current, t_token *token) // NEW
+t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 {
 	char	*delimiter;
 	int		fd;
+
 	while (token && ft_strcmp_minishell(token->split_value, "<<") == 0)
 	{
 		delimiter = token->next->split_value;
@@ -106,7 +101,7 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token) // NEW
 			free(current->heredoc);
 		current->heredoc = create_heredoc();
 		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
-		add_to_heredocs_list(current, current->heredoc);  // fonction pour ajouter le nom du fichier à la liste
+		add_to_heredocs_list(current, current->heredoc);
 		write_in_fd(fd, delimiter);
 		fd = open(current->heredoc, O_RDONLY);
 		current->fd_in = fd;
@@ -146,31 +141,7 @@ int	redirect_heredoc(t_command *current, t_token *token)
 }
 
 
-/* 
-faire des tests qd on retire le PATH
-
-chez nous : 
-
-minishell$> cat << a << b << c
-> coucou a
-> a
-> coucou b
-> b
-> coucou c
-> c
-coucou c
-minishell$> unset PATH
-minishell$> cat << a << b << c
-> coucou a
-> a
-> coucou b
-> b
-> coucou c
-> c
-minishell: cat: No such file or directory
-
-
-
+/*
 chez Rayan 
 
 [42] $> cat << a << b << c
@@ -190,4 +161,6 @@ coucou c
 >coucou c
 >c
 [42] $> 
+
+=> devrait afficher minishell: cat: No such file or directory
  */

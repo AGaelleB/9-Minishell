@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 18:07:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 09:52:05 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,11 @@ void	ft_free_current(t_command *current)
 
 void	clean_heredoc_files(t_command *cur)
 {
-	int i = 0;
-	while (cur->heredocs && cur->heredocs[i]) {
+	int	i;
+	
+	i = 0;
+	while (cur->heredocs && cur->heredocs[i])
+	{
 		// printf("Je supprime le heredoc : %s\n", cur->heredocs[i]);
 		unlink(cur->heredocs[i]);
 		free(cur->heredocs[i]);

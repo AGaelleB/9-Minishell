@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 18:05:31 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:09:50 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	is_builtin(t_command *cur)
 
 int	execve_process(t_command *cur, t_env *env)
 {
-	clean_heredoc_files(cur); // NEWW
+	clean_heredoc_files(cur);
 	ft_set_args_and_paths(cur, env);
 	if (env->flag_error || is_builtin(cur) == 2)
 		exit(0);
