@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 10:09:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:04:48 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	*create_heredoc(void)
 		heredoc[i] = (char)aleatori_char();
 		i++;
 	}
-	// printf("Je créé le heredoc : %s\n", heredoc); // PRINNNNT
 	return (heredoc);
 }
 
@@ -68,7 +67,7 @@ int	write_in_fd(int fd, char *delimiter)
 	return (0);
 }
 
-void add_to_heredocs_list(t_command *current, char *heredoc_name)
+void	add_to_heredocs_list(t_command *current, char *heredoc_name)
 {
 	int	i;
 	
@@ -139,28 +138,3 @@ int	redirect_heredoc(t_command *current, t_token *token)
 	}
 	return (0);
 }
-
-
-/*
-chez Rayan 
-
-[42] $> cat << a << b << c
->coucou a
->a
->coucou b
->b
->coucou c
->c
-coucou c
-[42] $> unset PATH
-[42] $> cat << a << b << c
->coucou a
->a
->coucou b
->b
->coucou c
->c
-[42] $> 
-
-=> devrait afficher minishell: cat: No such file or directory
- */

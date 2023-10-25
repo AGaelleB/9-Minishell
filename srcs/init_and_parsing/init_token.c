@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 16:44:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:49:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_token	*new_token(t_e_token_type e_type, char *split_value)
 		return (NULL);
 	token->type = e_type;
 	token->split_value = ft_strdup(split_value); // Remember to free this later!
-	token->next = (NULL);
+	token->next = NULL;
+	token->prev = NULL; // NEW
 	// printf("value : %s | type: %d\n", token->split_value, token->type);
 	return (token);
 }
@@ -35,6 +36,7 @@ void	add_token_to_list(t_token **head, t_token **tail, t_token *new_tok)
 	}
 	else
 	{
+		new_tok->prev = *tail; // NEWW pour utiliser prev dans la struct
 		(*tail)->next = new_tok;
 		*tail = new_tok;
 	}
@@ -60,6 +62,14 @@ void	init_tokenizer(t_tokenizer *tz, char *input)
 
 t_token	*create_token(t_tokenizer *tz, t_env *env)
 {
+
+	// tz->token = malloc(sizeof(t_token));
+	// if (!tz->token)
+	// 	return NULL; // Gestion d'erreur en cas d'échec de l'allocation mémoire
+
+	// tz->token->next = NULL;
+	// tz->token->prev = NULL;
+
 	tz->token = NULL;
 	if (tz->state == TYPE_F_OUT || tz->state == TYPE_F_IN)
 	{

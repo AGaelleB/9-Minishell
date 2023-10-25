@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 15:50:55 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:09:45 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int main(int ac, char **av, char **envp)
 				execve_fd(new_commands, env_bis);
 			}
 			// ft_free_tab(new_commands->command_arg);
+			// clean_heredoc_files(new_commands); usless
 			ft_free_struct(new_commands, new_commands->token_head);
 			ft_free_current(new_commands);
 			free(input);
@@ -112,28 +113,11 @@ int main(int ac, char **av, char **envp)
 										TO DO :
 
 EOF à faire :
-	supprimer les files crees avec EOF lors de la gestion de l'env
-	voir si besoin de ferme mieux :	// free_file_name(current->file_name);
-	
-	voir la cmd <celine.txt <<EOF cat ne doit afficher que EOF
-	voir la cmd <<EOF1 <<EOF2 <<EOF3 cat ne doit afficher que le derneir EOF (EOF3) 
-		-> mais ouvre et ecrit dans tout les EOF a creer
 	
 	<<EOF ls
 	> ^C
 	ferme heredoc et ne fait rien 
-	
-	<<EOF ls
-	> ^D
-	ferme heredoc et exec ls
 
-	<<EOF <<EOF cat
-	doit ouvrir les deux EOF mais ne doit print que le dernier
-
-	<celine.txt <<EOF cat
-	ne doit cat que EOF :doit reagir comme <celine.txt <lili.c cat
-
-	faire d autres test sur les EOF
 
 										A CORRIGER :
 EXITSTATUS a faire; 
@@ -142,6 +126,9 @@ verifier les free valgrind etc
 leaks lors de lexit apres avoir effectué une commande 
 on doit boucle une premiere fois sur current pour avancé dans nos commandes pour ensuite free dans chaque commandes la tokenisation effectuée:
 split_value avec "cat" et le token entier, cest ici que ce situe le probleme dinvalid read size
+
+
+
 
 
 
@@ -157,6 +144,29 @@ echo -n -a -nnn -er -nnnnnn -nae -nnn  bonjour
 
 ls |
 	-> il execute la commande 
+
+
+Pour les heredoc :
+[42] $> cat << a << b << c
+>coucou a
+>a
+>coucou b
+>b
+>coucou c
+>c
+coucou c
+[42] $> unset PATH
+[42] $> cat << a << b << c
+>coucou a
+>a
+>coucou b
+>b
+>coucou c
+>c
+[42] $> 
+
+=> devrait afficher minishell: cat: No such file or directory
+
 ************************************************************
 
 */

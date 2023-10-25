@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 18:07:07 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:46:56 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ typedef struct s_token
 	t_e_token_type		type;
 	char				*split_value; // e.g. "cat"
 	struct s_token		*next;
+	struct s_token		*prev;
 	char				*command;
-
 } t_token;
 
 typedef struct s_split_token
@@ -136,6 +136,7 @@ typedef struct s_command
 	char				*heredoc;
 	char				**heredocs;  // tableau dynamique pour stocker les noms de fichiers heredoc
 	int					flag_chevron;
+	bool				last_redir_is_heredoc; // Tableau pour les flags actifs des heredocs
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;
 	struct s_command	*next;

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 09:52:05 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:05:26 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,11 @@ void	clean_heredoc_files(t_command *cur)
 	i = 0;
 	while (cur->heredocs && cur->heredocs[i])
 	{
-		// printf("Je supprime le heredoc : %s\n", cur->heredocs[i]);
 		unlink(cur->heredocs[i]);
-		free(cur->heredocs[i]);
+		// free(cur->heredocs[i]); // casse l exec des pipe
 		i++;
 	}
-	free(cur->heredocs);
+	// free(cur->heredocs); // peut faire des doubles free sur une cmd basic avec pipe
 	cur->heredocs = NULL;
 }
 
