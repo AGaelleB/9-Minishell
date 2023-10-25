@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/18 16:56:14 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:23:59 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 	temp_path = ft_get_paths(env);
 	if ((temp_path == NULL || (temp_path[0][0]) == 0)
 		&& (ft_strcmp_minishell(args, "unset") != 0)
-		&& (ft_strcmp_minishell(args, "export") != 0)) // pas top peut-etre a ameliorer
+		&& (ft_strcmp_minishell(args, "export") != 0))
 	{
 		write(2, "minishell: ", 12);
 		write(2, args, ft_strlen(args));

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/10/06 17:49:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:44:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int	ft_isspace(int c)
 	return (0);
 }
 
-/////////////////////////////////////////////////////////////////////////
-void print_commands_and_tokens(t_command *head)
+/* void print_commands_and_tokens(t_command *head)
 {
 	t_command *current_cmd = head;
 	t_token *current_token;
@@ -84,3 +83,4 @@ void print_commands_and_tokens(t_command *head)
 		printf("\n");  // Just to separate different commands
 	}
 }
+ */

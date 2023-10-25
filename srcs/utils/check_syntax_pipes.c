@@ -1,65 +1,79 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_syntax.c                                     :+:      :+:    :+:   */
+/*   check_syntax_pipes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 15:08:08 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 09:58:05 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:39:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	check_valid_caractere_filename(char c)
+int	check_pipe_at_start(char *input)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '#'
-		|| c == '(' || c == ')' || c == '!' || c == ';'
-		|| c == '?' || c == '&' || c == '*' || c == '\\')
-	{
-		return (1);
-	}
-	else
-		return (0);
-}
-
-int	check_syntax_errors(char *input)
-{
-	char	*ptr;
-	int		pipe_found;
 	int		i;
 
-	ptr = input;
-	pipe_found = 0;
 	i = 0;
-	while (ptr[i] == ' ')
+	while (input[i] == ' ')
 		i++;
-	if (ptr[i] >= input[i] && ptr[i] == '|')
+	if (input[i] == '|')
 	{
-		if (ptr[i + 1] == '|')
+		if (input[i + 1] == '|')
 			return (2);
 		return (1); // Erreur: commande commence avec '|'
 	}
+	return (0);
+}
+
+int	check_pipe_sequence(char *input)
+{
+	int		pipe_found;
+	int		i;
+
+	pipe_found = 0;
 	i = 0;
-	while (ptr[i])
+	while (input[i])
 	{
-		if (ptr[i] == '|')
+		if (input[i] == '|')
 		{
 			if (pipe_found)
 				return (2); // Erreur: "||" trouvé
 			pipe_found = 1;
 		}
-		else if (ptr[i] != ' ')
+		else if (input[i] != ' ')
 			pipe_found = 0;
 		i++;
 	}
+	return (0);
+}
+
+int	check_pipe_at_end(char *input)
+{
+	char	*ptr;
+
 	ptr = input + ft_strlen(input) - 1;
 	while (ptr >= input && *ptr == ' ')
-		ptr--; 
+		ptr--;
 	if (ptr >= input && *ptr == '|')
 		return (1); // Erreur: commande finit avec '|'
 	return (0);
+}
+
+int	check_syntax_errors(char *input)
+{
+	int	pipe_at_start;
+	int	pipe_sequence;
+
+	pipe_at_start = check_pipe_at_start(input);
+	pipe_sequence = check_pipe_sequence(input);
+	if (pipe_sequence)
+		return (pipe_sequence);
+	if (pipe_at_start)
+		return (pipe_at_start);
+	return (check_pipe_at_end(input));
 }
 
 int	pipe_syntax_errors(char *input)

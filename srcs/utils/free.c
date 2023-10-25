@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 13:05:26 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:43:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_free_current(t_command *current)
 void	clean_heredoc_files(t_command *cur)
 {
 	int	i;
-	
+
 	i = 0;
 	while (cur->heredocs && cur->heredocs[i])
 	{

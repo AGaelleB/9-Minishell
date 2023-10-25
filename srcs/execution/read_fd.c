@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 14:17:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:08:52 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ void	handle_parent_process(t_process_data *data)
 	data->infile = data->current->fd_in;
 }
 
+void	handle_all_process(t_process_data *data, t_env *env)
+{
+	if (data->pid == 0)
+		handle_child_process(data, env);
+	else if (data->pid > 0)
+		handle_parent_process(data);
+	else
+		exit_with_error("fork", data->child_pids);
+}
+
 void	wait_for_children(t_command *command, pid_t *child_pids)
 {
 	int	i;
@@ -59,16 +69,6 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 		waitpid(child_pids[i], NULL, 0);
 	}
 	signal(SIGINT, ft_builtin_ctrl_c);
-}
-
-void	handle_all_process(t_process_data *data, t_env *env)
-{
-	if (data->pid == 0)
-		handle_child_process(data, env);
-	else if (data->pid > 0)
-		handle_parent_process(data);
-	else
-		exit_with_error("fork", data->child_pids);
 }
 
 void	execve_fd(t_command *current, t_env *env)

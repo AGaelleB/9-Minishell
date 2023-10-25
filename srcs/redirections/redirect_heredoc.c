@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 13:04:48 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:34:19 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,17 @@ int	write_in_fd(int fd, char *delimiter)
 	while (1)
 	{
 		line = readline("> ");
-		if (line == NULL)
+		// signal(SIGINT, ft_builtin_ctrl_c);  // Réinitialisez le gestionnaire après readline
+		if (global_ctrl_c_pressed) // NEW
+		{
+			free(line);
+			return (-1); // Indique que Ctrl+C a été pressé
+		}
+		if (!line)
+		{
+			global_ctrl_c_pressed = 1;
 			return (45);
+		}
 		if (ft_strcmp_minishell(line, delimiter) == 0)
 			break ;
 		write(fd, line, ft_strlen(line));

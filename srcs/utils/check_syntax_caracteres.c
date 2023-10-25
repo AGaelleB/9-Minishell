@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_exit.c                                      :+:      :+:    :+:   */
+/*   check_syntax_caracteres.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 16:34:35 by abonnefo         ###   ########.fr       */
+/*   Created: 2023/10/11 15:08:08 by abonnefo          #+#    #+#             */
+/*   Updated: 2023/10/25 17:40:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int global_ctrl_c_pressed = 0; // variable globale init ici
-
-void	ft_builtin_ctrl_c(int signal)
+int	check_valid_caractere_filename(char c)
 {
-	(void)signal;
-	write(1, "\n", 1);
-	global_ctrl_c_pressed = 1;
-	rl_on_new_line(); // Informe readline que nous sommes sur une nouvelle ligne
-	rl_replace_line("", 0); // Efface la ligne actuelle
-	rl_redisplay(); // Réaffiche le prompt
+	if (c == '|' || c == '<' || c == '>' || c == '#'
+		|| c == '(' || c == ')' || c == '!' || c == ';'
+		|| c == '?' || c == '&' || c == '*' || c == '\\')
+	{
+		return (1);
+	}
+	else
+		return (0);
 }

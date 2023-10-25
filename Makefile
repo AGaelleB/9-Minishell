@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/25 10:04:21 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/10/25 17:40:21 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS_EXECUTION = srcs/main_minishell.c \
 	srcs/execution/handle_quotes.c \
 	srcs/execution/read_fd.c \
 
-SRCS_BUILTINS = srcs/builtins/all_builtins.c \
+SRCS_BUILTINS = srcs/builtins/all_builtins_verifs.c \
 	srcs/builtins/builtin_cd.c \
 	srcs/builtins/builtin_echo.c \
 	srcs/builtins/builtin_env.c \
@@ -33,6 +33,9 @@ SRCS_BUILTINS = srcs/builtins/all_builtins.c \
 	srcs/builtins/builtin_pwd.c \
 	srcs/builtins/builtin_unset.c \
 	srcs/builtins/builtins_exit.c \
+	srcs/builtins/check_builtins_1.c \
+	srcs/builtins/check_builtins_2.c \
+	srcs/builtins/exec_builtins.c \
 
 SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/count_args_quotes.c \
@@ -48,12 +51,14 @@ SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 SRCS_REDIRECTIONS = srcs/redirections/epur_filename.c \
 	srcs/redirections/redirect_at_beginning.c \
 	srcs/redirections/redirect_file_in_and_out.c \
+	srcs/redirections/redirect_file_in_out.c \
 	srcs/redirections/redirect_heredoc.c \
 	srcs/redirections/redirect_open_fd.c \
 
 SRCS_SIGNALS = srcs/signals/signal_exit.c \
 
-SRCS_UTILS = srcs/utils/check_syntax.c \
+SRCS_UTILS = srcs/utils/check_syntax_caracteres.c \
+	srcs/utils/check_syntax_pipes.c \
 	srcs/utils/error.c \
 	srcs/utils/free_bis.c \
 	srcs/utils/free.c \

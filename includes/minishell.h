@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 12:46:56 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:30:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 # define MAGENTA "\033[35m"
 # define CYAN "\033[36m"
 # define WHITE "\033[37m"
+
+extern int global_ctrl_c_pressed; // ma variable globale 
 
 typedef struct s_command			t_command;
 
@@ -188,6 +190,17 @@ int			ft_builtin_pwd(int fd);
 
 void		ft_builtin_unset(char **args, t_env *env);
 
+int			check_pwd(t_command *current);
+int			check_echo(t_command *current, t_env *env);
+int			check_cd(t_command *current);
+
+int			check_env(t_command *current, t_env *env);
+int			check_unset(t_command *current);
+int			check_export(t_command *current, t_env *env);
+
+void		exec_builtins_unset_export(t_command *cmd, t_env *env_bis);
+void		exec_builtin_cd(t_command *cmd, t_env *env_bis);
+
 
 /***********EXECUTION***********/
 t_command	*create_new_cmd(char *command_str, t_env *env);
@@ -243,6 +256,11 @@ int			is_redir_at_beginning(char *input, int i);
 int			aleatori_char(void);
 // char		*create_file_name(void);
 // char		*create_file_name(t_command *command);
+
+void	heredoc_open_fd(t_command *command, t_token **token);
+void	redirect_file_in_open_fd(t_command *command, t_token *token, t_token *token_head);
+void	redirect_file_out_open_fd(t_command *command, t_token *token, t_token *token_head);
+void	redirect_append_file_out_open_fd(t_command *command, t_token *token, t_token *token_head);
 
 // int			write_in_fd(int fd, char *delimiter);
 // int			write_in_fd(int fd, char *delimiter, char *file_name);
