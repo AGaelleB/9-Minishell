@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 17:30:13 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 10:08:52 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,8 +198,8 @@ int			check_env(t_command *current, t_env *env);
 int			check_unset(t_command *current);
 int			check_export(t_command *current, t_env *env);
 
-void		exec_builtins_unset_export(t_command *cmd, t_env *env_bis);
-void		exec_builtin_cd(t_command *cmd, t_env *env_bis);
+void		execve_builtins_unset_export(t_command *cmd, t_env *env_bis);
+void		execve_builtin_cd(t_command *cmd, t_env *env_bis);
 
 
 /***********EXECUTION***********/
@@ -245,6 +245,9 @@ char		*add_spaces_around_redir(char *input);
 
 /***********REDIRECTIONS***********/
 char		*epur_filename(t_token *token_head);
+
+void	handle_quotes_heredoc(char *str, int *i, bool *in_quote, bool *double_quote);
+char	*extract_filename_heredoc(char *cmd);
 
 int			is_redir_at_beginning(char *input, int i);
 

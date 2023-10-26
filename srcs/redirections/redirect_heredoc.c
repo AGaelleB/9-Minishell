@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 16:34:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 11:45:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 
 	while (token && ft_strcmp_minishell(token->split_value, "<<") == 0)
 	{
-		delimiter = token->next->split_value;
+		delimiter = extract_filename_heredoc(current->command);
+		// printf("delimiter = %s\n", delimiter);
 		if (current->heredoc)
 			free(current->heredoc);
 		current->heredoc = create_heredoc();

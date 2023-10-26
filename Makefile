@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/25 17:40:21 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/10/26 10:05:11 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/parse_spaces_redir.c \
 
 SRCS_REDIRECTIONS = srcs/redirections/epur_filename.c \
+	srcs/redirections/epur_heredoc_name.c \
 	srcs/redirections/redirect_at_beginning.c \
 	srcs/redirections/redirect_file_in_and_out.c \
 	srcs/redirections/redirect_file_in_out.c \

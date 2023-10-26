@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 15:43:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 09:53:50 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	exec_builtins_unset_export(t_command *cmd, t_env *env_bis)
+void	execve_builtins_unset_export(t_command *cmd, t_env *env_bis)
 {
 	if (ft_strncmp(cmd->command, "unset", 5) == 0)
 	{
@@ -30,7 +30,7 @@ void	exec_builtins_unset_export(t_command *cmd, t_env *env_bis)
 	}
 }
 
-void	exec_builtin_cd(t_command *cmd, t_env *env_bis)
+void	execve_builtin_cd(t_command *cmd, t_env *env_bis)
 {
 	if (ft_strcmp_minishell(cmd->command, "cd") == 0)
 	{

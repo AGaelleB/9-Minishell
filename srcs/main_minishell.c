@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 16:12:20 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 09:53:50 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	main(int ac, char **av, char **envp)
 				// count_pipes(input, new_commands); // == count_and_set_pipes
 				env_bis->flag_builtin = false;
 				new_commands->command_arg = parse_input_quote(new_commands->command);
-				exec_builtins_unset_export(new_commands, env_bis);
-				exec_builtin_cd(new_commands, env_bis);
+				execve_builtins_unset_export(new_commands, env_bis);
+				execve_builtin_cd(new_commands, env_bis);
 				execve_fd(new_commands, env_bis);
 			}
 			global_ctrl_c_pressed = 0;
@@ -84,6 +84,9 @@ int	main(int ac, char **av, char **envp)
 
 /*
 										TO DO :
+
+
+
 
 EOF à faire :
 	

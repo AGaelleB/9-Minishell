@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   epur_filename.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:04:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 09:37:28 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/10/26 11:44:18 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@ static void	skip_until_char(char *str, int *i, char c)
 
 static void	handle_quotes(char *str, int *i, bool *in_quote, bool *double_quote)
 {
-	if (str[*i] == '\'')
+	if (!*in_quote && str[*i] == '\"' && str[*i + 1] == '\"')
+		(*i) += 2;
+	else if (!*double_quote && str[*i] == '\'' && str[*i + 1] == '\'')
+		(*i) += 2;
+	if (!*double_quote && str[*i] == '\'')
 		*in_quote = !*in_quote;
-	if (str[*i] == '\"')
+	else if (!*in_quote && str[*i] == '\"')
 		*double_quote = !*double_quote;
 	if (!*in_quote && str[*i] == '\"')
 		(*i)++;
-	if (!*double_quote && str[*i] == '\'')
+	else if (!*double_quote && str[*i] == '\'')
 		(*i)++;
 }
 
@@ -48,7 +52,7 @@ static char	*extract_filename(char *cmd, int *i)
 		if (cmd[*i] == '>' || cmd[*i] == '<')
 			break ;
 		handle_quotes(cmd, i, &in_quote, &double_quote);
-		if (!in_quote && !double_quote)
+		if (!in_quote && !double_quote && cmd[*i] == ' ')
 			break ;
 		file_name[j++] = cmd[(*i)++];
 	}
