@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/26 10:08:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:54:44 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,6 @@ void	redirect_append_file_out_open_fd(t_command *command, t_token *token, t_toke
 
 // int			write_in_fd(int fd, char *delimiter);
 // int			write_in_fd(int fd, char *delimiter, char *file_name);
-int			redirect_heredoc(t_command *current, t_token *token);
 
 int			open_fd(t_command *command);
 

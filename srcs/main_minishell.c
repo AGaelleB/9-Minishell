@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/26 09:53:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:47:51 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,42 +85,11 @@ int	main(int ac, char **av, char **envp)
 /*
 										TO DO :
 
-
-
-
 EOF à faire :
 	
-	<<EOF ls
-	> ^C
-	ferme heredoc et ne fait rien 
+	cat << EOF | ls
 
-"cat << ""del"" ne fonctionne pas chez nous
-	bash-5.1$ cat << "del"
-	> omg
-	> "del"
-	> del
-	omg
-	"del"
-
-cat << ''del ne fonctionne pas chez nous
-	bash-5.1$ cat << ''del
-	> ''del
-	> del
-	''del
-
-cat << " 'OMG' " ne fonctionne pas chez nous
-	bash-5.1$ cat << " 'OMG' "
-	> " 'OMG' "
-	> OMG
-	> "OMG"
-	> 'OMG'
-	> " OMG "
-	>  'OMG' 
-	" 'OMG' "
-	OMG
-	"OMG"
-	'OMG'
-	" OMG "
+	
 
 										A CORRIGER :
 EXITSTATUS a faire; 

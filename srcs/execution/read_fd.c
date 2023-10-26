@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 16:08:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:49:12 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	handle_child_process(t_process_data *data, t_env *env)
 {
+	printf("handle_child_process \n");
 	close(data->current->fd_in);
 	dup2(data->infile, 0);
 	if (data->current->next)
@@ -49,6 +50,7 @@ void	handle_parent_process(t_process_data *data)
 
 void	handle_all_process(t_process_data *data, t_env *env)
 {
+	printf("handle_all_process \n");
 	if (data->pid == 0)
 		handle_child_process(data, env);
 	else if (data->pid > 0)
@@ -74,7 +76,7 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 void	execve_fd(t_command *current, t_env *env)
 {
 	t_process_data	data;
-
+	printf("execve_fd \n");
 	data.command = current;
 	data.current = current;
 	data.infile = 0;

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/26 11:45:36 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:52:31 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,69 @@ char	*create_heredoc(void)
 	return (heredoc);
 }
 
-int	write_in_fd(int fd, char *delimiter)
+void	sighandler_heredoc(int sig)
 {
-	char	*line;
+	int fd;
 
+	(void)sig;
+	fd = open ("/dev/null", O_RDONLY);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	printf("\n");
+	global_ctrl_c_pressed = 130;
+	return ;
+}
+
+void handle_signals_heredoc()
+{
+	global_ctrl_c_pressed = 0;
+	signal(SIGINT, sighandler_heredoc);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+int	ctrl_d_heredoc(char *input, int i, char *delimiter)
+{
+	if (!input)
+	{
+		write(1, "minishell: warning: here-document at line ", 43);
+		ft_putnbr_fd(i, STDOUT_FILENO);
+		write(1," delimited by end-of-file (wanted \'", 36);
+		ft_putstr_fd(delimiter, STDOUT_FILENO);
+		write(1, "')\n", 4);
+		return (45);
+	}
+	return(0);
+}
+
+// gerer le pipe
+
+int	write_in_fd(int fd, char *delimiter, t_command *current)
+{
+	printf("write_in_fd \n");
+	char	*line;
+	int		i;
+
+	i = 0;
+	handle_signals_heredoc();
 	while (1)
 	{
 		line = readline("> ");
-		// signal(SIGINT, ft_builtin_ctrl_c);  // Réinitialisez le gestionnaire après readline
-		if (global_ctrl_c_pressed) // NEW
+		if (global_ctrl_c_pressed == 130)
 		{
+			clean_heredoc_files(current);
 			free(line);
-			return (-1); // Indique que Ctrl+C a été pressé
+			exit(130);
 		}
-		if (!line)
-		{
-			global_ctrl_c_pressed = 1;
+		if (ctrl_d_heredoc(line, i, delimiter) == 45)
 			return (45);
-		}
 		if (ft_strcmp_minishell(line, delimiter) == 0)
 			break ;
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
+		i++;
 		free(line);
 	}
+	printf("END write_in_fd \n");
 	free(line);
 	return (0);
 }
@@ -99,6 +138,7 @@ void	add_to_heredocs_list(t_command *current, char *heredoc_name)
 
 t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 {
+	printf("handle_multiple_heredocs \n");
 	char	*delimiter;
 	int		fd;
 
@@ -111,7 +151,7 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 		current->heredoc = create_heredoc();
 		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
 		add_to_heredocs_list(current, current->heredoc);
-		write_in_fd(fd, delimiter);
+		write_in_fd(fd, delimiter, current);
 		fd = open(current->heredoc, O_RDONLY);
 		current->fd_in = fd;
 		if (current->fd_in == -1)
@@ -122,29 +162,4 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 		token = token->next->next;
 	}
 	return(token);
-}
-
-int	redirect_heredoc(t_command *current, t_token *token)
-{
-	char	*delimiter;
-	int		fd;
-
-	fd = -1;
-	delimiter = token->next->split_value;
-	if (fd == -1)
-	{
-		if (current->heredoc)
-			free(current->heredoc);
-		current->heredoc = create_heredoc();
-		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
-	}
-	write_in_fd(fd, delimiter);
-	fd = open(current->heredoc, O_RDONLY);
-	current->fd_in = fd;
-	if (current->fd_in == -1)
-	{
-		perror("minishell: EOF");
-		exit(-1);
-	}
-	return (0);
 }

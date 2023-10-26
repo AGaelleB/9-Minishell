@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:27:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 17:30:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:51:40 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	heredoc_open_fd(t_command *command, t_token **token)
 {
+	printf("heredoc_open_fd \n");
 	if (*token && (*token)->type == TYPE_HEREDOC)
 	{
 		*token = handle_multiple_heredocs(command, *token);
