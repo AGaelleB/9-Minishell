@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/27 16:00:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:28:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@
 # define WHITE "\033[37m"
 
 extern int global_ctrl_c_pressed; // ma variable globale 
+
+// extern volatile sig_atomic_t signal_received = 0;
+
 
 typedef struct s_command			t_command;
 

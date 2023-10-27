@@ -1,35 +1,16 @@
-if (global_ctrl_c_pressed == 130)
-{
-    clean_heredoc_files(current);
-    free(line);
-    return (130); // Return error code for CTRL+C
+Agir en fonction du signal dans votre logique principale : 
+Là où vous appelez write_in_fd, vous devez vérifier si -1 
+est retourné et ne pas exécuter le code suivant si 
+l'utilisateur a appuyé sur CTRL+C.
+
+
+
+
+// ... code précédent
+int result = write_in_fd(fd, delimiter, current);
+if (result == -1) {
+    // Ne pas exécuter 'ls' ou la commande suivante si CTRL+C a été appuyé
+    // Peut-être revenir à la boucle principale de votre shell
+    return (-1);
 }
-
-
-// Partie de votre boucle principale
-...
-new_commands = get_command(input, env_bis);
-...
-if (new_commands != NULL)
-{
-    ...
-    int ret = execve_fd(new_commands, env_bis);
-    if (ret == 130) // Si CTRL+C a été pressé dans le heredoc
-    {
-        // Vous pouvez afficher un message ou simplement continuer
-    }
-    ...
-}
-...
-
-
-void execve_fd(t_command *current, t_env *env)
-{
-    ...
-    int ret = write_in_fd(...);
-    if (ret != 0)
-    {
-        return ret;
-    }
-    ...
-}
+// ... reste du code
