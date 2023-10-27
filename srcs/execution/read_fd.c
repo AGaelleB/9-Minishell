@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/27 09:42:56 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:00:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,60 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 		++i;
 		waitpid(child_pids[i], NULL, 0);
 	}
-	signal(SIGINT, ft_builtin_ctrl_c);
+	// signal(SIGINT, ft_builtin_ctrl_c);
+	signal(SIGINT, sighandler_heredoc);
+}
+
+
+
+void	signal_cmd_2(int sig)
+{
+	// g_exit_status += sig;
+	if (sig == 2)
+	{
+		// g_exit_status = 130;
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
+void	signal_cmd(int sig)
+{
+	// g_exit_status += sig;
+	if (sig == 2)
+	{
+		// g_exit_status = 130;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	if (sig == SIGQUIT)
+	{
+		write(2, "Quit (core dumped)\n", ft_strlen("Quit (core dumped)\n"));
+		exit (1);
+	}
 }
 
 void	execve_fd(t_command *current, t_env *env)
 {
-	t_process_data	data;
-	// printf("execve_fd \n");
+	t_process_data    data;
+	t_token *token;
+
 	data.command = current;
 	data.current = current;
+	token = data.current->token_head;
 	data.infile = 0;
 	data.index = 0;
 	init_execve(current, &(data.child_pids));
+	while (token)
+	{
+		if (token->type == TYPE_HEREDOC)
+			heredoc_open_fd(current, &token);
+		else
+			token = token->next;
+	}
 	while (data.current)
 	{
 		if (pipe(data.current->fd) == -1)
@@ -93,7 +135,15 @@ void	execve_fd(t_command *current, t_env *env)
 		handle_all_process(&data, env);
 		data.current = data.current->next;
 	}
+	// handle_signals_heredoc(); // 
+	// wait_for_children(data.command, data.child_pids);
+	// handle_signals_heredoc(); // 
+
+	signal(SIGINT, signal_cmd_2);
+	signal(SIGQUIT, SIG_IGN);
 	wait_for_children(data.command, data.child_pids);
+	signal(SIGINT, signal_cmd);
+	signal(SIGQUIT, SIG_IGN);
 	cleanup(data.child_pids, data.infile);
 }
 

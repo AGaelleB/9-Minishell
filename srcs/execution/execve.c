@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/27 09:42:43 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:56:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	execve_process(t_command *cur, t_env *env)
 	ft_set_args_and_paths(cur, env);
 	if (env->flag_error || is_builtin(cur) == 2)
 		exit(0);
+	signal(SIGQUIT, SIG_DFL); // ?
 	if ((cur->command_path == NULL) && is_builtin(cur) == 0)
 	{
 		write(2, "minishell: ", 11);

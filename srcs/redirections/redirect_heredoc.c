@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/27 09:44:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:23:28 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,44 @@ char	*create_heredoc(void)
 	return (heredoc);
 }
 
+// static void	signal_cmd_2(int sig)
+// {
+// 	// g_exit_status += sig;
+// 	if (sig == 2)
+// 	{
+// 		// g_exit_status = 130;
+// 		printf("\n");
+// 		rl_replace_line("", 0);
+// 		rl_redisplay();
+// 	}
+// }
+
+// static void	signal_cmd(int sig)
+// {
+// 	// g_exit_status += sig;
+// 	if (sig == 2)
+// 	{
+// 		// g_exit_status = 130;
+// 		printf("\n");
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0);
+// 		rl_redisplay();
+// 	}
+// 	if (sig == SIGQUIT)
+// 	{
+// 		write(2, "Quit (core dumped)\n", ft_strlen("Quit (core dumped)\n"));
+// 		exit (1);
+// 	}
+// }
+
+// void	sighandler_heredoc(int sig)
+// {
+// 	(void)sig;
+// 	printf("\n");
+// 	global_ctrl_c_pressed = 130;
+// 	return ;
+// }
+
 void	sighandler_heredoc(int sig)
 {
 	int fd;
@@ -57,7 +95,7 @@ void	sighandler_heredoc(int sig)
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	printf("\n");
-	global_ctrl_c_pressed = 130;
+	global_ctrl_c_pressed = 130; // 130 = ctrl C
 	return ;
 }
 
@@ -82,7 +120,7 @@ int	ctrl_d_heredoc(char *input, int i, char *delimiter)
 	return(0);
 }
 
-// gerer le pipe
+// cat << eof | wc
 
 int	write_in_fd(int fd, char *delimiter, t_command *current)
 {
@@ -92,14 +130,20 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 
 	i = 0;
 	handle_signals_heredoc();
+	// signal(SIGINT, signal_cmd_2);
+	// signal(SIGINT, signal_cmd);
+	// signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("> ");
 		if (global_ctrl_c_pressed == 130)
 		{
-			clean_heredoc_files(current);
+			// clean_heredoc_files(current);
 			free(line);
-			exit(130);
+			break;
+			// exit(130);
+			// return (130);
+			(void)current;
 		}
 		if (ctrl_d_heredoc(line, i, delimiter) == 45)
 			return (45);
@@ -108,8 +152,13 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		i++;
+		// signal(SIGINT, sighandler_heredoc);
+		// signal(SIGQUIT, SIG_IGN);
+		handle_signals_heredoc();
 		free(line);
 	}
+	// signal(SIGINT, signal_cmd);
+	// signal(SIGQUIT, SIG_IGN);
 	// printf("END write_in_fd \n");
 	free(line);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/24 10:13:18 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:02:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	ft_builtin_ctrl_d(char *input)
 {
 	if (!input)
 	{
-		write(1, "exit\n", 5);
+		write(1, "JE VAIS ", 9);
+		write(1, "exit\n", 6);
 		exit(0);
 	}
 }
