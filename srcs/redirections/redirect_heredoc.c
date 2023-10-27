@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/26 15:52:31 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/27 09:44:29 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ctrl_d_heredoc(char *input, int i, char *delimiter)
 
 int	write_in_fd(int fd, char *delimiter, t_command *current)
 {
-	printf("write_in_fd \n");
+	// printf("write_in_fd \n");
 	char	*line;
 	int		i;
 
@@ -110,7 +110,7 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 		i++;
 		free(line);
 	}
-	printf("END write_in_fd \n");
+	// printf("END write_in_fd \n");
 	free(line);
 	return (0);
 }
@@ -138,7 +138,7 @@ void	add_to_heredocs_list(t_command *current, char *heredoc_name)
 
 t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 {
-	printf("handle_multiple_heredocs \n");
+	// printf("handle_multiple_heredocs \n");
 	char	*delimiter;
 	int		fd;
 

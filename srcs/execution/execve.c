@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/26 15:56:46 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/27 09:42:43 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	is_builtin(t_command *cur)
 
 int	execve_process(t_command *cur, t_env *env)
 {
-	printf("execve_process \n");
-	printf("cur =  %s \n", cur->command);
+	// printf("execve_process \n");
+	// printf("cur =  %s \n", cur->command);
 
 	clean_heredoc_files(cur);
 	ft_set_args_and_paths(cur, env);
