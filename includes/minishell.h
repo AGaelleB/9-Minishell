@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/27 16:28:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:54:44 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@
 # define WHITE "\033[37m"
 
 extern int global_ctrl_c_pressed; // ma variable globale 
-
-// extern volatile sig_atomic_t signal_received = 0;
-
 
 typedef struct s_command			t_command;
 
@@ -165,8 +162,6 @@ char	**parse_input_quote(char *input);
 int		builtins_verif(t_command *current, t_env	*env_bis);
 char	**split_string_token(char *str, char **delimiters);
 t_token *handle_multiple_heredocs(t_command *current, t_token *token); // NEWWWW
-void handle_signals_heredoc();
-void	sighandler_heredoc(int sig);
 
 // char *extract_filename(const char *input);
 

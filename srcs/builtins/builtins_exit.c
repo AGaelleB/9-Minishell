@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/27 17:39:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/24 10:13:18 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	ft_builtin_write_exit(char *input)
 	str = ft_strtrim(input, " ");
 	if (ft_strcmp_minishell(str, "exit") == 0)
 	{
-		// free(str);
+		free(str);
 		printf("exit\n");
 		return (1);
 	}
-	// free(str);
+	free(str);
 	return (0);
 }
 
@@ -31,7 +31,7 @@ int	ft_builtin_enter(char *input)
 {
 	if (ft_strcmp_minishell(input, "") == 0)
 	{
-		// free(input);
+		free(input);
 		return (1);
 	}
 	return (0);
@@ -48,16 +48,15 @@ int	ft_is_all_space(char *input)
 			return (0);
 		i++;
 	}
-	// free(input);
+	free(input);
 	return (1);
 }
 
-// void	ft_builtin_ctrl_d(char *input)
-// {
-// 	if (!input)
-// 	{
-// 		write(1, "JE VAIS ", 9);
-// 		write(1, "exit\n", 6);
-// 		exit(0);
-// 	}
-// }
+void	ft_builtin_ctrl_d(char *input)
+{
+	if (!input)
+	{
+		write(1, "exit\n", 5);
+		exit(0);
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/27 17:41:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:47:51 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@
 // 		input++;
 // 	}
 // 	cmd->nb_pipes = count;
-// }
-
-// volatile sig_atomic_t global_ctrl_c_pressed = 0;
-// int global_ctrl_c_pressed = 0;
-
-// void handle_signal(int sig)
-// {
-//     if (sig == SIGINT)
-//     {
-//         global_ctrl_c_pressed = 1;
-//         // Vous pouvez également écrire un nouveau prompt si vous voulez
-//         // écrire(1, "\nminishell$> ", 13);
-//     }
 // }
 
 int	main(int ac, char **av, char **envp)
@@ -53,45 +40,20 @@ int	main(int ac, char **av, char **envp)
 			return (printf("run ./minishell without arg\n"));
 		if (!envp[0])
 			return (printf("env is missing\n"));
-		// signal(SIGINT, handle_signal);
-		signal(SIGINT, ft_builtin_ctrl_c); // coucou vol
-		signal(SIGQUIT, SIG_IGN); // coucou vol
+		signal(SIGINT, ft_builtin_ctrl_c);
+		signal(SIGQUIT, SIG_IGN);
 		copy_env(env_bis, envp);
 		while (1)
 		{
 			input = readline("minishell$> ");
-			// ft_builtin_ctrl_d(input);
-			add_history(input);
-			signal(SIGINT, ft_builtin_ctrl_c);  // coucou vol
-			signal(SIGQUIT, SIG_IGN); // coucou vol
-			printf("***** intput = %s\n", input);
-			if (input == NULL)
-			{
-				printf("***** Je suis un intput null ?? = %s\n", input);
-				write(1, "JE VAIS ", 9);
-				write(1, "exit\n", 6);
-				// continue;
-				exit(0);
-			}
+			ft_builtin_ctrl_d(input);
 			if (error_input(input) == 2)
-			{
-				printf("***** error_input = %s\n", input);
 				continue;
-			}
 			if (verif_nb_quote(input) != 0)
-			{
-				printf("***** verif_nb_quote = %s\n", input);
 				continue;
-			}
-			// add_history(input);
-			
-
-
+			add_history(input);
 			if (pipe_syntax_errors(input) == -1)
-			{
-				printf("***** pipe_syntax_errors = %s\n", input);
 				continue;
-			}
 			new_commands = get_command(input, env_bis);
 			count_and_set_pipes(input, new_commands);
 			// print_commands_and_tokens(new_commands); // PRINT
@@ -104,18 +66,11 @@ int	main(int ac, char **av, char **envp)
 				execve_builtin_cd(new_commands, env_bis);
 				execve_fd(new_commands, env_bis);
 			}
-
-			// if (input == NULL)
-			// {
-			// 	input = readline("minishell$> ");
-			// 	continue;
-			// }
-
-			// global_ctrl_c_pressed = 0;
+			global_ctrl_c_pressed = 0;
 			// ft_free_tab(new_commands->command_arg);
-			// ft_free_struct(new_commands, new_commands->token_head);
-			// ft_free_current(new_commands);
-			// free(input);
+			ft_free_struct(new_commands, new_commands->token_head);
+			ft_free_current(new_commands);
+			free(input);
 		}
 	}
 	else

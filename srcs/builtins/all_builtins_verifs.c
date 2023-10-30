@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/27 17:39:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:49:58 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	error_input(char *input)
 		return (2);
 	if (ft_builtin_write_exit(input) != 0)
 	{
-		// free(input);
+		free(input);
 		exit(0);
 	}
 	if (ft_is_all_space(input) != 0)
@@ -27,7 +27,7 @@ int	error_input(char *input)
 		|| ft_strcmp_minishell(input, "\'\'") == 0)
 	{
 		printf("minishell: : command not found\n");
-		// free(input);
+		free(input);
 		return (2);
 	}
 	return (0);
