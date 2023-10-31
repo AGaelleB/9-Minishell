@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/30 10:09:44 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:19:16 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	sighandler_heredoc(int sig)
 	return ;
 }
 
+
 void handle_signals_heredoc()
 {
 	global_ctrl_c_pressed = 0;
@@ -82,8 +83,6 @@ int	ctrl_d_heredoc(char *input, int i, char *delimiter)
 	return(0);
 }
 
-// gerer le pipe
-
 int	write_in_fd(int fd, char *delimiter, t_command *current)
 {
 	// printf("write_in_fd \n");
@@ -102,9 +101,17 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 			exit(130);
 		}
 		if (ctrl_d_heredoc(line, i, delimiter) == 45)
+		{
+			// clean_heredoc_files(current);
+			// free(line);
 			return (45);
+		}
 		if (ft_strcmp_minishell(line, delimiter) == 0)
+		{
+			// clean_heredoc_files(current);
 			break ;
+		}
+		
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		i++;
@@ -115,7 +122,6 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 		free(line);
 	return (0);
 }
-
 void	add_to_heredocs_list(t_command *current, char *heredoc_name)
 {
 	int	i;
@@ -139,14 +145,12 @@ void	add_to_heredocs_list(t_command *current, char *heredoc_name)
 
 t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 {
-	// printf("handle_multiple_heredocs \n");
 	char	*delimiter;
 	int		fd;
 
 	while (token && ft_strcmp_minishell(token->split_value, "<<") == 0)
 	{
-		delimiter = extract_filename_heredoc(current->command);
-		// printf("delimiter = %s\n", delimiter);
+		delimiter = token->next->split_value;
 		if (current->heredoc)
 			free(current->heredoc);
 		current->heredoc = create_heredoc();
@@ -163,4 +167,29 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 		token = token->next->next;
 	}
 	return(token);
+}
+
+int	redirect_heredoc(t_command *current, t_token *token)
+{
+	char	*delimiter;
+	int		fd;
+
+	fd = -1;
+	delimiter = token->next->split_value;
+	if (fd == -1)
+	{
+		if (current->heredoc)
+			free(current->heredoc);
+		current->heredoc = create_heredoc();
+		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
+	}
+	write_in_fd(fd, delimiter, current);
+	fd = open(current->heredoc, O_RDONLY);
+	current->fd_in = fd;
+	if (current->fd_in == -1)
+	{
+		perror("minishell: EOF");
+		exit(-1);
+	}
+	return (0);
 }
