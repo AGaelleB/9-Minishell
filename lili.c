@@ -1,24 +1,35 @@
-heredoc_open_fd_pipe:
-Pas de modifications majeures ici. 
-Assurez-vous simplement de ne pas fermer heredoc_fd[0] 
-immédiatement, car il sera utilisé comme entrée pour une commande ultérieure.
 
-
-
-execve_fd:
-Il semble que vous parcourez déjà toutes les commandes pour voir si 
-l'une d'entre elles utilise un heredoc. C'est bien. 
-Après avoir traité les heredocs, vous devez vous assurer de configurer 
-le descripteur de fichier infile de data sur heredoc_fd[0] pour la commande qui 
-utilise le heredoc comme entrée :
-
-...
-if (token->type == TYPE_HEREDOC)
+char	*extract_filename_heredoc(char *cmd)
 {
-	pid_t heredoc_pid = heredoc_open_fd_pipe(current, &token, data.heredoc_fd);
-	waitpid(heredoc_pid, NULL, 0);
-	data.infile = data.heredoc_fd[0];  // Ici, utilisez heredoc_fd comme entrée pour la commande
-	flag = 1;
-	break;
+	int		j;
+	bool	in_quote;
+	bool	double_quote;
+	char	*file_name;
+	int		i;
+
+	in_quote = false;
+	double_quote = false;
+	i = 0;
+	file_name = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
+	if (!file_name)
+		return (NULL);
+	j = 0;
+	while (cmd[i] != '<')
+		i++;
+	while (cmd[i] == '<' || cmd[i] == ' ')
+		i++;
+	while (cmd[i])
+	{
+		if (cmd[i] == '>' || cmd[i] == '<')
+			break ;
+		handle_quotes_heredoc(cmd, &i, &in_quote, &double_quote);
+		if (!in_quote && !double_quote && cmd[i] == ' ')
+		{
+			printf("je break alors qu eje ne devrais pas \n");
+			break ;
+		}
+		file_name[j++] = cmd[(i)++];
+	}
+	file_name[j] = '\0';
+	return (file_name);
 }
-...

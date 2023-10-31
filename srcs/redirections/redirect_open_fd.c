@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:07:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/30 15:21:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:28:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	open_fd(t_command *command)
 	set_last_redirection_flag(command, token_head);
 	while (token)
 	{
-		if ((token->type == TYPE_HEREDOC) && (command->nb_pipes == 0))
+		if (token->type == TYPE_HEREDOC)
 			heredoc_open_fd(command, &token);
 		else
 			token = token->next;

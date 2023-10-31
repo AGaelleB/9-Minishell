@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 10:13:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/31 10:40:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ typedef struct s_process_data
 	t_command	*command;  // ajouté ici
 	pid_t		*child_pids;
 	pid_t		pid;
-	int		heredoc_fd[2];  // Pour gérer le pipe de heredoc
 	char		**envp;
 	int			infile;  // déplacé ici et non plus un pointeur
 	int			index;  // ajouté ici
@@ -262,22 +261,21 @@ int			aleatori_char(void);
 // char		*create_file_name(t_command *command);
 
 void	heredoc_open_fd(t_command *command, t_token **token);
-// pid_t	heredoc_open_fd_pipe(t_command *command, t_token **token);
-pid_t heredoc_open_fd_pipe(t_command *command, t_token **token, int heredoc_fd[2]);
-
 void	redirect_file_in_open_fd(t_command *command, t_token *token, t_token *token_head);
 void	redirect_file_out_open_fd(t_command *command, t_token *token, t_token *token_head);
 void	redirect_append_file_out_open_fd(t_command *command, t_token *token, t_token *token_head);
 
 // int			write_in_fd(int fd, char *delimiter);
 // int			write_in_fd(int fd, char *delimiter, char *file_name);
+int			redirect_heredoc(t_command *current, t_token *token);
 
 int			open_fd(t_command *command);
 
 
 /***********SIGNALS***********/
 void		ft_builtin_ctrl_c (int sig);
-void		block_signal(int signal);
+void handle_signals_heredoc();
+int	ctrl_d_heredoc(char *input, int i, char *delimiter);
 
 
 /***********UTILS***********/
@@ -291,6 +289,7 @@ void		exit_with_error(char *message, pid_t *child_pids);
 void		print_error_cd(t_env *env, int i);
 // int			check_valid_identifier(char c);
 
+char	*create_heredoc(void);
 
 void		ft_free_tab(char **tab);
 void		ft_free_struct(t_command *current, t_token *head);

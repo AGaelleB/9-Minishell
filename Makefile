@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/26 10:05:11 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/10/31 10:40:26 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ SRCS_SIGNALS = srcs/signals/signal_exit.c \
 
 SRCS_UTILS = srcs/utils/check_syntax_caracteres.c \
 	srcs/utils/check_syntax_pipes.c \
+	srcs/utils/create_heredoc.c \
 	srcs/utils/error.c \
 	srcs/utils/free_bis.c \
 	srcs/utils/free.c \

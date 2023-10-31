@@ -6,86 +6,14 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/30 17:19:16 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/31 10:39:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	aleatori_char(void)
-{
-	char	buff[4];
-	int		nbr;
-	int		fd;
-
-	fd = open("/dev/random", O_RDONLY);
-	if (fd < -1)
-		return (-1);
-	read(fd, buff, 4);
-	nbr = *(int *)buff;
-	if (nbr < 0)
-		nbr++;
-	if (nbr < 0)
-		nbr = nbr * (-1);
-	return ('a' + nbr % 26);
-}
-
-char	*create_heredoc(void)
-{
-	char	*heredoc;
-	int		i;
-
-	i = 0;
-	heredoc = malloc(sizeof(char) * 11);
-	if (!heredoc)
-		return (NULL);
-	heredoc[10] = '\0';
-	while (i < 10)
-	{
-		heredoc[i] = (char)aleatori_char();
-		i++;
-	}
-	return (heredoc);
-}
-
-void	sighandler_heredoc(int sig)
-{
-	int fd;
-
-	(void)sig;
-	fd = open ("/dev/null", O_RDONLY);
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	printf("\n");
-	global_ctrl_c_pressed = 130;
-	return ;
-}
-
-
-void handle_signals_heredoc()
-{
-	global_ctrl_c_pressed = 0;
-	signal(SIGINT, sighandler_heredoc);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-int	ctrl_d_heredoc(char *input, int i, char *delimiter)
-{
-	if (!input)
-	{
-		write(1, "minishell: warning: here-document at line ", 43);
-		ft_putnbr_fd(i, STDOUT_FILENO);
-		write(1," delimited by end-of-file (wanted \'", 36);
-		ft_putstr_fd(delimiter, STDOUT_FILENO);
-		write(1, "')\n", 4);
-		return (45);
-	}
-	return(0);
-}
-
 int	write_in_fd(int fd, char *delimiter, t_command *current)
 {
-	// printf("write_in_fd \n");
 	char	*line;
 	int		i;
 
@@ -101,27 +29,20 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 			exit(130);
 		}
 		if (ctrl_d_heredoc(line, i, delimiter) == 45)
-		{
-			// clean_heredoc_files(current);
-			// free(line);
 			return (45);
-		}
 		if (ft_strcmp_minishell(line, delimiter) == 0)
-		{
-			// clean_heredoc_files(current);
 			break ;
-		}
 		
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		i++;
 		free(line);
 	}
-	// printf("END write_in_fd \n");
 	if (line)
 		free(line);
 	return (0);
 }
+
 void	add_to_heredocs_list(t_command *current, char *heredoc_name)
 {
 	int	i;
@@ -150,7 +71,8 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 
 	while (token && ft_strcmp_minishell(token->split_value, "<<") == 0)
 	{
-		delimiter = token->next->split_value;
+		delimiter = extract_filename_heredoc(current->command);
+		// printf("delimiter = %s\n", delimiter);
 		if (current->heredoc)
 			free(current->heredoc);
 		current->heredoc = create_heredoc();

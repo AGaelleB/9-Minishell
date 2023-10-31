@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 09:41:15 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/31 10:31:59 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 // 	}
 // 	cmd->nb_pipes = count;
 // }
-
 
 int	main(int ac, char **av, char **envp)
 {
@@ -86,47 +85,14 @@ int	main(int ac, char **av, char **envp)
 /*
 										TO DO :
 
-EOF à faire : 
+
+
+
+EOF à faire :
 	
-	cat << EOF | ls
-
-
-
-minishell$> cat << EOF
-> coucou
-coucou
-> EOF
-malloc(): unaligned fastbin chunk detected 3
-
-
-
-Dans votre code, lors de l'exécution d'une commande comme cat << EOF | wc, vous effectuez les étapes suivantes :
-
-Vous créez un processus enfant pour gérer le heredoc (heredoc_open_fd_pipe).
-Vous attendez que ce processus enfant termine avec waitpid(heredoc_pid, NULL, 0);.
-Vous créez un autre processus enfant pour exécuter la commande cat (ou d'autres commandes si vous avez plusieurs pipes).
-Vous attendez que ce dernier processus enfant termine avec waitpid(data.pid, NULL, 0);.
-Le problème est que vous avez une situation où la sortie du heredoc (en tant que processus enfant)
- est censée être connectée à l'entrée de la commande cat. Cependant, si vous attendez que le heredoc termine avant de démarrer la commande cat,
-  il n'y a rien pour lire la sortie du heredoc, et donc le pipe est bloqué.
-
-Voici comment résoudre le problème :
-
-Ne pas attendre que le processus heredoc termine avant de démarrer les autres processus enfant liés à la commande.
-Après avoir démarré tous les processus enfants nécessaires pour la commande, attendez qu'ils terminent tous.
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<<EOF ls
+	> ^C
+	ferme heredoc et ne fait rien 
 
 
 										A CORRIGER :

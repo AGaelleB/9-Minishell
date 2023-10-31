@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/10/26 15:49:42 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:44:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_close_fd(void)
 	int	fd;
 
 	fd = 3;
-	while (fd < 150)
+	while (fd < 100)
 	{
 		close(fd);
 		fd++;
