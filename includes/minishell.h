@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 10:40:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/31 17:28:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct s_command
 	char				**heredocs;  // tableau dynamique pour stocker les noms de fichiers heredoc
 	int					flag_chevron;
 	bool				last_redir_is_heredoc; // Tableau pour les flags actifs des heredocs
+	
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;
 	struct s_command	*next;
@@ -149,6 +150,7 @@ typedef struct s_process_data
 	t_command	*current;
 	t_command	*command;  // ajouté ici
 	pid_t		*child_pids;
+	pid_t		*heredoc_fd;
 	pid_t		pid;
 	char		**envp;
 	int			infile;  // déplacé ici et non plus un pointeur
@@ -162,6 +164,7 @@ char	**parse_input_quote(char *input);
 int		builtins_verif(t_command *current, t_env	*env_bis);
 char	**split_string_token(char *str, char **delimiters);
 t_token *handle_multiple_heredocs(t_command *current, t_token *token); // NEWWWW
+pid_t heredoc_open_fd_pipe(t_command *command, t_token **token);
 
 // char *extract_filename(const char *input);
 

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 10:39:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/31 15:22:09 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
 		add_to_heredocs_list(current, current->heredoc);
 		write_in_fd(fd, delimiter, current);
+		// close(fd); // AJOUT Gaga close the write fd
 		fd = open(current->heredoc, O_RDONLY);
 		current->fd_in = fd;
 		if (current->fd_in == -1)
