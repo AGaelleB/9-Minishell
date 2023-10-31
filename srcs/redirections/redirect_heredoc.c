@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 15:22:09 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/31 18:24:16 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 			exit(130);
 		}
 		if (ctrl_d_heredoc(line, i, delimiter) == 45)
+		{
+			// clean_heredoc_files(current); // marche mais va + casser wc
+			// free(line); // marche mais va + casser wc
+			// exit (45); // marche mais va + casser wc
 			return (45);
+		}
 		if (ft_strcmp_minishell(line, delimiter) == 0)
 			break ;
 		
@@ -40,6 +45,7 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 	}
 	if (line)
 		free(line);
+	// clean_heredoc_files(current); // marche mais va + casser wc
 	return (0);
 }
 

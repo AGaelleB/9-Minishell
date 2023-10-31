@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 17:45:41 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/31 17:56:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	handle_parent_process(t_process_data *data)
 void	handle_all_process(t_process_data *data, t_env *env)
 {
 	if (data->pid == 0)
+	{
 		handle_child_process(data, env);
+		clean_heredoc_files(data->current);
+	}
 	else if (data->pid > 0)
 		handle_parent_process(data);
 	else
