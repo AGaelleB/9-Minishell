@@ -1,8 +1,5 @@
 {
     "files.associations": {
-        "random": "c",
-        "system_error": "c",
-        "minishell.h": "c",
-        "*.tcc": "c"
+        "minishell.h": "c"
     }
 }

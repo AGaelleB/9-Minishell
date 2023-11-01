@@ -1,70 +1,72 @@
-Those are my fonctions, do you see the error ? : 
-
-
-t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
+int	count_args(char *input, int i)
 {
-	char	*delimiter;
-	int		fd;
+	int		arg_count = 0;
+	bool	double_quote = false;
+	bool	single_quote = false;
 
-	while (token && ft_strcmp_minishell(token->split_value, "<<") == 0)
+	while (input[i])
 	{
-		delimiter = extract_filename_heredoc(current->command);
-		// printf("delimiter = %s\n", delimiter);
-		if (current->heredoc)
-			free(current->heredoc);
-		current->heredoc = create_heredoc();
-		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
-		add_to_heredocs_list(current, current->heredoc);
-		write_in_fd(fd, delimiter, current);
-		// close(fd); // AJOUT Gaga close the write fd
-		fd = open(current->heredoc, O_RDONLY);
-		current->fd_in = fd;
-		if (current->fd_in == -1)
+		while (input[i] == ' ')
+			i++;
+		if (!input[i])
+			break;
+		if (is_redirection(input[i]))
 		{
-			perror("minishell: EOF");
-			exit(-1);
+			ft_skip_redirection_and_file(input, &i);
+			continue;
 		}
-		token = token->next->next;
+		arg_count++;
+		while (input[i] && (double_quote || single_quote || input[i] != ' '))
+		{
+			handle_quotes_echo(input, &i, &double_quote, &single_quote);
+			i++;
+		}
 	}
-	return(token);
+	return arg_count;
 }
 
-
-int	redirect_heredoc(t_command *current, t_token *token)
+int	count_arg_length(char *input, int i)
 {
-	char	*delimiter;
-	int		fd;
+	int		length = 0;
+	bool	double_quote = false;
+	bool	single_quote = false;
 
-	fd = -1;
-	delimiter = token->next->split_value;
-	if (fd == -1)
+	while (input[i])
 	{
-		if (current->heredoc)
-			free(current->heredoc);
-		current->heredoc = create_heredoc();
-		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
+		if (is_redirection(input[i]))
+		{
+			ft_skip_redirection_and_file(input, &i);
+			continue;
+		}
+		while (input[i] && (double_quote || single_quote || input[i] != ' '))
+		{
+			length++;
+			handle_quotes_echo(input, &i, &double_quote, &single_quote);
+			i++;
+		}
+		while (input[i] == ' ')
+			i++;
 	}
-	write_in_fd(fd, delimiter, current);
-	fd = open(current->heredoc, O_RDONLY);
-	current->fd_in = fd;
-	if (current->fd_in == -1)
-	{
-		perror("minishell: EOF");
-		exit(-1);
-	}
-	return (0);
+	return length;
 }
 
-int heredoc_open_fd_pipe(t_command *command, t_token **token)
+char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 {
-    if (*token && (*token)->type == TYPE_HEREDOC)
-    {
-            handle_multiple_heredocs(command, *token);
-            if (command->fd_in != -1)
-            {
-                dup2(command->fd_in, 0);
-                close(command->fd_in);
-            }
-    }
-    return 0;  // return 0 to signify success, you may need to adjust this based on your code.
+	char	*arg;
+	int		len;
+	bool	double_quote = false;
+	bool	single_quote = false;
+
+	len = count_arg_length(input, *i); 
+	arg = malloc(len + 1);  // +1 for the null terminator
+	if (!arg)
+		exit(EXIT_FAILURE);
+	*arg_idx = 0;
+
+	while (input[*i])
+	{
+		// ... [rest of your function]
+	}
+	// ... [rest of your function]
+	return arg;
 }

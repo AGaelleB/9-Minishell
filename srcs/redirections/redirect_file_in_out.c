@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:27:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 11:18:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 11:43:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	heredoc_open_fd_pipe(t_command *command, t_token **token)
 {
 	if (*token && (*token)->type == TYPE_HEREDOC)
 	{
-			*token = handle_multiple_heredocs(command, *token);
-			if (command->fd_in != -1)
-			{
-				dup2(command->fd_in, 0);
-				close(command->fd_in);
-			}
+		*token = handle_multiple_heredocs(command, *token);
+		if (command->fd_in != -1)
+		{
+			dup2(command->fd_in, 0);
+			close(command->fd_in);
+		}
 	}
 	return (0);
 }

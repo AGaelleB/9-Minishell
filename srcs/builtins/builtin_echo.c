@@ -6,28 +6,43 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 11:18:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 11:56:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 12:43:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_builtin_echo(char **tab)
+static int	is_valid_n_option(char *str)
 {
-	int	i;
-	int	j;
+	int j;
 
-	i = 1;
-	j = 0;
-	while (tab[i] && ft_strncmp(tab[i], "-n", 2) == 0)
+	if (ft_strncmp(str, "-n", 2) != 0)
+		return (0);
+	j = 2;
+	while (str[j] == 'n')
+		j++;
+	if (str[j] != '\0')
+		return (0);
+	return (1);
+}
+
+static int	handle_newline(char **tab, int *i)
+{
+	int newline;
+
+	newline = 1;
+	while (tab[*i] && tab[*i][0] == '-')
 	{
-		j = 2;
-		while (tab[i][j] == 'n')
-			j++;
-		if (tab[i][j] != '\0')
-			break ;
-		i++;
+		if (!is_valid_n_option(tab[*i]))
+			break;
+		newline = 0;
+		(*i)++;
 	}
+	return (newline);
+}
+
+static void	print_tab_content(char **tab, int i)
+{
 	while (tab[i])
 	{
 		ft_putstr_fd(tab[i], STDOUT_FILENO);
@@ -35,7 +50,17 @@ int	ft_builtin_echo(char **tab)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}
-	if (j == 0)
+}
+
+int	ft_builtin_echo(char **tab)
+{
+	int	i;
+	int	newline;
+
+	i = 1;
+	newline = handle_newline(tab, &i);
+	print_tab_content(tab, i);
+	if (newline)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }

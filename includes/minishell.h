@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 21:11:02 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:41:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define CYAN "\033[36m"
 # define WHITE "\033[37m"
 
-extern int global_ctrl_c_pressed; // ma variable globale 
+extern int g_ctrl_c_pressed; // ma variable globale 
 
 typedef struct s_command			t_command;
 
@@ -124,6 +124,15 @@ typedef struct s_tokenizer
 	bool		flag_double_quote;
 } t_tokenizer;
 
+typedef struct s_arg_handler
+{
+	t_env	*env;
+	char	*input;
+	int		*i;
+	char	*arg;
+	int		*arg_idx;
+} t_arg_handler;
+
 typedef struct s_process_data
 {
 	t_command	*current;
@@ -167,6 +176,8 @@ char	**split_string_token(char *str, char **delimiters);
 t_token *handle_multiple_heredocs(t_command *current, t_token *token); // NEWWWW
 // pid_t heredoc_open_fd_pipe(t_command *command, t_token **token);
 int heredoc_open_fd_pipe(t_command *command, t_token **token);
+int	is_redirection(char c);
+void	ft_skip_redirection_and_file(char *input, int *i);
 
 // char *extract_filename(const char *input);
 
@@ -212,6 +223,9 @@ t_command	*create_new_cmd(char *command_str, t_env *env);
 t_command	*append_new_cmd(t_command **head, t_command *new_cmd);
 t_command	*get_command(char *input, t_env *env);
 
+void	handle_all_process(t_process_data *data, t_env *env);
+
+
 void		init_execve(t_command *cur, pid_t **childs_pids);
 int			execve_process(t_command *cur, t_env *env);
 
@@ -228,10 +242,13 @@ t_token		*handle_arg_token(t_tokenizer *tz);
 t_token		*handle_single_quote_token(t_tokenizer *tz);
 t_token		*handle_double_quote_token(t_tokenizer *tz);
 
-
 int			verif_nb_quote(char *input);
 bool		contains_single_quote(char *str);
 bool		contains_double_quote(char *str);
+
+char	*env_var_exists(t_env *env, char *var);
+char	*get_env_value(t_env *env, char *str);
+void	append_env_value_to_arg(char *value, char *arg, int *arg_idx);
 
 t_token		*new_token(t_e_token_type e_type, char *split_value);
 t_token 	*tokenize_input(char *input, t_env *env);
@@ -276,6 +293,7 @@ int			redirect_heredoc(t_command *current, t_token *token);
 
 int			open_fd(t_command *command);
 
+int			write_in_fd(int fd, char *delimiter, t_command *current);
 
 /***********SIGNALS***********/
 void		ft_builtin_ctrl_c (int sig);
@@ -295,6 +313,10 @@ void		print_error_cd(t_env *env, int i);
 // int			check_valid_identifier(char c);
 
 char	*create_heredoc(void);
+
+int			count_args(char *input, int i);
+int			count_arg_length(char *input, int i);
+
 
 void		ft_free_tab(char **tab);
 void		ft_free_struct(t_command *current, t_token *head);

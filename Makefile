@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/31 10:40:26 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/01 15:29:07 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ OBJ_DIR_LIBFT = libft/obj_libft
 
 SRCS_EXECUTION = srcs/main_minishell.c \
 	srcs/execution/execve.c \
+	srcs/execution/handle_process.c \
 	srcs/execution/handle_quotes.c \
 	srcs/execution/read_fd.c \
 
@@ -41,6 +42,7 @@ SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/count_args_quotes.c \
 	srcs/init_and_parsing/create_cmd.c \
 	srcs/init_and_parsing/handle_token.c \
+	srcs/init_and_parsing/init_env.c \
 	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/init_quote.c \
 	srcs/init_and_parsing/path_token.c \
@@ -55,12 +57,14 @@ SRCS_REDIRECTIONS = srcs/redirections/epur_filename.c \
 	srcs/redirections/redirect_file_in_out.c \
 	srcs/redirections/redirect_heredoc.c \
 	srcs/redirections/redirect_open_fd.c \
+	srcs/redirections/write_in_heredoc.c \
 
 SRCS_SIGNALS = srcs/signals/signal_exit.c \
 
 SRCS_UTILS = srcs/utils/check_syntax_caracteres.c \
 	srcs/utils/check_syntax_pipes.c \
 	srcs/utils/create_heredoc.c \
+	srcs/utils/count_args.c \
 	srcs/utils/error.c \
 	srcs/utils/free_bis.c \
 	srcs/utils/free.c \
