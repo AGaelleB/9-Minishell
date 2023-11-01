@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 16:43:28 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 11:21:05 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_command	*get_command(char *input, t_env *env)
 		append_new_cmd(&head, new_cmd);
 		i++;
 	}
+	head->heredocs = NULL;
 	ft_free_tab(command);
 	return (head);
 }

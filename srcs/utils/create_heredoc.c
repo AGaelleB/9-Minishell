@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 10:39:39 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 10:39:51 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 09:44:19 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ char	*create_heredoc(void)
 		heredoc[i] = (char)aleatori_char();
 		i++;
 	}
+	// printf("%sheredoc = %s%s\n", GREEN, heredoc, RESET);
 	return (heredoc);
 }

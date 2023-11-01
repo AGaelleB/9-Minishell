@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 17:43:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/31 21:19:37 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_free_struct(t_command *current, t_token *head)
 			{
 				tmp = head;
 				free(tmp->split_value);
-				// if(tmp != NULL) Problme de l'invalid read size ??
+				// if(tmp != NULL) // Problme de l'invalid read size ??
 				free(tmp); //ICI
 				head = head->next;
 			}

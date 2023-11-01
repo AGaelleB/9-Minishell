@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 18:24:16 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 11:20:16 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,7 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 			exit(130);
 		}
 		if (ctrl_d_heredoc(line, i, delimiter) == 45)
-		{
-			// clean_heredoc_files(current); // marche mais va + casser wc
-			// free(line); // marche mais va + casser wc
-			// exit (45); // marche mais va + casser wc
 			return (45);
-		}
 		if (ft_strcmp_minishell(line, delimiter) == 0)
 			break ;
 		
@@ -45,7 +40,6 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 	}
 	if (line)
 		free(line);
-	// clean_heredoc_files(current); // marche mais va + casser wc
 	return (0);
 }
 
@@ -78,14 +72,12 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 	while (token && ft_strcmp_minishell(token->split_value, "<<") == 0)
 	{
 		delimiter = extract_filename_heredoc(current->command);
-		// printf("delimiter = %s\n", delimiter);
-		if (current->heredoc)
-			free(current->heredoc);
+		// if (current->heredoc) // malloc(): unaligned fastbin chunk detected 3
+		// 	free(current->heredoc);
 		current->heredoc = create_heredoc();
 		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
 		add_to_heredocs_list(current, current->heredoc);
 		write_in_fd(fd, delimiter, current);
-		// close(fd); // AJOUT Gaga close the write fd
 		fd = open(current->heredoc, O_RDONLY);
 		current->fd_in = fd;
 		if (current->fd_in == -1)
@@ -98,27 +90,3 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 	return(token);
 }
 
-int	redirect_heredoc(t_command *current, t_token *token)
-{
-	char	*delimiter;
-	int		fd;
-
-	fd = -1;
-	delimiter = token->next->split_value;
-	if (fd == -1)
-	{
-		if (current->heredoc)
-			free(current->heredoc);
-		current->heredoc = create_heredoc();
-		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
-	}
-	write_in_fd(fd, delimiter, current);
-	fd = open(current->heredoc, O_RDONLY);
-	current->fd_in = fd;
-	if (current->fd_in == -1)
-	{
-		perror("minishell: EOF");
-		exit(-1);
-	}
-	return (0);
-}

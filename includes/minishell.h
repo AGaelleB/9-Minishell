@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 17:28:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/10/31 21:11:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,18 @@ typedef struct s_tokenizer
 	bool		flag_double_quote;
 } t_tokenizer;
 
+typedef struct s_process_data
+{
+	t_command	*current;
+	t_command	*command;  // ajouté ici
+	pid_t		*child_pids;
+	pid_t		*heredoc_fd;
+	pid_t		pid;
+	char		**envp;
+	int			infile;  // déplacé ici et non plus un pointeur
+	int			index;  // ajouté ici
+} t_process_data;
+
 typedef struct s_command
 {
 	int					nb_pipes;
@@ -139,23 +151,12 @@ typedef struct s_command
 	char				**heredocs;  // tableau dynamique pour stocker les noms de fichiers heredoc
 	int					flag_chevron;
 	bool				last_redir_is_heredoc; // Tableau pour les flags actifs des heredocs
-	
+	// t_process_data		*pdata; // TEEEEEEEEEEEEEST
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;
 	struct s_command	*next;
 } t_command;
 
-typedef struct s_process_data
-{
-	t_command	*current;
-	t_command	*command;  // ajouté ici
-	pid_t		*child_pids;
-	pid_t		*heredoc_fd;
-	pid_t		pid;
-	char		**envp;
-	int			infile;  // déplacé ici et non plus un pointeur
-	int			index;  // ajouté ici
-} t_process_data;
 
 void	print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *cur, t_env *env);
@@ -164,7 +165,8 @@ char	**parse_input_quote(char *input);
 int		builtins_verif(t_command *current, t_env	*env_bis);
 char	**split_string_token(char *str, char **delimiters);
 t_token *handle_multiple_heredocs(t_command *current, t_token *token); // NEWWWW
-pid_t heredoc_open_fd_pipe(t_command *command, t_token **token);
+// pid_t heredoc_open_fd_pipe(t_command *command, t_token **token);
+int heredoc_open_fd_pipe(t_command *command, t_token **token);
 
 // char *extract_filename(const char *input);
 

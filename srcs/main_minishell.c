@@ -6,23 +6,11 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/31 17:54:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 11:13:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// void count_pipes(char *input, t_command *cmd) //doublons refaire appel a la fonction deja existante
-// {
-// 	int count = 0;
-// 	while (*input)
-// 	{
-// 		if (*input == '|')
-// 			count++;
-// 		input++;
-// 	}
-// 	cmd->nb_pipes = count;
-// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -56,18 +44,26 @@ int	main(int ac, char **av, char **envp)
 				continue;
 			new_commands = get_command(input, env_bis);
 			count_and_set_pipes(input, new_commands);
-			// print_commands_and_tokens(new_commands); // PRINT
 			if (new_commands != NULL)
 			{
-				// count_pipes(input, new_commands); // == count_and_set_pipes
 				env_bis->flag_builtin = false;
 				new_commands->command_arg = parse_input_quote(new_commands->command);
+					
+				pid_t pid = fork();
 				execve_builtins_unset_export(new_commands, env_bis);
 				execve_builtin_cd(new_commands, env_bis);
-				execve_fd(new_commands, env_bis);
+				if (pid == 0)  // child process
+				{
+					execve_fd(new_commands, env_bis);
+					exit(0);
+				}
+				else if (pid < 0)  // fork failed
+					perror("fork");
+				else  // parent process
+					waitpid(pid, NULL, 0);
 			}
 			global_ctrl_c_pressed = 0;
-			clean_heredoc_files(new_commands);
+			// clean_heredoc_files(new_commands);
 			// ft_free_tab(new_commands->command_arg);
 			ft_free_struct(new_commands, new_commands->token_head);
 			ft_free_current(new_commands);
