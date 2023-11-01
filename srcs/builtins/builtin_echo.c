@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 11:18:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 12:43:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:11:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_valid_n_option(char *str)
 {
-	int j;
+	int	j;
 
 	if (ft_strncmp(str, "-n", 2) != 0)
 		return (0);
@@ -28,13 +28,13 @@ static int	is_valid_n_option(char *str)
 
 static int	handle_newline(char **tab, int *i)
 {
-	int newline;
+	int	newline;
 
 	newline = 1;
 	while (tab[*i] && tab[*i][0] == '-')
 	{
 		if (!is_valid_n_option(tab[*i]))
-			break;
+			break ;
 		newline = 0;
 		(*i)++;
 	}

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 15:41:30 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:56:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,8 +176,7 @@ char	**split_string_token(char *str, char **delimiters);
 t_token *handle_multiple_heredocs(t_command *current, t_token *token); // NEWWWW
 // pid_t heredoc_open_fd_pipe(t_command *command, t_token **token);
 int heredoc_open_fd_pipe(t_command *command, t_token **token);
-int	is_redirection(char c);
-void	ft_skip_redirection_and_file(char *input, int *i);
+
 
 // char *extract_filename(const char *input);
 
@@ -302,6 +301,9 @@ int	ctrl_d_heredoc(char *input, int i, char *delimiter);
 
 
 /***********UTILS***********/
+int			is_redirection(char c);
+void		ft_skip_redirection_and_file(char *input, int *i);
+
 int			check_valid_caractere_filename(char c);
 int			check_syntax_errors(char *input);
 int			pipe_syntax_errors(char *input);

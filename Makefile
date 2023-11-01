@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/01 15:29:07 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/01 15:55:46 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ SRCS_REDIRECTIONS = srcs/redirections/epur_filename.c \
 
 SRCS_SIGNALS = srcs/signals/signal_exit.c \
 
-SRCS_UTILS = srcs/utils/check_syntax_caracteres.c \
+SRCS_UTILS = srcs/utils/check_redirections.c \
+	srcs/utils/check_syntax_caracteres.c \
 	srcs/utils/check_syntax_pipes.c \
 	srcs/utils/create_heredoc.c \
 	srcs/utils/count_args.c \

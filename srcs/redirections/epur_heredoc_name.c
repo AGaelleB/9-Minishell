@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 10:04:43 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 14:40:27 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/01 16:21:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*extract_filename_heredoc(char *cmd)
 	double_quote = false;
 	file_name = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
 	if (!file_name)
-		return (NULL);  
+		return (NULL);
 	i = skip_to_heredoc(cmd);
 	j = 0;
 	while (cmd[i])
