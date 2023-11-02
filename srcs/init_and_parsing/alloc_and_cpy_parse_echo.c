@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/01 16:11:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:33:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,12 @@ void	handle_arg_value(t_env *env, char *input, int *i, char *arg,
 char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 {
 	char	*arg;
-	int		len;
 	bool	double_quote;
 	bool	single_quote;
 
 	double_quote = false;
 	single_quote = false;
-	len = count_arg_length(input, *i);
-	arg = malloc(len + 1);
+	arg = malloc(sizeof(char *) * SIZE);
 	if (!arg)
 		exit(EXIT_FAILURE);
 	*arg_idx = 0;

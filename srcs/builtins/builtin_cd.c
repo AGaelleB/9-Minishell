@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 16:03:28 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 11:56:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	update_env_pwd(t_env *env, char *new_pwd)
 {
+	env->pwd_index = find_env_var(env, "PWD");
 	if (env->pwd_index != -1)
 	{
 		free(env->cpy_env[env->pwd_index]);
@@ -25,6 +26,7 @@ void	update_env_oldpwd(t_env *env)
 {
 	char	*current_pwd;
 
+	env->oldpwd_index = find_env_var(env, "OLDPWD");
 	current_pwd = getcwd(NULL, 0);
 	if (env->oldpwd_index != -1 && current_pwd)
 	{
@@ -60,7 +62,6 @@ int	ft_builtin_cd(char **args, t_env *env)
 {
 	char	*home;
 
-	env->flag_builtin = true;
 	if (args[1] == NULL || ft_strcmp_minishell(args[1], "~") == 0)
 	{
 		home = get_home_directory(env);

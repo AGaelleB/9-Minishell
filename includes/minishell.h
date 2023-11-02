@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 15:56:27 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:33:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 # define CYAN "\033[36m"
 # define WHITE "\033[37m"
 
+# define SIZE 1000
+
 extern int g_ctrl_c_pressed; // ma variable globale 
 
 typedef struct s_command			t_command;
@@ -52,7 +54,6 @@ typedef struct s_env
 	char				**cpy_env;
 	char				*str;
 	bool				flag_error;
-	bool				flag_builtin;
 	int					pwd_index;
 	int					oldpwd_index;
 	char				*path_to_change;
@@ -177,6 +178,7 @@ t_token *handle_multiple_heredocs(t_command *current, t_token *token); // NEWWWW
 // pid_t heredoc_open_fd_pipe(t_command *command, t_token **token);
 int heredoc_open_fd_pipe(t_command *command, t_token **token);
 
+int	find_env_var(t_env *env, char *arg);
 
 // char *extract_filename(const char *input);
 

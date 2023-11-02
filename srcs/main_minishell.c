@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 11:51:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:09:46 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+/* int	main(int ac, char **av, char **envp)
 {
 	t_command	*new_commands;
 	t_env		*env_bis;
@@ -48,10 +48,12 @@ int	main(int ac, char **av, char **envp)
 			{
 				env_bis->flag_builtin = false;
 				new_commands->command_arg = parse_input_quote(new_commands->command);
-					
 				pid_t pid = fork();
 				execve_builtins_unset_export(new_commands, env_bis);
+				// execve_builtin_cd(new_commands, env_bis);
+				// printf("Avant l'appel à execve_builtin_cd à la ligne %d\n", __LINE__);
 				execve_builtin_cd(new_commands, env_bis);
+				// printf("Après l'appel à execve_builtin_cd à la ligne %d\n", __LINE__);
 				if (pid == 0)  // child process
 				{
 					execve_fd(new_commands, env_bis);
@@ -76,14 +78,85 @@ int	main(int ac, char **av, char **envp)
 		return(-1);
 	}
 	return (0);
+} */
+
+/* int is_builtin_command(t_command *current)
+{
+	if (!current || !current->command)
+		return (0);
+	// En supposant que les fonctions check_* renvoient 1 si la commande correspond à un builtin
+	if (check_pwd(current) || check_echo(current, NULL) || check_cd(current) ||
+			check_env(current, NULL) || check_unset(current) || check_export(current, NULL))
+	{ 
+		return (1);
+	}
+	return (0);
+} */
+
+int main(int ac, char **av, char **envp)
+{
+	t_command *new_commands;
+	t_env *env_bis;
+	char *input;
+
+	(void)av;
+	env_bis = (t_env *)malloc(sizeof(t_env));
+	if (!env_bis)
+		return (1);
+	if (isatty(0))
+	{
+		if (ac != 1)
+			return (printf("run ./minishell without arg\n"));
+		if (!envp[0])
+			return (printf("env is missing\n"));
+		signal(SIGINT, ft_builtin_ctrl_c);
+		signal(SIGQUIT, SIG_IGN);
+		copy_env(env_bis, envp);
+		while (1)
+		{
+			input = readline("minishell$> ");
+			ft_builtin_ctrl_d(input);
+			if (error_input(input) == 2 || verif_nb_quote(input) != 0 || pipe_syntax_errors(input) == -1)
+			{
+				free(input);
+				continue;
+			}
+			add_history(input);
+			new_commands = get_command(input, env_bis);
+			count_and_set_pipes(input, new_commands);
+			if (new_commands != NULL)
+			{
+				new_commands->command_arg = parse_input_quote(new_commands->command);
+				execve_builtins_unset_export(new_commands, env_bis);
+				execve_builtin_cd(new_commands, env_bis);
+				pid_t pid = fork();
+				if (pid == 0)
+				{
+					execve_fd(new_commands, env_bis);
+					exit(0);
+				}
+				else if (pid < 0)
+					perror("fork");
+				else
+					waitpid(pid, NULL, 0);
+				g_ctrl_c_pressed = 0;
+				ft_free_struct(new_commands, new_commands->token_head);
+				ft_free_current(new_commands);
+				free(input);
+			}
+		}
+	}
+	else
+	{
+		printf("the standard input is NOT from a terminal\n");
+		return (-1);
+	}
+	return (0);
 }
 
 
 /*
 										TO DO :
-
-
-
 
 EOF à faire :
 	

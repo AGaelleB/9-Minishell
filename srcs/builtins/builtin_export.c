@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 15:52:05 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 11:55:43 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	add_var_env(t_env *env, char **args, int i, int arg_idx)
 		if (env->cpy_env[i + 1] == NULL)
 		{
 			env->cpy_env[i + 1] = args[arg_idx];
-			env->cpy_env[i + 2] = NULL;
+			env->cpy_env[i + 2] = NULL; ///
 			return (1);
 		}
 		i++;
@@ -76,7 +76,6 @@ int	ft_builtin_export(char **args, t_env *env)
 	int	i;
 
 	i = 0;
-	env->flag_builtin = true;
 	if (!args[1])
 	{
 		while (env->cpy_env[i])

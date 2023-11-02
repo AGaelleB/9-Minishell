@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:44:17 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 14:20:17 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:20:24 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	check_pwd(t_command *current)
 {
-	if (ft_strcmp_minishell(current->command, "pwd") == 0)
+	if (ft_strcmp_minishell(current->command, "pwd") == 0
+		|| ft_strncmp(current->command, "pwd ", 4) == 0)
 	{
 		ft_builtin_pwd(STDOUT_FILENO);
 		return (1);
@@ -28,7 +29,7 @@ int	check_echo(t_command *current, t_env *env)
 
 	if (ft_strncmp(current->command, "echo ", 5) == 0)
 	{
-		tab = parse_input_quote_echo(env, current->command); // WARNING
+		tab = parse_input_quote_echo(env, current->command);
 		ft_builtin_echo(tab);
 		return (1);
 	}

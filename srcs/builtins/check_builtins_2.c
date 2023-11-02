@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:44:17 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 15:51:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 10:28:45 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ int	check_unset(t_command *current)
 
 int	check_export(t_command *current, t_env *env)
 {
+	(void)env;
 	if (ft_strcmp_minishell(current->command, "export") == 0)
 	{
-		ft_builtin_export(current->command_arg, env);
+		// ft_builtin_export(current->command_arg, env);
 		return (1);
 	}
 	else if (ft_strncmp(current->command, "export ", 7) == 0)
