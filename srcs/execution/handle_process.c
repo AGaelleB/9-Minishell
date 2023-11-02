@@ -6,11 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 09:31:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:49:32 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+extern int	g_exit_status;
 
 void	handle_child_process(t_process_data *data, t_env *env)
 {
@@ -34,7 +36,10 @@ void	handle_child_process(t_process_data *data, t_env *env)
 	if (builtins_verif(data->current, env) == 1)
 		exit(0);
 	if (execve_process(data->current, env) == 127)
+	{
+		// printf("handle_child_process execve_process %d\n", g_exit_status);
 		exit(127);
+	}
 }
 
 void	handle_parent_process(t_process_data *data)

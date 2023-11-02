@@ -6,15 +6,17 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:46:59 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 11:51:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:24:25 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+extern int	g_exit_status;
+
 static void	handle_heredoc_signals(t_command *current, char *line)
 {
-	if (g_ctrl_c_pressed == 130)
+	if (g_exit_status == 130)
 	{
 		clean_heredoc_files(current);
 		free(line);

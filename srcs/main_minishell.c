@@ -6,79 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 12:09:46 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:14:26 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* int	main(int ac, char **av, char **envp)
-{
-	t_command	*new_commands;
-	t_env		*env_bis;
-	char		*input;
-
-	(void)av;
-	env_bis = (t_env *)malloc(sizeof(t_env));
-	if (isatty(0))
-	{
-		if (!env_bis)
-			return (0);
-		if (ac != 1)
-			return (printf("run ./minishell without arg\n"));
-		if (!envp[0])
-			return (printf("env is missing\n"));
-		signal(SIGINT, ft_builtin_ctrl_c);
-		signal(SIGQUIT, SIG_IGN);
-		copy_env(env_bis, envp);
-		while (1)
-		{
-			input = readline("minishell$> ");
-			ft_builtin_ctrl_d(input);
-			if (error_input(input) == 2)
-				continue;
-			if (verif_nb_quote(input) != 0)
-				continue;
-			add_history(input);
-			if (pipe_syntax_errors(input) == -1)
-				continue;
-			new_commands = get_command(input, env_bis);
-			count_and_set_pipes(input, new_commands);
-			if (new_commands != NULL)
-			{
-				env_bis->flag_builtin = false;
-				new_commands->command_arg = parse_input_quote(new_commands->command);
-				pid_t pid = fork();
-				execve_builtins_unset_export(new_commands, env_bis);
-				// execve_builtin_cd(new_commands, env_bis);
-				// printf("Avant l'appel à execve_builtin_cd à la ligne %d\n", __LINE__);
-				execve_builtin_cd(new_commands, env_bis);
-				// printf("Après l'appel à execve_builtin_cd à la ligne %d\n", __LINE__);
-				if (pid == 0)  // child process
-				{
-					execve_fd(new_commands, env_bis);
-					exit(0);
-				}
-				else if (pid < 0)  // fork failed
-					perror("fork");
-				else  // parent process
-					waitpid(pid, NULL, 0);
-			}
-			g_ctrl_c_pressed = 0;
-			// clean_heredoc_files(new_commands);
-			// ft_free_tab(new_commands->command_arg);
-			ft_free_struct(new_commands, new_commands->token_head);
-			ft_free_current(new_commands);
-			free(input);
-		}
-	}
-	else
-	{
-		printf("the standard input is NOT from a terminal\n");
-		return(-1);
-	}
-	return (0);
-} */
+int	g_exit_status;
 
 /* int is_builtin_command(t_command *current)
 {
@@ -95,12 +29,14 @@
 
 int main(int ac, char **av, char **envp)
 {
-	t_command *new_commands;
-	t_env *env_bis;
-	char *input;
+	t_command	*new_commands;
+	t_env		*env_bis;
+	char		*input;
+	int			status;
 
 	(void)av;
-	env_bis = (t_env *)malloc(sizeof(t_env));
+	env_bis = (t_env *)malloc(sizeof(t_env)); // A FREE
+	// g_exit_status = 0;
 	if (!env_bis)
 		return (1);
 	if (isatty(0))
@@ -109,16 +45,20 @@ int main(int ac, char **av, char **envp)
 			return (printf("run ./minishell without arg\n"));
 		if (!envp[0])
 			return (printf("env is missing\n"));
+		g_exit_status = 0;
+		// printf("Debug: g_exit_status set to %d at main\n", g_exit_status);
 		signal(SIGINT, ft_builtin_ctrl_c);
 		signal(SIGQUIT, SIG_IGN);
 		copy_env(env_bis, envp);
 		while (1)
 		{
+			// printf("begin main %d\n", g_exit_status);
 			input = readline("minishell$> ");
+			// printf("after readline main %d\n", g_exit_status);
 			ft_builtin_ctrl_d(input);
 			if (error_input(input) == 2 || verif_nb_quote(input) != 0 || pipe_syntax_errors(input) == -1)
 			{
-				free(input);
+				// free(input); // invalid free ???
 				continue;
 			}
 			add_history(input);
@@ -132,17 +72,27 @@ int main(int ac, char **av, char **envp)
 				pid_t pid = fork();
 				if (pid == 0)
 				{
+					// printf("if main %d\n", g_exit_status);
 					execve_fd(new_commands, env_bis);
-					exit(0);
+					// exit(64); // permet de kill les process des childs mais bug 
+					// printf("if after execve main %d\n", g_exit_status);
+					// return (64);
+					exit(g_exit_status);
 				}
 				else if (pid < 0)
 					perror("fork");
 				else
-					waitpid(pid, NULL, 0);
-				g_ctrl_c_pressed = 0;
+				{
+					// printf("else main %d\n", g_exit_status);
+					waitpid(pid, &status, 0); // La valeur de status est mise à jour ici
+					if (WIFEXITED(status))
+						g_exit_status = WEXITSTATUS(status); // Mettez à jour g_exit_status avec le code de sortie du processus
+				}
+				// g_exit_status = 42;
 				ft_free_struct(new_commands, new_commands->token_head);
 				ft_free_current(new_commands);
 				free(input);
+				// printf("end main %d\n", g_exit_status);
 			}
 		}
 	}

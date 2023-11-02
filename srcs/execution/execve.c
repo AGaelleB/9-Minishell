@@ -6,11 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 11:21:34 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:57:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+extern int	g_exit_status;
 
 void	init_execve(t_command *cur, pid_t **childs_pids)
 {
@@ -63,7 +65,9 @@ int	execve_process(t_command *cur, t_env *env)
 	clean_heredoc_files(cur);
 	ft_set_args_and_paths(cur, env);
 	if (env->flag_error || is_builtin(cur) == 2)
-		exit(0);
+		exit(g_exit_status);
+	if(verif_access(cur, cur->command) == 1)
+		exit(126);
 	if ((cur->command_path == NULL) && is_builtin(cur) == 0)
 	{
 		write(2, "minishell: ", 11);
@@ -72,7 +76,11 @@ int	execve_process(t_command *cur, t_env *env)
 		write(2, "\n", 1);
 		ft_free_tab(cur->command_arg);
 		ft_free_current(cur);
-		return (127);
+		// return (g_exit_status);
+		g_exit_status = 127;
+		// printf("Debug: Setting exit status to %d for command not found\n", g_exit_status);
+		// printf("execve_process g_exit_status  %d\n", g_exit_status);
+		exit(g_exit_status); 
 	}
 	else if ((cur->command_path)
 		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))

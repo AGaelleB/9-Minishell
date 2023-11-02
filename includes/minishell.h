@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 12:33:10 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:57:50 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 
 # define SIZE 1000
 
-extern int g_ctrl_c_pressed; // ma variable globale 
+// extern int g_exit_status; // ma variable globale 
 
 typedef struct s_command			t_command;
 
@@ -161,6 +161,7 @@ typedef struct s_command
 	char				**heredocs;  // tableau dynamique pour stocker les noms de fichiers heredoc
 	int					flag_chevron;
 	bool				last_redir_is_heredoc; // Tableau pour les flags actifs des heredocs
+	int					exit_status;
 	// t_process_data		*pdata; // TEEEEEEEEEEEEEST
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;
@@ -314,6 +315,7 @@ int			pipe_syntax_errors(char *input);
 void		ft_print_error(char *str);
 void		exit_with_error(char *message, pid_t *child_pids);
 void		print_error_cd(t_env *env, int i);
+int			verif_access(t_command *current, char *command);
 // int			check_valid_identifier(char c);
 
 char	*create_heredoc(void);

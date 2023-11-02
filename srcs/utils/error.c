@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 16:03:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:58:41 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,25 @@ void	print_error_cd(t_env *env, int i)
 	}
 }
 
-/* int	check_valid_identifier(char c)
+void	exit_access(t_command *current, char *command)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
-		|| c == '\'' || c == '\"' || c == ',' || c == '.'
-		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
-		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
-		|| c == '~' || c == ';'
-		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*') //|| c == ' '
+	perror(command);
+	//free
+	(void)current;
+	exit(126);
+}
+
+int	verif_access(t_command *current, char *command)
+{
+	if (command[0] == '.' && command[1] == '/')
 	{
-		return (1);
+		if (access(command, X_OK) == 0)
+			return (0);
+		if (access(command, X_OK))
+		{
+			exit_access(current, command);
+			return (1);
+		}
 	}
-	else
-		return (0);
-} */
+	return (0);
+}

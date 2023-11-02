@@ -6,11 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 12:14:13 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:19:57 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+extern int	g_exit_status;
 
 char	**ft_get_paths(t_env *env)
 {
@@ -84,6 +86,7 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 		write(2, ": No such file or directory", 28);
 		write(2, "\n", 1);
 		env->flag_error = true;
+		g_exit_status = 127;
 		return (NULL);
 	}
 	env->flag_error = false;
