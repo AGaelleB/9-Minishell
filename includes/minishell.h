@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 14:38:46 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:42:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ typedef struct s_command
 } t_command;
 
 void	ft_close_all_fd(void);
-void ft_free_all(t_env *env, t_command *current, t_token *token);
+void ft_free_all(t_command *current, t_token *token);
 void ft_free_env(t_env *env);
 void	print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *cur, t_env *env);
@@ -275,9 +275,7 @@ char		*add_spaces_around_redir(char *input);
 /***********REDIRECTIONS***********/
 char		*epur_filename(t_token *token_head);
 
-void	handle_quotes_heredoc(char *str, int *i, bool *in_quote, bool *double_quote);
-char	*extract_filename_heredoc(char *cmd);
-// char *extract_filename_heredoc(char *cmd, int *current_position);
+char		*epur_filename_heredoc(t_token *token_head);
 
 int			is_redir_at_beginning(char *input, int i);
 
@@ -347,8 +345,6 @@ char		*ft_strjoin_minishell(char *s1, char *s2);
 // char		*ft_strstr(const char *str, const char *substr);
 
 char		**split_command_on_pipe(char *input);
-
-char		**ft_split_heredoc(char *s, char c); // test
 
 int			is_delimiter(char *str, char **delimiters, int *delim_len);
 int			count_split_tokens_str(char *str, char **delimiters);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/03 12:38:27 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:38:40 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,34 +137,3 @@ void	execve_fd(t_command *current, t_env *env)
 	wait_for_children(data.command, data.child_pids);
 	cleanup(data.child_pids, data.infile);
 }
-
-/* // RAYAN
-	int status;
-	int i = 0;
-	printf("nombre de pipes final : %d\n", command->nb_pipes);
-	while (i < command->nb_pipes)
-	{
-		// printf("test\n");
-		waitpid(0, &status, -1);
-		i++;
-	}
-	WEXITSTATUS(status);
-
-void	wait_exec(t_main *data)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	signal(SIGINT, SIG_IGN);
-	waitpid(data->pid_last, &status, 0);
-	while (i < data->pipe_count)
-	{
-		waitpid(-1, NULL, 0);
-		i++;
-	}
-	signal(SIGINT, sig_handler);
-	if (WIFEXITED(status))
-		data->return_value = WEXITSTATUS(status);
-}
- */
