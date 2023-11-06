@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/01 15:55:46 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/06 11:59:57 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ SRCS_UTILS = srcs/utils/check_redirections.c \
 	srcs/utils/free.c \
 	srcs/utils/libft_modify.c \
 	srcs/utils/split_command_on_pipe.c \
+	srcs/utils/split_heredoc.c \
 	srcs/utils/split_string_token_utils.c \
 	srcs/utils/split_string_token.c \
 	srcs/utils/split_string.c \

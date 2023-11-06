@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/04 15:33:19 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:29:45 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	handle_child_process(t_process_data *data, t_env *env)
 		exit (0);
 		// return ;
 	}
+	// printf("	handle_child_process \n");
 	if (execve_process(data->current, env) == 127)
 		exit(127);
 }

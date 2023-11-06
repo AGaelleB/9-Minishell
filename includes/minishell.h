@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/04 15:27:48 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:29:44 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ typedef struct s_token
 {
 	t_e_token_type		type;
 	char				*split_value; // e.g. "cat"
+	char				*split_heredoc;
 	struct s_token		*next;
 	struct s_token		*prev;
-	char				*command; // PAS FREE
+	char				*command;
 } t_token;
 
 typedef struct s_split_token
@@ -117,6 +118,7 @@ typedef struct s_tokenizer
 	t_token		*curr;
 	t_token		*token;
 	char		**words;
+	char		**heredocs; // TEST
 	char		*delimiters[6];
 	int			i;
 	int			state;
@@ -161,6 +163,7 @@ typedef struct s_command
 	int					flag_chevron;
 	bool				last_redir_is_heredoc; // Tableau pour les flags actifs des heredocs
 	int					exit_status;
+	// char				*split_herdoc;
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;
 	struct s_command	*next;
@@ -252,7 +255,8 @@ char	*env_var_exists(t_env *env, char *var);
 char	*get_env_value(t_env *env, char *str);
 void	append_env_value_to_arg(char *value, char *arg, int *arg_idx);
 
-t_token		*new_token(t_e_token_type e_type, char *split_value);
+// t_token		*new_token(t_e_token_type e_type, char *split_value);
+t_token		*new_token(t_e_token_type e_type, char *split_value, char *split_heredoc);
 t_token 	*tokenize_input(char *input, t_env *env);
 char		*ft_check_paths_token(t_env *env, char *args);
 char		*ft_check_paths(t_env *env, char *args);
@@ -272,6 +276,7 @@ char		*epur_filename(t_token *token_head);
 
 void	handle_quotes_heredoc(char *str, int *i, bool *in_quote, bool *double_quote);
 char	*extract_filename_heredoc(char *cmd);
+// char *extract_filename_heredoc(char *cmd, int *current_position);
 
 int			is_redir_at_beginning(char *input, int i);
 
@@ -299,8 +304,8 @@ int			write_in_fd(int fd, char *delimiter, t_command *current);
 
 /***********SIGNALS***********/
 void		ft_builtin_ctrl_c (int sig);
-void handle_signals_heredoc();
-int	ctrl_d_heredoc(char *input, int i, char *delimiter);
+void		handle_signals_heredoc(void);
+int			ctrl_d_heredoc(char *input, int i, char *delimiter);
 
 
 /***********UTILS***********/
@@ -341,6 +346,8 @@ char		*ft_strjoin_minishell(char *s1, char *s2);
 // char		*ft_strstr(const char *str, const char *substr);
 
 char		**split_command_on_pipe(char *input);
+
+char		**ft_split_heredoc(char *s, char c); // test
 
 int			is_delimiter(char *str, char **delimiters, int *delim_len);
 int			count_split_tokens_str(char *str, char **delimiters);

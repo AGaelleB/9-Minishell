@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 10:04:43 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 16:21:10 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:40:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,48 @@ void	handle_quotes_heredoc(char *str, int *i,
 		(*i)++;
 }
 
-static int	skip_to_heredoc(char *cmd)
-{
-	int	i;
+// static int	skip_to_heredoc(char *cmd)
+// {
+// 	int	i;
 
-	i = 0;
-	while (cmd[i] != '<')
-		i++;
-	while (cmd[i] == '<' || cmd[i] == ' ')
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (cmd[i] != '<')
+// 		i++;
+// 	while (cmd[i] == '<' || cmd[i] == ' ')
+// 		i++;
+// 	return (i);
+// }
 
-char	*extract_filename_heredoc(char *cmd)
+// char *extract_filename_heredoc(char *cmd, int *current_position)
+// {
+// 	int		j;
+// 	bool	in_quote;
+// 	bool	double_quote;
+// 	char	*file_name;
+// 	int		i;
+
+// 	in_quote = false;
+// 	double_quote = false;
+// 	file_name = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
+// 	if (!file_name)
+// 		return (NULL);
+// 	// i = skip_to_heredoc(cmd);
+// 	i = *current_position;
+// 	j = 0;
+// 	while (cmd[i])
+// 	{
+// 		handle_quotes_heredoc(cmd, &i, &in_quote, &double_quote);
+// 		if (!in_quote && !double_quote && cmd[i] == ' ')
+// 			break ;
+// 		file_name[j++] = cmd[i++];
+// 	}
+// 	file_name[j] = '\0';
+// 	*current_position = i;
+// 	return (file_name);
+// }
+
+
+char	*extract_filename_heredoc(char *cmd) // avancer sur next filename
 {
 	int		j;
 	bool	in_quote;
@@ -54,7 +83,8 @@ char	*extract_filename_heredoc(char *cmd)
 	file_name = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
 	if (!file_name)
 		return (NULL);
-	i = skip_to_heredoc(cmd);
+	// i = skip_to_heredoc(cmd);
+	i  = 0;
 	j = 0;
 	while (cmd[i])
 	{

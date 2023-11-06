@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 09:14:39 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:33:25 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int main(int ac, char **av, char **envp)
 				continue;
 			}
 			add_history(input);
-			env_bis = (t_env *)malloc(sizeof(t_env)); // A FREE
-			if (!env_bis)
-				return (1);
-			copy_env(env_bis, envp);
+			env_bis = (t_env *)malloc(sizeof(t_env)); // A FREE // PAS SURE
+			if (!env_bis) // PAS SURE
+				return (1); // PAS SURE
+			copy_env(env_bis, envp); // PAS SURE UNSET
 			new_commands = get_command(input, env_bis);
 			count_and_set_pipes(input, new_commands);
 			if (new_commands != NULL)
@@ -72,6 +72,7 @@ int main(int ac, char **av, char **envp)
 				{
 					execve_fd(new_commands, env_bis);
 					// ft_free_env(env_bis);
+					// printf("MAIN execve_process g_exit_status  %d\n", g_exit_status);
 					ft_close_all_fd();
 					ft_free_all(env_bis, new_commands, new_commands->token_head);
 					exit(g_exit_status);

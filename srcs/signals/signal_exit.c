@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/03 15:56:30 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:52:46 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	sighandler_heredoc(int sig)
 
 void	handle_signals_heredoc(void)
 {
+	g_exit_status = 0;
 	signal(SIGINT, sighandler_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }

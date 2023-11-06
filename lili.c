@@ -1,59 +1,126 @@
-void ft_free_token(t_command *current)
+Je veux que tu modifies mon split pour stocker les donnees de la maniere suivante : 
+
+minishell$> cat << " 'EOF' "
+args[0] = cat
+args[1] = <<
+args[2] =  'EOF' 
+
+minishell$> cat << 'EOF'
+args[0] = cat
+args[1] = <<
+args[2] = EOF
+
+minishell$> cat << "EOF"
+args[0] = cat
+args[1] = <<
+args[2] = EOF
+
+minishell$> cat << EOF
+args[0] = cat
+args[1] = <<
+args[2] = EOF
+
+
+
+le code a modifier : 
+
+static char	ft_separateur(char cmp, char c)
 {
-    while (current)
+	if (cmp == c)
+		return (1);
+	return (0);
+}
+
+static int	ft_alloctxt(char **tab, char *s, char c)
+{
+	int	word_len;
+	int	i;
+
+	i = 0;
+	while (*s)
 	{
-        t_token *head = current->token_head;
-        while (head)
+		while (*s && ft_separateur(*s, c) == 1)
+			s++;
+		word_len = 0;
+		while (*s && ft_separateur(*s, c) == 0)
 		{
-            t_token *tmp = head;
-            head = head->next;
-            free(tmp->split_value);
-            free(tmp);
-        }
-        current->token_head = NULL;  // Set token_head to NULL after freeing all tokens
-        current = current->next;
-    }
+			word_len++;
+			s++;
+		}
+		if (word_len != 0)
+		{
+			tab[i] = malloc(word_len + 1);
+			if (tab[i] == 0)
+				return (0);
+			tab[i++][word_len] = 0;
+		}
+	}
+	return (1);
 }
 
-void ft_free_current(t_command *head)
+static void	ft_filltab(char **tab, char *s, char c)
 {
-    while (head)
+	int	i;
+	int	j;
+
+	i = 0;
+	while (*s && tab[i])
 	{
-        ft_free_tab(head->command_arg);
-        free(head->command_path);
-        free(head->command);
-        t_command *tmp = head;
-        head = head->next;
-        free(tmp);
-    }
+		while (*s && ft_separateur(*s, c) == 1)
+			s++;
+		j = 0;
+		while (*s && ft_separateur(*s, c) == 0)
+			tab[i][j++] = *(s++);
+		i++;
+	}
 }
-// void	ft_free_token(t_command *current, t_token *head)
-// {
-// 	t_token	*tmp;
 
-// 	tmp = NULL;
-// 	while (current)
-// 	{
-// 		head = current->token_head;
-// 		if (head != NULL)
-// 		{
-// 			while (head)
-// 			{
-// 				tmp = head;
-// 				// head->command = NULL;
-// 				// if (tmp->command != NULL)
-// 				// 	free(tmp->command);
-// 				free(tmp->split_value);
-// 				// free(tmp);
-// 				head = head->next;
-// 			}
-// 			free(current->token_head->command);
-// 			if(current->token_head != NULL)
-// 				free(current->token_head);
-// 			// if(head != NULL) //visiblement inutile
-// 			// 	free(head);
-// 		}
-// 		current = current->next;
-// 	}
-// }
+static unsigned int	ft_countwords(char *s, char c)
+{
+	int	count;
+	int	i;
 
+	i = 0;
+	count = 0;
+	while (s[i])
+	{
+		if (s[i] && ft_separateur(s[i], c) == 0)
+		{
+			count++;
+			i++;
+		}
+		while (s[i] && ft_separateur(s[i], c) == 0)
+			i++;
+		while (s[i] && ft_separateur(s[i], c) == 1)
+			i++;
+	}
+	return (count);
+}
+
+char	**ft_split_heredoc(char *s, char c)
+{
+	char			**tab;
+	unsigned int	nb_words;
+	unsigned int	i;
+
+	if (s == 0)
+		return (NULL);
+	nb_words = ft_countwords(s, c);
+	tab = malloc((nb_words + 1) * sizeof(char *));
+	if (tab == 0)
+		return (0);
+	tab[nb_words] = 0;
+	if (nb_words > 0)
+	{
+		if (ft_alloctxt(tab, s, c) == 0)
+		{
+			i = 0;
+			while (tab[i])
+				free(tab[i++]);
+			free(tab);
+			return (0);
+		}
+		ft_filltab(tab, s, c);
+	}
+	return (tab);
+}

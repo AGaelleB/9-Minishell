@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/04 15:08:44 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 09:30:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void ft_free_token(t_command *current)
 
 	head = NULL;
 	tmp = NULL;
-	printf("%sI'M FREE TOKEN\n%s", YELLOW, RESET);
+	// printf("%sI'M FREE TOKEN\n%s", YELLOW, RESET);
 	while (current)
 	{
 		free(current->token_head->command);
@@ -68,7 +68,7 @@ void	ft_free_current(t_command *current)
 	t_command	*tmp;
 
 	tmp = NULL;
-	printf("%sI WILL COMMAND\n%s", GREEN, RESET);
+	// printf("%sI WILL COMMAND\n%s", GREEN, RESET);
 	ft_free_herdocs(current);
 	ft_free_tab(current->command_arg);
 	while (current)

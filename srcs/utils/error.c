@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/03 12:29:00 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:04:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ void	exit_access(t_command *current, char *command)
 	exit(126);
 }
 
+void	exit_access_2(t_command *current, char *command)
+{
+	perror(command);
+	//free
+	(void)current;
+	exit(127);
+}
+
+
 int	is_dir_error(t_command *current, char *command)
 {
 	ft_putstr_fd("minishell: ", 2);
@@ -74,11 +83,16 @@ int	verif_access(t_command *current, char *command)
 	{
 		if (access(command, F_OK) == 0) // Add == 0 to check for file existence
 			return (is_dir_error(current, command));
-		if (access(command, X_OK) == 0)
+		if (access(command, X_OK | F_OK) == 0)
 			return (0);
-		if (access(command, X_OK))
+		if (access(command, X_OK) && access(command, F_OK) == 0)
 		{
 			exit_access(current, command);
+			return (1);
+		}
+		if (access(command, X_OK))
+		{
+			exit_access_2(current, command);
 			return (1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:24 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/17 16:05:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 09:49:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	copy_env(t_env *env, char **envp)
 		i++;
 	}
 	env->cpy_env[i] = NULL;
+	env->flag_error = false;
 }
 
 void	ft_builtin_env(t_env *env)

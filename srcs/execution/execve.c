@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/03 12:16:35 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 10:03:40 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,8 @@ int	execve_process(t_command *cur, t_env *env)
 		write(2, cur->command_arg[0], ft_strlen(cur->command_arg[0]));
 		write(2, " :command not found", 19);
 		write(2, "\n", 1);
-		ft_free_tab(cur->command_arg);
-		ft_free_current(cur);
-		// return (g_exit_status);
 		g_exit_status = 127;
-		// printf("Debug: Setting exit status to %d for command not found\n", g_exit_status);
-		// printf("execve_process g_exit_status  %d\n", g_exit_status);
+		// printf("EXECVE execve_process g_exit_status  %d\n", g_exit_status);
 		exit(g_exit_status); 
 	}
 	else if ((cur->command_path)
