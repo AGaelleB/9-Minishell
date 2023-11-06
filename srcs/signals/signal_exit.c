@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 16:02:08 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:56:30 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_builtin_ctrl_c(int signal)
 {
 	(void)signal;
 	write(1, "\n", 1);
-	g_exit_status = 1;
+	g_exit_status = 130;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -29,7 +29,7 @@ void	sighandler_heredoc(int sig)
 	int	fd;
 
 	(void)sig;
-	fd = open ("/dev/null", O_RDONLY);
+	fd = open ("/dev/null", O_RDONLY); // closed ? not sure
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	printf("\n");
@@ -39,7 +39,6 @@ void	sighandler_heredoc(int sig)
 
 void	handle_signals_heredoc(void)
 {
-	g_exit_status = 0;
 	signal(SIGINT, sighandler_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }

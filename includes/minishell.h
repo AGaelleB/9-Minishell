@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 17:57:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:27:48 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct s_token
 	char				*split_value; // e.g. "cat"
 	struct s_token		*next;
 	struct s_token		*prev;
-	char				*command;
+	char				*command; // PAS FREE
 } t_token;
 
 typedef struct s_split_token
@@ -137,13 +137,13 @@ typedef struct s_arg_handler
 typedef struct s_process_data
 {
 	t_command	*current;
-	t_command	*command;  // ajouté ici
+	t_command	*command;
 	pid_t		*child_pids;
 	pid_t		*heredoc_fd;
 	pid_t		pid;
 	char		**envp;
-	int			infile;  // déplacé ici et non plus un pointeur
-	int			index;  // ajouté ici
+	int			infile;
+	int			index;
 } t_process_data;
 
 typedef struct s_command
@@ -155,20 +155,20 @@ typedef struct s_command
 	int					fd[2];
 	int					fd_out;
 	int					fd_in;
-	// int					nb_pipes;
 	char				*file_name;
-	char				*heredoc;
+	char				*heredoc;  // PAS FREE
 	char				**heredocs;  // tableau dynamique pour stocker les noms de fichiers heredoc
 	int					flag_chevron;
 	bool				last_redir_is_heredoc; // Tableau pour les flags actifs des heredocs
 	int					exit_status;
-	// t_process_data		*pdata; // TEEEEEEEEEEEEEST
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;
 	struct s_command	*next;
 } t_command;
 
-
+void	ft_close_all_fd(void);
+void ft_free_all(t_env *env, t_command *current, t_token *token);
+void ft_free_env(t_env *env);
 void	print_commands_and_tokens(t_command *head);
 void	ft_set_args_and_paths(t_command *cur, t_env *env);
 char	**parse_input_quote(char *input);
@@ -325,7 +325,7 @@ int			count_arg_length(char *input, int i);
 
 
 void		ft_free_tab(char **tab);
-void		ft_free_struct(t_command *current, t_token *head);
+void		ft_free_token(t_command *current);
 void		ft_free_current(t_command *current);
 void		clean_heredoc_files(t_command *cur);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/06 17:44:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:26:53 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,29 @@ char	**free_token_split(char **tokens)
 		free(tokens[i++]);
 	free(tokens);
 	return (NULL);
+}
+
+void ft_free_env(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	// printf("%sje commance a free env\n%s", BLUE, RESET);
+	while (env->cpy_env[i])
+	{
+		free(env->cpy_env[i]);
+		i++;
+	}
+	free(env->cpy_env);
+	free(env);
+}
+
+void ft_free_all(t_env *env, t_command *current, t_token *token)
+{
+	if (env)
+		ft_free_env(env);
+	if (token)
+		ft_free_token(current);
+	if (current)
+		ft_free_current(current);
 }

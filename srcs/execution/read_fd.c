@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 16:40:35 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:38:27 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void wait_for_children(t_command *command, pid_t *child_pids)
 			else if (WIFSIGNALED(status))
 				g_exit_status = WTERMSIG(status) + 128; // Update global exit status for signal termination
 		}
-		printf("%swait_for_children: Child exited with status %d%s\n", RED, g_exit_status, RESET);
+		// printf("%swait_for_children: Child exited with status %d%s\n", RED, g_exit_status, RESET);
 	}
 	signal(SIGINT, ft_builtin_ctrl_c);
 }

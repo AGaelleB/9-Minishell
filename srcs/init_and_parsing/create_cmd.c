@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 11:21:05 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:06:49 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ t_command	*create_new_cmd(char *command_str, t_env *env)
 	}
 	new_cmd->token_head = tokenize_input(new_cmd->command, env);
 	if (new_cmd->token_head != NULL)
+	{
+		new_cmd->token_head->command = NULL;
 		new_cmd->token_head->command = add_spaces_around_redir(command_str);
+	}
 	new_cmd->next = NULL;
 	return (new_cmd);
 }
@@ -69,10 +72,10 @@ t_command	*get_command(char *input, t_env *env)
 		if (ft_strcmp_minishell(command[i], "") == 0)
 			return (NULL);
 		new_cmd = create_new_cmd(command[i], env);
+		new_cmd->heredocs = NULL;
 		append_new_cmd(&head, new_cmd);
 		i++;
 	}
-	head->heredocs = NULL;
 	ft_free_tab(command);
 	return (head);
 }

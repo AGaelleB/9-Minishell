@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 17:57:10 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:16:35 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	execve_process(t_command *cur, t_env *env)
 	else if ((cur->command_path)
 		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))
 	{
-		perror("Error");
+		perror("Error ");
 		return (-1);
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 11:50:46 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/04 11:16:53 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 		fd = open(current->heredoc, O_CREAT | O_EXCL | O_RDWR, 0644);
 		add_to_heredocs_list(current, current->heredoc);
 		write_in_fd(fd, delimiter, current);
+		if (delimiter) //NEW
+			free(delimiter); //NEW
 		fd = open(current->heredoc, O_RDONLY);
 		current->fd_in = fd;
 		if (current->fd_in == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/01 16:12:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:02:01 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ void	ft_close_fd(void)
 	int	fd;
 
 	fd = 3;
+	while (fd < 100)
+	{
+		close(fd);
+		fd++;
+	}
+}
+
+void	ft_close_all_fd(void)
+{
+	int	fd;
+
+	fd = 0;
 	while (fd < 100)
 	{
 		close(fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 17:22:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/04 12:29:01 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_token	*new_token(t_e_token_type e_type, char *split_value)
 {
 	t_token	*token;
 
+	token = NULL;
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
@@ -46,7 +47,8 @@ void	init_tokenizer(t_tokenizer *tz, char *input)
 	tz->i = 0;
 	tz->head = NULL;
 	tz->curr = NULL;
-	tz->state = TYPE_CMD; // -1
+	tz->token = NULL; //NEW init ici
+	tz->state = TYPE_CMD;
 	tz->cmd_processed = false;
 	tz->flag_single_quote = false;
 	tz->flag_double_quote = false;
@@ -80,6 +82,27 @@ t_token	*create_token(t_tokenizer *tz, t_env *env)
 	return (tz->token);
 }
 
+// t_token	*tokenize_input(char *input, t_env *env)
+// {
+// 	t_tokenizer	*tz;
+
+// 	tz = malloc(sizeof(t_tokenizer));//NEW
+// 	init_tokenizer(tz, input);
+// 	while (tz->words[tz->i])
+// 	{
+// 		if (!is_empty_or_space(tz->words[tz->i]))
+// 		{
+// 			tz->token = malloc(sizeof(t_token) * 1000); //NEW init ici
+// 			tz->token = create_token(tz, env);
+// 			add_token_to_list(&tz->head, &tz->curr, tz->token);
+// 			// free(tz.token); //on a plus rien ca tourne dans le vide
+// 		}
+// 		tz->i++;
+// 	}
+// 	ft_free_tab(tz->words);
+// 	return (tz->head);
+// }
+
 t_token	*tokenize_input(char *input, t_env *env)
 {
 	t_tokenizer	tz;
@@ -91,6 +114,7 @@ t_token	*tokenize_input(char *input, t_env *env)
 		{
 			tz.token = create_token(&tz, env);
 			add_token_to_list(&tz.head, &tz.curr, tz.token);
+			// free(tz.token);
 		}
 		tz.i++;
 	}

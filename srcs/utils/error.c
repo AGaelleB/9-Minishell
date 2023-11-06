@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 17:58:41 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:29:00 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+extern int	g_exit_status;
 
 void	ft_print_error(char *str)
 {
@@ -55,10 +57,23 @@ void	exit_access(t_command *current, char *command)
 	exit(126);
 }
 
+int	is_dir_error(t_command *current, char *command)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(command, 2);
+	g_exit_status = 126;
+	ft_putstr_fd(": Is a directory\n", 2);
+	//free ??? ici ou avant le exit(126) de lexecve ?
+	(void)current;
+	return (1);
+}
+
 int	verif_access(t_command *current, char *command)
 {
 	if (command[0] == '.' && command[1] == '/')
 	{
+		if (access(command, F_OK) == 0) // Add == 0 to check for file existence
+			return (is_dir_error(current, command));
 		if (access(command, X_OK) == 0)
 			return (0);
 		if (access(command, X_OK))

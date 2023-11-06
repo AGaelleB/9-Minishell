@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 16:49:32 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:33:19 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,18 @@ void	handle_child_process(t_process_data *data, t_env *env)
 	}
 	open_fd(data->current);
 	if (builtins_verif(data->current, env) == 1)
-		exit(0);
-	if (execve_process(data->current, env) == 127)
 	{
-		// printf("handle_child_process execve_process %d\n", g_exit_status);
-		exit(127);
+		ft_free_all(env, data->current, data->current->token_head);
+		exit (0);
+		// return ;
 	}
+	if (execve_process(data->current, env) == 127)
+		exit(127);
 }
 
 void	handle_parent_process(t_process_data *data)
 {
+	// printf("PARENTS PROCESS\n");
 	close(data->current->fd_out);
 	if (data->infile != 0)
 		close(data->infile);
