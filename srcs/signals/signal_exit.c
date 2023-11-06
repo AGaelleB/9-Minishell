@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 10:52:46 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 15:15:11 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ extern int	g_exit_status;
 void	ft_builtin_ctrl_c(int signal)
 {
 	(void)signal;
-	write(1, "\n", 1);
+	// write(1, "\n", 1);
 	g_exit_status = 130;
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redisplay();
+	write(1, "\n", 1);
+	// rl_redisplay();
 }
 
 void	sighandler_heredoc(int sig)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:45:54 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 12:16:39 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:43:28 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-static bool	ft_isquote(char c)
+/* static bool	ft_isquote(char c)
 {
 	return (c == '"' || c == '\'');
 }
@@ -138,3 +138,4 @@ char	**ft_split_heredoc(char *s, char c)
 	tab[nb_words] = NULL;
 	return (tab);
 }
+ */

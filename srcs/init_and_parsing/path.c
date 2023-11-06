@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 10:11:31 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:12:08 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 	if ((temp_path == NULL || (temp_path[0][0]) == 0)
 		&& (ft_strcmp_minishell(args, "unset") != 0)
 		&& (ft_strcmp_minishell(args, "export") != 0)
-		&& (ft_strcmp_minishell(args, "pwd") != 0))
+		&& (ft_strcmp_minishell(args, "pwd") != 0)
+		&& (ft_strcmp_minishell(args, "echo") != 0))
 	{
 		write(2, "minishell: ", 12);
 		write(2, args, ft_strlen(args));

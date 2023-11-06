@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:05:00 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 12:38:48 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:44:20 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*new_token(t_e_token_type e_type, char *split_value, char *split_heredoc)
+t_token	*new_token(t_e_token_type e_type, char *split_value)
 {
 	t_token	*token;
 
@@ -22,8 +22,6 @@ t_token	*new_token(t_e_token_type e_type, char *split_value, char *split_heredoc
 		return (NULL);
 	token->type = e_type;
 	token->split_value = ft_strdup(split_value); // Remember to free this later!
-	if (split_heredoc != NULL)
-		token->split_heredoc = ft_strdup(split_heredoc);
 	token->next = NULL;
 	token->prev = NULL;
 	return (token);
@@ -61,7 +59,6 @@ void	init_tokenizer(t_tokenizer *tz, char *input)
 	tz->delimiters[4] = ">";
 	tz->delimiters[5] = NULL;
 	tz->words = split_string_token(input, tz->delimiters);
-	tz->heredocs = ft_split_heredoc(input, ' '); // TEST
 }
 
 t_token	*create_token(t_tokenizer *tz, t_env *env)

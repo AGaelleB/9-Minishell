@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 12:29:44 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:38:46 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_token
 	struct s_token		*next;
 	struct s_token		*prev;
 	char				*command;
+	char				*command_two;
 } t_token;
 
 typedef struct s_split_token
@@ -255,8 +256,8 @@ char	*env_var_exists(t_env *env, char *var);
 char	*get_env_value(t_env *env, char *str);
 void	append_env_value_to_arg(char *value, char *arg, int *arg_idx);
 
-// t_token		*new_token(t_e_token_type e_type, char *split_value);
-t_token		*new_token(t_e_token_type e_type, char *split_value, char *split_heredoc);
+t_token		*new_token(t_e_token_type e_type, char *split_value);
+// t_token		*new_token(t_e_token_type e_type, char *split_value, char *split_heredoc);
 t_token 	*tokenize_input(char *input, t_env *env);
 char		*ft_check_paths_token(t_env *env, char *args);
 char		*ft_check_paths(t_env *env, char *args);

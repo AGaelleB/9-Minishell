@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:44:17 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 12:20:24 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:13:52 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	check_echo(t_command *current, t_env *env)
 {
 	char	**tab;
 
-	if (ft_strncmp(current->command, "echo ", 5) == 0)
+	if (ft_strcmp_minishell(current->command, "echo") == 0
+		|| ft_strncmp(current->command, "echo ", 5) == 0)
 	{
 		tab = parse_input_quote_echo(env, current->command);
 		ft_builtin_echo(tab);

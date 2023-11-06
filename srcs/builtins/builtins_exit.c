@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/03 16:37:28 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:01:25 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_builtin_ctrl_d(char *input)
 {
 	if (!input)
 	{
-		ft_close_all_fd();
+		// ft_close_all_fd();
 		write(1, "exit\n", 5);
 		exit(0);
 	}

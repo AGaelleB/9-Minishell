@@ -1,126 +1,77 @@
-Je veux que tu modifies mon split pour stocker les donnees de la maniere suivante : 
 
-minishell$> cat << " 'EOF' "
-args[0] = cat
-args[1] = <<
-args[2] =  'EOF' 
-
-minishell$> cat << 'EOF'
-args[0] = cat
-args[1] = <<
-args[2] = EOF
-
-minishell$> cat << "EOF"
-args[0] = cat
-args[1] = <<
-args[2] = EOF
-
-minishell$> cat << EOF
-args[0] = cat
-args[1] = <<
-args[2] = EOF
-
-
-
-le code a modifier : 
-
-static char	ft_separateur(char cmp, char c)
+int main(int ac, char **av, char **envp)
 {
-	if (cmp == c)
+	t_command	*new_commands;
+	t_env		*env_bis;
+	char		*input;
+	int			status;
+
+	(void)av;
+	env_bis = (t_env *)malloc(sizeof(t_env)); // A FREE
+	if (!env_bis)
 		return (1);
+	if (isatty(0))
+	{
+		if (ac != 1)
+			return (printf("run ./minishell without arg\n"));
+		if (!envp[0])
+			return (printf("env is missing\n"));
+		g_exit_status = 0;
+		// printf("Debug: g_exit_status set to %d at main\n", g_exit_status);
+		signal(SIGINT, ft_builtin_ctrl_c);
+		signal(SIGQUIT, SIG_IGN);
+		copy_env(env_bis, envp);
+		while (1)
+		{
+			// printf("begin main %d\n", g_exit_status);
+			input = readline("minishell$> ");
+			// printf("after readline main %d\n", g_exit_status);
+			ft_builtin_ctrl_d(input);
+			if (error_input(input) == 2 || verif_nb_quote(input) != 0 || pipe_syntax_errors(input) == -1)
+			{
+				// free(input); // invalid free ???
+				continue;
+			}
+			add_history(input);
+			new_commands = get_command(input, env_bis);
+			count_and_set_pipes(input, new_commands);
+			if (new_commands != NULL)
+			{
+				new_commands->command_arg = parse_input_quote(new_commands->command);
+				execve_builtins_unset_export(new_commands, env_bis);
+				execve_builtin_cd(new_commands, env_bis);
+				pid_t pid = fork();
+				if (pid == 0)
+				{
+					// printf("if main %d\n", g_exit_status);
+					execve_fd(new_commands, env_bis);
+					// exit(64); // permet de kill les process des childs mais bug 
+					// printf("if after execve main %d\n", g_exit_status);
+					// return (64);
+					exit(g_exit_status);
+				}
+				else if (pid < 0)
+					perror("fork");
+				else
+				{
+					// printf("else main %d\n", g_exit_status);
+					waitpid(pid, &status, 0); // La valeur de status est mise à jour ici
+					if (WIFEXITED(status))
+						g_exit_status = WEXITSTATUS(status); // Mettez à jour g_exit_status avec le code de sortie du processus
+				}
+				// g_exit_status = 42;
+				ft_free_struct(new_commands, new_commands->token_head);
+				ft_free_current(new_commands);
+				free(input);
+				// printf("end main %d\n", g_exit_status);
+			}
+		}
+	}
+	else
+	{
+		printf("the standard input is NOT from a terminal\n");
+		return (-1);
+	}
 	return (0);
 }
 
-static int	ft_alloctxt(char **tab, char *s, char c)
-{
-	int	word_len;
-	int	i;
-
-	i = 0;
-	while (*s)
-	{
-		while (*s && ft_separateur(*s, c) == 1)
-			s++;
-		word_len = 0;
-		while (*s && ft_separateur(*s, c) == 0)
-		{
-			word_len++;
-			s++;
-		}
-		if (word_len != 0)
-		{
-			tab[i] = malloc(word_len + 1);
-			if (tab[i] == 0)
-				return (0);
-			tab[i++][word_len] = 0;
-		}
-	}
-	return (1);
-}
-
-static void	ft_filltab(char **tab, char *s, char c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (*s && tab[i])
-	{
-		while (*s && ft_separateur(*s, c) == 1)
-			s++;
-		j = 0;
-		while (*s && ft_separateur(*s, c) == 0)
-			tab[i][j++] = *(s++);
-		i++;
-	}
-}
-
-static unsigned int	ft_countwords(char *s, char c)
-{
-	int	count;
-	int	i;
-
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		if (s[i] && ft_separateur(s[i], c) == 0)
-		{
-			count++;
-			i++;
-		}
-		while (s[i] && ft_separateur(s[i], c) == 0)
-			i++;
-		while (s[i] && ft_separateur(s[i], c) == 1)
-			i++;
-	}
-	return (count);
-}
-
-char	**ft_split_heredoc(char *s, char c)
-{
-	char			**tab;
-	unsigned int	nb_words;
-	unsigned int	i;
-
-	if (s == 0)
-		return (NULL);
-	nb_words = ft_countwords(s, c);
-	tab = malloc((nb_words + 1) * sizeof(char *));
-	if (tab == 0)
-		return (0);
-	tab[nb_words] = 0;
-	if (nb_words > 0)
-	{
-		if (ft_alloctxt(tab, s, c) == 0)
-		{
-			i = 0;
-			while (tab[i])
-				free(tab[i++]);
-			free(tab);
-			return (0);
-		}
-		ft_filltab(tab, s, c);
-	}
-	return (tab);
-}

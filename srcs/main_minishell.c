@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 10:33:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:15:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int main(int ac, char **av, char **envp)
 	int			status;
 
 	(void)av;
+	env_bis = (t_env *)malloc(sizeof(t_env)); // A FREE // PAS SURE
+	if (!env_bis) // PAS SURE
+		return (1); // PAS SURE
 	if (isatty(0))
 	{
 		if (ac != 1)
@@ -46,6 +49,10 @@ int main(int ac, char **av, char **envp)
 		g_exit_status = 0;
 		signal(SIGINT, ft_builtin_ctrl_c);
 		signal(SIGQUIT, SIG_IGN);
+		// env_bis = (t_env *)malloc(sizeof(t_env)); // A FREE // PAS SURE
+		// if (!env_bis) // PAS SURE
+		// 	return (1); // PAS SURE
+		copy_env(env_bis, envp); // PAS SURE UNSET
 		while (1)
 		{
 			input = readline("minishell$> ");
@@ -56,10 +63,6 @@ int main(int ac, char **av, char **envp)
 				continue;
 			}
 			add_history(input);
-			env_bis = (t_env *)malloc(sizeof(t_env)); // A FREE // PAS SURE
-			if (!env_bis) // PAS SURE
-				return (1); // PAS SURE
-			copy_env(env_bis, envp); // PAS SURE UNSET
 			new_commands = get_command(input, env_bis);
 			count_and_set_pipes(input, new_commands);
 			if (new_commands != NULL)
@@ -97,7 +100,7 @@ int main(int ac, char **av, char **envp)
 		printf("the standard input is NOT from a terminal\n");
 		return (-1);
 	}
-	printf("%s J'AI FINI\n%s", MAGENTA, RESET);
+	// printf("%s J'AI FINI\n%s", MAGENTA, RESET);
 	return (0);
 }
 
@@ -106,20 +109,18 @@ int main(int ac, char **av, char **envp)
 /*
 										TO DO :
 
-cat < celine.txt << EOF
- cat << a << b  <<c
-
  EOF et ctrl^c leaks
 
  aie aie aie jai peur :
- minishell$> cat << a << b <<c
-> coucou
-> 
-minishell$> ^C
+	minishell$> cat << " 'a' " << "b" << 'c'
+	delimiter =  'a'  | current->heredoc = xguhpidyod 
+	>  'a' 
+	delimiter = b | current->heredoc = hyuuglvvda 
+	> minishell: warning: here-document at line 0 delimited by end-of-file (wanted 'b')
+	delimiter = c | current->heredoc = vbtsjdkezs 
+	> minishell: warning: here-document at line 0 delimited by end-of-file (wanted 'c')
 
-echo | pwd, echo simple pb 
-
-
+penser qa rechercher les truc quon a (void) et voir si utile. pareil pour forbiden function et a recoder
 
 ************************************************************
 cassé chez Rayan : 

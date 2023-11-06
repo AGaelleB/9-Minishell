@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/03 16:06:49 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:56:33 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_command	*create_new_cmd(char *command_str, t_env *env)
 	{
 		new_cmd->token_head->command = NULL;
 		new_cmd->token_head->command = add_spaces_around_redir(command_str);
+		new_cmd->token_head->command_two = add_spaces_around_redir(command_str);
 	}
 	new_cmd->next = NULL;
 	return (new_cmd);
