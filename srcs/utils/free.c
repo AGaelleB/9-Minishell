@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 09:30:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:47:55 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void ft_free_token(t_command *current)
 	while (current)
 	{
 		free(current->token_head->command);
+		free(current->token_head->command_two);
 		head = current->token_head;
 		while (head)
 		{

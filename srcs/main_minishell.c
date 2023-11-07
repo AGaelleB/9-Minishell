@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 16:44:36 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/07 09:25:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,39 @@ int main(int ac, char **av, char **envp)
 
 
 
+
 /*
 										TO DO :
+
+minishell$> ./minishell
+minishell: ./minishell: Is a directory
+=> faire un patch manuel pour ./minishell
+
+<<un <<deux cat | <<trois cat
+=> n affiche pas le dernier heredoc, faire en sorte d ignorer si << apres pipe 
+
+minishell$> '''''ls'''''
+doit fonctionner
+=> regarder vers parse input quopte dans le get command
+
+minishell$> exit 42
+minishell: exit :command not found
+=> devrait afficher 42 si on fait echo $?
+
+[42] $> export HELLO-=123
+minishell: export: `HELLO-': not a valid identifier
+
+minishell$> export GAGA="'gaga'"
+export GAGA="'gaga'"
+
+echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
+
+echo "exit_code ->$? user ->$USER home -> $HOME" 
+
+echo "$PWD"
+
+minishell$> export = 
+minishell: export: `=': not a valid identifier
 
  EOF et ctrl^c leaks
 

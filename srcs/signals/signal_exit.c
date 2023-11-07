@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 15:15:11 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/07 09:17:56 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_builtin_ctrl_c(int signal)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	write(1, "\n", 1);
-	// rl_redisplay();
+	rl_redisplay();
 }
 
 void	sighandler_heredoc(int sig)
