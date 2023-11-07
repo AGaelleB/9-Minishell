@@ -6,24 +6,34 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/07 13:11:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:19:43 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_quotes(char *input, int *i,
-	bool *double_quote, bool *single_quote)
+void	handle_quotes(char *input, int *i, bool *double_quote, bool *single_quote)
 {
-	if (input[*i] == '\"' && !*single_quote)
+	char	quote_char;
+	int		count;
+
+	quote_char = input[*i];
+	count = 0;
+	if ((quote_char == '\"' || quote_char == '\'')
+		&& !(*double_quote && *single_quote))
 	{
-		*double_quote = !*double_quote;
-		(*i)++;
-	}
-	else if (input[*i] == '\'' && !*double_quote)
-	{
-		*single_quote = !*single_quote;
-		(*i)++;
+		while (input[*i] == quote_char)
+		{
+			count++;
+			(*i)++;
+		}
+		if (count % 2 != 0)
+		{
+			if (quote_char == '\"')
+				*double_quote = !*double_quote;
+			else
+				*single_quote = !*single_quote;
+		}
 	}
 }
 
@@ -101,4 +111,4 @@ char	**parse_input_quote(char *input)
 	}
 	parser.args[parser.idx] = NULL;
 	return (parser.args);
-} // peut etre ici le pbl du '''ls'''
+}

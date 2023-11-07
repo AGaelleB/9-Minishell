@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/06 17:06:43 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/07 14:22:26 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ OBJ_DIR_LIBFT = libft/obj_libft
 
 SRCS_EXECUTION = srcs/main_minishell.c \
 	srcs/execution/execve.c \
+	srcs/execution/handle_dollars.c \
 	srcs/execution/handle_process.c \
 	srcs/execution/handle_quotes.c \
 	srcs/execution/read_fd.c \

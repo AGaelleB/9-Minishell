@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/07 11:57:23 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:24:40 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,8 @@ int main(int ac, char **av, char **envp)
 /*
 										TO DO :
 
-nettoyer alloc and copy
-
 <<un <<deux cat | <<trois cat
 => n affiche pas le dernier heredoc, faire en sorte d ignorer si << apres pipe 
-
-minishell$> '''''ls'''''
-doit fonctionner
-=> regarder vers parse input quopte dans le get command
 
 [42] $> export HELLO-=123
 minishell: export: `HELLO-': not a valid identifier
