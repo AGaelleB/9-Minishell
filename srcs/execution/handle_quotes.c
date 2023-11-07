@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 16:36:02 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:11:50 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,4 @@ char	**parse_input_quote(char *input)
 	}
 	parser.args[parser.idx] = NULL;
 	return (parser.args);
-}
+} // peut etre ici le pbl du '''ls'''

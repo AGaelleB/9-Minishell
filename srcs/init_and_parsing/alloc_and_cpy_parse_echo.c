@@ -6,64 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/06 17:59:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:42:51 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 extern int	g_exit_status;
-
-char *get_env_value_dollar(t_env *env, const char *key)
-{
-    int i = 0;
-    char *key_eq = NULL;
-    size_t key_len = strlen(key);
-
-    // Construit une chaîne qui représente la clé suivie d'un signe égal pour la comparaison
-    key_eq = malloc(key_len + 2); // +1 pour '=', +1 pour '\0'
-    if (!key_eq) {
-        // Gestion de l'erreur, retourne ou exit selon la convention de votre code
-        return NULL;
-    }
-    sprintf(key_eq, "%s=", key);
-
-    while (env->cpy_env[i])
-    {
-        // Si la clé est trouvée au début de la chaîne de l'environnement
-        if (strncmp(env->cpy_env[i], key_eq, key_len + 1) == 0)
-        {
-            free(key_eq);
-            // Retourne la valeur en sautant la clé et le signe égal
-            return env->cpy_env[i] + key_len + 1;
-        }
-        i++;
-    }
-
-    free(key_eq); // Libère la mémoire de la chaîne temporaire
-    return NULL; // Retourne NULL si la clé n'est pas trouvée
-}
-
-
-
-// Cette fonction devrait remplacer l'appel à append_env_value_to_arg
-static void	append_env_value(char *var_name, char *arg, int *arg_idx, t_env *env)
-{
-	char	*value;
-
-	// Obtenir la valeur de la variable d'environnement var_name
-	value = get_env_value_dollar(env, var_name);
-	if (value)
-	{
-		// Copier la valeur dans arg
-		while (*value)
-		{
-			arg[(*arg_idx)++] = *value++;
-		}
-	}
-}
-
-
 
 void	handle_quotes_echo(char *str, int *i,
 	bool *double_quote, bool *in_quote)
@@ -92,72 +41,66 @@ static char	*get_exit_status_str(void)
 	return (str);
 }
 
-static void handle_dollar(t_env *env, char *input, int *i, char *arg, int *arg_idx)
+static void	extract_variable_name(char *input, int *i, int *start, char **str)
 {
-	char	*str;
-	int		j;
-	// int		start;
+	int end;
 
-    if (input[*i + 1] == '?')
-    {
-        char *str = get_exit_status_str(); // This should return a string version of g_exit_status
-        for (int j = 0; str[j]; j++)
-        {
-            arg[(*arg_idx)++] = str[j]; // Copy the exit status to the arg
-        }
-        free(str); // Free the string if necessary
-        *i += 2; // Move past the '$' and '?'
-    }
-    else
+	end = *start;
+	while (input[*i] && (ft_isalnum(input[*i]) || input[*i] == '_'))
 	{
-		*i += 1;
-		j = *i;
-		while (input[*i] && input[*i] != ' ' && input[*i] != '\'' && input[*i] != '\"')
-			(*i)++;
-		str = ft_substr(input, j, *i - j);
-		if (!str)
-			exit(EXIT_FAILURE);
-		append_env_value(str, arg, arg_idx, env); // Replace append_env_value_to_arg
-		free(str);
+		(*i)++;
+	}
+	end = *i - *start;
+	*str = ft_substr(input, *start, end);
+	if (!(*str))
+		exit(EXIT_FAILURE);
+}
+
+static void	append_env_value(char *env_value, char *arg, int *arg_idx)
+{
+	int j;
+
+	j = 0;
+	while (env_value[j])
+	{
+		arg[(*arg_idx)++] = env_value[j];
+		j++;
 	}
 }
 
-// void	handle_arg_value(t_env *env, char *input, int *i, char *arg, int *arg_idx)
-// {
-// 	(void)env;
-// 	if (input[*i] == '$')
-// 		handle_dollar(input, i, arg, arg_idx);
-// 	else
-// 		arg[(*arg_idx)++] = input[(*i)++];
-// }
+static void	handle_dollar(t_env *env, char *input, int *i, char *arg, int *arg_idx)
+{
+	char	*str;
+	char	*env_value;
+	int		start;
+
+	start = *i + 1;
+	if (input[start] == '?')
+	{
+		str = get_exit_status_str();
+		append_env_value(str, arg, arg_idx);
+		free(str);
+		*i += 2;
+	}
+	else
+	{
+		(*i)++;
+		extract_variable_name(input, i, &start, &str);
+		env_value = get_env_value(env, str);
+		if (env_value)
+			append_env_value(env_value, arg, arg_idx);
+		// free(str); //double free
+	}
+}
 
 void	handle_arg_value(t_env *env, char *input, int *i, char *arg, int *arg_idx)
 {
+	(void)env;
 	if (input[*i] == '$')
-		handle_dollar(env, input, i, arg, arg_idx); // Pass env here
+		handle_dollar(env, input, i, arg, arg_idx);
 	else
 		arg[(*arg_idx)++] = input[(*i)++];
 }
-
-
-// void	handle_arg_value(t_env *env, char *input, int *i, char *arg, int *arg_idx) // broken sur les exit status
-// {
-// 	char	*str;
-// 	int		j;
-// 	int		start;
-
-// 	j = 0;
-// 	start = *i + 1;
-// 	while (input[*i] && input[*i] != ' ' && input[*i] != '\''
-// 		&& input[*i] != '\"')
-// 	{
-// 		(*i)++;
-// 		if (input[*i] != '\"' && input[*i] != '\'')
-// 			j++;
-// 	}
-// 	str = ft_substr(input, start, j);
-// 	append_env_value_to_arg(get_env_value(env, str), arg, arg_idx);
-// }
 
 char	*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 {

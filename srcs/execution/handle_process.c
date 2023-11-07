@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 16:42:44 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/07 10:29:14 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_exit_status;
 
-void	handle_child_process(t_process_data *data, t_env *env)
+void	handle_child_process(t_process_data *data, t_env *env) // NEW
 {
 	close(data->current->fd_in);
 	dup2(data->infile, 0);
@@ -33,6 +33,7 @@ void	handle_child_process(t_process_data *data, t_env *env)
 		close(data->current->fd_out);
 	}
 	open_fd(data->current);
+	ft_builtin_write_exit(data->current->command);
 	if (builtins_verif(data->current, env) == 1)
 	{
 		ft_free_all(data->current, data->current->token_head);

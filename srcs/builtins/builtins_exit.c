@@ -6,22 +6,35 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 16:29:45 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:08:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_builtin_write_exit(char *input)
+extern int g_exit_status;
+
+int ft_builtin_write_exit(char *input) // NEW
 {
-	char	*str;
+	char *str;
+	char *exit_status_str;
+	int exit_status;
 
 	str = ft_strtrim(input, " ");
-	if (ft_strcmp_minishell(str, "exit") == 0)
+	if (ft_strncmp(str, "exit", 4) == 0)
 	{
 		free(str);
-		printf("exit\n");
-		return (1);
+		exit_status_str = input + 4;
+		if (*exit_status_str == ' ')
+		{
+			exit_status_str++;
+			exit_status = ft_atoi(exit_status_str);
+			g_exit_status = exit_status;
+		}
+		else
+			g_exit_status = 0;
+		// write(1, "exit", 4);
+		exit(g_exit_status);
 	}
 	free(str);
 	return (0);
@@ -52,12 +65,14 @@ int	ft_is_all_space(char *input)
 	return (1);
 }
 
-void	ft_builtin_ctrl_d(char *input)
+void	ft_builtin_ctrl_d(char *input) // NEW
 {
 	if (!input)
 	{
+		// write(1, "\n", 1);
+		write(1, "exit", 5);
+		write(1, "\n", 1);
 		ft_close_all_fd();
-		write(1, "exit\n", 5);
 		exit(0);
 	}
 }

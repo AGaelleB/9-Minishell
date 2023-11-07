@@ -30,20 +30,28 @@ int	check_pipe_at_start(char *input)
 
 int	check_pipe_sequence(char *input)
 {
-	int		pipe_found;
-	int		i;
+	int	pipe_found;
+	int	i;
+	int	single_quote;
+	int	double_quote;
 
 	pipe_found = 0;
 	i = 0;
+	single_quote = 0;
+	double_quote = 0;
 	while (input[i])
 	{
-		if (input[i] == '|')
+		if (input[i] == '\'' && !double_quote)
+			single_quote = !single_quote;
+		if (input[i] == '\"' && !single_quote)
+			double_quote = !double_quote;
+		if (input[i] == '|' && !single_quote && !double_quote)
 		{
 			if (pipe_found)
 				return (2); // Erreur: "||" trouvé
 			pipe_found = 1;
 		}
-		else if (input[i] != ' ')
+		else if (input[i] != ' ' && input[i] != '|')
 			pipe_found = 0;
 		i++;
 	}
@@ -76,7 +84,7 @@ int	check_syntax_errors(char *input)
 	return (check_pipe_at_end(input));
 }
 
-int	pipe_syntax_errors(char *input)
+int	pipe_syntax_errors(char *input) // si inside " " ignorer, voir avec le parse input qupote
 {
 	int	syntax_error_code;
 

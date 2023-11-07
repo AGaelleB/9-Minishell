@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 10:04:01 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/07 10:33:43 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,52 +49,56 @@ void	print_error_cd(t_env *env, int i)
 	}
 }
 
-void	exit_access(t_command *current, char *command)
+void exit_access_exec(t_command *current, char *command) // NEW
 {
 	perror(command);
-	//free
+	// Add any necessary cleanup here
 	(void)current;
 	exit(126);
 }
 
-void	exit_access_2(t_command *current, char *command)
+void exit_access_not_found(t_command *current, char *command) // NEW
 {
 	perror(command);
-	//free
+	// Add any necessary cleanup here
 	(void)current;
 	exit(127);
 }
 
-
-int	is_dir_error(t_command *current, char *command)
+int is_dir_error(t_command *current, char *command) // NEW
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(command, 2);
 	g_exit_status = 126;
 	ft_putstr_fd(": Is a directory\n", 2);
-	//free ??? ici ou avant le exit(126) de lexecve ?
+	// Add any necessary cleanup here
 	(void)current;
 	return (1);
 }
 
-int	verif_access(t_command *current, char *command)
+int verif_access(t_command *current, char *command) // NEW
 {
+	(void)current;
+	struct stat file_stat;
 	if (command[0] == '.' && command[1] == '/')
 	{
-		if (access(command, F_OK) == 0) // Add == 0 to check for file existence
-			return (is_dir_error(current, command));
-		if (access(command, X_OK | F_OK) == 0)
-			return (0);
+		if (access(command, F_OK))
+		{
+			exit_access_not_found(current, command);
+			return (1); 
+		}
 		if (access(command, X_OK) && access(command, F_OK) == 0)
 		{
-			exit_access(current, command);
+			exit_access_exec(current, command);
 			return (1);
 		}
-		if (access(command, X_OK))
+		if (stat(command, &file_stat) == 0)
 		{
-			exit_access_2(current, command);
-			return (1);
+			if (S_ISDIR(file_stat.st_mode))
+				return (is_dir_error(NULL, command));
 		}
+		return (0);
 	}
 	return (0);
 }
+

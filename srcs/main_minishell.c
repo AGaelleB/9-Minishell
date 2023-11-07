@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/07 09:25:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:57:23 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int main(int ac, char **av, char **envp)
 		{
 			input = readline("minishell$> ");
 			ft_builtin_ctrl_d(input);
+			ft_builtin_write_exit(input);
 			if (error_input(input) == 2 || verif_nb_quote(input) != 0 || pipe_syntax_errors(input) == -1)
 				continue;
 			add_history(input);
@@ -81,14 +82,10 @@ int main(int ac, char **av, char **envp)
 }
 
 
-
-
 /*
 										TO DO :
 
-minishell$> ./minishell
-minishell: ./minishell: Is a directory
-=> faire un patch manuel pour ./minishell
+nettoyer alloc and copy
 
 <<un <<deux cat | <<trois cat
 => n affiche pas le dernier heredoc, faire en sorte d ignorer si << apres pipe 
@@ -97,26 +94,16 @@ minishell$> '''''ls'''''
 doit fonctionner
 => regarder vers parse input quopte dans le get command
 
-minishell$> exit 42
-minishell: exit :command not found
-=> devrait afficher 42 si on fait echo $?
-
 [42] $> export HELLO-=123
 minishell: export: `HELLO-': not a valid identifier
 
 minishell$> export GAGA="'gaga'"
 export GAGA="'gaga'"
 
-echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
-
-echo "exit_code ->$? user ->$USER home -> $HOME" 
-
-echo "$PWD"
-
 minishell$> export = 
 minishell: export: `=': not a valid identifier
 
- EOF et ctrl^c leaks
+EOF et ctrl^c leaks
 
  aie aie aie jai peur :
 	minishell$> cat << " 'a' " << "b" << 'c'
@@ -128,42 +115,5 @@ minishell: export: `=': not a valid identifier
 	> minishell: warning: here-document at line 0 delimited by end-of-file (wanted 'c')
 
 penser qa rechercher les truc quon a (void) et voir si utile. pareil pour forbiden function et a recoder
-
-************************************************************
-cassé chez Rayan : 
-ec'h'o     t'rst'
-	-> on doit avoir "trst"
-ec'h'o'   ' t'rst'
-	-> on doit avoir "echo   : command not found"
-
-echo -n -a -nnn -er -nnnnnn -nae -nnn  bonjour
-	-> -a -nnn -er -nnnnnn -nae -nnn  bonjourminishell$> 
-
-ls |
-	-> il execute la commande 
-
-
-Pour les heredoc :
-[42] $> cat << a << b << c
->coucou a
->a
->coucou b
->b
->coucou c
->c
-coucou c
-[42] $> unset PATH
-[42] $> cat << a << b << c
->coucou a
->a
->coucou b
->b
->coucou c
->c
-[42] $> 
-
-=> devrait afficher minishell: cat: No such file or directory
-
-************************************************************
 
 */
