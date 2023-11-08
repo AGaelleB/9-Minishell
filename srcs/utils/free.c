@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 16:47:55 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:37:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	ft_free_herdocs(t_command *current)
 	free(current->heredocs);
 }
 
-void ft_free_token(t_command *current)
+void	ft_free_token(t_command *current)
 {
-	t_token *head;
-	t_token *tmp;
+	t_token	*head;
+	t_token	*tmp;
 
 	head = NULL;
 	tmp = NULL;
@@ -72,6 +72,7 @@ void	ft_free_current(t_command *current)
 	// printf("%sI WILL COMMAND\n%s", GREEN, RESET);
 	ft_free_herdocs(current);
 	ft_free_tab(current->command_arg);
+	ft_free_tab(current->export_arg);
 	while (current)
 	{
 		tmp = current;
@@ -94,13 +95,6 @@ void	clean_heredoc_files(t_command *cur)
 		i++;
 	}
 	cur->heredocs = NULL;
-}
-
-void	cleanup(pid_t *child_pids, int infile)
-{
-	free(child_pids);
-	if (infile != 0)
-		close(infile);
 }
 
 /* void	ft_free_token(t_command *current, t_token *head)

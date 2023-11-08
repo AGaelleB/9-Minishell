@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 14:36:09 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:54:04 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,8 @@ int			execve_process(t_command *cur, t_env *env);
 /***********INIT_AND_PARSING***********/
 char		*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx);
 
+int			check_valid_identifier_export(char *str);
+
 int			count_args_single_quotes(char *input);
 int			count_args_double_quotes_args(char *input);
 
@@ -250,6 +252,10 @@ t_token		*handle_arg_token(t_tokenizer *tz);
 t_token		*handle_single_quote_token(t_tokenizer *tz);
 t_token		*handle_double_quote_token(t_tokenizer *tz);
 
+char		*create_str_from_arg(char *arg);
+int			update_var_env(t_env *env, char *arg);
+int			add_var_env(t_env *env, int i, char *str);
+
 int			verif_nb_quote(char *input);
 bool		contains_single_quote(char *str);
 bool		contains_double_quote(char *str);
@@ -258,12 +264,20 @@ char	*env_var_exists(t_env *env, char *var);
 char	*get_env_value(t_env *env, char *str);
 void	append_env_value_to_arg(char *value, char *arg, int *arg_idx);
 
+char	*handle_quotes_export(char *str);
+
 t_token		*new_token(t_e_token_type e_type, char *split_value);
 // t_token		*new_token(t_e_token_type e_type, char *split_value, char *split_heredoc);
 t_token 	*tokenize_input(char *input, t_env *env);
 char		*ft_check_paths_token(t_env *env, char *args);
 char		*ft_check_paths(t_env *env, char *args);
 void		execve_fd(t_command *current, t_env *env);
+
+void		write_exit_simple(void);
+int			ft_builtin_enter(char *input);
+int			ft_is_all_space(char *input);
+void		ft_builtin_ctrl_d(char *input);
+
 
 char		**parse_arg_export(char *input);
 
@@ -326,7 +340,16 @@ void		print_error_cd(t_env *env, int i);
 int			verif_access(t_command *current, char *command);
 // int			check_valid_identifier(char c);
 
-char	*create_heredoc(void);
+void		exit_access_exec(t_command *current, char *command);
+void		exit_access_not_found(t_command *current, char *command);
+int			is_dir_error(t_command *current, char *command);
+
+void		print_no_file_or_directory(t_env *env, char *args);
+void		ft_print_error(char *str);
+void		print_error_cd(t_env *env, int i);
+
+
+char		*create_heredoc(void);
 
 int			count_args(char *input, int i);
 int			count_arg_length(char *input, int i);

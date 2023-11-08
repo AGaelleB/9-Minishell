@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 10:40:17 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:51:38 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,8 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 		&& (ft_strcmp_minishell(args, "pwd") != 0)
 		&& (ft_strcmp_minishell(args, "echo") != 0))
 	{
-		write(2, "minishell: ", 12);
-		write(2, args, ft_strlen(args));
-		write(2, ": No such file or directory", 28);
-		write(2, "\n", 1);
-		env->flag_error = true;
-		g_exit_status = 127;
+		print_no_file_or_directory(env, args);
+		ft_free_tab(temp_path);
 		return (NULL);
 	}
 	env->flag_error = false;

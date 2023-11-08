@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 10:40:05 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:07:17 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_child_process(t_process_data *data, t_env *env) // NEW
+void    handle_child_process(t_process_data *data, t_env *env) // NEW
 {
 	close(data->current->fd_in);
 	dup2(data->infile, 0);
@@ -34,12 +34,14 @@ void	handle_child_process(t_process_data *data, t_env *env) // NEW
 	ft_builtin_write_exit(data->current->command);
 	if (builtins_verif(data->current, env) == 1)
 	{
+		ft_close_all_fd();
 		ft_free_all(data->current, data->current->token_head);
 		exit (g_exit_status);
 	}
 	if (execve_process(data->current, env) == 127)
 		exit(127);
 }
+
 
 void	handle_parent_process(t_process_data *data)
 {

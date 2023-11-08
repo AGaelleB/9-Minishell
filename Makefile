@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
+#    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/08 14:35:24 by bfresque         ###   ########.fr        #
+#    Updated: 2023/11/08 17:53:33 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,13 +40,17 @@ SRCS_BUILTINS = srcs/builtins/all_builtins_verifs.c \
 	srcs/builtins/exec_builtins.c \
 
 SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
+	srcs/init_and_parsing/check_valid_identifier_export.c \
 	srcs/init_and_parsing/count_args_quotes.c \
 	srcs/init_and_parsing/create_cmd.c \
+	srcs/init_and_parsing/handle_quote_export.c \
 	srcs/init_and_parsing/handle_token.c \
+	srcs/init_and_parsing/handle_var_export.c \
 	srcs/init_and_parsing/init_env.c \
 	srcs/init_and_parsing/init_quote.c \
 	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/parse_spaces_redir.c \
+	srcs/init_and_parsing/parser_exit.c \
 	srcs/init_and_parsing/parser_export.c \
 	srcs/init_and_parsing/parsing_echo.c \
 	srcs/init_and_parsing/path_token.c \
@@ -67,11 +71,12 @@ SRCS_UTILS = srcs/utils/check_redirections.c \
 	srcs/utils/check_syntax_caracteres.c \
 	srcs/utils/check_syntax_pipes.c \
 	srcs/utils/create_heredoc.c \
+	srcs/utils/exit_error.c \
 	srcs/utils/count_args.c \
-	srcs/utils/error.c \
 	srcs/utils/free_bis.c \
 	srcs/utils/free.c \
 	srcs/utils/libft_modify.c \
+	srcs/utils/print_error.c \
 	srcs/utils/split_command_on_pipe.c \
 	srcs/utils/split_string_token_utils.c \
 	srcs/utils/split_string_token.c \

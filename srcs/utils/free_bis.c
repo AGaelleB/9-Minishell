@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 16:42:01 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:37:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**free_token_split(char **tokens)
 	return (NULL);
 }
 
-void ft_free_env(t_env *env)
+void	ft_free_env(t_env *env)
 {
 	int	i;
 
@@ -51,10 +51,17 @@ void ft_free_env(t_env *env)
 	free(env);
 }
 
-void ft_free_all(t_command *current, t_token *token)
+void	ft_free_all(t_command *current, t_token *token)
 {
 	if (token)
 		ft_free_token(current);
 	if (current)
 		ft_free_current(current);
+}
+
+void	cleanup(pid_t *child_pids, int infile)
+{
+	free(child_pids);
+	if (infile != 0)
+		close(infile);
 }

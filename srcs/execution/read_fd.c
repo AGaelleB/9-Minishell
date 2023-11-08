@@ -3,62 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 10:40:13 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:42:50 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* void	wait_for_children(t_command *command, pid_t *child_pids)
-{
-	int	i;
-	int	status;
-
-	// i = 0;
-	i = -1;
-	signal(SIGINT, SIG_IGN);
-	while (i < command->nb_pipes)
-	{
-		++i;
-		waitpid(child_pids[i], &status, 0);
-		// i++;
-	}
-	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
-	signal(SIGINT, ft_builtin_ctrl_c);
-	
-	// printf("%sexit_status = %d%s\n", MAGENTA, command->exit_status, RESET);
-} */
-
-// void	wait_for_children(t_command *command, pid_t *child_pids)
-// {
-// 	int i;
-// 	// int status;
-
-// 	i = -1;
-// 	signal(SIGINT, SIG_IGN);
-// 	while (++i <= command->nb_pipes)
-// 	{
-// 		if (waitpid(child_pids[i], &g_exit_status, 0) > 0)
-// 		{
-// 			if (WIFEXITED(g_exit_status))
-// 				g_exit_status = WEXITSTATUS(g_exit_status);
-// 			else if (WIFSIGNALED(g_exit_status))
-// 				g_exit_status = WTERMSIG(g_exit_status) + 128;
-// 		}
-// 		printf("Debug: Child exited with status %d\n", g_exit_status);
-// 	}
-// 	signal(SIGINT, ft_builtin_ctrl_c);
-// }
-
-
 void wait_for_children(t_command *command, pid_t *child_pids)
 {
 	int i;
-	int status; // Use a local status variable
+	int status;
 
 	i = -1;
 	signal(SIGINT, SIG_IGN);
@@ -67,15 +24,13 @@ void wait_for_children(t_command *command, pid_t *child_pids)
 		if (waitpid(child_pids[i], &status, 0) > 0)
 		{
 			if (WIFEXITED(status))
-				g_exit_status = WEXITSTATUS(status); // Update global exit status
+				g_exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
-				g_exit_status = WTERMSIG(status) + 128; // Update global exit status for signal termination
+				g_exit_status = WTERMSIG(status) + 128;
 		}
-		// printf("%swait_for_children: Child exited with status %d%s\n", RED, g_exit_status, RESET);
 	}
 	signal(SIGINT, ft_builtin_ctrl_c);
 }
-
 
 static void	handle_heredoc_tokens(t_process_data *data)
 {
@@ -132,6 +87,8 @@ void	execve_fd(t_command *current, t_env *env)
 		handle_heredoc_tokens(&data);
 	data.current = current;
 	handle_execve_processes(&data, env);
+
 	wait_for_children(data.command, data.child_pids);
+	
 	cleanup(data.child_pids, data.infile);
 }

@@ -23,12 +23,12 @@ int	check_pipe_at_start(char *input)
 	{
 		if (input[i + 1] == '|')
 			return (2);
-		return (1); // Erreur: commande commence avec '|'
+		return (1);
 	}
 	return (0);
 }
 
-int	check_pipe_sequence(char *input)
+int	check_pipe_sequence(char *input) //// AHHHHHHHHH depasse de 1
 {
 	int	pipe_found;
 	int	i;
@@ -48,7 +48,7 @@ int	check_pipe_sequence(char *input)
 		if (input[i] == '|' && !single_quote && !double_quote)
 		{
 			if (pipe_found)
-				return (2); // Erreur: "||" trouvé
+				return (2);
 			pipe_found = 1;
 		}
 		else if (input[i] != ' ' && input[i] != '|')
@@ -66,7 +66,7 @@ int	check_pipe_at_end(char *input)
 	while (ptr >= input && *ptr == ' ')
 		ptr--;
 	if (ptr >= input && *ptr == '|')
-		return (1); // Erreur: commande finit avec '|'
+		return (1);
 	return (0);
 }
 
@@ -84,7 +84,7 @@ int	check_syntax_errors(char *input)
 	return (check_pipe_at_end(input));
 }
 
-int	pipe_syntax_errors(char *input) // si inside " " ignorer, voir avec le parse input qupote
+int	pipe_syntax_errors(char *input)
 {
 	int	syntax_error_code;
 

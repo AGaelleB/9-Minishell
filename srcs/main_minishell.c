@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 14:58:17 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:42:22 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ int main(int ac, char **av, char **envp)
 					perror("fork");
 				else
 				{
+					signal(SIGINT, SIG_IGN);
 					waitpid(pid, &status, 0);
+					signal(SIGINT, ft_builtin_ctrl_c);
 					if (WIFEXITED(status))
 						g_exit_status = WEXITSTATUS(status);
 				}
@@ -86,16 +88,12 @@ int main(int ac, char **av, char **envp)
 /*
 										TO DO :
 
-si j'ouvre plusieurs minishell, les ctrl+c sont pas en pause dans les premiers
-
 <<un <<deux cat | <<trois cat
 => n affiche pas le dernier heredoc, faire en sorte d ignorer si << apres pipe 
 
-
 EOF et ctrl^c leaks
 
-
-Tapis ?:
+Tapis ?: OUI
 minishell$> cat << " 'a' " << "b" << 'c'
 
 penser a rechercher les truc quon a (void) et voir si utile.
