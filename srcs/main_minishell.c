@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 10:03:34 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:50:02 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,6 @@ int main(int ac, char **av, char **envp)
 
 <<un <<deux cat | <<trois cat
 => n affiche pas le dernier heredoc, faire en sorte d ignorer si << apres pipe 
-
-[42] $> export HELLO-=123
-minishell: export: `HELLO-': not a valid identifier
 
 minishell$> export GAGA="'gaga'"
 export GAGA="'gaga'"
