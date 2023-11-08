@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 14:26:21 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:40:37 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ void	print_export(char *str, int fd)
 		}
 		i++;
 	}
-	ft_putchar_fd('\"', fd);
+	if (flag == 1)
+		ft_putchar_fd('\"', fd);
 }
 
 char *handle_quotes_export(char *str)

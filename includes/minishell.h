@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 14:07:28 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:36:09 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,8 @@ t_token 	*tokenize_input(char *input, t_env *env);
 char		*ft_check_paths_token(t_env *env, char *args);
 char		*ft_check_paths(t_env *env, char *args);
 void		execve_fd(t_command *current, t_env *env);
+
+char		**parse_arg_export(char *input);
 
 char		**parse_input_quote_echo(t_env *env, char *input);
 void		skip_spaces_echo(char *input, int *i);

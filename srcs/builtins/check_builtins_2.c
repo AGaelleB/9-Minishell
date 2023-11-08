@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:44:17 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 14:29:53 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:42:48 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	check_unset(t_command *current)
 
 int	check_export(t_command *current, t_env *env)
 {
-	(void)env;
 	if (ft_strcmp_minishell(current->command, "export") == 0)
 	{
 		ft_builtin_export(current->command_arg, env);

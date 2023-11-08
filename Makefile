@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
+#    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/07 14:22:26 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/08 14:35:24 by bfresque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,12 +44,13 @@ SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/create_cmd.c \
 	srcs/init_and_parsing/handle_token.c \
 	srcs/init_and_parsing/init_env.c \
-	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/init_quote.c \
+	srcs/init_and_parsing/init_token.c \
+	srcs/init_and_parsing/parse_spaces_redir.c \
+	srcs/init_and_parsing/parser_export.c \
+	srcs/init_and_parsing/parsing_echo.c \
 	srcs/init_and_parsing/path_token.c \
 	srcs/init_and_parsing/path.c \
-	srcs/init_and_parsing/parsing_echo.c \
-	srcs/init_and_parsing/parse_spaces_redir.c \
 
 SRCS_REDIRECTIONS = srcs/redirections/epur_filename.c \
 	srcs/redirections/epur_heredoc_name.c \
