@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 11:36:54 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:26:21 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	check_valid_identifier_export(char *str)
 				|| str[i] == '\'' || str[i] == '\"' || str[i] == ' ')
 				i++;
 			else
+			{
+				printf("str[%d] : '%c'\n", i, str[i]);
 				flag = 1;
+			}
 		}
 	}
 	else
@@ -85,16 +88,15 @@ int	update_var_env(t_env *env, char *arg)
 	return (0);
 }
 
-int	add_var_env(t_env *env, char **args, int i, int arg_idx)
+int	add_var_env(t_env *env, int i, char *str)
 {
 	i = 0;
-	arg_idx = 1;
 	while (env->cpy_env[i])
 	{
 		if (env->cpy_env[i + 1] == NULL)
 		{
-			env->cpy_env[i + 1] = args[arg_idx];
-			env->cpy_env[i + 2] = NULL; ///
+			env->cpy_env[i + 1] = str;
+			env->cpy_env[i + 2] = NULL;
 			return (1);
 		}
 		i++;
@@ -170,10 +172,8 @@ int	ft_builtin_export(char **args, t_env *env)
 	{
 		while (env->cpy_env[i])
 		{
-			
-			str = handle_quotes_export(env->cpy_env[i]);
 			ft_putstr_fd("export ", STDOUT_FILENO);
-			print_export(str, STDOUT_FILENO);
+			print_export(env->cpy_env[i], STDOUT_FILENO);
 			ft_putchar_fd('\n', STDOUT_FILENO);
 			i++;
 		}
@@ -182,16 +182,16 @@ int	ft_builtin_export(char **args, t_env *env)
 	arg_idx = 1;
 	while (args[arg_idx])
 	{
-		printf("%sact : %s%s\n", MAGENTA, args[arg_idx], RESET);
-		if (check_valid_identifier_export(args[arg_idx]))
+		str = handle_quotes_export(args[arg_idx]);
+		if (check_valid_identifier_export(str))
 		{
-			if (update_var_env(env, args[arg_idx]) == 1)
+			if (update_var_env(env, str) == 1)
 				return (1);
 			arg_idx++;
 		}
 		else
 			break ;
 	}
-	add_var_env(env, args, i, arg_idx);
+	add_var_env(env, i, str);
 	return (g_exit_status);
 }

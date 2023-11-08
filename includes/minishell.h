@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 10:40:38 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:07:28 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct s_command
 	int					nb_pipes;
 	char				*command;	// e.g. "cat test.txt"
 	char				**command_arg;	// e.g. "cat"
+	char				**export_arg;
 	char				*command_path;	// e.g. /usr/bin/cat/
 	int					fd[2];
 	int					fd_out;

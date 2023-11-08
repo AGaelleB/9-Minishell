@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 10:07:01 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:09:29 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execve_builtins_unset_export(t_command *cmd, t_env *env_bis)
 	else if ((ft_strncmp(cmd->command, "export ", 7) == 0
 		|| ft_strcmp_minishell(cmd->command, "export") == 0)
 		&& (cmd->nb_pipes == 0))
-			ft_builtin_export(cmd->command_arg, env_bis);
+			ft_builtin_export(cmd->export_arg, env_bis);
 }
 
 int	count_cd_args(char *command_arg)
