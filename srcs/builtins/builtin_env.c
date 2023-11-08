@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:24 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 09:49:10 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:36:33 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,5 @@ void	ft_builtin_env(t_env *env)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		i++;
 	}
+	g_exit_status = 0;
 }

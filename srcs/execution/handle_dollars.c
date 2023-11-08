@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:20:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/07 14:23:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:39:59 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_exit_status;
 
 static char	*get_exit_status_str(void)
 {

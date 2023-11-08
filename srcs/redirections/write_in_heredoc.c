@@ -6,13 +6,11 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:46:59 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 15:10:46 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:40:19 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_exit_status;
 
 static void	handle_heredoc_signals(t_command *current, char *line)
 {

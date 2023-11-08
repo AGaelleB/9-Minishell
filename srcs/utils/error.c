@@ -6,13 +6,11 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/07 10:33:43 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:40:25 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_exit_status;
 
 void	ft_print_error(char *str)
 {
@@ -41,10 +39,12 @@ void	print_error_cd(t_env *env, int i)
 		write(2, env->path_to_change, ft_strlen(env->path_to_change));
 		write(2, ": ", 2);
 		perror("");
+		g_exit_status = 1;
 	}
 	if (i == 2)
 	{
 		update_env_pwd(env, env->new_directory);
+		g_exit_status = 0;
 		free(env->new_directory);
 	}
 }

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_and_cpy_parse_echo.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/07 14:25:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:40:10 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_exit_status;
 
 void	handle_quotes_echo(char *str, int *i,
 	bool *double_quote, bool *in_quote)

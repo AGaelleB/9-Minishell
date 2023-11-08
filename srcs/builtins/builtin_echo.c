@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 11:18:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 16:11:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:39:47 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ int	ft_builtin_echo(char **tab)
 	print_tab_content(tab, i);
 	if (newline)
 		ft_putchar_fd('\n', STDOUT_FILENO);
+	g_exit_status = 0;
 	return (0);
 }

@@ -6,13 +6,11 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/07 10:29:14 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:40:05 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern int	g_exit_status;
 
 void	handle_child_process(t_process_data *data, t_env *env) // NEW
 {
@@ -37,7 +35,7 @@ void	handle_child_process(t_process_data *data, t_env *env) // NEW
 	if (builtins_verif(data->current, env) == 1)
 	{
 		ft_free_all(data->current, data->current->token_head);
-		exit (0);
+		exit (g_exit_status);
 	}
 	if (execve_process(data->current, env) == 127)
 		exit(127);

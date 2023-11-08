@@ -99,7 +99,7 @@ bash-5.1$ echo t'est >'> olalala
    *** TEST DES REDIRECTIONS : ***
 
 bash-5.1$            >a>   b>c   cat '  '   celine.txt
-cat: '  ': No such file or directory
+# cat: '  ': No such file or directory
    -> doit aussi renvoyer le cat dans le fichier 
 
 bash-5.1$ > a > b cat celine.txt

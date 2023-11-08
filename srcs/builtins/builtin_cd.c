@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 11:56:13 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:39:43 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	ft_builtin_cd(char **args, t_env *env)
 		if (!home)
 		{
 			write(2, "minishell: cd: HOME not set\n", 29);
-			return (1);
+			g_exit_status = 1;
+			return (g_exit_status);
 		}
 		env->path_to_change = home;
 	}
@@ -83,5 +84,5 @@ int	ft_builtin_cd(char **args, t_env *env)
 	env->new_directory = getcwd(NULL, 0);
 	if (env->new_directory)
 		print_error_cd(env, 2);
-	return (0);
+	return (g_exit_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:58:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 11:55:41 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:44:17 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ void	ft_builtin_unset(char **args, t_env *env)
 			remove_env_var(env, idx);
 		arg_idx++;
 	}
+	g_exit_status = 0;
 }
