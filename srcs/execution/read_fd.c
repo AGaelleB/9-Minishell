@@ -6,16 +6,16 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 16:42:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:18:47 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void wait_for_children(t_command *command, pid_t *child_pids)
+void	wait_for_children(t_command *command, pid_t *child_pids)
 {
-	int i;
-	int status;
+	int	i;
+	int	status;
 
 	i = -1;
 	signal(SIGINT, SIG_IGN);
@@ -87,8 +87,6 @@ void	execve_fd(t_command *current, t_env *env)
 		handle_heredoc_tokens(&data);
 	data.current = current;
 	handle_execve_processes(&data, env);
-
 	wait_for_children(data.command, data.child_pids);
-	
 	cleanup(data.child_pids, data.infile);
 }

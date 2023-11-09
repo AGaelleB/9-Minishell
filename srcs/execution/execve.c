@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 10:39:55 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:19:46 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	execve_process(t_command *cur, t_env *env)
 	ft_set_args_and_paths(cur, env);
 	if (env->flag_error || is_builtin(cur) == 2)
 		exit(g_exit_status);
-	if(verif_access(cur, cur->command) == 1)
+	if (verif_access(cur, cur->command) == 1)
 		exit(126);
 	if ((cur->command_path == NULL) && is_builtin(cur) == 0)
 	{
@@ -74,7 +74,7 @@ int	execve_process(t_command *cur, t_env *env)
 		write(2, "\n", 1);
 		g_exit_status = 127;
 		// printf("EXECVE execve_process g_exit_status  %d\n", g_exit_status);
-		exit(g_exit_status); 
+		exit(g_exit_status);
 	}
 	else if ((cur->command_path)
 		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))
