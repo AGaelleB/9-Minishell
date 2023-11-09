@@ -1,40 +1,59 @@
-static int	check_builtin_commands(char *args)
+void handle_quotes_echo(char *str, int *i, bool *double_quote, bool *single_quote)
 {
-	return ((ft_strcmp_minishell(args, "unset") == 0)
-		|| (ft_strcmp_minishell(args, "export") == 0)
-		|| (ft_strcmp_minishell(args, "pwd") == 0)
-		|| (ft_strcmp_minishell(args, "echo") == 0));
+    // Si nous trouvons une paire de guillemets doubles consécutifs, nous les sautons.
+    if (str[*i] == '\"' && str[*i + 1] == '\"' && !*single_quote) {
+        (*i) += 2;
+        return;
+    }
+    // Si nous trouvons une paire de guillemets simples consécutifs, nous les sautons.
+    else if (str[*i] == '\'' && str[*i + 1] == '\'' && !*double_quote) {
+        (*i) += 2;
+        return;
+    }
+
+    // Si nous trouvons un guillemet simple, nous basculons l'état de single_quote.
+    if (str[*i] == '\'' && !*double_quote) {
+        *single_quote = !*single_quote;
+        (*i)++;
+        return;
+    }
+    // Si nous trouvons un guillemet double, nous basculons l'état de double_quote.
+    else if (str[*i] == '\"' && !*single_quote) {
+        *double_quote = !*double_quote;
+        (*i)++;
+        return;
+    }
 }
 
-static void	print_no_file_or_directory(t_env *env, char *args)
+char *ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
 {
-	write(2, "minishell: ", 12);
-	write(2, args, ft_strlen(args));
-	write(2, ": No such file or directory", 28);
-	write(2, "\n", 1);
-	env->flag_error = true;
-	g_exit_status = 127;
-}
+    t_arg_handler	handler;
+    bool			double_quote = false;
+    bool			single_quote = false;
 
-char	*ft_check_relative_paths(t_env *env, char *args)
-{
-	char	**temp_path;
-	char	*valid_path;
+    handler = init_handler(env, input, i, arg_idx);
+    handler.arg = malloc(sizeof(char) * SIZE);  // Attention à la taille allouée.
+    if (!handler.arg)
+        exit(EXIT_FAILURE);
 
-	temp_path = ft_get_paths(env);
-	if (!temp_path || temp_path[0][0] == '\0')
-	{
-		if (!check_builtin_commands(args))
-		{
-			print_no_file_or_directory(env, args);
-			ft_free_tab(temp_path);
-			return (NULL);
-		}
-	}
-	env->flag_error = false;
-	valid_path = find_valid_path(temp_path, args);
-	ft_free_tab(temp_path);
-	if (valid_path && access(valid_path, F_OK | X_OK) == 0)
-		return (valid_path);
-	return (NULL);
+    *handler.arg_idx = 0;
+    while (handler.input[*handler.i])
+    {
+        if (handler.input[*handler.i] == ' ' && !double_quote && !single_quote) {
+            break;  // Arrêt si espace et pas dans les guillemets.
+        }
+
+        handle_quotes_echo(handler.input, handler.i, &double_quote, &single_quote);
+        if (is_redirection(handler.input[*handler.i]) && !double_quote && !single_quote) {
+            ft_skip_redirection_and_file(handler.input, handler.i);
+        } else if (handler.input[*handler.i] == '$' && !single_quote) {
+            handle_arg_value(&handler);
+        } else {
+            handler.arg[(*handler.arg_idx)++] = handler.input[*handler.i];
+            (*handler.i)++;
+        }
+    }
+
+    handler.arg[*handler.arg_idx] = '\0';
+    return (handler.arg);
 }

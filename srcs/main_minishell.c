@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 16:42:22 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/09 15:59:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main(int ac, char **av, char **envp)
 			input = readline("minishell$> ");
 			ft_builtin_ctrl_d(input);
 			ft_builtin_write_exit(input);
-			if (error_input(input) == 2 || verif_nb_quote(input) != 0 || pipe_syntax_errors(input) == -1)
+			if (error_input(input) == 2 || verif_nb_quote(input) != 0 || pipe_syntax_errors(input) == 2)
 				continue;
 			add_history(input);
 			new_commands = get_command(input, env_bis);
@@ -87,6 +87,7 @@ int main(int ac, char **av, char **envp)
 
 /*
 										TO DO :
+echo " 'O $USER O'     "
 
 <<un <<deux cat | <<trois cat
 => n affiche pas le dernier heredoc, faire en sorte d ignorer si << apres pipe 

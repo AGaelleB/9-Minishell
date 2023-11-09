@@ -28,7 +28,7 @@ int	check_pipe_at_start(char *input)
 	return (0);
 }
 
-int	check_pipe_sequence(char *input) //// AHHHHHHHHH depasse de 1
+int	check_pipe_sequence(char *input)
 {
 	int	pipe_found;
 	int	i;
@@ -47,9 +47,8 @@ int	check_pipe_sequence(char *input) //// AHHHHHHHHH depasse de 1
 			double_quote = !double_quote;
 		if (input[i] == '|' && !single_quote && !double_quote)
 		{
-			if (pipe_found)
+			if (pipe_found++)
 				return (2);
-			pipe_found = 1;
 		}
 		else if (input[i] != ' ' && input[i] != '|')
 			pipe_found = 0;
@@ -93,13 +92,15 @@ int	pipe_syntax_errors(char *input)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", 2);
 		free(input);
-		return (-1);
+		g_exit_status = 2;
+		return (g_exit_status);
 	}
 	else if (syntax_error_code == 2)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token '||'\n", 2);
 		free(input);
-		return (-1);
+		g_exit_status = 2;
+		return (g_exit_status);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 17:54:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:26:05 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ char	**split_string_token(char *str, char **delimiters);
 t_token *handle_multiple_heredocs(t_command *current, t_token *token); // NEWWWW
 // pid_t heredoc_open_fd_pipe(t_command *command, t_token **token);
 int heredoc_open_fd_pipe(t_command *command, t_token **token);
-
+void handle_arg_value(t_arg_handler *handler);
 int	find_env_var(t_env *env, char *arg);
 
 // char *extract_filename(const char *input);
@@ -230,7 +230,7 @@ t_command	*create_new_cmd(char *command_str, t_env *env);
 t_command	*append_new_cmd(t_command **head, t_command *new_cmd);
 t_command	*get_command(char *input, t_env *env);
 
-void	handle_arg_value(t_env *env, char *input, int *i, char *arg, int *arg_idx);
+// void	handle_arg_value(t_env *env, char *input, int *i, char *arg, int *arg_idx);
 
 void	handle_all_process(t_process_data *data, t_env *env);
 

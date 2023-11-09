@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 10:04:43 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 16:26:01 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/09 15:01:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	skip_until_sequence(char *str, int *i, char *redir)
 {
 	while (str[*i] && (str[*i] != redir[0]
-		|| ft_strncmp(&str[*i], redir, ft_strlen(redir)) != 0))
+			|| ft_strncmp(&str[*i], redir, ft_strlen(redir)) != 0))
 		(*i)++;
 }
 
@@ -38,9 +38,12 @@ static void	handle_quotes(char *str, int *i, bool *in_quote, bool *double_quote)
 static char	*extract_filename(char *cmd, int *i)
 {
 	int		j;
-	bool	in_quote = false, double_quote = false;
+	bool	in_quote;
+	bool	double_quote;
 	char	*file_name;
 
+	in_quote = false;
+	double_quote = false;
 	file_name = malloc(sizeof(char) * (strlen(cmd) + 1));
 	if (!file_name)
 		return (NULL);
@@ -48,8 +51,9 @@ static char	*extract_filename(char *cmd, int *i)
 	while (cmd[*i] && !(cmd[*i] == ' ' && !in_quote && !double_quote))
 	{
 		handle_quotes(cmd, i, &in_quote, &double_quote);
-		if (cmd[*i] == '>' || cmd[*i] == '<' || (cmd[*i] == ' ' && !in_quote && !double_quote))
-			break;
+		if (cmd[*i] == '>' || cmd[*i] == '<'
+			|| (cmd[*i] == ' ' && !in_quote && !double_quote))
+			break ;
 		file_name[j++] = cmd[(*i)++];
 	}
 	file_name[j] = '\0';
@@ -58,7 +62,9 @@ static char	*extract_filename(char *cmd, int *i)
 
 static char	*update_command(char *cmd, int i)
 {
-	char	*new_cmd = strdup(&cmd[i]);
+	char	*new_cmd;
+
+	new_cmd = strdup(&cmd[i]);
 	if (!new_cmd)
 		return (NULL);
 	free(cmd);
@@ -68,8 +74,9 @@ static char	*update_command(char *cmd, int i)
 char	*epur_filename_heredoc(t_token *token_head)
 {
 	char	*file_name;
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	skip_until_sequence(token_head->command_two, &i, "<<");
 	i += 2;
 	while (token_head->command_two[i] == ' ')
