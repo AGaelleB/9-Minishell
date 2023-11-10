@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/09 17:15:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:40:45 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ typedef struct s_arg_handler
 	int		*i;
 	char	*arg;
 	int		*arg_idx;
+	bool	*double_quote;
+	bool	*single_quote;
 } t_arg_handler;
 
 typedef struct s_process_data
@@ -230,7 +232,9 @@ t_command	*create_new_cmd(char *command_str, t_env *env);
 t_command	*append_new_cmd(t_command **head, t_command *new_cmd);
 t_command	*get_command(char *input, t_env *env);
 
-void	handle_arg_value(t_env *env, char *input, int *i, char *arg, int *arg_idx);
+// void	handle_arg_value(t_env *env, char *input, int *i, char *arg, int *arg_idx);
+void	handle_arg_value(t_arg_handler *arg_handler);
+
 
 void	handle_all_process(t_process_data *data, t_env *env);
 
@@ -239,7 +243,9 @@ int			execve_process(t_command *cur, t_env *env);
 
 
 /***********INIT_AND_PARSING***********/
-char		*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx);
+// char		*ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx);
+char	*ft_allocate_and_copy(t_arg_handler *arg_handler);
+
 
 int			check_valid_identifier_export(char *str);
 
@@ -283,7 +289,10 @@ char		**parse_arg_export(char *input);
 
 char		**parse_input_quote_echo(t_env *env, char *input);
 void		skip_spaces_echo(char *input, int *i);
-void		handle_quotes_echo(char *input, int *i, bool *double_quote, bool *single_quote);
+// void		handle_quotes_echo(char *input, int *i, bool *double_quote, bool *single_quote);
+// void	handle_quotes_echo(t_arg_handler *arg_handler, bool *double_quote, bool *in_quote);
+void handle_quotes_echo(t_arg_handler *arg_handler);
+
 
 int			calculate_new_len(char *input);
 char		*copy_with_spaces(char *input, char *new_input);

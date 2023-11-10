@@ -1,59 +1,36 @@
-void handle_quotes_echo(char *str, int *i, bool *double_quote, bool *single_quote)
+static void append_env_value(t_arg_handler *arg_handler, char *env_value)
 {
-    // Si nous trouvons une paire de guillemets doubles consécutifs, nous les sautons.
-    if (str[*i] == '\"' && str[*i + 1] == '\"' && !*single_quote) {
-        (*i) += 2;
-        return;
-    }
-    // Si nous trouvons une paire de guillemets simples consécutifs, nous les sautons.
-    else if (str[*i] == '\'' && str[*i + 1] == '\'' && !*double_quote) {
-        (*i) += 2;
-        return;
-    }
-
-    // Si nous trouvons un guillemet simple, nous basculons l'état de single_quote.
-    if (str[*i] == '\'' && !*double_quote) {
-        *single_quote = !*single_quote;
-        (*i)++;
-        return;
-    }
-    // Si nous trouvons un guillemet double, nous basculons l'état de double_quote.
-    else if (str[*i] == '\"' && !*single_quote) {
-        *double_quote = !*double_quote;
-        (*i)++;
-        return;
+    printf("%s append_env_value env value = %s%s\n", RED, env_value, RESET);
+    while (*env_value)
+    {
+        arg_handler->arg[(*arg_handler->arg_idx)++] = *env_value++;
     }
 }
 
-char *ft_allocate_and_copy(t_env *env, char *input, int *i, int *arg_idx)
+static void handle_dollar(t_arg_handler *arg_handler)
 {
-    t_arg_handler	handler;
-    bool			double_quote = false;
-    bool			single_quote = false;
+    char *str;
+    char *env_value;
+    int start = *arg_handler->i + 1;
 
-    handler = init_handler(env, input, i, arg_idx);
-    handler.arg = malloc(sizeof(char) * SIZE);  // Attention à la taille allouée.
-    if (!handler.arg)
-        exit(EXIT_FAILURE);
-
-    *handler.arg_idx = 0;
-    while (handler.input[*handler.i])
+    if (arg_handler->input[start] == '?')
     {
-        if (handler.input[*handler.i] == ' ' && !double_quote && !single_quote) {
-            break;  // Arrêt si espace et pas dans les guillemets.
-        }
-
-        handle_quotes_echo(handler.input, handler.i, &double_quote, &single_quote);
-        if (is_redirection(handler.input[*handler.i]) && !double_quote && !single_quote) {
-            ft_skip_redirection_and_file(handler.input, handler.i);
-        } else if (handler.input[*handler.i] == '$' && !single_quote) {
-            handle_arg_value(&handler);
-        } else {
-            handler.arg[(*handler.arg_idx)++] = handler.input[*handler.i];
-            (*handler.i)++;
-        }
+        str = get_exit_status_str();
+        append_env_value(arg_handler, str);
+        free(str);
+        *arg_handler->i += 2;
     }
-
-    handler.arg[*handler.arg_idx] = '\0';
-    return (handler.arg);
+    else
+    {
+        (*arg_handler->i)++;
+        extract_variable_name(arg_handler->input, arg_handler->i, &start, &str);
+        env_value = get_env_value(arg_handler->env, str);
+        printf("%s handle_dollar env value = %s%s\n", BLUE, env_value, RESET);
+        if (env_value)
+        {
+            append_env_value(arg_handler, env_value);
+            free(env_value); // Assuming get_env_value allocates memory for env_value
+        }
+        free(str); // Freeing the result of extract_variable_name
+    }
 }

@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 14:26:29 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:41:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_quotes(char *input, int *i, bool *double_quote, bool *single_quote)
+void	handle_quotes(char *input, int *i,
+	bool *double_quote, bool *single_quote)
 {
 	char	quote_char;
 	int		count;
 
 	quote_char = input[*i];
 	count = 0;
-	if ((quote_char == '\"' || quote_char == '\'') && !(*double_quote && *single_quote))
+	if ((quote_char == '\"' || quote_char == '\'')
+		&& !(*double_quote && *single_quote))
 	{
 		while (input[*i] == quote_char)
 		{

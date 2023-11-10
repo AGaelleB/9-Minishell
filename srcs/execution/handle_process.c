@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 17:07:17 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:42:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void    handle_child_process(t_process_data *data, t_env *env) // NEW
+void	handle_child_process(t_process_data *data, t_env *env)
 {
 	close(data->current->fd_in);
 	dup2(data->infile, 0);
@@ -41,7 +41,6 @@ void    handle_child_process(t_process_data *data, t_env *env) // NEW
 	if (execve_process(data->current, env) == 127)
 		exit(127);
 }
-
 
 void	handle_parent_process(t_process_data *data)
 {

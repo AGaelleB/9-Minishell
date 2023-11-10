@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:20:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/09 17:10:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:40:19 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,48 +37,46 @@ static void	extract_variable_name(char *input, int *i, int *start, char **str)
 		exit(EXIT_FAILURE);
 }
 
-static void	append_env_value(char *env_value, char *arg, int *arg_idx)
+static void	append_env_value(t_arg_handler *arg_handler, char *env_value)
 {
-	int	j;
-
-	j = 0;
-	while (env_value[j])
-	{
-		arg[(*arg_idx)++] = env_value[j];
-		j++;
-	}
+	while (*env_value)
+		arg_handler->arg[(*arg_handler->arg_idx)++] = *env_value++;
 }
 
-static void	handle_dollar(t_env *env, char *input, int *i, char *arg, int *arg_idx)
+static void	handle_dollar(t_arg_handler *arg_handler)
 {
 	char	*str;
 	char	*env_value;
 	int		start;
 
-	start = *i + 1;
-	if (input[start] == '?')
+	start = *arg_handler->i + 1;
+	if (arg_handler->input[start] == '?')
 	{
 		str = get_exit_status_str();
-		append_env_value(str, arg, arg_idx);
+		append_env_value(arg_handler, str);
 		free(str);
-		*i += 2;
+		*arg_handler->i += 2;
 	}
 	else
 	{
-		(*i)++;
-		extract_variable_name(input, i, &start, &str);
-		env_value = get_env_value(env, str);
+		(*arg_handler->i)++;
+		extract_variable_name(arg_handler->input, arg_handler->i, &start, &str);
+		env_value = get_env_value(arg_handler->env, str);
 		if (env_value)
-			append_env_value(env_value, arg, arg_idx);
-		// free(str); //double free
+		{
+			append_env_value(arg_handler, env_value);
+			// free(env_value);
+		}
 	}
 }
 
-void	handle_arg_value(t_env *env, char *input, int *i, char *arg, int *arg_idx)
+void	handle_arg_value(t_arg_handler *arg_handler)
 {
-	(void)env;
-	if (input[*i] == '$')
-		handle_dollar(env, input, i, arg, arg_idx);
+	if (arg_handler->input[*arg_handler->i] == '$'
+		&& arg_handler->input[*arg_handler->i + 1] != '$'
+		&& ft_isalpha(arg_handler->input[*arg_handler->i + 1]) == 1)
+		handle_dollar(arg_handler);
 	else
-		arg[(*arg_idx)++] = input[(*i)++];
+		arg_handler->arg[(*arg_handler->arg_idx)++]
+			= arg_handler->input[(*arg_handler->i)++];
 }

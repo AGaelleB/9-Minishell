@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:49:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/10/17 16:45:30 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:31:05 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,18 @@ void	skip_spaces_echo(char *input, int *i)
 		(*i)++;
 }
 
-/*Fonction 3: Copie d'un argument dans le tableau d'arguments*/
 char	**copy_argument_echo(t_env *env, t_parser *parser, char *input)
 {
-	char	*arg;
-	int		arg_idx;
+	t_arg_handler	arg_handler;
+	char			*arg;
+	int				arg_idx = 0;
 
-	arg = ft_allocate_and_copy(env, input, &(parser->i), &arg_idx);
+	arg_handler.env = env;
+	arg_handler.input = input;
+	arg_handler.i = &(parser->i);
+	arg_handler.arg_idx = &arg_idx;
+	arg_handler.arg = NULL;
+	arg = ft_allocate_and_copy(&arg_handler);
 	if (!arg)
 		return (NULL);
 	if (arg_idx > 0)
