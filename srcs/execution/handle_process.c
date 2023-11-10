@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 10:42:10 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:54:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_child_process(t_process_data *data, t_env *env)
 		dup2(data->current->fd_out, 1);
 		close(data->current->fd_out);
 	}
-	open_fd(data->current);
+	open_fd(data->current); // retier dans open fd 
 	ft_builtin_write_exit(data->current->command);
 	if (builtins_verif(data->current, env) == 1)
 	{

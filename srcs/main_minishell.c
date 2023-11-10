@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/09 15:59:27 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/10 12:38:56 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main(int ac, char **av, char **envp)
 		copy_env(env_bis, envp);
 		while (1)
 		{
-			input = readline("minishell$> ");
+			input = readline("minishell$>");
 			ft_builtin_ctrl_d(input);
 			ft_builtin_write_exit(input);
 			if (error_input(input) == 2 || verif_nb_quote(input) != 0 || pipe_syntax_errors(input) == 2)
