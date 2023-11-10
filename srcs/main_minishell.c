@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 14:42:17 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:26:27 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,70 @@
 
 int	g_exit_status;
 
+void	handle_heredoc_tokens(t_command *current)
+{
+	t_token	*token;
+	pid_t	heredoc_pid;
+	int		flag;
+
+	token = current->token_head;
+	flag = 0;
+	while (current && flag == 0)
+	{
+		while (token && flag == 0)
+		{	
+			if (token->type == TYPE_HEREDOC)
+			{
+				heredoc_pid = heredoc_open_fd_pipe(current, &token);
+				waitpid(heredoc_pid, NULL, 0);
+				flag = 1;
+				break ;
+			}
+			token = token->next;
+		}
+		if (flag == 1)
+			break ;
+		current = current->next;
+	}
+}
+
+void	open_heredocs(t_command *current)
+{
+	t_token *token;
+	token = current->token_head;
+	if (current->nb_pipes != 0)
+		handle_heredoc_tokens(current);
+	else
+	{
+		while (token)
+		{
+			if ((token->type == TYPE_HEREDOC) && (current->nb_pipes == 0))
+				heredoc_open_fd(current, &token);
+			else
+				token = token->next;
+		}
+	}
+}
 
 void	child_main(t_command *current, t_env *env)
 {
 	int		status;
 	pid_t	pid;
-	pid_t	*child_pids;
-	int i;
+	// pid_t	*child_pids;
+	// int i;
 
-	i = 0;
-	init_execve(current, &(child_pids));
+	// i = 0;
+	// init_execve(current, &(child_pids));
 	while (current)
 	{
-		// if (current == NULL)
-		// 	break ;
 		pid = fork();
-		child_pids[i++] = pid;
+		// child_pids[i++] = pid;
 		if (pid == 0)
 		{
+			open_heredocs(current);
 			execve_fd(current, env);
-			ft_close_all_fd();
-			ft_free_all(current, current->token_head);
+			// ft_close_all_fd();
+			// ft_free_all(current, current->token_head);
 			exit(g_exit_status);
 		}
 		else if (pid < 0)
@@ -43,15 +86,18 @@ void	child_main(t_command *current, t_env *env)
 		{
 			signal(SIGINT, SIG_IGN);
 			waitpid(pid, &status, 0);
-			// i = 0;
-			// while (i <= current->nb_pipes)
+			// i = -1;
+			// while (++i <= current->nb_pipes)
 			// {
-			// 	waitpid(child_pids[i], &status, 0);
-			// 	i++;
+			// 	if (waitpid(child_pids[i], &status, 0) > 0)
+			// 	{
+			// 		if (WIFEXITED(status))
+			// 			g_exit_status = WEXITSTATUS(status);
+			// 		else if (WIFSIGNALED(status))
+			// 			g_exit_status = WTERMSIG(status) + 128;
+			// 	}
 			// }
 			signal(SIGINT, ft_builtin_ctrl_c);
-			if (WIFEXITED(status))
-				g_exit_status = WEXITSTATUS(status);
 		}
 		current = current->next;
 	}

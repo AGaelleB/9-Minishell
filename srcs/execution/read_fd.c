@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/09 17:18:47 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/10 15:27:19 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,32 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 	signal(SIGINT, ft_builtin_ctrl_c);
 }
 
-static void	handle_heredoc_tokens(t_process_data *data)
-{
-	t_token	*token;
-	pid_t	heredoc_pid;
-	int		flag;
+// static void	handle_heredoc_tokens(t_process_data *data)
+// {
+// 	t_token	*token;
+// 	pid_t	heredoc_pid;
+// 	int		flag;
 
-	token = data->current->token_head;
-	flag = 0;
-	while (data->current && flag == 0)
-	{
-		while (token && flag == 0)
-		{	
-			if (token->type == TYPE_HEREDOC)
-			{
-				heredoc_pid = heredoc_open_fd_pipe(data->current, &token);
-				waitpid(heredoc_pid, NULL, 0);
-				flag = 1;
-				break ;
-			}
-			token = token->next;
-		}
-		if (flag == 1)
-			break ;
-		data->current = data->current->next;
-	}
-}
+// 	token = data->current->token_head;
+// 	flag = 0;
+// 	while (data->current && flag == 0)
+// 	{
+// 		while (token && flag == 0)
+// 		{	
+// 			if (token->type == TYPE_HEREDOC)
+// 			{
+// 				heredoc_pid = heredoc_open_fd_pipe(data->current, &token);
+// 				waitpid(heredoc_pid, NULL, 0);
+// 				flag = 1;
+// 				break ;
+// 			}
+// 			token = token->next;
+// 		}
+// 		if (flag == 1)
+// 			break ;
+// 		data->current = data->current->next;
+// 	}
+// }
 
 static void	handle_execve_processes(t_process_data *data, t_env *env)
 {
@@ -83,8 +83,8 @@ void	execve_fd(t_command *current, t_env *env)
 	data.infile = 0;
 	data.index = 0;
 	init_execve(current, &(data.child_pids));
-	if (data.current->nb_pipes != 0)
-		handle_heredoc_tokens(&data);
+	// if (data.current->nb_pipes != 0)
+		// handle_heredoc_tokens(&data);
 	data.current = current;
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);
