@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:46:59 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 10:40:19 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:13:24 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	write_in_fd(int fd, char *delimiter, t_command *current)
 	while (1)
 	{
 		line = readline("> ");
-		(void)current;
 		handle_heredoc_signals(current, line);
 		if (ctrl_d_heredoc(line, i, delimiter) == 45)
 		{

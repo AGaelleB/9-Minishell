@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 14:04:18 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:12:54 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
-# include <errno.h>
+# include <stdbool.h>
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdbool.h>
+# include <errno.h>
 
 # include "../includes/ft_printf.h"
 # include "../includes/get_next_line.h"
@@ -50,14 +50,14 @@ typedef struct s_command	t_command;
 
 typedef struct s_env
 {
-	char				**cpy_env;
-	char				*str;
-	bool				flag_error;
-	int					pwd_index;
-	int					oldpwd_index;
-	char				*path_to_change;
-	char				*new_directory;
-	struct s_env		*next;
+	char			**cpy_env;
+	char			*str;
+	bool			flag_error;
+	int				pwd_index;
+	int				oldpwd_index;
+	char			*path_to_change;
+	char			*new_directory;
+	struct s_env	*next;
 }	t_env;
 
 typedef struct s_parser
@@ -93,22 +93,22 @@ typedef enum e_token_type
 
 typedef struct s_token
 {
-	t_e_token_type		type;
-	char				*split_value;
-	char				*split_heredoc;
-	struct s_token		*next;
-	struct s_token		*prev;
-	char				*command;
-	char				*command_two;
+	t_e_token_type	type;
+	char			*split_value;
+	char			*split_heredoc;
+	struct s_token	*next;
+	struct s_token	*prev;
+	char			*command;
+	char			*command_two;
 }	t_token;
 
 typedef struct s_split_token
 {
-	int					i;
-	int					j;
-	int					start;
-	int					delim_len;
-	int					len_to_copy;
+	int		i;
+	int		j;
+	int		start;
+	int		delim_len;
+	int		len_to_copy;
 }	t_split_token;
 
 typedef struct s_tokenizer
