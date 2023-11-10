@@ -1,36 +1,50 @@
-static void append_env_value(t_arg_handler *arg_handler, char *env_value)
+static char *initialize_arg_and_vars(t_arg_handler *arg_handler, bool *double_quote,
+	bool *single_quote, int *arg_idx)
 {
-    printf("%s append_env_value env value = %s%s\n", RED, env_value, RESET);
-    while (*env_value)
-    {
-        arg_handler->arg[(*arg_handler->arg_idx)++] = *env_value++;
-    }
+	char *arg;
+	int size_of_argument;
+
+	size_of_argument = calculate_size_of_argument(arg_handler->input);
+	*double_quote = false;
+	*single_quote = false;
+	arg = malloc(sizeof(char) * (size_of_argument + 1));
+	if (!arg)
+		exit(EXIT_FAILURE);
+	*arg_idx = 0;
+	return arg;
 }
 
-static void handle_dollar(t_arg_handler *arg_handler)
+static void process_input(t_arg_handler *arg_handler,
+	char *arg, int *arg_idx, bool *double_quote, bool *single_quote)
 {
-    char *str;
-    char *env_value;
-    int start = *arg_handler->i + 1;
+	int *i = arg_handler->i;
 
-    if (arg_handler->input[start] == '?')
-    {
-        str = get_exit_status_str();
-        append_env_value(arg_handler, str);
-        free(str);
-        *arg_handler->i += 2;
-    }
-    else
-    {
-        (*arg_handler->i)++;
-        extract_variable_name(arg_handler->input, arg_handler->i, &start, &str);
-        env_value = get_env_value(arg_handler->env, str);
-        printf("%s handle_dollar env value = %s%s\n", BLUE, env_value, RESET);
-        if (env_value)
-        {
-            append_env_value(arg_handler, env_value);
-            free(env_value); // Assuming get_env_value allocates memory for env_value
-        }
-        free(str); // Freeing the result of extract_variable_name
-    }
+	while (arg_handler->input[*i] && (*double_quote || *single_quote \
+		|| arg_handler->input[*i] != ' '))
+	{
+		handle_quotes_echo(arg_handler);
+		if (is_redirection(arg_handler->input[*i]) && !*double_quote && !*single_quote)
+			ft_skip_redirection_and_file(arg_handler->input, i);
+		else if (arg_handler->input[*i] == '$' && !*single_quote)
+			handle_arg_value(arg_handler);
+		else
+			arg[(*arg_idx)++] = arg_handler->input[(*i)++];
+	}
+	arg[*arg_idx] = '\0';
+}
+
+char *ft_allocate_and_copy(t_arg_handler *arg_handler)
+{
+	char *arg;
+	bool double_quote;
+	bool single_quote;
+	int arg_idx;
+
+	arg = initialize_arg_and_vars(arg_handler, &double_quote, &single_quote, &arg_idx);
+	arg_handler->arg = arg;
+	arg_handler->double_quote = &double_quote;
+	arg_handler->single_quote = &single_quote;
+	process_input(arg_handler, arg, &arg_idx, &double_quote, &single_quote);
+	skip_spaces_echo(arg_handler->input, arg_handler->i);
+	return arg;
 }

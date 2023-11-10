@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/09 17:40:45 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/10 11:57:17 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -391,6 +391,10 @@ void		count_and_set_pipes(char *input, t_command *command);
 void		ft_close_fd(void);
 int			is_empty_or_space(char *str);
 int			ft_isspace(int c);
+
+void		handle_quotes_echo(t_arg_handler *arg_handler);
+int			calculate_size_of_argument(char *input);
+void		initialize_bools(t_arg_handler *arg_handler);
 
 char		**split_string(const char *str, char delimiter);
 

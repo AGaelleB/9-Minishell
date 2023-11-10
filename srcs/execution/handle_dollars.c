@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:20:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 10:40:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/10 11:33:33 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void	handle_arg_value(t_arg_handler *arg_handler)
 {
 	if (arg_handler->input[*arg_handler->i] == '$'
 		&& arg_handler->input[*arg_handler->i + 1] != '$'
-		&& ft_isalpha(arg_handler->input[*arg_handler->i + 1]) == 1)
+		&& (ft_isalpha(arg_handler->input[*arg_handler->i + 1]) == 1
+			|| arg_handler->input[*arg_handler->i + 1] == '?'))
 		handle_dollar(arg_handler);
 	else
 		arg_handler->arg[(*arg_handler->arg_idx)++]

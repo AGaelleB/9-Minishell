@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/08 17:53:33 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/10 11:00:10 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ SRCS_UTILS = srcs/utils/check_redirections.c \
 	srcs/utils/split_string_token_utils.c \
 	srcs/utils/split_string_token.c \
 	srcs/utils/split_string.c \
+	srcs/utils/utils_echo.c \
 	srcs/utils/utils.c \
 
 SRCS_LIBFT = libft/ft_atoi.c \
