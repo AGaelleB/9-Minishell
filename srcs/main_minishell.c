@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 15:26:27 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/11 11:13:03 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	open_heredocs(t_command *current)
 {
 	t_token *token;
 	token = current->token_head;
+	// printf("%scurrent->nb_pipes = %d %s\n",RED, current->nb_pipes, RESET); // PRINT
 	if (current->nb_pipes != 0)
 		handle_heredoc_tokens(current);
 	else
@@ -63,21 +64,28 @@ void	child_main(t_command *current, t_env *env)
 {
 	int		status;
 	pid_t	pid;
-	// pid_t	*child_pids;
+	// pid_t	child_pids[current->nb_pipes];
+	// t_command *tmp;
 	// int i;
 
 	// i = 0;
+	// tmp = current;
 	// init_execve(current, &(child_pids));
-	while (current)
-	{
+	// while (current)
+	// {
+	// 	current = current->next;
+	// }
+	// current = tmp;
+	// while (current) // heredocs sans boucle ?
+	// {
 		pid = fork();
 		// child_pids[i++] = pid;
 		if (pid == 0)
 		{
 			open_heredocs(current);
 			execve_fd(current, env);
-			// ft_close_all_fd();
-			// ft_free_all(current, current->token_head);
+			ft_close_all_fd();
+			ft_free_all(current, current->token_head);
 			exit(g_exit_status);
 		}
 		else if (pid < 0)
@@ -89,18 +97,16 @@ void	child_main(t_command *current, t_env *env)
 			// i = -1;
 			// while (++i <= current->nb_pipes)
 			// {
-			// 	if (waitpid(child_pids[i], &status, 0) > 0)
-			// 	{
-			// 		if (WIFEXITED(status))
-			// 			g_exit_status = WEXITSTATUS(status);
-			// 		else if (WIFSIGNALED(status))
-			// 			g_exit_status = WTERMSIG(status) + 128;
-			// 	}
+			// 	waitpid(child_pids[i], &status, 0);
+			// 	// i++;
 			// }
+			// printf("%swait main fini %s\n", BLUE, RESET); // PRINT
 			signal(SIGINT, ft_builtin_ctrl_c);
+			if (WIFEXITED(status))
+				g_exit_status = WEXITSTATUS(status);
 		}
-		current = current->next;
-	}
+		// current = current->next;
+	// }
 }
 
 int main(int ac, char **av, char **envp)

@@ -6,13 +6,13 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/03 16:02:01 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:44:27 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	count_and_set_pipes(char *input, t_command *command)
+void	count_and_set_pipes(char *input, t_command *current)
 {
 	int	count;
 	int	i;
@@ -25,7 +25,11 @@ void	count_and_set_pipes(char *input, t_command *command)
 			count++;
 		i++;
 	}
-	command->nb_pipes = count;
+	while(current)
+	{
+		current->nb_pipes = count;
+		current = current->next;
+	}
 }
 
 void	ft_close_fd(void)

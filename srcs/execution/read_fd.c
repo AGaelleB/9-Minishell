@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 15:27:19 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:55:57 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 	int	status;
 
 	i = -1;
+	// i = 0;
 	signal(SIGINT, SIG_IGN);
+	// printf("%scommand->nb_pipes = %d %s\n", YELLOW, command->nb_pipes, RESET); // PRINT
 	while (++i <= command->nb_pipes)
 	{
 		if (waitpid(child_pids[i], &status, 0) > 0)
@@ -30,9 +32,10 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 		}
 	}
 	signal(SIGINT, ft_builtin_ctrl_c);
+	// printf("%swaut children fini %s\n", GREEN, RESET); // PRINT
 }
 
-// static void	handle_heredoc_tokens(t_process_data *data)
+// static void	handle_heredoc_tokens(t_process_data *data) // HDS
 // {
 // 	t_token	*token;
 // 	pid_t	heredoc_pid;
@@ -42,7 +45,7 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 // 	flag = 0;
 // 	while (data->current && flag == 0)
 // 	{
-// 		while (token && flag == 0)
+// 		while (token && flcommand->nb_pipesag == 0)
 // 		{	
 // 			if (token->type == TYPE_HEREDOC)
 // 			{
@@ -83,8 +86,8 @@ void	execve_fd(t_command *current, t_env *env)
 	data.infile = 0;
 	data.index = 0;
 	init_execve(current, &(data.child_pids));
-	// if (data.current->nb_pipes != 0)
-		// handle_heredoc_tokens(&data);
+	// if (data.current->nb_pipes != 0) // HDS
+	// 	handle_heredoc_tokens(&data); // HDS
 	data.current = current;
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);
