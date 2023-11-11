@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:04:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/11 11:15:19 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/11 12:24:28 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_token	*handle_multiple_heredocs(t_command *current, t_token *token)
 	char	*delimiter;
 	int		fd;
 
+	// printf("handle_multiple_heredocs\n");
 	while (token && ft_strcmp_minishell(token->split_value, "<<") == 0)
 	{
 		delimiter = epur_filename_heredoc(current->token_head);

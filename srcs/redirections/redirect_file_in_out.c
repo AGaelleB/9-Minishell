@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:27:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 17:21:42 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/11 14:43:26 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,20 @@ void	heredoc_open_fd(t_command *command, t_token **token)
 	}
 }
 
-int	heredoc_open_fd_pipe(t_command *command, t_token **token)
-{
-	if (*token && (*token)->type == TYPE_HEREDOC)
-	{
-		*token = handle_multiple_heredocs(command, *token);
-		if (command->fd_in != -1)
-		{
-			dup2(command->fd_in, 0);
-			close(command->fd_in);
-		}
-	}
-	return (0);
-}
+// int	heredoc_open_fd_pipe(t_command *command, t_token **token)
+// {
+// 	// printf("heredoc_open_fd_pipe\n");
+// 	if (*token && (*token)->type == TYPE_HEREDOC)
+// 	{
+// 		handle_multiple_heredocs(command, *token);
+// 		if (command->fd_in != -1)
+// 		{
+// 			dup2(command->fd_in, 0);
+// 			close(command->fd_in);
+// 		}
+// 	}
+// 	return (0);
+// }
 
 void	redirect_file_in_open_fd(t_command *command,
 	t_token *token, t_token *token_head)

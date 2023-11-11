@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 17:55:57 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/11 14:48:39 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,6 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 	// printf("%swaut children fini %s\n", GREEN, RESET); // PRINT
 }
 
-// static void	handle_heredoc_tokens(t_process_data *data) // HDS
-// {
-// 	t_token	*token;
-// 	pid_t	heredoc_pid;
-// 	int		flag;
-
-// 	token = data->current->token_head;
-// 	flag = 0;
-// 	while (data->current && flag == 0)
-// 	{
-// 		while (token && flcommand->nb_pipesag == 0)
-// 		{	
-// 			if (token->type == TYPE_HEREDOC)
-// 			{
-// 				heredoc_pid = heredoc_open_fd_pipe(data->current, &token);
-// 				waitpid(heredoc_pid, NULL, 0);
-// 				flag = 1;
-// 				break ;
-// 			}
-// 			token = token->next;
-// 		}
-// 		if (flag == 1)
-// 			break ;
-// 		data->current = data->current->next;
-// 	}
-// }
-
 static void	handle_execve_processes(t_process_data *data, t_env *env)
 {
 	while (data->current)
@@ -86,8 +59,13 @@ void	execve_fd(t_command *current, t_env *env)
 	data.infile = 0;
 	data.index = 0;
 	init_execve(current, &(data.child_pids));
-	// if (data.current->nb_pipes != 0) // HDS
-	// 	handle_heredoc_tokens(&data); // HDS
+	// printf("%scommand->nb_pipes = %d %s\n", YELLOW, data.command->nb_pipes, RESET); // PRINT
+	data.current->flag = 0;
+	while(data.current)
+	{
+		open_fd(data.current);
+		data.current = data.current->next;
+	}
 	data.current = current;
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);

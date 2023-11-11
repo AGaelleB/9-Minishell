@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 14:12:54 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/11 13:39:05 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef enum e_token_type
 	TYPE_REDIR_OUT,
 	TYPE_REDIR_IN,
 	TYPE_REDIR_APPEND,
-	TYPE_HEREDOC,
+	TYPE_HEREDOC, //7
 	TYPE_F_OUT,
 	TYPE_F_IN,
 	TYPE_EOF, // 10
@@ -165,10 +165,12 @@ typedef struct s_command
 	int					flag_chevron;
 	bool				last_redir_is_heredoc;
 	int					exit_status;
+	int					flag;
 	struct s_token		*token_head;
 	struct s_quote		*quote_head;
 	struct s_command	*next;
 }	t_command;
+
 
 void			ft_close_all_fd(void);
 void			ft_free_all(t_command *current, t_token *token);

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/11 11:13:03 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/11 14:58:17 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,53 @@
 
 int	g_exit_status;
 
-void	handle_heredoc_tokens(t_command *current)
-{
-	t_token	*token;
-	pid_t	heredoc_pid;
-	int		flag;
-
-	token = current->token_head;
-	flag = 0;
-	while (current && flag == 0)
-	{
-		while (token && flag == 0)
-		{	
-			if (token->type == TYPE_HEREDOC)
-			{
-				heredoc_pid = heredoc_open_fd_pipe(current, &token);
-				waitpid(heredoc_pid, NULL, 0);
-				flag = 1;
-				break ;
-			}
-			token = token->next;
-		}
-		if (flag == 1)
-			break ;
-		current = current->next;
-	}
-}
-
-void	open_heredocs(t_command *current)
-{
-	t_token *token;
-	token = current->token_head;
+// void	open_heredocs(t_command *current)
+// {
+	// t_token *token;
+	// token = current->token_head;
 	// printf("%scurrent->nb_pipes = %d %s\n",RED, current->nb_pipes, RESET); // PRINT
-	if (current->nb_pipes != 0)
-		handle_heredoc_tokens(current);
-	else
-	{
-		while (token)
-		{
-			if ((token->type == TYPE_HEREDOC) && (current->nb_pipes == 0))
-				heredoc_open_fd(current, &token);
-			else
-				token = token->next;
-		}
-	}
-}
+	// if (current->nb_pipes != 0)
+		// handle_heredoc_tokens(current);
+	// else
+	// {
+	// 	while (token)
+	// 	{
+	// 		if ((token->type == TYPE_HEREDOC) && (current->nb_pipes == 0))
+	// 			heredoc_open_fd(current, &token);
+	// 		else
+	// 			token = token->next;
+	// 	}
+	// }
+// }
+
+// void	handle_heredoc_tokens(t_command *current)
+// {
+// 	t_token	*token;
+// 	pid_t	heredoc_pid;
+// 	int		flag;
+
+// 	token = current->token_head;
+// 	flag = 0;
+// 	while (current && flag == 0)
+// 	{
+// 		while (token && flag == 0)
+// 		{	
+// 			if (token->type == TYPE_HEREDOC)
+// 			{
+// 				heredoc_pid = heredoc_open_fd_pipe(current, &token);
+// 				waitpid(heredoc_pid, NULL, 0);
+// 				flag = 1;
+// 				break ;
+// 			}
+// 			token = token->next;
+// 		}
+// 		if (flag == 1)
+// 			break ;
+// 		current = current->next;
+// 	}
+// }
+
+
 
 void	child_main(t_command *current, t_env *env)
 {
@@ -75,14 +77,39 @@ void	child_main(t_command *current, t_env *env)
 	// {
 	// 	current = current->next;
 	// }
-	// current = tmp;
+	// current = tmp;// void	handle_heredoc_tokens(t_command *current)
+// {
+// 	t_token	*token;
+// 	pid_t	heredoc_pid;
+// 	int		flag;
+
+// 	token = current->token_head;
+// 	flag = 0;
+// 	while (current && flag == 0)
+// 	{
+// 		while (token && flag == 0)
+// 		{	
+// 			if (token->type == TYPE_HEREDOC)
+// 			{
+// 				heredoc_pid = heredoc_open_fd_pipe(current, &token);
+// 				waitpid(heredoc_pid, NULL, 0);
+// 				flag = 1;
+// 				break ;
+// 			}
+// 			token = token->next;
+// 		}
+// 		if (flag == 1)
+// 			break ;
+// 		current = current->next;
+// 	}
+// }
 	// while (current) // heredocs sans boucle ?
 	// {
 		pid = fork();
 		// child_pids[i++] = pid;
 		if (pid == 0)
 		{
-			open_heredocs(current);
+			// open_heredocs(current);
 			execve_fd(current, env);
 			ft_close_all_fd();
 			ft_free_all(current, current->token_head);
@@ -105,7 +132,7 @@ void	child_main(t_command *current, t_env *env)
 			if (WIFEXITED(status))
 				g_exit_status = WEXITSTATUS(status);
 		}
-		// current = current->next;
+	// 	current = current->next;
 	// }
 }
 

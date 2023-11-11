@@ -1,50 +1,60 @@
-static char *initialize_arg_and_vars(t_arg_handler *arg_handler, bool *double_quote,
-	bool *single_quote, int *arg_idx)
-{
-	char *arg;
-	int size_of_argument;
 
-	size_of_argument = calculate_size_of_argument(arg_handler->input);
-	*double_quote = false;
-	*single_quote = false;
-	arg = malloc(sizeof(char) * (size_of_argument + 1));
-	if (!arg)
-		exit(EXIT_FAILURE);
-	*arg_idx = 0;
-	return arg;
+
+
+
+
+
+
+int handle_multiple_heredocs_two(t_command *current, t_token *token) {
+    char *delimiter;
+    int fd[2]; // Pipe file descriptors
+
+    while (token && ft_strcmp_minishell(token->split_value, "<<") == 0) {
+        delimiter = epur_filename_heredoc(current->token_head);
+
+        if (pipe(fd) == -1) {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+
+        pid_t pid = fork();
+        if (pid == -1) {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        } else if (pid == 0) { // Child process
+            close(fd[0]); // Close the read end
+            write_in_fd(fd[1], delimiter, current); // Write to the pipe
+            close(fd[1]); // Close the write end after writing
+            exit(EXIT_SUCCESS);
+        } else { // Parent process
+            close(fd[1]); // Close the write end
+            current->fd_in = fd[0]; // Use the read end as stdin for the command
+        }
+
+        if (delimiter) free(delimiter);
+        token = token->next->next;
+    }
+    return 0; // Return 0 to indicate success
 }
 
-static void process_input(t_arg_handler *arg_handler,
-	char *arg, int *arg_idx, bool *double_quote, bool *single_quote)
-{
-	int *i = arg_handler->i;
+static void handle_heredoc_tokens(t_process_data *data) {
+    t_token *token;
+    int status;
 
-	while (arg_handler->input[*i] && (*double_quote || *single_quote \
-		|| arg_handler->input[*i] != ' '))
+    token = data->current->token_head;
+    while (data->current)
 	{
-		handle_quotes_echo(arg_handler);
-		if (is_redirection(arg_handler->input[*i]) && !*double_quote && !*single_quote)
-			ft_skip_redirection_and_file(arg_handler->input, i);
-		else if (arg_handler->input[*i] == '$' && !*single_quote)
-			handle_arg_value(arg_handler);
-		else
-			arg[(*arg_idx)++] = arg_handler->input[(*i)++];
-	}
-	arg[*arg_idx] = '\0';
-}
-
-char *ft_allocate_and_copy(t_arg_handler *arg_handler)
-{
-	char *arg;
-	bool double_quote;
-	bool single_quote;
-	int arg_idx;
-
-	arg = initialize_arg_and_vars(arg_handler, &double_quote, &single_quote, &arg_idx);
-	arg_handler->arg = arg;
-	arg_handler->double_quote = &double_quote;
-	arg_handler->single_quote = &single_quote;
-	process_input(arg_handler, arg, &arg_idx, &double_quote, &single_quote);
-	skip_spaces_echo(arg_handler->input, arg_handler->i);
-	return arg;
+        while (token)
+		{
+            if (token->type == TYPE_HEREDOC){
+                heredoc_open_fd_pipe(data->current, &token);
+            }
+            token = token->next;
+        }
+        data->current = data->current->next;
+    }
+    // Attendez tous les processus enfants ici
+    for (int i = 0; i <= data->current->nb_pipes; i++) {
+        waitpid(-1, &status, 0);
+    }
 }
