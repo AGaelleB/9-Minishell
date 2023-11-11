@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/11 13:39:05 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/11 17:35:28 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,11 @@ typedef struct s_arg_handler
 	bool	*single_quote;
 }	t_arg_handler;
 
+typedef struct s_here_doc
+{
+	int	fd[2];
+}	t_here_doc;
+
 typedef struct s_process_data
 {
 	t_command	*current;
@@ -147,6 +152,9 @@ typedef struct s_process_data
 	char		**envp;
 	int			infile;
 	int			index;
+	t_here_doc	*heredocs;
+	int			current_hd;
+	
 }	t_process_data;
 
 typedef struct s_command
@@ -181,7 +189,7 @@ char			**parse_input_quote(char *input);
 int				builtins_verif(t_command *current, t_env	*env_bis);
 char			**split_string_token(char *str, char **delimiters);
 t_token			*handle_multiple_heredocs(t_command *current, t_token *token);
-int				heredoc_open_fd_pipe(t_command *command, t_token **token);
+void			heredoc_open_fd(t_process_data *data, t_command *command, t_token **token);
 int				find_env_var(t_env *env, char *arg);
 
 /***********MAIN***********/
@@ -294,7 +302,6 @@ int				is_redir_at_beginning(char *input, int i);
 
 int				aleatori_char(void);
 
-void			heredoc_open_fd(t_command *command, t_token **token);
 void			redirect_file_in_open_fd(t_command *command, t_token *token,
 					t_token *token_head);
 void			redirect_file_out_open_fd(t_command *command, t_token *token,
@@ -304,7 +311,7 @@ void			redirect_append_file_out_open_fd(t_command *command,
 
 int				redirect_heredoc(t_command *current, t_token *token);
 
-int				open_fd(t_command *command);
+int				open_fd(t_process_data *data, t_command *command);
 
 int				write_in_fd(int fd, char *delimiter, t_command *current);
 

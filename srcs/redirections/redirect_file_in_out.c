@@ -6,17 +6,18 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:27:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/11 14:43:26 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/11 17:57:31 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	heredoc_open_fd(t_command *command, t_token **token)
+void	heredoc_open_fd(t_process_data *data, t_command *command, t_token **token)
 {
 	if (*token && (*token)->type == TYPE_HEREDOC)
 	{
-		*token = handle_multiple_heredocs(command, *token);
+		command->fd_in = data->heredocs[data->current_hd].fd[0];
+		data->current_hd++;
 		if (command->fd_in != -1)
 		{
 			dup2(command->fd_in, 0);

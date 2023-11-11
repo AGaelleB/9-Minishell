@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:07:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/11 14:42:53 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/11 17:28:06 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	set_last_redirection_flag(t_command *command, t_token *token_head)
 // 	// }
 // }
 
-int	open_fd(t_command *command)
+int	open_fd(t_process_data *data, t_command *command)
 {
 	t_token	*token;
 	t_token	*token_head;
@@ -78,19 +78,19 @@ int	open_fd(t_command *command)
 	token = command->token_head;
 	token_head = command->token_head;
 	set_last_redirection_flag(command, token_head);
+	// while (token)
+	// {
+	// 	if ((token->type == TYPE_HEREDOC))
+	// 	{
+	// 		heredoc_open_fd(command, &token);
+	// 	}
+	// 	else
+	// 		token = token->next;
+	// }
+	// token = command->token_head;
 	while (token)
 	{
-		if ((token->type == TYPE_HEREDOC))
-		{
-			heredoc_open_fd(command, &token);
-		}
-		else
-			token = token->next;
-	}
-	token = command->token_head;
-	while (token)
-	{
-		// heredoc_open_fd(command, &token);
+		heredoc_open_fd(data, command, &token);
 		redirect_file_in_open_fd(command, token, token_head);
 		redirect_file_out_open_fd(command, token, token_head);
 		redirect_append_file_out_open_fd(command, token, token_head);
