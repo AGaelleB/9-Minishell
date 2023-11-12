@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/12 11:34:47 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:01:34 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,12 @@
 void	ctrl_c_main(int signal)
 {
 	(void)signal;
-	printf("ctrl_c_main\n");
 	g_exit_status = 130;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	write(1, "\n", 1);
 	rl_redisplay();
 }
-
-
-// void	handle_signals_heredoc(t_process_data *data, char *line)
-// {
-// 	g_exit_status = 0;
-// 	printf("handle_signals_heredoc\n");
-	
-// 	// signal(SIGINT, sighandler_heredoc);
-// 	signal(SIGINT, handle_heredoc_signals(data, line));
-// 	signal(SIGQUIT, SIG_IGN);
-// }
 
 int	ctrl_d_heredoc(char *input, int i, char *delimiter)
 {
