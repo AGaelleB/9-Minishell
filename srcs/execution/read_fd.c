@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/11 18:45:25 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/12 12:12:07 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 				g_exit_status = WTERMSIG(status) + 128;
 		}
 	}
-	signal(SIGINT, ft_builtin_ctrl_c);
+	signal(SIGINT, ctrl_c_main);
 	// printf("%swaut children fini %s\n", GREEN, RESET); // PRINT
 }
 
@@ -60,45 +60,97 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 // 	}
 // }
 
-static void	handle_heredoc_signals(t_process_data *data, char *line)
+// void	handle_heredoc_signals(t_process_data *data, char *line)
+// {
+// 	if (g_exit_status == 130)
+// 	{
+// 		int i = 0;
+// 		printf("handle_heredoc_signals\n");
+// 		while (i < data->count_hd)
+// 		{
+// 			if (i == 0)
+// 				break ;
+// 			close(data->heredocs[i].fd[0]);
+// 			close(data->heredocs[i].fd[1]);
+// 			i++;
+// 		}
+// 		// free(line); // a free
+// 		(void)line;
+// 		g_exit_status = 130;
+// 		exit(130);
+// 	}
+// }
+
+// void	ctrl_c_heredoc(int signal)
+// {
+// 	t_process_data *data;
+// 	int i;
+
+// 	if (signal == SIGINT)
+// 	{
+// 		i = 0;
+// 		while (i < data->count_hd)
+// 		{
+// 			if (i == 0)
+// 				break ;
+// 			close(data->heredocs[i].fd[0]);
+// 			close(data->heredocs[i].fd[1]);
+// 			i++;
+// 		}
+// 		//penser a free
+// 		exit (42);
+// 	}
+// }
+
+// void	ctrl_c_heredoc(int signal)
+// {
+// 	int	fd;
+
+// 	if (signal == SIGINT)
+//  	{
+// 		fd = open ("/dev/null", O_RDONLY);
+// 		dup2(fd, STDIN_FILENO);
+// 		close(fd);
+// 		printf("\n");
+// 		g_exit_status = 130;
+// 		exit(130);
+// 	}
+// }
+
+void ctrl_c_heredoc(int signal)
 {
-	if (g_exit_status == 130)
+    if (signal == SIGINT)
 	{
-		int i = 0;
-		while (i < data->count_hd)
-		{
-			if (i == 0)
-				break ;
-			close(data->heredocs[i].fd[0]);
-			close(data->heredocs[i].fd[1]);
-			i++;
-		}
-		clean_heredoc_files(data->current);
-		free(line);
-		exit(130);
-	}
+        g_exit_status = 130;
+		// close(fd[1]);
+        printf("\n");
+        exit(g_exit_status); 
+    }
 }
 
-int	here_doc_manage(t_process_data *data, int fd[2])
+
+int	here_doc_manage(t_process_data *data, int fd[2], char *delimiter)
 {
 	char	*input;
 	int i;
-	char	*delimiter = epur_filename_heredoc(data->current->token_head);
+	// printf("%sdelimiter : %s\n%s", BLUE, delimiter, RESET);
 	i = 0;
+	(void)data;
+	signal(SIGINT, ctrl_c_heredoc);
 	close(fd[0]);
-	handle_signals_heredoc();
 	while (1)
 	{
 		input = readline("> ");
-		handle_heredoc_signals(data, input);
 		if (ctrl_d_heredoc(input, i, delimiter) == 45)
 		{
 			free(input);
+			// printf("j'exit by ctrl^D\n");
 			return (45);
 		}
 		if (ft_strcmp_minishell(input, delimiter) == 0)
 		{
 			free(input);
+			// printf("j'exit by EOF\n");
 			close(fd[1]);
 			exit (1);
 		}
@@ -107,6 +159,7 @@ int	here_doc_manage(t_process_data *data, int fd[2])
 		free(input);
 		i++;
 	}
+		signal(SIGQUIT, ctrl_c_main); //sig
 	return (0);
 }
 
@@ -127,23 +180,40 @@ int	here_doc_rayan(t_process_data *data)
 	}
 	data->heredocs = malloc(sizeof(t_here_doc) * data->count_hd);
 	redir = data->current->token_head;
+	signal(SIGINT, SIG_IGN); //sig
+
+    // signal(SIGINT, ctrl_c_heredoc); // Configurez le gestionnaire de signal
+    g_exit_status = 0;
+
 	while (i < data->count_hd)
 	{
+		int status;
+
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		{
+			// Si un heredoc a été interrompu, arrêtez d'attendre les autres
+			break;
+		}
+
 		pipe(data->heredocs[i].fd);
 		pid = fork();
-		signal(SIGINT, SIG_IGN);
+		char	*delimiter = epur_filename_heredoc(data->current->token_head);
 		if (pid == 0)
 		{
-			here_doc_manage(data, data->heredocs[i].fd);
+			here_doc_manage(data, data->heredocs[i].fd, delimiter);
 			exit(1);
 		}
 		waitpid(pid, NULL, 0);
-		signal(SIGINT, ft_builtin_ctrl_c);
 		close(data->heredocs[i].fd[1]);
 		i++;
 	}
+
+	// signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, ctrl_c_main); //sig
 	return (0);
 }
+
 static void	handle_execve_processes(t_process_data *data, t_env *env)
 {
 	while (data->current)

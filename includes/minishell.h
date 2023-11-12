@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/11 18:40:51 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/12 11:15:57 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,8 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 
-
+void	handle_signals_heredoc(t_process_data *data, char *line);
+void	handle_heredoc_signals(t_process_data *data, char *line);
 void			ft_close_all_fd(void);
 void			ft_free_all(t_command *current, t_token *token);
 void			ft_free_env(t_env *env);
@@ -317,8 +318,8 @@ int				open_fd(t_process_data *data, t_command *command);
 int				write_in_fd(int fd, char *delimiter, t_command *current);
 
 /***********SIGNALS***********/
-void			ft_builtin_ctrl_c(int sig);
-void			handle_signals_heredoc(void);
+void			ctrl_c_main(int sig);
+// void			handle_signals_heredoc(void);
 int				ctrl_d_heredoc(char *input, int i, char *delimiter);
 
 /***********UTILS***********/

@@ -1,60 +1,41 @@
+volatile sig_atomic_t heredoc_interrupted = 0;
 
-
-
-
-
-
-
-int handle_multiple_heredocs_two(t_command *current, t_token *token) {
-    char *delimiter;
-    int fd[2]; // Pipe file descriptors
-
-    while (token && ft_strcmp_minishell(token->split_value, "<<") == 0) {
-        delimiter = epur_filename_heredoc(current->token_head);
-
-        if (pipe(fd) == -1) {
-            perror("pipe");
-            exit(EXIT_FAILURE);
-        }
-
-        pid_t pid = fork();
-        if (pid == -1) {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        } else if (pid == 0) { // Child process
-            close(fd[0]); // Close the read end
-            write_in_fd(fd[1], delimiter, current); // Write to the pipe
-            close(fd[1]); // Close the write end after writing
-            exit(EXIT_SUCCESS);
-        } else { // Parent process
-            close(fd[1]); // Close the write end
-            current->fd_in = fd[0]; // Use the read end as stdin for the command
-        }
-
-        if (delimiter) free(delimiter);
-        token = token->next->next;
-    }
-    return 0; // Return 0 to indicate success
-}
-
-static void handle_heredoc_tokens(t_process_data *data) {
-    t_token *token;
-    int status;
-
-    token = data->current->token_head;
-    while (data->current)
-	{
-        while (token)
-		{
-            if (token->type == TYPE_HEREDOC){
-                heredoc_open_fd_pipe(data->current, &token);
-            }
-            token = token->next;
-        }
-        data->current = data->current->next;
-    }
-    // Attendez tous les processus enfants ici
-    for (int i = 0; i <= data->current->nb_pipes; i++) {
-        waitpid(-1, &status, 0);
+void ctrl_c_heredoc(int signal) {
+    if (signal == SIGINT) {
+        heredoc_interrupted = 1;
+        printf("\n");
     }
 }
+
+int here_doc_manage(...) {
+    // ... Votre code existant ...
+    if (heredoc_interrupted) {
+        // Si Ctrl+C a été pressé, fermez le fd et terminez
+        close(fd[1]);
+        exit(130);  // Utilisez un code de sortie spécifique
+    }
+    // ... Reste du code ...
+}
+
+int here_doc_rayan(...) {
+    // ... Initialisation ...
+    signal(SIGINT, ctrl_c_heredoc); // Configurez le gestionnaire de signal
+    heredoc_interrupted = 0;
+
+    while (i < data->count_hd) {
+        // ... Votre code existant pour créer des processus enfants ...
+        int status;
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 130) {
+            // Si un heredoc a été interrompu, arrêtez d'attendre les autres
+            break;
+        }
+        // ... Reste du code ...
+    }
+
+    // Restaurer le gestionnaire de signal par défaut ou comme avant
+    signal(SIGINT, SIG_DFL);
+    return heredoc_interrupted ? -1 : 0; // Retournez -1 si interrompu
+}
+
+// Dans handle_execve_processes ou ailleurs, gérez le cas où heredoc est interrompu

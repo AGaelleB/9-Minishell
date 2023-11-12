@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/11 16:54:57 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/12 11:12:14 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,126 +14,28 @@
 
 int	g_exit_status;
 
-// void	open_heredocs(t_command *current)
-// {
-	// t_token *token;
-	// token = current->token_head;
-	// printf("%scurrent->nb_pipes = %d %s\n",RED, current->nb_pipes, RESET); // PRINT
-	// if (current->nb_pipes != 0)
-		// handle_heredoc_tokens(current);
-	// else
-	// {
-	// 	while (token)
-	// 	{
-	// 		if ((token->type == TYPE_HEREDOC) && (current->nb_pipes == 0))
-	// 			heredoc_open_fd(current, &token);
-	// 		else
-	// 			token = token->next;
-	// 	}
-	// }
-// }
-
-// void	handle_heredoc_tokens(t_command *current)
-// {
-// 	t_token	*token;
-// 	pid_t	heredoc_pid;
-// 	int		flag;
-
-// 	token = current->token_head;
-// 	flag = 0;
-// 	while (current && flag == 0)
-// 	{
-// 		while (token && flag == 0)
-// 		{	
-// 			if (token->type == TYPE_HEREDOC)
-// 			{
-// 				heredoc_pid = heredoc_open_fd_pipe(current, &token);
-// 				waitpid(heredoc_pid, NULL, 0);
-// 				flag = 1;
-// 				break ;
-// 			}
-// 			token = token->next;
-// 		}
-// 		if (flag == 1)
-// 			break ;
-// 		current = current->next;
-// 	}
-// }
-
-
-
 void	child_main(t_command *current, t_env *env)
 {
 	int		status;
 	pid_t	pid;
-	// pid_t	child_pids[current->nb_pipes];
-	// t_command *tmp;
-	// int i;
-
-	// i = 0;
-	// tmp = current;
-	// init_execve(current, &(child_pids));
-	// while (current)
-	// {
-	// 	current = current->next;
-	// }
-	// current = tmp;// void	handle_heredoc_tokens(t_command *current)
-// {
-// 	t_token	*token;
-// 	pid_t	heredoc_pid;
-// 	int		flag;
-
-// 	token = current->token_head;
-// 	flag = 0;
-// 	while (current && flag == 0)
-// 	{
-// 		while (token && flag == 0)
-// 		{	
-// 			if (token->type == TYPE_HEREDOC)
-// 			{
-// 				heredoc_pid = heredoc_open_fd_pipe(current, &token);
-// 				waitpid(heredoc_pid, NULL, 0);
-// 				flag = 1;
-// 				break ;
-// 			}
-// 			token = token->next;
-// 		}
-// 		if (flag == 1)
-// 			break ;
-// 		current = current->next;
-// 	}
-// }
-	// while (current) // heredocs sans boucle ?
-	// {
-		pid = fork();
-		// child_pids[i++] = pid;
-		if (pid == 0)
-		{
-			// open_heredocs(current);
-			execve_fd(current, env);
-			ft_close_all_fd();
-			ft_free_all(current, current->token_head);
-			exit(g_exit_status);
-		}
-		else if (pid < 0)
-			perror("fork");
-		else
-		{
-			signal(SIGINT, SIG_IGN);
-			waitpid(pid, &status, 0);
-			// i = -1;
-			// while (++i <= current->nb_pipes)
-			// {
-			// 	waitpid(child_pids[i], &status, 0);
-			// 	// i++;
-			// }
-			// printf("%swait main fini %s\n", BLUE, RESET); // PRINT
-			signal(SIGINT, ft_builtin_ctrl_c);
-			if (WIFEXITED(status))
-				g_exit_status = WEXITSTATUS(status);
-		}
-	// 	current = current->next;
-	// }
+	pid = fork();
+	if (pid == 0)
+	{
+		execve_fd(current, env);
+		ft_close_all_fd();
+		ft_free_all(current, current->token_head);
+		exit(g_exit_status);
+	}
+	else if (pid < 0)
+		perror("fork");
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &status, 0);
+		signal(SIGINT, ctrl_c_main);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+	}
 }
 
 int main(int ac, char **av, char **envp)
@@ -150,7 +52,7 @@ int main(int ac, char **av, char **envp)
 		if (!envp[0])
 			return (printf("env is missing\n"));
 		g_exit_status = 0;
-		signal(SIGINT, ft_builtin_ctrl_c);
+		signal(SIGINT, ctrl_c_main);
 		signal(SIGQUIT, SIG_IGN);
 		env_bis = (t_env *)malloc(sizeof(t_env));
 		if (!env_bis)
@@ -173,9 +75,6 @@ int main(int ac, char **av, char **envp)
 				execve_builtins_unset_export(new_commands, env_bis);
 				execve_builtin_cd(new_commands, env_bis);
 				child_main(new_commands, env_bis);
-				// execve_fd(new_commands, env_bis);
-				// ft_close_all_fd();
-				// ft_free_all(new_commands, new_commands->token_head);
 			}
 			free(input);
 		}
@@ -194,15 +93,16 @@ int main(int ac, char **av, char **envp)
 
 /*
 										TO DO :
-echo " 'O $USER O'     "
 
-<<un <<deux cat | <<trois cat
-=> n affiche pas le dernier heredoc, faire en sorte d ignorer si << apres pipe 
+nouveau trucs cassés
+
+export PATH=$PATH$PWD
+export PATH=$PATH:$PWD
+
++ faire boucle pour les exit status une fois a 256 retour a 0
+
 
 EOF et ctrl^c leaks
-
-Tapis ?: OUI
-minishell$> cat << " 'a' " << "b" << 'c'
 
 penser a rechercher les truc quon a (void) et voir si utile.
 pareil pour forbiden function et a recoder

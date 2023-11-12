@@ -6,16 +6,16 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 15:48:08 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/12 11:34:47 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_builtin_ctrl_c(int signal)
+void	ctrl_c_main(int signal)
 {
 	(void)signal;
-	// write(1, "\n", 1);
+	printf("ctrl_c_main\n");
 	g_exit_status = 130;
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -23,25 +23,16 @@ void	ft_builtin_ctrl_c(int signal)
 	rl_redisplay();
 }
 
-void	sighandler_heredoc(int sig)
-{
-	int	fd;
 
-	(void)sig;
-	fd = open ("/dev/null", O_RDONLY); // closed ? not sure
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	printf("\n");
-	g_exit_status = 130;
-	return ;
-}
-
-void	handle_signals_heredoc(void)
-{
-	g_exit_status = 0;
-	signal(SIGINT, sighandler_heredoc);
-	signal(SIGQUIT, SIG_IGN);
-}
+// void	handle_signals_heredoc(t_process_data *data, char *line)
+// {
+// 	g_exit_status = 0;
+// 	printf("handle_signals_heredoc\n");
+	
+// 	// signal(SIGINT, sighandler_heredoc);
+// 	signal(SIGINT, handle_heredoc_signals(data, line));
+// 	signal(SIGQUIT, SIG_IGN);
+// }
 
 int	ctrl_d_heredoc(char *input, int i, char *delimiter)
 {
