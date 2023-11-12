@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:48:37 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 16:49:05 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:25:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 static int	is_first_char_valid(char c)
 {
-	return (ft_isalpha(c) || c == '_');
+	return (ft_isalpha(c) || c == '_' || c == '$'); // tempo pour le dollard a retirer
 }
 
 static int	is_char_valid(char c)
 {
 	return (ft_isalnum(c) || c == '_' || c == '='
-		|| c == '\'' || c == '\"' || c == ' ');
+		|| c == '\'' || c == '\"' || c == ' ' 
+		||  c == '$' ||  c == ':');
 }
-
 static void	print_invalid_identifier(char *str, int index)
 {
+	printf("print_invalid_identifier\n");
 	ft_putstr_fd("minishell: export: \'", 2);
 	write(2, &str[index], 1);
 	ft_putstr_fd("\': not a valid identifier\n", 2);

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 17:22:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/12 13:27:39 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,16 @@ int	ft_builtin_export(char **args, t_env *env)
 	char	*str;
 
 	i = 0;
+	printf("ft_builtin_export\n");
 	if (!args[1])
 		return (print_env_vars(env));
 	arg_idx = 1;
 	while (args[arg_idx])
 	{
 		str = handle_quotes_export(args[arg_idx]);
-		if (check_valid_identifier_export(str))
+		if (check_valid_identifier_export(str) == 0)
 		{
+			printf("IF ft_builtin_export\n");
 			if (update_var_env(env, str) == 1)
 				return (1);
 			arg_idx++;
