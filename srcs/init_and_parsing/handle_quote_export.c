@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:55:59 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 17:45:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/12 14:08:23 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*handle_quotes_export(char *str)
 	y = 0;
 	single_quote = false;
 	double_quote = false;
-	dest = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	dest = malloc(sizeof(char) * (ft_strlen(str) + 100000)); // WARNING TAPIE
 	if (!dest)
 		return (NULL);
 	while (str[i])
