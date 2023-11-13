@@ -6,13 +6,12 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:49:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/10 11:32:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:40:33 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*Fonction 1: Gestion des espaces après un argument*/
 void	skip_spaces_echo(char *input, int *i)
 {
 	while (input[*i] == ' ')
@@ -42,7 +41,6 @@ char	**copy_argument_echo(t_env *env, t_parser *parser, char *input)
 	return (parser->args);
 }
 
-/*Fonction 4 (principale): Parse Input avec Quotes*/
 char	**parse_input_quote_echo(t_env *env, char *input)
 {
 	t_parser	parser;

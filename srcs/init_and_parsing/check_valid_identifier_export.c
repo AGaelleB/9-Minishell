@@ -3,65 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   check_valid_identifier_export.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:48:37 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 14:13:54 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:19:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// static int	is_first_char_valid(char c)
-// {
-// 	return (ft_isalpha(c) || c == '_'); // tempo pour le dollard a retirer
-// }
-
 int	is_char_valid(char c)
 {
 	if (ft_isalnum(c) || c == '_' || c == '='
-		|| c == '\'' || c == '\"'
-		|| c == '$' ||  c == ':' ||  c == '-'
-		||  c == '.')
+		|| c == '\'' || c == '\"' || c == '.'
+		|| c == '$' || c == ':' || c == '-')
 	{
 		return (0);
 	}
 	else
 		return (1);
 }
-
-// static void	print_invalid_identifier(char *str, int index)
-// {
-// 	printf("print_invalid_identifier\n");
-// 	ft_putstr_fd("minishell: export: \'", 2);
-// 	write(2, &str[index], 1);
-// 	ft_putstr_fd("\': not a valid identifier\n", 2);
-// }
-
-// int	check_valid_identifier_export(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!is_first_char_valid(str[i]))
-// 	{
-// 		print_invalid_identifier(str, i);
-// 		g_exit_status = 1;
-// 		return (g_exit_status);
-// 	}
-// 	i++;
-// 	while (str[i])
-// 	{
-// 		if (!is_char_valid(str[i]))
-// 		{
-// 			print_invalid_identifier(str, i);
-// 			g_exit_status = 1;
-// 			return (g_exit_status);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
 
 int	print_error_export(char *s, int ok)
 {
@@ -136,21 +97,11 @@ int	check_after_equal(char *str)
 			single_quote = !single_quote;
 		else if (str[i] == '\"')
 			double_quote = !double_quote;
-		// printf("[%d]\n", single_quote);
-		// printf("[%d]\n", single_quote);
 		while (str[i] == ' ' && (double_quote || single_quote))
-		{
-			// printf("je suis dans des quotes\n");
 			i++;
-		}
-		// printf("%sstr[%d] = %c\n%s",GREEN, i, str[i], RESET);
 		if (is_char_valid(str[i]) == 1)
-		{
-			// printf("str[%d] = %c\n", i, str[i]);
 			return (1);
-		}
 		i++;
 	}
-	// printf("IAM OUT\n");
 	return (0);
 }

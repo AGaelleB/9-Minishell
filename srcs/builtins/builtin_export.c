@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 14:16:25 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:05:29 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ static int	print_env_vars(t_env *env)
 	return (1);
 }
 
-char *extract_var_name(char *str)
+char	*extract_var_name(char *str)
 {
-	char *start;
-	char *var_name;
-	int len;
+	char	*start;
+	char	*var_name;
+	int		len;
 
 	start = ft_strchr(str, '$');
 	if (!start)
@@ -60,37 +60,44 @@ char *extract_var_name(char *str)
 	start++;
 	len = 0;
 	while (start[len]
-		&& (ft_isalnum(start[len]) && start[len] != '_' && start[len] != ':' && start[len] != '$'))
+		&& (ft_isalnum(start[len]) && start[len] != '_'
+			&& start[len] != ':' && start[len] != '$'))
 		len++;
 	var_name = malloc(len + 1);
 	if (!var_name)
 		return (NULL);
 	ft_strncpy(var_name, start, len);
 	var_name[len] = '\0';
-	// printf("%s var_name : %s%s\n",MAGENTA, var_name, RESET);
 	return (var_name);
 }
 
-// int	check_identifier(char *str)
-// {
-// 	char	*str_cpy;
-// 	int		i;
+void	process_arg(char *arg, t_env *env, int *i)
+{
+	t_export	*export;
+	char		*str;
+	char		*var_name;
 
-// 	i = 0;
-// 	while(str[i] != '=')
-// 		i++;
-// 	str_cpy = ft_strdup(str);
-// 	printf("%s : str_cpy \n", str_cpy);
-// 	return (check_after_equal(str_cpy));
-// }
+	if ((check_before_equal(arg) == 0) && (check_after_equal(arg) == 0))
+	{
+		str = handle_quotes_export(arg);
+		export = init_export();
+		var_name = extract_var_name(str);
+		if (var_name)
+			export_expander(export, var_name, str, env);
+		else
+		{
+			update_var_env(env, str);
+			add_var_env(env, *i, str);
+		}
+		// free(var_name);
+		// free(str);
+	}
+}
 
 int	ft_builtin_export(char **args, t_env *env)
 {
-	t_export	*export;
 	int			arg_idx;
 	int			i;
-	char		*str;
-	char		*var_name;
 
 	i = 0;
 	if (!args[1])
@@ -98,29 +105,10 @@ int	ft_builtin_export(char **args, t_env *env)
 	arg_idx = 1;
 	while (args[arg_idx])
 	{
-		if ((check_before_equal(args[arg_idx]) == 0)
-			&& (check_after_equal(args[arg_idx]) == 0))
-		{
-			str = handle_quotes_export(args[arg_idx]);
-			// printf("str : %s\n", str);
-			export = init_export();
-			var_name = extract_var_name(str);
-			if (var_name)
-				export_expander(export, var_name, str, env);
-			else
-			{
-				update_var_env(env, str);
-				// printf("ATTENTION derriere on sors\n");
-				add_var_env(env, i, str);
-			}
-		}
+		process_arg(args[arg_idx], env, &i);
 		arg_idx++;
 	}
-	// str = handle_quotes_export(args[arg_idx]);
-	
 	// free(str);
 	// free(ret);
-	// if (flag == 1)
-	// 	return (g_exit_status = 1);
 	return (g_exit_status);
 }

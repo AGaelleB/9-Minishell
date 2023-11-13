@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/13 11:07:56 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/13 15:48:39 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/handle_token.c \
 	srcs/init_and_parsing/handle_var_export.c \
 	srcs/init_and_parsing/init_env.c \
+	srcs/init_and_parsing/init_export_var.c \
 	srcs/init_and_parsing/init_quote.c \
 	srcs/init_and_parsing/init_token.c \
 	srcs/init_and_parsing/parse_spaces_redir.c \
@@ -63,16 +64,13 @@ SRCS_REDIRECTIONS = srcs/redirections/epur_filename.c \
 	srcs/redirections/redirect_at_beginning.c \
 	srcs/redirections/redirect_file_in_and_out.c \
 	srcs/redirections/redirect_file_in_out.c \
-	srcs/redirections/redirect_heredoc.c \
 	srcs/redirections/redirect_open_fd.c \
-	srcs/redirections/write_in_heredoc.c \
 
 SRCS_SIGNALS = srcs/signals/signal_exit.c \
 
 SRCS_UTILS = srcs/utils/check_redirections.c \
 	srcs/utils/check_syntax_caracteres.c \
 	srcs/utils/check_syntax_pipes.c \
-	srcs/utils/create_heredoc.c \
 	srcs/utils/exit_error.c \
 	srcs/utils/count_args.c \
 	srcs/utils/free_bis.c \

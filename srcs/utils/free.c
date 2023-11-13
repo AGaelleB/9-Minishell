@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 17:37:13 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:37:06 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,47 +83,3 @@ void	ft_free_current(t_command *current)
 		free(tmp);
 	}
 }
-
-void	clean_heredoc_files(t_command *cur)
-{
-	int	i;
-
-	i = 0;
-	while (cur->heredocs && cur->heredocs[i])
-	{
-		unlink(cur->heredocs[i]);
-		i++;
-	}
-	cur->heredocs = NULL;
-}
-
-/* void	ft_free_token(t_command *current, t_token *head)
-{
-	t_token	*tmp;
-
-	tmp = NULL;
-	while (current)
-	{
-		head = current->token_head;
-		if (head != NULL)
-		{
-			while (head)
-			{
-				tmp = head;
-				// head->command = NULL;
-				// if (tmp->command != NULL)
-				// 	free(tmp->command);
-				free(tmp->split_value);
-				// free(tmp);
-				head = head->next;
-			}
-			free(current->token_head->command);
-			if(current->token_head != NULL)
-				free(current->token_head);
-			// if(head != NULL) //visiblement inutile
-			// 	free(head);
-		}
-		current = current->next;
-	}
-}
- */

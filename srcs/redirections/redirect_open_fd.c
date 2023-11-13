@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:07:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 10:24:07 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:35:56 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,52 +41,14 @@ void	set_last_redirection_flag(t_command *command, t_token *token_head)
 	command->last_redir_is_heredoc = false;
 }
 
-// static void	handle_heredoc_tokens(t_command *current, t_token *token)
-// {
-// 	// t_token	*token;
-// 	pid_t	heredoc_pid;
-// 	// int		flag;
-
-// 	// token = current->token_head;
-// 	// flag = 0;
-// 	// while (current && flag == 0)
-// 	// {
-// 	// 	while (token && flag == 0)
-// 	// 	{	
-// 			if (token->type == TYPE_HEREDOC)
-// 			{
-// 				heredoc_pid = heredoc_open_fd_pipe(current, &token);
-// 				waitpid(heredoc_pid, NULL, 0);
-// 				// flag = 1;
-// 				// break ;
-// 			}
-// 			// token = token->next;
-// 		// }
-// 		// if (flag == 1)
-// 		// 	break ;
-// 		// current = current->next;
-// 	// }
-// }
-
 int	open_fd(t_process_data *data, t_command *command)
 {
 	t_token	*token;
 	t_token	*token_head;
 
-	// flag = 0;
 	token = command->token_head;
 	token_head = command->token_head;
 	set_last_redirection_flag(command, token_head);
-	// while (token)
-	// {
-	// 	if ((token->type == TYPE_HEREDOC))
-	// 	{
-	// 		heredoc_open_fd(command, &token);
-	// 	}
-	// 	else
-	// 		token = token->next;
-	// }
-	// token = command->token_head;
 	while (token)
 	{
 		heredoc_open_fd(data, command, &token);

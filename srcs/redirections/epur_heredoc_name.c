@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 10:04:43 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 09:55:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:40:47 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ char	*epur_filename_heredoc(t_token *token_head)
 	file_name = extract_filename(token_head->command_two, &i);
 	if (!file_name)
 		return (NULL);
-	// printf("%scommand before : %s\n%s", YELLOW, token_head->command_two, RESET);
 	token_head->command_two = update_command(token_head->command_two, i);
-	// printf("%scommand after : %s\n%s", MAGENTA, token_head->command_two, RESET);
 	if (!token_head->command_two)
 	{
 		free(file_name);

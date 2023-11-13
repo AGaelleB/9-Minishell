@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 10:41:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:39:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	handle_quotes(char *input, int *i,
 	}
 }
 
-/*Fonction 1: Allocation de l'argument et copie des caractères*/
 char	*allocate_and_copy(char *input, int *i, int *arg_idx)
 {
 	char	*arg;
@@ -64,14 +63,12 @@ char	*allocate_and_copy(char *input, int *i, int *arg_idx)
 	return (arg);
 }
 
-/*Fonction 2: Gestion des espaces après un argument*/
 void	skip_spaces(char *input, int *i)
 {
 	while (input[*i] == ' ')
 		(*i)++;
 }
 
-/*Fonction 3: Copie d'un argument dans le tableau d'arguments*/
 char	**copy_argument(char *input, t_parser *parser)
 {
 	char	*arg;
@@ -88,7 +85,6 @@ char	**copy_argument(char *input, t_parser *parser)
 	return (parser->args);
 }
 
-/*Fonction 4 (principale): Parse Input avec Quotes*/
 char	**parse_input_quote(char *input)
 {
 	t_parser	parser;

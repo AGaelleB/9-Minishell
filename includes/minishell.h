@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 12:59:42 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:49:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,6 @@ void			ft_set_args_and_paths(t_command *cur, t_env *env);
 char			**parse_input_quote(char *input);
 int				builtins_verif(t_command *current, t_env	*env_bis);
 char			**split_string_token(char *str, char **delimiters);
-t_token			*handle_multiple_heredocs(t_command *current, t_token *token);
 void			heredoc_open_fd(t_process_data *data, t_command *command, t_token **token);
 int				find_env_var(t_env *env, char *arg);
 void			remove_env_var(t_env *env, int idx);
@@ -321,8 +320,6 @@ int				redirect_append_file_out(t_command *current, t_token *token,
 					t_token *token_head);
 int				is_redir_at_beginning(char *input, int i);
 
-int				aleatori_char(void);
-
 void			redirect_file_in_open_fd(t_command *command, t_token *token,
 					t_token *token_head);
 void			redirect_file_out_open_fd(t_command *command, t_token *token,
@@ -372,7 +369,6 @@ int				count_arg_length(char *input, int i);
 void			ft_free_tab(char **tab);
 void			ft_free_token(t_command *current);
 void			ft_free_current(t_command *current);
-void			clean_heredoc_files(t_command *cur);
 
 void			cleanup(pid_t *child_pids, int infile);
 
@@ -401,5 +397,10 @@ int				calculate_size_of_argument(char *input);
 void			initialize_bools(t_arg_handler *arg_handler);
 
 char			**split_string(const char *str, char delimiter);
+
+void			copy_env_in_return(t_export *export, t_env *env);
+void			begin_var(t_export *export, char *str);
+char			*re_init_var_str(t_export *export, char *str);
+t_export		*init_export(void);
 
 #endif

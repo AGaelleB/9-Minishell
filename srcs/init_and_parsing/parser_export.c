@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_export.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 14:33:24 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/08 14:36:46 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:40:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,12 @@ char	*allocate_and_copy_export(char *input, int *i, int *arg_idx)
 	return (arg);
 }
 
-/*Fonction 2: Gestion des espaces après un argument*/
 void	skip_spaces_export(char *input, int *i)
 {
 	while (input[*i] == ' ')
 		(*i)++;
 }
 
-/*Fonction 3: Copie d'un argument dans le tableau d'arguments*/
 char	**copy_argument_export(char *input, t_parser *parser)
 {
 	char	*arg;
@@ -64,7 +62,6 @@ char	**copy_argument_export(char *input, t_parser *parser)
 	return (parser->args);
 }
 
-/*Fonction 4 (principale): Parse Input avec Quotes*/
 char	**parse_arg_export(char *input)
 {
 	t_parser	parser;
