@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/12 11:12:14 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/13 09:42:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,6 @@ nouveau trucs cassés
 
 export PATH=$PATH$PWD
 export PATH=$PATH:$PWD
-
-+ faire boucle pour les exit status une fois a 256 retour a 0
-
 
 EOF et ctrl^c leaks
 
