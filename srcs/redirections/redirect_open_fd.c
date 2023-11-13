@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_open_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:07:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/11 17:28:06 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:24:07 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	open_fd(t_process_data *data, t_command *command)
 {
 	t_token	*token;
 	t_token	*token_head;
-
 
 	// flag = 0;
 	token = command->token_head;

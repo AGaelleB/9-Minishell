@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:33:50 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/25 10:02:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 09:51:39 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ void		ft_lstiter(t_list *lst, void (*f)(void *));
 /**************************************************************************/
 
 void		*ft_realloc(void *ptr, size_t original_size, size_t new_size);
+char		*ft_strncpy(char *dest, const char *src, size_t n);
 
 #endif

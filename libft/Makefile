@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/09 12:06:57 by abonnefo          #+#    #+#              #
-#    Updated: 2023/10/25 10:03:03 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/13 09:53:28 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRC_BONUS = ft_lstadd_back.c \
 	ft_lstnew.c \
 	ft_lstsize.c \
 	ft_realloc.c \
+	ft_strncpy.c \
 
 OBJS = $(SRC:.c=.o)
 

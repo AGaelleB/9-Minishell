@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/12 13:01:34 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:21:16 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,16 @@ int	ctrl_d_heredoc(char *input, int i, char *delimiter)
 		return (45);
 	}
 	return (0);
+}
+
+// par contre je ne close surement pas bien mes 
+// fd : close(data->heredocs[i].fd[0]);
+void	ctrl_c_heredoc(int signal)
+{
+	if (signal == SIGINT)
+	{
+		g_exit_status = 130;
+		write(2, "\n", 1); // si coms n affiche plus C^ sur le readline
+		exit(g_exit_status);
+	}
 }

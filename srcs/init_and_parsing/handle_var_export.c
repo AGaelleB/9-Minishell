@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:00:41 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/12 14:01:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:05:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int	update_var_env(t_env *env, char *arg)
 		if (ft_strncmp(env->cpy_env[i], str, ft_strlen(str)) == 0
 			&& env->cpy_env[i][ft_strlen(str)] == '=')
 		{
-			free(env->cpy_env[i]);
-			env->cpy_env[i] = ft_strdup(arg);
-			// env->cpy_env[i + 1] = NULL;
-			free(str);
+			remove_env_var(env, i);
 			return (1);
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   epur_heredoc_name.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 10:04:43 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/12 10:59:51 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/13 09:55:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*extract_filename(char *cmd, int *i)
 
 	in_quote = false;
 	double_quote = false;
-	file_name = malloc(sizeof(char) * (strlen(cmd) + 1));
+	file_name = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
 	if (!file_name)
 		return (NULL);
 	j = 0;

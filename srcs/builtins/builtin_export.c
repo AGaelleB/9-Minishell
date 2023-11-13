@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/12 15:24:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:39:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,19 @@ char *extract_var_name(char *str)
 	var_name = malloc(len + 1);
 	if (!var_name)
 		return (NULL);
-	strncpy(var_name, start, len); // a faire strcpy
+	ft_strncpy(var_name, start, len);
 	var_name[len] = '\0';
-	printf("%s var_name : %s%s\n",MAGENTA, var_name, RESET);
-	return (var_name); // renvoie la varaible a charcher
+	// printf("%s var_name : %s%s\n",MAGENTA, var_name, RESET);
+	return (var_name);
 }
 
 int	ft_builtin_export(char **args, t_env *env)
 {
-	int		arg_idx;
-	int		i;
-	char	*str;
+	t_export	*export;
+	int			arg_idx;
+	int			i;
+	char		*str;
+	char		*var_name;
 
 	i = 0;
 	if (!args[1])
@@ -86,137 +88,25 @@ int	ft_builtin_export(char **args, t_env *env)
 		str = handle_quotes_export(args[arg_idx]);
 		if (check_valid_identifier_export(str) == 0)
 		{
-			if (update_var_env(env, str) == 1)
-				return (1);
+			update_var_env(env, str);
 			arg_idx++;
 		}
 		else
 			break ;
 	}
-	i = 0;
-	
-	char *ret;
-	char *new;
-
-	// if (ret)
-	// 	free(ret);
-	new = malloc(sizeof(char) * SIZE);
-	ret = malloc(sizeof(char) * SIZE);
-	if (!ret)
-		return (-1);
-	int l = 0;
-	new = str;
-	int m;
-	int flag = 0;
-	while(str[i])
+	export = init_export();
+	var_name = extract_var_name(str);
+	if (var_name)
+		export_expander(export, var_name, str, env);
+	else
 	{
-		int  k = 0;
-		int j = find_env_var(env, extract_var_name(str));
-		if (j != -1)
-		{
-			if (flag == 0)
-			{
-				flag =1;
-				while (str[i] && str[i] != '=')
-					ret[l++] = str[i++];
-				printf("%sstr[%d] = %c%s\n",YELLOW, i, str[i], RESET);
-				while (str[i] && str[i] != '$')
-					ret[l++] = str[i++];
-				printf("%sstr[%d] = %c%s\n",YELLOW, i, str[i], RESET);
-			}
-			while (env->cpy_env[j][k] != '=')
-				k++;
-			k++;
-			while(env->cpy_env[j][k])
-			{
-				// printf("env[%d] = %c\n", k, env->cpy_env[j][k]);
-				ret[l] = env->cpy_env[j][k++];
-				printf("ret[%d] = %c\n", l, ret[l]);
-				l++;
-			}
-			printf("%sstr[%d] = %c%s\n",BLUE, i, str[i], RESET);
-			i++;
-			printf("%sstr[%d] = %c%s\n",BLUE, i, str[i], RESET);
-			while(str[i] && str[i] != '$')
-			{
-				if (!str[i])
-					break ;
-				i++;
-				printf("str[%d] = %c\n", i, str[i]);
-			}
-			k = 0;
-			m = i;
-			printf("%sstr[%d] = %c\n%s", RED, i, str[i], RESET);
-			while(str[i])
-			{
-				new[k] = str[i++];
-				k++;
-			}
-			printf("%snew[%d] = %c\n%s", MAGENTA, k, new[k], RESET);
-			i = m;
-			new[k++] = '\0';
-		}
-		else
-		{
-			printf("attention derriere on sors\n");
-			break ;
-			// while(str[i] && str[i] != '$')
-			// 	i++;
-		}
+		// printf("ATTENTION derriere on sors\n");
+		add_var_env(env, i, str);
+		// free(str);
+		// free(ret);
+		return (g_exit_status);
 	}
-	ret[l] = '\0';
-	add_var_env(env, i, ret);
-	free(str);
+	// free(str);
 	// free(ret);
 	return (g_exit_status);
 }
-
-/* 
-int	ft_builtin_export(char **args, t_env *env)
-{
-	int		arg_idx;
-	int		i;
-	char	*str;
-
-	i = 0;
-	if (!args[1])
-		return (print_env_vars(env));
-	arg_idx = 1;
-	while (args[arg_idx])
-	{
-		str = handle_quotes_export(args[arg_idx]);
-		if (check_valid_identifier_export(str) == 0)
-		{
-			if (update_var_env(env, str) == 1)
-				return (1);
-			arg_idx++;
-		}
-		else
-			break ;
-	}
-	i = 0;
-	int  k = 0;
-	int j = find_env_var(env, extract_var_name(str));
-	printf("%s j : %d%s\n",GREEN, j, RESET);
-	if (j != -1)
-	{
-		while (str[i] != '=')
-			i++;
-		while (str[i] != '$')
-			i++;
-		if (str[i] == '$')
-		{
-			// ici je veux pas stocker le $ dans la str
-			i++;
-		}
-		while (env->cpy_env[j][k] != '=')
-			k++;
-		if (env->cpy_env[j][k] == '=')
-			k++;
-		while(env->cpy_env[j][k])
-			str[i++] = env->cpy_env[j][k++];
-	}
-	add_var_env(env, i, str);
-	return (g_exit_status);
-}
- */

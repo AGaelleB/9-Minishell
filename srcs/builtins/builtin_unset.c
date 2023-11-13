@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:58:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 10:44:17 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:08:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	find_env_var(t_env *env, char *arg)
 	return (-1);
 }
 
-static void	remove_env_var(t_env *env, int idx)
+void	remove_env_var(t_env *env, int idx)
 {
 	free(env->cpy_env[idx]);
 	while (env->cpy_env[idx + 1])

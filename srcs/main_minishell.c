@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 09:42:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:56:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,9 @@ int main(int ac, char **av, char **envp)
 										TO DO :
 
 nouveau trucs cassés
+
+unset USER;
+not a valid identifier a fix
 
 export PATH=$PATH$PWD
 export PATH=$PATH:$PWD

@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/10 11:00:10 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/13 11:07:56 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS_EXECUTION = srcs/main_minishell.c \
 	srcs/execution/handle_dollars.c \
 	srcs/execution/handle_process.c \
 	srcs/execution/handle_quotes.c \
+	srcs/execution/heredocs_manage.c \
 	srcs/execution/read_fd.c \
 
 SRCS_BUILTINS = srcs/builtins/all_builtins_verifs.c \
@@ -38,6 +39,7 @@ SRCS_BUILTINS = srcs/builtins/all_builtins_verifs.c \
 	srcs/builtins/check_builtins_1.c \
 	srcs/builtins/check_builtins_2.c \
 	srcs/builtins/exec_builtins.c \
+	srcs/builtins/export_utils.c \
 
 SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/check_valid_identifier_export.c \
@@ -129,6 +131,7 @@ SRCS_LIBFT_BONUS = libft/ft_lstadd_back.c \
 	libft/ft_lstnew.c \
 	libft/ft_lstsize.c \
 	libft/ft_realloc.c \
+	libft/ft_strncpy.c \
 
 SRCS_GNL = libft/GNL/get_next_line.c \
 	libft/GNL/get_next_line_utils.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/12 11:15:57 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:49:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,18 @@ typedef struct s_here_doc
 	int	fd[2];
 }	t_here_doc;
 
+typedef struct s_export
+{
+	char	*ret;
+	char	*new;
+	int		flag;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+	int		m;
+}	t_export;
+
 typedef struct s_process_data
 {
 	t_command	*current;
@@ -155,7 +167,6 @@ typedef struct s_process_data
 	t_here_doc	*heredocs;
 	int			current_hd;
 	int			count_hd;
-	
 }	t_process_data;
 
 typedef struct s_command
@@ -180,8 +191,8 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 
-void	handle_signals_heredoc(t_process_data *data, char *line);
-void	handle_heredoc_signals(t_process_data *data, char *line);
+void			handle_signals_heredoc(t_process_data *data, char *line);
+void			handle_heredoc_signals(t_process_data *data, char *line);
 void			ft_close_all_fd(void);
 void			ft_free_all(t_command *current, t_token *token);
 void			ft_free_env(t_env *env);
@@ -193,6 +204,10 @@ char			**split_string_token(char *str, char **delimiters);
 t_token			*handle_multiple_heredocs(t_command *current, t_token *token);
 void			heredoc_open_fd(t_process_data *data, t_command *command, t_token **token);
 int				find_env_var(t_env *env, char *arg);
+void			remove_env_var(t_env *env, int idx);
+char			*extract_var_name(char *str);
+int				export_expander(t_export *export, char *var_name, char *str, t_env *env);
+t_export		*init_export(void);
 
 /***********MAIN***********/
 
@@ -234,6 +249,8 @@ t_command		*get_command(char *input, t_env *env);
 
 void			handle_arg_value(t_arg_handler *arg_handler);
 void			handle_all_process(t_process_data *data, t_env *env);
+
+int				here_doc_ray(t_process_data *data);
 
 void			init_execve(t_command *cur, pid_t **childs_pids);
 int				execve_process(t_command *cur, t_env *env);
@@ -321,6 +338,8 @@ int				write_in_fd(int fd, char *delimiter, t_command *current);
 void			ctrl_c_main(int sig);
 // void			handle_signals_heredoc(void);
 int				ctrl_d_heredoc(char *input, int i, char *delimiter);
+void			ctrl_c_heredoc(int signal);
+
 
 /***********UTILS***********/
 int				is_redirection(char c);
