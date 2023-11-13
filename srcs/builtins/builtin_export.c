@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 11:39:10 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:10:45 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,19 @@ char *extract_var_name(char *str)
 	return (var_name);
 }
 
+// int	check_identifier(char *str)
+// {
+// 	char	*str_cpy;
+// 	int		i;
+
+// 	i = 0;
+// 	while(str[i] != '=')
+// 		i++;
+// 	str_cpy = ft_strdup(str);
+// 	printf("%s : str_cpy \n", str_cpy);
+// 	return (check_after_equal(str_cpy));
+// }
+
 int	ft_builtin_export(char **args, t_env *env)
 {
 	t_export	*export;
@@ -86,20 +99,20 @@ int	ft_builtin_export(char **args, t_env *env)
 	while (args[arg_idx])
 	{
 		str = handle_quotes_export(args[arg_idx]);
-		if (check_valid_identifier_export(str) == 0)
-		{
-			update_var_env(env, str);
+		if (check_before_equal(args[arg_idx]) == 0 && check_after_equal(args[arg_idx]) == 0)
 			arg_idx++;
-		}
 		else
-			break ;
+			return (g_exit_status = 1);
 	}
+	str = handle_quotes_export(args[arg_idx]);
+	printf("ATTENTION derriere on sors\n");
 	export = init_export();
 	var_name = extract_var_name(str);
 	if (var_name)
 		export_expander(export, var_name, str, env);
 	else
 	{
+		update_var_env(env, str);
 		// printf("ATTENTION derriere on sors\n");
 		add_var_env(env, i, str);
 		// free(str);

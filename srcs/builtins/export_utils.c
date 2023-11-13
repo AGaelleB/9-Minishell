@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:16:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/13 11:50:45 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:51:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	copy_env_in_return(t_export *export, t_env *env)
 	export->i++;
 }
 
-void	re_init_var_str(t_export *export, char *str)
+char	*re_init_var_str(t_export *export, char *str)
 {
 	while (ft_isalpha(str[export->i]))
 		export->i++;
@@ -75,20 +75,43 @@ void	re_init_var_str(t_export *export, char *str)
 	}
 	export->i = export->m;
 	export->new[export->k++] = '\0';
+	if (ft_is_all_space(export->new))
+		return (NULL);
+	// printf("%s NEW : %s\n%s", MAGENTA, export->new, RESET);
+	return	(export->new);
+	
 }
 
 int	export_expander(t_export *export, char *var_name, char *str, t_env *env)
 {
-	while (str[export->i])
+	char	*str_cpy;
+	
+
+	str_cpy = ft_strdup(str);
+	while (1)
 	{
 		export->k = 0;
+		// printf("%s STR : %s\n%s", BLUE, str, RESET);
 		var_name = extract_var_name(str);
+		// printf("%svar_name : %s\n%s", MAGENTA, var_name, RESET);
 		export->j = find_env_var(env, var_name);
 		if (export->j != -1)
 		{
 			begin_var(export, str);
 			copy_env_in_return(export, env);
-			re_init_var_str(export, str);
+			str = re_init_var_str(export, str);
+			// printf("%s STR[%d] : %s\n%s", GREEN, export->i, str, RESET);
+			if (!str)
+			{
+				// printf("je suis null je quit\n");
+				update_var_env(env, str_cpy);
+				export->ret[export->l] = '\0';
+				add_var_env(env, export->i, export->ret);
+				free(str);
+				free (var_name);
+				// faire free de la struct export
+				return (g_exit_status);
+			}
 		}
 		else
 		{
@@ -98,10 +121,12 @@ int	export_expander(t_export *export, char *var_name, char *str, t_env *env)
 			return (g_exit_status);
 		}
 	}
-	export->ret[export->l] = '\0';
-	add_var_env(env, export->i, export->ret);
-	free(str);
-	free (var_name);
+	// printf("%s STR[%d] : %s\n%s", YELLOW, export->i, str, RESET);
+	// update_var_env(env, str_cpy);
+	// export->ret[export->l] = '\0';
+	// add_var_env(env, export->i, export->ret);
+	// free(str);
+	// free (var_name);
 	// faire free de la struct export
 	return (g_exit_status);
 }

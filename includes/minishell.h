@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 11:49:35 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:59:42 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,8 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 
+int				check_after_equal(char *str);
+int				check_before_equal(char *s);
 void			handle_signals_heredoc(t_process_data *data, char *line);
 void			handle_heredoc_signals(t_process_data *data, char *line);
 void			ft_close_all_fd(void);
