@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:16:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/13 12:51:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:39:57 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,28 @@ char	*re_init_var_str(t_export *export, char *str)
 	
 }
 
+char	*check_none_var(char *str)
+{
+	char	*str_cpy;
+	int		i;
+	int		y;
+
+	i = 0;
+	y = 0;
+	str_cpy = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	while(str[i])
+	{
+		if(str[i] == '$')
+		{
+			i++;
+			while (ft_isalnum(str[i]))
+				i++;
+		}
+		str_cpy[y++] = str[i++];
+	}
+	return(str_cpy);
+}
+
 int	export_expander(t_export *export, char *var_name, char *str, t_env *env)
 {
 	char	*str_cpy;
@@ -115,6 +137,7 @@ int	export_expander(t_export *export, char *var_name, char *str, t_env *env)
 		}
 		else
 		{
+			str = check_none_var(str);
 			add_var_env(env, export->i, str);
 			free (var_name);
 			// faire free de la struct export

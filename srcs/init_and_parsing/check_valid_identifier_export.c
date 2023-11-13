@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_valid_identifier_export.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:48:37 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 13:09:39 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:13:54 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,20 +136,21 @@ int	check_after_equal(char *str)
 			single_quote = !single_quote;
 		else if (str[i] == '\"')
 			double_quote = !double_quote;
+		// printf("[%d]\n", single_quote);
+		// printf("[%d]\n", single_quote);
 		while (str[i] == ' ' && (double_quote || single_quote))
 		{
-			printf("je suis dans des quotes\n");
+			// printf("je suis dans des quotes\n");
 			i++;
 		}
-		printf("%sstr[%d] = %c\n%s",GREEN, i, str[i], RESET);
-		printf("[%d]\n", single_quote);
-		printf("[%d]\n", single_quote);
+		// printf("%sstr[%d] = %c\n%s",GREEN, i, str[i], RESET);
 		if (is_char_valid(str[i]) == 1)
 		{
-			printf("str[%d] = %c\n", i, str[i]);
+			// printf("str[%d] = %c\n", i, str[i]);
 			return (1);
 		}
 		i++;
 	}
+	// printf("IAM OUT\n");
 	return (0);
 }

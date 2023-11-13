@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 13:10:45 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:16:25 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char *extract_var_name(char *str)
 
 	start = ft_strchr(str, '$');
 	if (!start)
-		return NULL;
+		return (NULL);
 	start++;
 	len = 0;
 	while (start[len]
@@ -98,28 +98,29 @@ int	ft_builtin_export(char **args, t_env *env)
 	arg_idx = 1;
 	while (args[arg_idx])
 	{
-		str = handle_quotes_export(args[arg_idx]);
-		if (check_before_equal(args[arg_idx]) == 0 && check_after_equal(args[arg_idx]) == 0)
-			arg_idx++;
-		else
-			return (g_exit_status = 1);
+		if ((check_before_equal(args[arg_idx]) == 0)
+			&& (check_after_equal(args[arg_idx]) == 0))
+		{
+			str = handle_quotes_export(args[arg_idx]);
+			// printf("str : %s\n", str);
+			export = init_export();
+			var_name = extract_var_name(str);
+			if (var_name)
+				export_expander(export, var_name, str, env);
+			else
+			{
+				update_var_env(env, str);
+				// printf("ATTENTION derriere on sors\n");
+				add_var_env(env, i, str);
+			}
+		}
+		arg_idx++;
 	}
-	str = handle_quotes_export(args[arg_idx]);
-	printf("ATTENTION derriere on sors\n");
-	export = init_export();
-	var_name = extract_var_name(str);
-	if (var_name)
-		export_expander(export, var_name, str, env);
-	else
-	{
-		update_var_env(env, str);
-		// printf("ATTENTION derriere on sors\n");
-		add_var_env(env, i, str);
-		// free(str);
-		// free(ret);
-		return (g_exit_status);
-	}
+	// str = handle_quotes_export(args[arg_idx]);
+	
 	// free(str);
 	// free(ret);
+	// if (flag == 1)
+	// 	return (g_exit_status = 1);
 	return (g_exit_status);
 }
