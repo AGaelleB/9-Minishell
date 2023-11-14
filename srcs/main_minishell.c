@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 17:29:28 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 12:44:21 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,20 +98,20 @@ int	main(int ac, char **av, char **envp)
 {
 	t_env	*env_bis;
 
-	if (isatty(0))
-	{
+	// if (isatty(0))
+	// {
 		if (check_args_and_env(ac, envp))
 			return (1);
 		env_bis = initialize_env(envp);
 		if (!env_bis)
 			return (1);
 		main_loop(env_bis);
-	}
-	else
-	{
-		printf("the standard input is NOT from a terminal\n");
-		return (-1);
-	}
+	// }
+	// else
+	// {
+	// 	printf("the standard input is NOT from a terminal\n");
+	// 	return (-1);
+	// }
 	(void)av;
 	return (0);
 }

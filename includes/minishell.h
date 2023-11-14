@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 11:56:05 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 12:41:00 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ typedef struct s_command
 }	t_command;
 
 int				check_valid_identifier_bis_bis(char c);
-void			exit_with_error(char *message, pid_t *child_pids);
+// void			exit_with_error(char *message, pid_t *child_pids);
 int				check_after_equal(char *str);
 int				check_before_equal(char *s);
 void			handle_signals_heredoc(t_process_data *data, char *line);
