@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 13:06:01 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:02:36 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static void	handle_execve_processes(t_process_data *data, t_env *env)
 void	execve_fd(t_command *current, t_env *env)
 {
 	t_process_data	data;
+	// int				i;
 
+	// i = 0;
 	data.command = current;
 	data.current = current;
 	data.infile = 0;
@@ -62,5 +64,7 @@ void	execve_fd(t_command *current, t_env *env)
 	data.current = current;
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);
+	// while (data.heredocs)
+	// 	free(data.heredocs);
 	cleanup(data.child_pids, data.infile);
 }

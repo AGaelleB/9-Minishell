@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_file_in_out.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:27:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 16:18:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:54:51 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	heredoc_open_fd(t_process_data *data,
 			dup2(command->fd_in, 0);
 			close(command->fd_in);
 		}
+		// free(data->heredocs);
 	}
 }
 

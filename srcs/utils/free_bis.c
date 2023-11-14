@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 17:37:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:10:00 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_free_env(t_env *env)
 
 void	ft_free_all(t_command *current, t_token *token)
 {
+	ft_close_all_fd();
 	if (token)
 		ft_free_token(current);
 	if (current)

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 12:44:21 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:28:42 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	child_main(t_command *current, t_env *env)
 	if (pid == 0)
 	{
 		execve_fd(current, env);
-		ft_close_all_fd();
 		ft_free_all(current, current->token_head);
 		exit(g_exit_status);
 	}
@@ -67,13 +66,15 @@ void	main_loop(t_env *env_bis)
 {
 	t_command	*new_cmd;
 	char		*input;
+	int			flag_ok;
 
+	flag_ok = 0;
 	while (1)
 	{
 		input = readline("minishell$> ");
-		ft_builtin_ctrl_d(input);
-		ft_builtin_write_exit(input);
-		if (error_input(input) == 2 || verif_nb_quote(input) != 0
+		ft_builtin_ctrl_d(input, new_cmd, env_bis, flag_ok);
+		// ft_builtin_write_exit(input);
+		if (error_input(env_bis, new_cmd, input, flag_ok) == 2 || verif_nb_quote(input) != 0
 			|| pipe_syntax_errors(input) == 2)
 			continue ;
 		add_history(input);
@@ -87,39 +88,41 @@ void	main_loop(t_env *env_bis)
 			execve_builtin_cd(new_cmd, env_bis);
 			child_main(new_cmd, env_bis);
 		}
+		flag_ok = 1;
 		free(input);
 	}
-	ft_close_all_fd();
 	ft_free_env(env_bis);
 	ft_free_all(new_cmd, new_cmd->token_head);
+	clear_history();
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_env	*env_bis;
 
-	// if (isatty(0))
-	// {
+	if (isatty(0))
+	{
 		if (check_args_and_env(ac, envp))
 			return (1);
 		env_bis = initialize_env(envp);
 		if (!env_bis)
 			return (1);
 		main_loop(env_bis);
-	// }
-	// else
-	// {
-	// 	printf("the standard input is NOT from a terminal\n");
-	// 	return (-1);
-	// }
+	}
+	else
+	{
+		printf("the standard input is NOT from a terminal\n");
+		return (-1);
+	}
 	(void)av;
 	return (0);
 }
 
 /*
 										TO DO :
-
-EOF et ctrl^c leaks
+minishell$> exit | ls
+exit
+minishell: exit: too many arguments // doit afficher ls
 
 penser a rechercher les truc quon a (void) et voir si utile.
 pareil pour forbiden function et a recoder

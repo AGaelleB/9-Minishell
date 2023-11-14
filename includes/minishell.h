@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 12:41:00 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:14:22 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,8 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 
+int	error_input(t_env *env, t_command *new_cmd, char *input, int flag_ok);
+void	ft_builtin_ctrl_d(char *input, t_command *new_cmd, t_env *env_bis, int flag_ok);
 int				check_valid_identifier_bis_bis(char c);
 // void			exit_with_error(char *message, pid_t *child_pids);
 int				check_after_equal(char *str);
@@ -221,8 +223,6 @@ int				ft_builtin_cd(char **args, t_env *env);
 int				ft_builtin_write_exit_process(char *input);
 
 int				ft_builtin_write_exit(char *input);
-void			ft_builtin_ctrl_d(char *input);
-int				error_input(char *input);
 int				ft_builtin_enter(char *input);
 int				ft_is_all_space(char *input);
 
@@ -297,7 +297,6 @@ void			execve_fd(t_command *current, t_env *env);
 void			write_exit_simple(void);
 int				ft_builtin_enter(char *input);
 int				ft_is_all_space(char *input);
-void			ft_builtin_ctrl_d(char *input);
 
 char			**parse_arg_export(char *input);
 

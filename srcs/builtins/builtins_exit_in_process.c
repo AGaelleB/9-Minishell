@@ -6,15 +6,15 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 11:21:43 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:20:52 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	validate_exit_status_process(char *exit_status_str)
+static int    validate_exit_status_process(char *exit_status_str)
 {
-	int	i;
+	int    i;
 
 	i = 0;
 	if (strcmp(exit_status_str, "-") == 0)
@@ -36,10 +36,10 @@ static int	validate_exit_status_process(char *exit_status_str)
 	return (ft_atoi(exit_status_str));
 }
 
-static char	**parse_exit_args_process(char *input, int *arg_count)
+static char    **parse_exit_args_process(char *input, int *arg_count)
 {
-	char	*exit_status_str;
-	char	**args;
+	char    *exit_status_str;
+	char    **args;
 
 	exit_status_str = ft_strtrim(input + 4, " ");
 	args = ft_split(exit_status_str, ' ');
@@ -50,19 +50,20 @@ static char	**parse_exit_args_process(char *input, int *arg_count)
 	return (args);
 }
 
-static void	handle_exit_with_status_process(char *input)
+static void    handle_exit_with_status_process(char *input)
 {
-	int		arg_count;
-	char	**args;
-	int		i;
-	int		exit_status;
+	int        arg_count;
+	char    **args;
+	int        i;
+	int        exit_status;
 
 	args = parse_exit_args_process(input, &arg_count);
 	i = 0;
 	if (arg_count > 1)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		exit(g_exit_status = 1);
+		g_exit_status = 1;
+		return ;
 	}
 	else
 	{
@@ -75,21 +76,21 @@ static void	handle_exit_with_status_process(char *input)
 	free(args);
 }
 
-int	ft_builtin_write_exit_process(char *input)
+int    ft_builtin_write_exit_process(char *input)
 {
-	char	*str;
+	char    *str;
 
 	str = ft_strtrim(input, " ");
 	if (ft_strcmp_minishell(str, "exit") == 0)
 	{
 		free(str);
-		return (0);
+		return (1);
 	}
 	if (ft_strncmp(str, "exit", 4) == 0)
 	{
 		handle_exit_with_status_process(str);
 		free(str);
-		return (0);
+		return (1);
 	}
 	free(str);
 	return (0);

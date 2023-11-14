@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 15:39:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:51:14 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	handle_quotes(char *input, int *i,
 
 	quote_char = input[*i];
 	count = 0;
-	if ((quote_char == '\"' || quote_char == '\'')
-		&& !(*double_quote && *single_quote))
+	if ((quote_char == '\"' || quote_char == '\'') && !(*double_quote && *single_quote))
 	{
 		while (input[*i] == quote_char)
 		{
@@ -37,6 +36,23 @@ void	handle_quotes(char *input, int *i,
 		}
 	}
 }
+
+
+// static void	handle_quotes(char *str, int *i, bool *double_quote, bool *in_quote)
+// {
+// 	if (!*in_quote && str[*i] == '\"' && str[*i + 1] == '\"')
+// 		(*i) += 2;
+// 	else if (!*double_quote && str[*i] == '\'' && str[*i + 1] == '\'')
+// 		(*i) += 2;
+// 	if (!*double_quote && str[*i] == '\'')
+// 		*in_quote = !*in_quote;
+// 	else if (!*in_quote && str[*i] == '\"')
+// 		*double_quote = !*double_quote;
+// 	if (!*in_quote && str[*i] == '\"')
+// 		(*i)++;
+// 	else if (!*double_quote && str[*i] == '\'')
+// 		(*i)++;
+// }
 
 char	*allocate_and_copy(char *input, int *i, int *arg_idx)
 {

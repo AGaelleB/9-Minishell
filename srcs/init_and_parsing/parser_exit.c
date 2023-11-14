@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:23:27 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 17:26:58 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:24:47 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,18 @@ int	ft_is_all_space(char *input)
 	return (1);
 }
 
-void	ft_builtin_ctrl_d(char *input)
+void	ft_builtin_ctrl_d(char *input, t_command *new_cmd, t_env *env_bis, int flag_ok)
 {
 	if (!input)
 	{
 		write(1, "exit", 5);
 		write(1, "\n", 1);
 		ft_close_all_fd();
+		ft_free_env(env_bis);
+		if (flag_ok == 1)
+		{
+			ft_free_all(new_cmd, new_cmd->token_head);
+		}
 		exit(0);
 	}
 }
