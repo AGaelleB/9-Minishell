@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 14:11:21 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 14:26:58 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,55 +58,62 @@ char	*get_home_directory(t_env *env)
 	return (ft_get_env("HOME", env));
 }
 
-char	*extract_var_name(char *var_name, )
+int	pass_find_var_name(t_env *env, char *var_name, int *i, int j)
+{
+	while (env->path_to_change 
+		&& (ft_isalnum(env->path_to_change[*i])
+		&& env->path_to_change[*i] != '_'
+		&& env->path_to_change[*i] != ':' 
+		&& env->path_to_change[*i] != '$'))
+	{
+		var_name[j++] = env->path_to_change[(*i)++];
+	}
+	return (j = find_env_var(env, var_name));
+}
+
+char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
+{
+	char	*var_name;
+	int		j;
+	int		k;
+	int		l;
+	
+	j = 0;
+	k = 0;
+	l = 0;
+	var_name = malloc(sizeof(char) * SIZE);
+	j = pass_find_var_name(env, var_name, i, j);
+	if (j != -1)
+	{
+		while (env->cpy_env[j][k] != '=')
+			k++;
+		if (env->cpy_env[j][k] == '=')
+			k++;
+		while (env->cpy_env[j][k])
+			var_name[l++] = env->cpy_env[j][k++];
+		var_name[l] = '\0';
+		l = 0;
+		while (var_name[l])
+			ret[(*m)++] = var_name[l++];
+	}
+	return (ret);
+}
 
 char	*check_expender(t_env *env)
 {
 	int		i;
-	int		j;
-	int		k;
-	int		l;
 	int		m;
-	char	*var_name;
 	char	*ret;
 
 	i = 0;
-	j = 0;
-	k = 0;
-	l = 0;
 	m = 0;
-	var_name = malloc(sizeof(char) * SIZE);
 	ret = malloc(sizeof(char) * SIZE);
 	while (env->path_to_change[i])
 	{
 		if (env->path_to_change[i] == '$')
 		{
 			i++;
-			while (env->path_to_change 
-				&& (ft_isalnum(env->path_to_change[i])
-				&& env->path_to_change[i] != '_'
-				&& env->path_to_change[i] != ':' 
-				&& env->path_to_change[i] != '$'))
-			{
-				var_name[j++] = env->path_to_change[i++];
-			}
-			j = find_env_var(env, var_name);
-			if (j != -1)
-			{
-				while (env->cpy_env[j][k] != '=')
-					k++;
-				if (env->cpy_env[j][k] == '=')
-					k++;
-				while (env->cpy_env[j][k])
-				{
-					var_name[l] = env->cpy_env[j][k++];
-					l++;
-				}
-				var_name[l] = '\0';
-				l = 0;
-				while (var_name[l])
-					ret[m++] = var_name[l++];
-			}
+			extract_var_name_cd(env, ret, &i, &m);
 		}
 		ret[m++] = env->path_to_change[i++];
 	}
@@ -134,10 +141,7 @@ int	ft_builtin_cd(char **args, t_env *env)
 	update_env_oldpwd(env);
 	env->path_to_change = check_expender(env);
 	if (chdir(env->path_to_change) == -1)
-	{
-		print_error_cd(env, 1);
-		return (1);
-	}
+		return (print_error_cd(env, 1), 1);
 	env->new_directory = getcwd(NULL, 0);
 	if (env->new_directory)
 		print_error_cd(env, 2);
