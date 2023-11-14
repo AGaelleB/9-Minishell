@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:48:37 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 11:44:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:37:56 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	check_after_equal(char *str)
 	i = 0;
 	single_quote = false;
 	double_quote = false;
-	while (str[i] != '=')
+	while (str[i] != '=' && str[i])
 		i++;
 	if (str[i] == '=')
 		i++;

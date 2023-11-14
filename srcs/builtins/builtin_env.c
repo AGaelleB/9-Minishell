@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:24 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 11:01:13 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:34:20 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,20 @@ void	copy_env(t_env *env, char **envp)
 	env->flag_error = false;
 }
 
+int	check_equal_env(char *str)
+{
+	int	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == '=')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	ft_builtin_env(t_env *env)
 {
 	int		i;
@@ -55,8 +69,11 @@ void	ft_builtin_env(t_env *env)
 	i = 0;
 	while (env->cpy_env[i])
 	{
-		ft_putstr_fd(env->cpy_env[i], STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		if (check_equal_env(env->cpy_env[i]) == 0)
+		{
+			ft_putstr_fd(env->cpy_env[i], STDOUT_FILENO);
+			ft_putchar_fd('\n', STDOUT_FILENO);
+		}
 		i++;
 	}
 	g_exit_status = 0;

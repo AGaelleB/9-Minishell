@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:23:27 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 17:24:47 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:36:28 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ void	ft_builtin_ctrl_d(char *input, t_command *new_cmd, t_env *env_bis, int flag
 		ft_free_env(env_bis);
 		if (flag_ok == 1)
 		{
-			ft_free_all(new_cmd, new_cmd->token_head);
+			(void)env_bis;
+			(void)new_cmd;
+		// 	ft_free_all(new_cmd, new_cmd->token_head);
 		}
 		exit(0);
 	}
