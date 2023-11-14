@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 15:49:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:22:34 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,8 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 
+
+void			exit_with_error(char *message, pid_t *child_pids);
 int				check_after_equal(char *str);
 int				check_before_equal(char *s);
 void			handle_signals_heredoc(t_process_data *data, char *line);

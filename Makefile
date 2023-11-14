@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
+#    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/13 15:48:39 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/14 10:22:12 by bfresque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ SRCS_SIGNALS = srcs/signals/signal_exit.c \
 SRCS_UTILS = srcs/utils/check_redirections.c \
 	srcs/utils/check_syntax_caracteres.c \
 	srcs/utils/check_syntax_pipes.c \
+	srcs/utils/exit_error_bis.c \
 	srcs/utils/exit_error.c \
 	srcs/utils/count_args.c \
 	srcs/utils/free_bis.c \

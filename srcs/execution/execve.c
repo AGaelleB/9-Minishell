@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 17:52:51 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:18:34 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,15 @@ int	execve_process(t_command *cur, t_env *env)
 	ft_set_args_and_paths(cur, env);
 	if (env->flag_error || is_builtin(cur) == 2)
 		exit(g_exit_status);
-	if (verif_access(cur, cur->command) == 1)
-		exit(126);
+	if (verif_access(cur, cur->command) != 0)
+		exit(g_exit_status);
 	if ((cur->command_path == NULL) && is_builtin(cur) == 0)
 	{
 		write(2, "minishell: ", 11);
 		write(2, cur->command_arg[0], ft_strlen(cur->command_arg[0]));
 		write(2, " :command not found", 19);
 		write(2, "\n", 1);
-		g_exit_status = 127;
-		exit(g_exit_status);
+		exit(g_exit_status = 127);
 	}
 	else if ((cur->command_path)
 		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))
