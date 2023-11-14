@@ -6,13 +6,14 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 15:33:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:29:28 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_exit_status;
+
 
 void	child_main(t_command *current, t_env *env)
 {

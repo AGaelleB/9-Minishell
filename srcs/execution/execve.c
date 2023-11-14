@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 15:38:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:52:51 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	execve_process(t_command *cur, t_env *env)
 		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))
 	{
 		perror("Error ");
-		return (-1);
+		return (g_exit_status = 126);
 	}
 	return (0);
 }

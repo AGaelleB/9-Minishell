@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/12 13:33:53 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:51:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void	execve_builtin_cd(t_command *cmd, t_env *env_bis)
 		&& (cmd->nb_pipes == 0))
 	{
 		if (count_cd_args(cmd->command) > 2)
+		{
+			g_exit_status = 1;
 			ft_putstr_fd("cd: too many arguments\n", 2);
+		}
 		else
 			ft_builtin_cd(cmd->command_arg, env_bis);
 	}

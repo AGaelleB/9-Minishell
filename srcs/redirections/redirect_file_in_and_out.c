@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_file_in_and_out.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/10/12 09:38:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:49:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*verif_file_name(t_token *token, t_token *token_head)
 			ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
 			ft_putchar_fd(file_name[0], 2);
 			ft_putstr_fd("\n", 2);
-			exit(-1);
+			exit(g_exit_status = 2);
 		}
 	}
 	return (file_name);
@@ -46,7 +46,7 @@ int	redirect_file_out(t_command *current, t_token *token, t_token *token_head)
 	{
 		write(1, "minishell: ", 12);
 		perror(filename);
-		exit(-1);
+		exit(g_exit_status = 1);
 	}
 	return (0);
 }
@@ -63,7 +63,7 @@ int	redirect_file_in(t_command *current, t_token *token, t_token *token_head)
 	{
 		write(1, "minishell: ", 12);
 		perror(filename);
-		exit(-1);
+		exit(g_exit_status = 1);
 	}
 	return (0);
 }
@@ -81,7 +81,7 @@ int	redirect_append_file_out(t_command *current,
 	{
 		write(1, "minishell: ", 12);
 		perror(filename);
-		exit(-1);
+		exit(g_exit_status = 1);
 	}
 	return (0);
 }
