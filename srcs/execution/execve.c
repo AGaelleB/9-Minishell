@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 12:39:49 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 12:53:07 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ int	execve_process(t_command *cur, t_env *env)
 	else if ((cur->command_path)
 		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))
 	{
-		perror("Error ");
-		return (g_exit_status = 126);
+		write(2, "minishell: ", 11);
+		write(2, cur->command_arg[0], ft_strlen(cur->command_arg[0]));
+		write(2, " :command not found", 19);
+		write(2, "\n", 1);
+		exit(g_exit_status = 127);
 	}
 	return (0);
 }

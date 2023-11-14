@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_builtins_verifs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/02 14:53:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 12:55:49 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	error_input(char *input)
 	{
 		printf("minishell: : command not found\n");
 		free(input);
+		g_exit_status = 127;
 		return (2);
 	}
 	return (0);
