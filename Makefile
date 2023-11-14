@@ -6,7 +6,7 @@
 #    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/14 10:22:12 by bfresque         ###   ########.fr        #
+#    Updated: 2023/11/14 11:21:04 by bfresque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS_BUILTINS = srcs/builtins/all_builtins_verifs.c \
 	srcs/builtins/builtin_export.c \
 	srcs/builtins/builtin_pwd.c \
 	srcs/builtins/builtin_unset.c \
+	srcs/builtins/builtins_exit_in_process.c \
 	srcs/builtins/builtins_exit.c \
 	srcs/builtins/check_builtins_1.c \
 	srcs/builtins/check_builtins_2.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 16:05:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:39:45 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*extract_var_name(char *str)
 	return (var_name);
 }
 
-void	process_arg(char *arg, t_env *env, int *i)
+int	process_arg(char *arg, t_env *env, int *i)
 {
 	t_export	*export;
 	char		*str;
@@ -83,7 +83,7 @@ void	process_arg(char *arg, t_env *env, int *i)
 		export = init_export();
 		var_name = extract_var_name(str);
 		if (var_name)
-			export_expander(export, var_name, str, env);
+			export_expander(export, str, env);
 		else
 		{
 			update_var_env(env, str);
@@ -92,6 +92,10 @@ void	process_arg(char *arg, t_env *env, int *i)
 		// free(var_name);
 		// free(str);
 	}
+	else
+		return (g_exit_status);
+	return (0);
+	
 }
 
 int	ft_builtin_export(char **args, t_env *env)
@@ -105,7 +109,8 @@ int	ft_builtin_export(char **args, t_env *env)
 	arg_idx = 1;
 	while (args[arg_idx])
 	{
-		process_arg(args[arg_idx], env, &i);
+		if (process_arg(args[arg_idx], env, &i) != 0)
+			return (g_exit_status);
 		arg_idx++;
 	}
 	// free(str);

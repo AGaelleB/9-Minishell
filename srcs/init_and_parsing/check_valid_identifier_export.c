@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_valid_identifier_export.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:48:37 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 16:19:14 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:44:02 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	print_error_export(char *s, int ok)
 		while (s[i] && s[i] != '=')
 			ft_putchar_fd(s[i++], 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
-		return (1);
+		return (g_exit_status = 1);
 	}
 	return (0);
 }
@@ -55,6 +55,37 @@ int	check_valid_identifier(char c)
 		return (0);
 }
 
+int	check_valid_identifier_bis(char c)
+{
+	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
+		|| c == ' ' || c == ',' || c == '.'
+		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
+		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
+		|| c == '~'
+		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*')
+	{
+		return (1);
+	}
+	else
+		return (0);
+}
+
+int	check_valid_identifier_bis_bis(char c)
+{
+	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
+		|| c == ' ' || c == ',' || c == '.'
+		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
+		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
+		|| c == '~' || c == '$'
+		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*')
+	{
+		return (1);
+	}
+	else
+		return (0);
+}
+
+
 int	check_before_equal(char *s)
 {
 	int		i;
@@ -64,9 +95,9 @@ int	check_before_equal(char *s)
 		i++;
 	if (s[i] == '\0')
 		return (print_error_export(s, 1));
-	if (ft_isdigit(s[0]) || check_valid_identifier(s[0]))
+	if (ft_isdigit(s[0]) || check_valid_identifier_bis_bis(s[0]))
 		return (print_error_export(s, 1));
-	i = 0;
+	i = 1;
 	while (s[i] != '=')
 	{
 		if (s[i] == '\0')
@@ -99,7 +130,7 @@ int	check_after_equal(char *str)
 			double_quote = !double_quote;
 		while (str[i] == ' ' && (double_quote || single_quote))
 			i++;
-		if (is_char_valid(str[i]) == 1)
+		if ((!double_quote && !single_quote) && (check_valid_identifier_bis(str[i]) == 1))
 			return (1);
 		i++;
 	}

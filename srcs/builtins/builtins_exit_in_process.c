@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_exit.c                                    :+:      :+:    :+:   */
+/*   builtins_exit_in_process.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 10:27:15 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:21:43 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	validate_exit_status(char *exit_status_str)
+static int	validate_exit_status_process(char *exit_status_str)
 {
 	int	i;
 
 	i = 0;
 	if (strcmp(exit_status_str, "-") == 0)
 	{
-		write(2, "exit\n", 5);
 		ft_putstr_fd("minishell: exit: -: numeric argument required\n", 2);
 		exit(g_exit_status = 2);
 	}
@@ -27,7 +26,6 @@ static int	validate_exit_status(char *exit_status_str)
 	{
 		if (!(ft_isdigit(exit_status_str[i])) && exit_status_str[i] != '-')
 		{
-			write(2, "exit\n", 5);
 			ft_putstr_fd("minishell: exit: ", 2);
 			write(2, exit_status_str, ft_strlen(exit_status_str));
 			ft_putstr_fd(": numeric argument required\n", 2);
@@ -38,7 +36,7 @@ static int	validate_exit_status(char *exit_status_str)
 	return (ft_atoi(exit_status_str));
 }
 
-static char	**parse_exit_args(char *input, int *arg_count)
+static char	**parse_exit_args_process(char *input, int *arg_count)
 {
 	char	*exit_status_str;
 	char	**args;
@@ -52,25 +50,23 @@ static char	**parse_exit_args(char *input, int *arg_count)
 	return (args);
 }
 
-static void	handle_exit_with_status(char *input)
+static void	handle_exit_with_status_process(char *input)
 {
 	int		arg_count;
 	char	**args;
 	int		i;
 	int		exit_status;
 
-	args = parse_exit_args(input, &arg_count);
+	args = parse_exit_args_process(input, &arg_count);
 	i = 0;
 	if (arg_count > 1)
 	{
-		write(2, "exit\n", 5);
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		exit(g_exit_status = 1);
 	}
 	else
 	{
-		exit_status = validate_exit_status(args[0]);
-		write(2, "exit\n", 5);
+		exit_status = validate_exit_status_process(args[0]);
 		g_exit_status = exit_status;
 		exit(g_exit_status);
 	}
@@ -79,20 +75,19 @@ static void	handle_exit_with_status(char *input)
 	free(args);
 }
 
-int	ft_builtin_write_exit(char *input)
+int	ft_builtin_write_exit_process(char *input)
 {
 	char	*str;
 
 	str = ft_strtrim(input, " ");
 	if (ft_strcmp_minishell(str, "exit") == 0)
 	{
-		write_exit_simple();
 		free(str);
 		return (0);
 	}
 	if (ft_strncmp(str, "exit", 4) == 0)
 	{
-		handle_exit_with_status(str);
+		handle_exit_with_status_process(str);
 		free(str);
 		return (0);
 	}

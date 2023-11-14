@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:16:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/13 16:16:48 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:59:23 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*check_none_var(char *str)
 		if (str[i] == '$')
 		{
 			i++;
-			while (ft_isalnum(str[i]))
+			while (ft_isalnum(str[i]))// && check_valid_identifier_bis_bis(str[i]) == 0)
 				i++;
 		}
 		str_cpy[y++] = str[i++];
@@ -54,19 +54,19 @@ int	expand_variable(t_export *export, char **str, t_env *env)
 		else
 		{
 			*str = check_none_var(*str);
+			add_var_env(env, export->i, *str);
 			free(var_name);
-			return (0);
+			return (1);
 		}
 		free(var_name);
 	}
 }
 
-int	export_expander(t_export *export, char *var_name, char *str, t_env *env)
+int	export_expander(t_export *export, char *str, t_env *env)
 {
 	char	*str_cpy;
 
 	str_cpy = ft_strdup(str);
-	(void)var_name;
 	if (expand_variable(export, &str, env) == 0)
 	{
 		update_var_env(env, str_cpy);

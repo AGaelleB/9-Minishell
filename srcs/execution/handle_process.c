@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 15:36:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:20:32 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	handle_child_process(t_process_data *data, t_env *env)
 	}
 	// ft_close_fd(); //close a partir du current_hds et le fdin avant et apres // +25 lignes
 	open_fd(data, data->current);
-	ft_builtin_write_exit(data->current->command);
+	ft_builtin_write_exit_process(data->current->command);
 	if (builtins_verif(data->current, env) == 1)
 	{
 		ft_close_all_fd();

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 10:22:34 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:56:05 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 
-
+int				check_valid_identifier_bis_bis(char c);
 void			exit_with_error(char *message, pid_t *child_pids);
 int				check_after_equal(char *str);
 int				check_before_equal(char *s);
@@ -209,7 +209,7 @@ void			heredoc_open_fd(t_process_data *data, t_command *command, t_token **token
 int				find_env_var(t_env *env, char *arg);
 void			remove_env_var(t_env *env, int idx);
 char			*extract_var_name(char *str);
-int				export_expander(t_export *export, char *var_name, char *str, t_env *env);
+int				export_expander(t_export *export, char *str, t_env *env);
 t_export		*init_export(void);
 
 /***********MAIN***********/
@@ -217,6 +217,8 @@ t_export		*init_export(void);
 /***********BUILTINS***********/
 void			update_env_pwd(t_env *env, char *new_pwd);
 int				ft_builtin_cd(char **args, t_env *env);
+
+int				ft_builtin_write_exit_process(char *input);
 
 int				ft_builtin_write_exit(char *input);
 void			ft_builtin_ctrl_d(char *input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/13 10:24:58 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:16:49 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,20 @@ void	count_and_set_pipes(char *input, t_command *current)
 {
 	int	count;
 	int	i;
+	bool	single_q;
+	bool	double_q;
 
 	count = 0;
 	i = 0;
+	single_q = false;
+	double_q = false;
 	while (input[i])
 	{
-		if (input[i] == '|')
+		if (input[i] == '\'')
+			single_q = !single_q;
+		else if (input[i] == '\"')
+			double_q = !double_q;
+		if ((!double_q && !single_q) && input[i] == '|')
 			count++;
 		i++;
 	}
