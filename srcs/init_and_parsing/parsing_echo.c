@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:49:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/13 15:40:33 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:06:40 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ char	**parse_input_quote_echo(t_env *env, char *input)
 	parser.i = is_redir_at_beginning(input, 0);
 	arg_count = count_args_single_quotes(input);
 	parser.args = malloc((arg_count + 1) * sizeof(char *));
-	parser.in_quote = false;
-	parser.idx = 0;
 	if (!parser.args)
 		return (NULL);
+	parser.in_quote = false;
+	parser.idx = 0;
 	while (input[parser.i])
 	{
 		parser.args = copy_argument_echo(env, &parser, input);

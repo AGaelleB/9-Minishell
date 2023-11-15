@@ -6,35 +6,11 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 14:26:58 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:26:44 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	update_env_pwd(t_env *env, char *new_pwd)
-{
-	env->pwd_index = find_env_var(env, "PWD");
-	if (env->pwd_index != -1)
-	{
-		free(env->cpy_env[env->pwd_index]);
-		env->cpy_env[env->pwd_index] = ft_strjoin("PWD=", new_pwd);
-	}
-}
-
-void	update_env_oldpwd(t_env *env) // a tester
-{
-	char	*current_pwd;
-
-	env->oldpwd_index = find_env_var(env, "OLDPWD");
-	current_pwd = getcwd(NULL, 0);
-	if (env->oldpwd_index != -1 && current_pwd)
-	{
-		free(env->cpy_env[env->oldpwd_index]);
-		env->cpy_env[env->oldpwd_index] = ft_strjoin("OLDPWD=", current_pwd);
-	}
-	free(current_pwd);
-}
 
 char	*ft_get_env(const char *name, t_env *env)
 {
@@ -53,18 +29,13 @@ char	*ft_get_env(const char *name, t_env *env)
 	return (NULL);
 }
 
-char	*get_home_directory(t_env *env)
-{
-	return (ft_get_env("HOME", env));
-}
-
 int	pass_find_var_name(t_env *env, char *var_name, int *i, int j)
 {
-	while (env->path_to_change 
+	while (env->path_to_change
 		&& (ft_isalnum(env->path_to_change[*i])
-		&& env->path_to_change[*i] != '_'
-		&& env->path_to_change[*i] != ':' 
-		&& env->path_to_change[*i] != '$'))
+			&& env->path_to_change[*i] != '_'
+			&& env->path_to_change[*i] != ':'
+			&& env->path_to_change[*i] != '$'))
 	{
 		var_name[j++] = env->path_to_change[(*i)++];
 	}
@@ -77,11 +48,13 @@ char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
 	int		j;
 	int		k;
 	int		l;
-	
+
 	j = 0;
 	k = 0;
 	l = 0;
 	var_name = malloc(sizeof(char) * SIZE);
+	if (!var_name)
+		return (NULL);
 	j = pass_find_var_name(env, var_name, i, j);
 	if (j != -1)
 	{
@@ -96,7 +69,7 @@ char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
 		while (var_name[l])
 			ret[(*m)++] = var_name[l++];
 	}
-	return (ret);
+	return (free(var_name), ret);// free NEW
 }
 
 char	*check_expender(t_env *env)
@@ -108,6 +81,8 @@ char	*check_expender(t_env *env)
 	i = 0;
 	m = 0;
 	ret = malloc(sizeof(char) * SIZE);
+	if (!ret)
+		return (NULL);
 	while (env->path_to_change[i])
 	{
 		if (env->path_to_change[i] == '$')
@@ -127,7 +102,7 @@ int	ft_builtin_cd(char **args, t_env *env)
 
 	if (args[1] == NULL || ft_strcmp_minishell(args[1], "~") == 0)
 	{
-		home = get_home_directory(env);
+		home = ft_get_env("HOME", env);
 		if (!home)
 		{
 			write(2, "minishell: cd: HOME not set\n", 29);

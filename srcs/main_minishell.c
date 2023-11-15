@@ -6,14 +6,13 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 16:31:29 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:39:04 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_exit_status;
-
 
 void	child_main(t_command *current, t_env *env)
 {
@@ -74,7 +73,8 @@ void	main_loop(t_env *env_bis)
 		input = readline("minishell$> ");
 		ft_builtin_ctrl_d(input, new_cmd, env_bis, flag_ok);
 		// ft_builtin_write_exit(input);
-		if (error_input(env_bis, new_cmd, input, flag_ok) == 2 || verif_nb_quote(input) != 0
+		if (error_input(env_bis, new_cmd, input, flag_ok) == 2
+			|| verif_nb_quote(input) != 0
 			|| pipe_syntax_errors(input) == 2)
 			continue ;
 		add_history(input);
@@ -111,8 +111,8 @@ int	main(int ac, char **av, char **envp)
 	// }
 	// else
 	// {
-		// printf("the standard input is NOT from a terminal\n");
-		// return (-1);
+	// 	printf("the standard input is NOT from a terminal\n");
+	// 	return (-1);
 	// }
 	(void)av;
 	return (0);

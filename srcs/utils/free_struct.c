@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 15:37:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:14:46 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_free_tab(char **tab)
+void	ft_free_env(t_env *env)
 {
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	// printf("%sje commance a free env\n%s", BLUE, RESET);
+	while (env->cpy_env[i])
 	{
-		free(tab[i]);
+		free(env->cpy_env[i]);
 		i++;
 	}
-	free(tab);
+	free(env->cpy_env);
+	free(env);
+}
+
+void	free_export(t_export *export)
+{
+	if (export->new)
+		free(export->new);
+	if (export->ret)
+		free(export->ret);
+	if (export)
+		free(export);
 }
 
 void	ft_free_herdocs(t_command *current)

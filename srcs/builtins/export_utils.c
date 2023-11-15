@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:16:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/15 15:25:12 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:02:38 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*check_none_var(char *str)
 	i = 0;
 	y = 0;
 	str_cpy = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!str_cpy)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '$')

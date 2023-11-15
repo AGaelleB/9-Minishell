@@ -6,15 +6,15 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 17:20:52 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:28:21 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int    validate_exit_status_process(char *exit_status_str)
+static int	validate_exit_status_process(char *exit_status_str)
 {
-	int    i;
+	int	i;
 
 	i = 0;
 	if (strcmp(exit_status_str, "-") == 0)
@@ -36,10 +36,10 @@ static int    validate_exit_status_process(char *exit_status_str)
 	return (ft_atoi(exit_status_str));
 }
 
-static char    **parse_exit_args_process(char *input, int *arg_count)
+static char	**parse_exit_args_process(char *input, int *arg_count)
 {
-	char    *exit_status_str;
-	char    **args;
+	char	*exit_status_str;
+	char	**args;
 
 	exit_status_str = ft_strtrim(input + 4, " ");
 	args = ft_split(exit_status_str, ' ');
@@ -50,12 +50,12 @@ static char    **parse_exit_args_process(char *input, int *arg_count)
 	return (args);
 }
 
-static void    handle_exit_with_status_process(char *input)
+static void	handle_exit_with_status_process(char *input)
 {
-	int        arg_count;
-	char    **args;
-	int        i;
-	int        exit_status;
+	int		arg_count;
+	char	**args;
+	int		i;
+	int		exit_status;
 
 	args = parse_exit_args_process(input, &arg_count);
 	i = 0;
@@ -76,9 +76,9 @@ static void    handle_exit_with_status_process(char *input)
 	free(args);
 }
 
-int    ft_builtin_write_exit_process(char *input)
+int	ft_builtin_write_exit_process(char *input)
 {
-	char    *str;
+	char	*str;
 
 	str = ft_strtrim(input, " ");
 	if (ft_strcmp_minishell(str, "exit") == 0)

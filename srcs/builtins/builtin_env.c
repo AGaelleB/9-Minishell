@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:24 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 17:34:20 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:19:02 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_equal_env(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '=')
 			return (0);

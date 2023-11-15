@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:42:22 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 09:54:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:07:53 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ char	**alloc_tokens(const char *str, char delimiter)
 	token_count = count_tokens(str, delimiter);
 	tokens = malloc((token_count + 1) * sizeof(char *));
 	if (!tokens)
+	{
 		perror("malloc");
+		return (NULL);
+	}
 	return (tokens);
 }
 

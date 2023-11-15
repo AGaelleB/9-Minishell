@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 14:32:38 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/14 11:16:49 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:36:42 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void	count_and_set_pipes(char *input, t_command *current)
 {
-	int	count;
-	int	i;
-	bool	single_q;
-	bool	double_q;
+	int		count;
+	int		i;
+	bool	single_quotes;
+	bool	double_quotes;
 
 	count = 0;
 	i = 0;
-	single_q = false;
-	double_q = false;
+	single_quotes = false;
+	double_quotes = false;
 	while (input[i])
 	{
 		if (input[i] == '\'')
-			single_q = !single_q;
+			single_quotes = !single_quotes;
 		else if (input[i] == '\"')
-			double_q = !double_q;
-		if ((!double_q && !single_q) && input[i] == '|')
+			double_quotes = !double_quotes;
+		if ((!double_quotes && !single_quotes) && input[i] == '|')
 			count++;
 		i++;
 	}

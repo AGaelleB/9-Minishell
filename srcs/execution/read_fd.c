@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 16:34:13 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:29:16 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ static void	handle_execve_processes(t_process_data *data, t_env *env)
 void	execve_fd(t_command *current, t_env *env)
 {
 	t_process_data	data;
-	// int				i;
 
-	// i = 0;
 	data.command = current;
 	data.current = current;
 	data.infile = 0;

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:55:59 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 12:22:55 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:05:25 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*handle_quotes_export(char *str)
 	y = 0;
 	single_quote = false;
 	double_quote = false;
-	dest = malloc(sizeof(char) * SIZE); // WARNING TAPIE
+	dest = malloc(sizeof(char) * SIZE);
 	if (!dest)
 		return (NULL);
 	while (str[i])

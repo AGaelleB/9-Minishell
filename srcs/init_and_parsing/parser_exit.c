@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:23:27 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 11:02:30 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:30:58 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	ft_is_all_space(char *input)
 	return (1);
 }
 
-void	ft_builtin_ctrl_d(char *input, t_command *new_cmd, t_env *env_bis, int flag_ok)
+void	ft_builtin_ctrl_d(char *input, t_command *new_cmd,
+	t_env *env_bis, int flag_ok)
 {
 	if (!input)
 	{

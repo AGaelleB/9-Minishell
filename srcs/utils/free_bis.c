@@ -6,11 +6,24 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 15:10:00 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:14:41 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	ft_free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
 
 void	free_tokens(char **tokens, int num)
 {
@@ -34,21 +47,6 @@ char	**free_token_split(char **tokens)
 		free(tokens[i++]);
 	free(tokens);
 	return (NULL);
-}
-
-void	ft_free_env(t_env *env)
-{
-	int	i;
-
-	i = 0;
-	// printf("%sje commance a free env\n%s", BLUE, RESET);
-	while (env->cpy_env[i])
-	{
-		free(env->cpy_env[i]);
-		i++;
-	}
-	free(env->cpy_env);
-	free(env);
 }
 
 void	ft_free_all(t_command *current, t_token *token)

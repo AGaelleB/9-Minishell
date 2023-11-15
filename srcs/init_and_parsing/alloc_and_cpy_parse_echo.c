@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/14 17:01:19 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:35:12 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_allocate_and_copy(t_arg_handler *arg_handler)
 	size_of_argument = calculate_size_of_argument(arg_handler->input);
 	arg = malloc(sizeof(char) * (size_of_argument + 1));
 	if (!arg)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	arg_handler->arg = arg;
 	arg_idx = arg_handler->arg_idx;
 	*arg_idx = 0;

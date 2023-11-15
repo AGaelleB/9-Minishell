@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 10:16:45 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:23:56 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ret_place_var(t_command *current, t_env *env, char *str)
 	j = 0;
 	while (current->command[i]
 		&& ((ft_isalnum(current->command[i]))
-		|| (current->command[i] == '_')))
+			|| (current->command[i] == '_')))
 	{
 		str[j++] = current->command[i++];
 	}
@@ -72,33 +72,18 @@ int	ret_place_var(t_command *current, t_env *env, char *str)
 	return (i);
 }
 
-void	print_expander_cmd(t_env *env, char *str, int i)
-{
-	int		j;
-	int		k;
-
-	j = 0;
-	k = 0;
-	while (env->cpy_env[i][j] && env->cpy_env[i][j] != '=')
-		j++;
-	j++;
-	while (env->cpy_env[i][j])
-		str[k++] = env->cpy_env[i][j++];
-	write(1, "minishell: ", 11);
-	ft_putstr_fd(str, 1);
-	write(1, ": command not found\n", 21);
-}
-
 int	check_expand(t_command *current, t_env *env)
 {
 	int		i;
 	char	*str;
 
-	str = malloc(sizeof(char) * SIZE);
 	if (current->command[0] == '$')
 	{
 		if (check_g_expander(current) == 1)
-			return (free(str), 1);
+			return (1);
+		str = malloc(sizeof(char) * SIZE);
+		if (!str)
+			return (-1);
 		i = ret_place_var(current, env, str);
 		if (i != -1)
 		{
@@ -107,8 +92,8 @@ int	check_expand(t_command *current, t_env *env)
 			g_exit_status = 127;
 			return (1);
 		}
+		free(str);
 	}
-	free(str);
 	return (0);
 }
 

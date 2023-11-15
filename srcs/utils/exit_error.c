@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 12:41:32 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:37:24 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	verif_access(t_command *current, char *command)
 		write(2, "\n", 1);
 		exit(g_exit_status = 127);
 	}
-	if ((command[0] == '.' && command[1] == ' ') || (command[0] == '.' && !(command[1])))
+	if ((command[0] == '.' && command[1] == ' ') || (command[0] == '.'
+			&& !(command[1])))
 	{
 		write(2, ".: usage: . filename [arguments]", 33);
 		write(2, "\n", 1);
