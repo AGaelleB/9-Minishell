@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 14:35:48 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:34:07 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	here_doc_manage(t_process_data *data, int fd[2], char *delimiter)
 			return (result);
 		i++;
 	}
-	signal(SIGQUIT, ctrl_c_main);
+	signal(SIGQUIT, ctrl_c_heredoc);
 	return (0);
 }
 
@@ -103,7 +103,7 @@ int	here_doc_ray(t_process_data *data)
 		heredoc_interrupted = manage_single_heredoc(data, i);
 		i++;
 	}
-	signal(SIGQUIT, ctrl_c_main);
+	signal(SIGQUIT, ctrl_c_heredoc);
 	if (heredoc_interrupted)
 		return (-1);
 	else

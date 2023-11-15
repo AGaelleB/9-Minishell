@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:16:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/14 11:59:23 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:25:12 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*check_none_var(char *str)
 		if (str[i] == '$')
 		{
 			i++;
-			while (ft_isalnum(str[i]))// && check_valid_identifier_bis_bis(str[i]) == 0)
+			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_')) //MODIF ICI
 				i++;
 		}
 		str_cpy[y++] = str[i++];
@@ -67,7 +67,7 @@ int	export_expander(t_export *export, char *str, t_env *env)
 	char	*str_cpy;
 
 	str_cpy = ft_strdup(str);
-	if (expand_variable(export, &str, env) == 0)
+	if (expand_variable(export, &str, env) == 0) // pb du fait qu'on renvoie l'adresse ? &str
 	{
 		update_var_env(env, str_cpy);
 		export->ret[export->l] = '\0';
@@ -76,5 +76,34 @@ int	export_expander(t_export *export, char *str, t_env *env)
 		free(str);
 		return (g_exit_status);
 	}
+	// free(str_cpy);
 	return (g_exit_status);
 }
+
+/* int	expand_variable(t_export *export, char *str, t_env *env)
+{
+	char	*var_name;
+
+	while (1)
+	{
+		export->k = 0;
+		var_name = extract_var_name(str);
+		export->j = find_env_var(env, var_name);
+		if (export->j != -1)
+		{
+			begin_var(export, str);
+			copy_env_in_return(export, env);
+			str = re_init_var_str(export, str);
+			if (!(str))
+				return (free(var_name), 0);
+		}
+		else
+		{
+			str = check_none_var(str);
+			add_var_env(env, export->i, str);
+			free(var_name);
+			return (1);
+		}
+		free(var_name);
+	}
+} */

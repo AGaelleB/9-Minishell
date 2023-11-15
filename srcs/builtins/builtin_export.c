@@ -6,16 +6,16 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 11:39:45 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:30:56 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_export(char *str, int fd)
+void print_export(char *str, int fd)
 {
-	int	i;
-	int	flag;
+	int i;
+	int flag;
 
 	flag = 0;
 	i = 0;
@@ -33,9 +33,9 @@ void	print_export(char *str, int fd)
 		ft_putchar_fd('\"', fd);
 }
 
-static int	print_env_vars(t_env *env)
+static int print_env_vars(t_env *env)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (env->cpy_env[i])
@@ -48,60 +48,103 @@ static int	print_env_vars(t_env *env)
 	return (1);
 }
 
-char	*extract_var_name(char *str)
+char *extract_var_name(char *str)
 {
-	char	*start;
-	char	*var_name;
-	int		len;
+	char *start;
+	char *var_name;
+	int len;
 
 	start = ft_strchr(str, '$');
 	if (!start)
 		return (NULL);
 	start++;
 	len = 0;
-	while (start[len]
-		&& (ft_isalnum(start[len]) && start[len] != '_'
-			&& start[len] != ':' && start[len] != '$'))
+	while (start[len] && ((ft_isalnum(start[len]) || start[len] == '_')
+		&& start[len] != ':' && start[len] != '$'))
 		len++;
 	var_name = malloc(len + 1);
 	if (!var_name)
 		return (NULL);
 	ft_strncpy(var_name, start, len);
 	var_name[len] = '\0';
+	// free() //jsp si besoin
 	return (var_name);
 }
 
-int	process_arg(char *arg, t_env *env, int *i)
+void free_export(t_export *export)
+{
+	if (export->new)
+		export->new = malloc(sizeof(char) * SIZE);
+	if (export->ret)
+		export->ret = malloc(sizeof(char) * SIZE);
+	if (export)
+		export = malloc(sizeof(t_export));
+}
+
+void	check_invalid_var(t_env *env, char *str)
+{
+	char	*var_name;
+	int		i;
+	int		j;
+
+	j = 0;
+	if (str[0] == '$')
+	{
+		var_name = extract_var_name(str);
+		i = find_env_var(env, var_name);
+		if (i != -1)
+		{
+			ft_putstr_fd("minishell: export: `", 1);
+			while (env->cpy_env[i][j] && env->cpy_env[i][j] != '=')
+				j++;
+			j++;
+			while (env->cpy_env[i][j])
+				ft_putchar_fd(env->cpy_env[i][j++], 1);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+		}
+		else
+			print_env_vars(env);
+		free(var_name);
+	}
+	return ;
+}
+
+int process_arg(char *arg, t_env *env, int *i)
 {
 	t_export	*export;
 	char		*str;
 	char		*var_name;
 
-	if ((check_before_equal(arg) == 0) && (check_after_equal(arg) == 0))
+	
+	// str = NULL;
+	// str = malloc(sizeof(char) * SIZE);
+	// str = malloc(sizeof(char) * ft_strlen(arg));
+	if ((check_before_equal(arg) == 0) && (check_after_equal(arg) == 0) )
 	{
+		str = ft_strdup(arg);
 		str = handle_quotes_export(arg);
 		export = init_export();
 		var_name = extract_var_name(str);
 		if (var_name)
-			export_expander(export, str, env);
+			export_expander(export, str, env);// str uninitialised
 		else
 		{
 			update_var_env(env, str);
 			add_var_env(env, *i, str);
 		}
-		// free(var_name);
-		// free(str);
+		free(var_name);
+		// free(str); // fait SEG/bug apres le ctrl^d pour quitter ./minishell
 	}
 	else
-		return (g_exit_status);
+		return (check_invalid_var(env, arg), g_exit_status);
+	free_export(export);
 	return (0);
-	
 }
 
-int	ft_builtin_export(char **args, t_env *env)
+int ft_builtin_export(char **args, t_env *env)
 {
-	int			arg_idx;
-	int			i;
+	int arg_idx;
+	int i;
 
 	i = 0;
 	if (!args[1])

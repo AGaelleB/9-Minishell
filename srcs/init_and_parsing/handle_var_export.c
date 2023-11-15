@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:00:41 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 10:52:26 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 15:13:20 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	update_var_env(t_env *env, char *arg)
 	while (env->cpy_env[i])
 	{
 		if (ft_strncmp(env->cpy_env[i], str, ft_strlen(str)) == 0
-			&& env->cpy_env[i][ft_strlen(str)] == '=')
+			&& ((env->cpy_env[i][ft_strlen(str)] == '=')
+			|| !(env->cpy_env[i][ft_strlen(str)])))
 		{
 			remove_env_var(env, i);
 			return (1);

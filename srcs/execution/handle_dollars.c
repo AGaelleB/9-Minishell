@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:20:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 11:33:33 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/15 10:45:01 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ static void	handle_dollar(t_arg_handler *arg_handler)
 		if (env_value)
 		{
 			append_env_value(arg_handler, env_value);
-			// free(env_value);
 		}
 	}
+	// free(env_value);
 }
 
 void	handle_arg_value(t_arg_handler *arg_handler)

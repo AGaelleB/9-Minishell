@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_export_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:47:32 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 16:17:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/15 12:39:58 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	copy_env_in_return(t_export *export, t_env *env)
 		export->k++;
 	while (env->cpy_env[export->j][export->k])
 	{
-		export->ret[export->l] = env->cpy_env[export->j][export->k++];
-		export->l++;
+		export->ret[export->l++] = env->cpy_env[export->j][export->k++];
+		// export->l++;
 	}
 	export->i++;
 }

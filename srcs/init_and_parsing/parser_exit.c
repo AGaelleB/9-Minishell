@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:23:27 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 17:36:28 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 11:02:30 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_is_all_space(char *input)
 			return (0);
 		i++;
 	}
-	free(input);
+	// free(input);
 	return (1);
 }
 

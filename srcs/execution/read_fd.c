@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 15:02:36 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:34:13 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 		{
 			if (WIFEXITED(status))
 				g_exit_status = WEXITSTATUS(status);
-			// else if (WIFSIGNALED(status))
-			// 	g_exit_status = WTERMSIG(status) + 128;
+			else if (WIFSIGNALED(status))
+				g_exit_status = WTERMSIG(status) + 128;
 		}
 	}
 	signal(SIGINT, ctrl_c_main);

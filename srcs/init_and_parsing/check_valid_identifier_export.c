@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:48:37 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 17:37:56 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/15 16:26:03 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	check_valid_identifier_bis(char c)
 {
 	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
 		|| c == ' ' || c == ',' || c == '.'
-		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
+		|| c == '/' || c == '{' || c == '}' || c == '+'
 		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
 		|| c == '~'
 		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*')
@@ -74,9 +74,9 @@ int	check_valid_identifier_bis_bis(char c)
 {
 	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
 		|| c == ' ' || c == ',' || c == '.'
-		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
+		|| c == '/' || c == '{' || c == '}' || c == '+'
 		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
-		|| c == '~' || c == '$'
+		|| c == '~' || c == ':' //ICI
 		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*')
 	{
 		return (1);
@@ -84,7 +84,6 @@ int	check_valid_identifier_bis_bis(char c)
 	else
 		return (0);
 }
-
 
 int	check_before_equal(char *s)
 {
@@ -97,11 +96,13 @@ int	check_before_equal(char *s)
 		return (print_error_export(s, 1));
 	if (ft_isdigit(s[0]) || check_valid_identifier_bis_bis(s[0]))
 		return (print_error_export(s, 1));
+	if (s[i] == '$')
+		return (1);
 	i = 1;
-	while (s[i] != '=')
+	while (s[i] && (s[i] != '='))
 	{
-		if (s[i] == '\0')
-			break ;
+		// if (s[i] == '\0')
+		// 	break ;
 		if (check_valid_identifier(s[i]))
 			return (print_error_export(s, 1));
 		i++;
@@ -118,7 +119,7 @@ int	check_after_equal(char *str)
 	i = 0;
 	single_quote = false;
 	double_quote = false;
-	while (str[i] != '=' && str[i])
+	while ((str[i] != '=') && str[i])
 		i++;
 	if (str[i] == '=')
 		i++;
