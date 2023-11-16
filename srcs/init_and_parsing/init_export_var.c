@@ -6,22 +6,18 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:47:32 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 12:39:58 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:34:20 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_export	*init_export(void)
+t_export	*init_export(t_export *export)
 {
-	t_export	*export;
-
-	export = malloc(sizeof(t_export));
-	if (!export)
-		return (NULL);
-	export->ret = malloc(sizeof(char) * SIZE);
-	if (!export->ret)
-		return (NULL);
+	// export->ret = malloc(sizeof(char) * SIZE);
+	// if (!export->ret)
+	// 	return (NULL);
+	export->ret = NULL;
 	export->new = malloc(sizeof(char) * SIZE);
 	if (!export->new)
 		return (NULL);
@@ -73,9 +69,6 @@ void	copy_env_in_return(t_export *export, t_env *env)
 	if (env->cpy_env[export->j][export->k] == '=')
 		export->k++;
 	while (env->cpy_env[export->j][export->k])
-	{
 		export->ret[export->l++] = env->cpy_env[export->j][export->k++];
-		// export->l++;
-	}
 	export->i++;
 }

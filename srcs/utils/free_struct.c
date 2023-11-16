@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:14:46 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:45:28 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	ft_free_env(t_env *env)
 
 void	free_export(t_export *export)
 {
+	// if (export->ret)
+	// 	free(export->ret); // nous fait perdre 5 tests
 	if (export->new)
 		free(export->new);
-	if (export->ret)
-		free(export->ret);
 	if (export)
 		free(export);
 }

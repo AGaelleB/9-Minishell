@@ -1,0 +1,2 @@
+minishell: ( :command not found
+rm: cannot remove 'pwd': No such file or directory

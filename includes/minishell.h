@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:34:42 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:21:43 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,13 @@ typedef struct s_command
 }	t_command;
 
 
+
+
+
+
+
+t_export	*init_export(t_export *export);
+void	cleanup(pid_t *child_pids, int infile);
 int	is_char_valid(char c);
 int	print_error_export(char *s, int ok);
 int	check_valid_identifier(char c);
@@ -223,7 +230,6 @@ int				find_env_var(t_env *env, char *arg);
 void			remove_env_var(t_env *env, int idx);
 char			*extract_var_name(char *str);
 int				export_expander(t_export *export, char *str, t_env *env);
-t_export		*init_export(void);
 
 /***********MAIN***********/
 
@@ -384,7 +390,6 @@ void			ft_free_tab(char **tab);
 void			ft_free_token(t_command *current);
 void			ft_free_current(t_command *current);
 
-void			cleanup(pid_t *child_pids, int infile);
 
 void			free_tokens(char **tokens, int num);
 char			**free_token_split(char **tokens);
@@ -415,6 +420,5 @@ char			**split_string(const char *str, char delimiter);
 void			copy_env_in_return(t_export *export, t_env *env);
 void			begin_var(t_export *export, char *str);
 char			*re_init_var_str(t_export *export, char *str);
-t_export		*init_export(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 11:20:32 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:23:13 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	handle_child_process(t_process_data *data, t_env *env)
 	{
 		ft_close_all_fd();
 		ft_free_all(data->current, data->current->token_head);
+		ft_free_env(env);
+		// cleanup(data->child_pids, data->infile); // on perd un test
+		free(data->heredocs);
 		exit(g_exit_status);
 	}
 	if (execve_process(data->current, env) == 127)
@@ -48,6 +51,7 @@ void	handle_parent_process(t_process_data *data)
 	if (data->infile != 0)
 		close(data->infile);
 	data->infile = data->current->fd_in;
+	// ft_free_tab(env->cpy_env); // fait perdre 25 tests
 }
 
 void	handle_all_process(t_process_data *data, t_env *env)
@@ -56,6 +60,7 @@ void	handle_all_process(t_process_data *data, t_env *env)
 		handle_child_process(data, env);
 	else if (data->pid > 0)
 		handle_parent_process(data);
+		// free(data->heredocs);  // on perd un test
 	else
 		exit_with_error("fork", data->child_pids);
 }

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:26:44 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:56:49 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
 		while (var_name[l])
 			ret[(*m)++] = var_name[l++];
 	}
-	return (free(var_name), ret);// free NEW
+	return (free(var_name), ret); // NEW FREE 
 }
 
 char	*check_expender(t_env *env)
@@ -120,5 +120,6 @@ int	ft_builtin_cd(char **args, t_env *env)
 	env->new_directory = getcwd(NULL, 0);
 	if (env->new_directory)
 		print_error_cd(env, 2);
+	free(env->path_to_change);
 	return (g_exit_status);
 }

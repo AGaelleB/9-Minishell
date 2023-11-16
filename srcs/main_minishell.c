@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:39:04 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:00:20 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ void	main_loop(t_env *env_bis)
 	while (1)
 	{
 		input = readline("minishell$> ");
+		add_history(input);
 		ft_builtin_ctrl_d(input, new_cmd, env_bis, flag_ok);
 		// ft_builtin_write_exit(input);
 		if (error_input(env_bis, new_cmd, input, flag_ok) == 2
 			|| verif_nb_quote(input) != 0
 			|| pipe_syntax_errors(input) == 2)
 			continue ;
-		add_history(input);
 		new_cmd = get_command(input, env_bis);
 		count_and_set_pipes(input, new_cmd);
 		if (new_cmd != NULL)

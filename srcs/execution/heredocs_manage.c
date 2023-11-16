@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 16:34:07 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:19:35 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int	here_doc_ray(t_process_data *data)
 	int	heredoc_interrupted;
 
 	data->count_hd = count_heredocs(data->current->token_head);
-	data->heredocs = malloc(sizeof(t_here_doc) * data->count_hd);
+	// data->heredocs = malloc(sizeof(t_here_doc) * data->count_hd);
+	data->heredocs = malloc(sizeof(t_here_doc));
 	if (!data->heredocs)
 		return (-1);
 	signal(SIGINT, ctrl_c_heredoc);

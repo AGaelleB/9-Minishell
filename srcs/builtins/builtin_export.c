@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:16:56 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:20:08 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,52 +62,60 @@ void	check_invalid_var(t_env *env, char *str)
 	return ;
 }
 
-int	process_arg(char *arg, t_env *env, int *i)
+int	process_arg(t_export *export, char *arg, t_env *env, int *i)
 {
-	t_export	*export;
 	char		*str;
 	char		*var_name;
 
-	// str = NULL;
-	// str = malloc(sizeof(char) * SIZE);
-	// str = malloc(sizeof(char) * ft_strlen(arg));
+	str = NULL;
 	if ((check_before_equal(arg) == 0) && (check_after_equal(arg) == 0))
 	{
-		str = ft_strdup(arg);
 		str = handle_quotes_export(arg);
-		export = init_export();
+		export = init_export(export);
 		var_name = extract_var_name(str);
 		if (var_name)
-			export_expander(export, str, env);// str uninitialised
+			export_expander(export, str, env);
 		else
 		{
 			update_var_env(env, str);
 			add_var_env(env, *i, str);
+			// free(str); // fait perdre 20 tests
 		}
 		free(var_name);
-		// free(str); // fait SEG/bug apres le ctrl^d pour quitter ./minishell
+		// free(str); // fait perdre 19 tests // ancien seg
 	}
 	else
+	{
+		free(str); // NEW FREE
 		return (check_invalid_var(env, arg), g_exit_status);
-	free_export(export);
-	return (0); //24 lines
+	}
+	// if (str)
+	// 	free(str); // fait perdre 19 tests
+	return (0);
 }
 
 int	ft_builtin_export(char **args, t_env *env)
 {
-	int	arg_idx;
-	int	i;
+	t_export	*export;
+	int			arg_idx;
+	int			i;
 
 	i = 0;
+	export = malloc(sizeof(t_export));
+	if (!export)
+		return (0);
+	export->new = NULL;
+	export->ret = NULL;
 	if (!args[1])
 		return (print_env_vars(env));
 	arg_idx = 1;
 	while (args[arg_idx])
 	{
-		if (process_arg(args[arg_idx], env, &i) != 0)
+		if (process_arg(export, args[arg_idx], env, &i) != 0)
 			return (g_exit_status);
 		arg_idx++;
 	}
+	free_export(export);
 	// free(str);
 	// free(ret);
 	return (g_exit_status);

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:22:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 10:16:54 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	ft_builtin_write_exit(char *input)
 	{
 		handle_exit_with_status(str);
 		free(str);
-		return (g_exit_status); /// NEW
+		return (g_exit_status); // NEW
 	}
 	free(str);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:32:40 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/15 17:32:54 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:32:17 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	check_before_equal(char *s)
 	i = 1;
 	while (s[i] && (s[i] != '='))
 	{
-		// if (s[i] == '\0')
-		// 	break ;
 		if (check_valid_identifier(s[i]))
 			return (print_error_export(s, 1));
 		i++;

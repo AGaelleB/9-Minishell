@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:16:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/15 17:02:38 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:34:16 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	expand_variable(t_export *export, char **str, t_env *env)
 		export->j = find_env_var(env, var_name);
 		if (export->j != -1)
 		{
+			export->ret = malloc(sizeof(*str)
+				* (ft_strlen(env->cpy_env[export->j]) + ft_strlen(*str) + 1)); // propre mais perd un test
 			begin_var(export, *str);
 			copy_env_in_return(export, env);
 			*str = re_init_var_str(export, *str);
@@ -78,7 +80,7 @@ int	export_expander(t_export *export, char *str, t_env *env)
 		free(str);
 		return (g_exit_status);
 	}
-	// free(str_cpy);
+	free(str_cpy); // NEW FREE
 	return (g_exit_status);
 }
 
