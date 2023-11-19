@@ -192,6 +192,9 @@ main(){
 	esac
 	shift
 	done
+	echo -e "/^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^ ^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^\\"
+	echo -e "|\t~/~\t~/~\t${RED}MINI${GRN}TESTER${NC}\t~\\~\t~\\~\t| ~ By emis. With love."
+	echo -e "\\_ __ __ __ __ __ __ __ __ _ _ __ __ __ __ __ __ __ __ _/\n"
 	fetch_last
 	[ ! -f "$minishell" ] && die "Minishell executable not found. Copy it in this dir or change \$fetchpath."
 	modifier_set "bo2" && best_of_2 && exit $?

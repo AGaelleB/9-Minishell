@@ -1,2 +1,2 @@
-ls: invalid option -- 'z'
-Try 'ls --help' for more information.
+ls : option invalide -- 'z'
+Saisissez « ls --help » pour plus d'informations.

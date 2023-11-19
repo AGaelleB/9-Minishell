@@ -8,10 +8,10 @@ minitester.sh
 HOLA=bonjour
 HOLA=bonjour
 export PATH="..."☃
-export HOME="/mnt/nfs/homes/bfresque"☃export Hola☃export PATH="..."☃
-HOME="/mnt/nfs/homes/bfresque"☃Hola9hey☃PATH="..."☃
-export HOME="/mnt/nfs/homes/bfresque"☃export PATH="..."☃
-export HOME="/mnt/nfs/homes/bfresque"☃
+export HOME="/home/bfresque"☃export Hola☃export PATH="..."☃
+HOME="/home/bfresque"☃Hola9hey☃PATH="..."☃
+export HOME="/home/bfresque"☃export PATH="..."☃
+export HOME="/home/bfresque"☃
 
 
 
@@ -48,8 +48,8 @@ PATH=☃
 HOLA=bon☃
 HOLA=☃
 HOLA=bonjour☃
-HOLA=/mnt/nfs/homes/bfresque☃
-HOLA=bonjour/mnt/nfs/homes/bfresque☃
+HOLA=/home/bfresque☃
+HOLA=bonjour/home/bfresque☃
 HOLA=☃
 HOLA=bon☃
 HOLA=bonjour☃
@@ -100,7 +100,7 @@ HOL=A=
 
 
 
-/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester
+/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester
 
 
 
@@ -111,8 +111,8 @@ PATH=☃
 
 
 ☃
-☃☃/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester☃
-/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester☃☃☃☃/mnt/nfs/homes/bfresque
+☃☃/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester☃
+/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester☃☃☃☃/home/bfresque
 ☃
 
 ☃

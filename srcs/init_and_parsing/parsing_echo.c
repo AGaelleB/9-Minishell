@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:49:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/15 17:06:40 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/19 15:32:42 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	**copy_argument_echo(t_env *env, t_parser *parser, char *input)
 	char			*arg;
 	int				arg_idx;
 
+	// arg_handler = malloc(sizeof(t_arg_handler));
 	arg_idx = 0;
 	arg_handler.env = env;
 	arg_handler.input = input;
@@ -38,6 +39,7 @@ char	**copy_argument_echo(t_env *env, t_parser *parser, char *input)
 	else
 		free(arg);
 	skip_spaces_echo(input, &(parser->i));
+	// free(arg_handler);
 	return (parser->args);
 }
 

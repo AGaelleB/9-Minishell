@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/16 16:21:24 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/19 14:06:42 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 
 static void	handle_execve_processes(t_process_data *data, t_env *env)
 {
+	if (g_exit_status == 139)
+		g_exit_status = 0;
 	while (data->current)
 	{
 		if (pipe(data->current->fd) == -1)
@@ -62,8 +64,6 @@ void	execve_fd(t_command *current, t_env *env)
 	data.current = current;
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);
-	// if (data.heredocs)
-	// free(data.heredocs); // NEW FREE // fait perdre un test
-	ft_free_env(env); // ne casse rien ??? wahou
+	free(data.heredocs); // NEW FREE
 	cleanup(data.child_pids, data.infile);
 }

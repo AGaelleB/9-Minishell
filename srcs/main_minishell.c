@@ -6,37 +6,13 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/16 12:00:20 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/19 16:27:40 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_exit_status;
-
-void	child_main(t_command *current, t_env *env)
-{
-	int		status;
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		execve_fd(current, env);
-		ft_free_all(current, current->token_head);
-		exit(g_exit_status);
-	}
-	else if (pid < 0)
-		perror("fork");
-	else
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
-		signal(SIGINT, ctrl_c_main);
-		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
-	}
-}
 
 int	check_args_and_env(int ac, char **envp)
 {
@@ -86,7 +62,8 @@ void	main_loop(t_env *env_bis)
 			new_cmd->export_arg = parse_arg_export(new_cmd->command); //not free
 			execve_builtins_unset_export(new_cmd, env_bis);
 			execve_builtin_cd(new_cmd, env_bis);
-			child_main(new_cmd, env_bis);
+			execve_fd(new_cmd, env_bis);
+			// ft_close_all_fd();
 		}
 		flag_ok = 1;
 		free(input);
@@ -119,10 +96,31 @@ int	main(int ac, char **av, char **envp)
 }
 
 /*
-										TO DO :
+                                        TO DO :
 minishell$> exit | ls
 exit
 minishell: exit: too many arguments // doit afficher ls
+
+
+si que tab, ignorer
+                
+echo                a
+doit ignorer les tabs
+
+
+export PATH=$PATH:$PWD
+    ->casse, donne une ligne vide
+une fois repare, verifier si couette avec Export :xcxcxc
+
+
+echo "$PATH" | '/usr/bin/wc'      -c    > 'coucou>tamere'
+    -> voir les epurfilename, doit creer un file coucou>tamere
+
+
+minishell$> $cc
+minishell: $cc :command not found
+    -> on devrait juste faire un retour a la ligne
+
 
 penser a rechercher les truc quon a (void) et voir si utile.
 pareil pour forbiden function et a recoder

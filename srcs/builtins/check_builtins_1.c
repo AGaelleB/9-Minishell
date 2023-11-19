@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:44:17 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 16:13:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/19 14:20:47 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	check_echo(t_command *current, t_env *env)
 	{
 		tab = parse_input_quote_echo(env, current->command);
 		ft_builtin_echo(tab);
+		ft_free_tab(tab);
 		return (1);
 	}
 	return (0);

@@ -6,11 +6,20 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/16 16:23:13 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/19 13:58:49 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_child(t_process_data *data, t_env *env)
+{
+	ft_close_all_fd();
+	free(data->heredocs);
+	ft_free_env(env);
+	ft_free_all(data->current, data->current->token_head);
+	cleanup(data->child_pids, data->infile); // on perd un test
+}
 
 void	handle_child_process(t_process_data *data, t_env *env)
 {
@@ -34,15 +43,15 @@ void	handle_child_process(t_process_data *data, t_env *env)
 	ft_builtin_write_exit_process(data->current->command);
 	if (builtins_verif(data->current, env) == 1)
 	{
-		ft_close_all_fd();
-		ft_free_all(data->current, data->current->token_head);
-		ft_free_env(env);
-		// cleanup(data->child_pids, data->infile); // on perd un test
-		free(data->heredocs);
+		free_child(data, env);
 		exit(g_exit_status);
 	}
 	if (execve_process(data->current, env) == 127)
+	{
+		free_child(data, env);
 		exit(127);
+	}
+	free_child(data, env);
 }
 
 void	handle_parent_process(t_process_data *data)

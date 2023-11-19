@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:23:27 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:30:58 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/19 14:06:19 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ void	ft_builtin_ctrl_d(char *input, t_command *new_cmd,
 		write(1, "exit", 5);
 		write(1, "\n", 1);
 		ft_close_all_fd();
-		ft_free_env(env_bis);
+		ft_free_env(env_bis); // a remettre
 		if (flag_ok == 1)
 		{
-			(void)env_bis;
-			(void)new_cmd;
-		// 	ft_free_all(new_cmd, new_cmd->token_head);
+			printf("\n\ncoucou\n\n");
+			// (void)env_bis;
+			// (void)new_cmd;
+			ft_free_all(new_cmd, new_cmd->token_head);
 		}
 		exit(0);
 	}

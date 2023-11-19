@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 11:54:09 by bfresque          #+#    #+#             */
-/*   Updated: 2023/10/14 12:09:35 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/19 11:00:51 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**ft_get_paths_token(t_env *env)
 	}
 	if (path == NULL)
 		return (NULL);
-	all_paths = ft_split(path, ':');
+	all_paths = ft_split(path, ':'); // casse tout quand on export avec : path=path:pwd plusieurs fois
 	return (all_paths);
 }
 
@@ -74,7 +74,9 @@ char	*ft_check_relative_paths_token(t_env *env, char *args)
 	char	*valid_path;
 
 	temp_path = ft_get_paths_token(env);
-	if (temp_path == NULL || (temp_path[0][0]) == 0)
+	if (temp_path == NULL)
+		return (NULL);
+	if (temp_path[0][0] == 0)//ne pas remttre au dessus (segfault)
 		return (NULL);
 	valid_path = find_valid_path_token(temp_path, args);
 	ft_free_tab(temp_path);

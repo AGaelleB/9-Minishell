@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+         #
+#    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/15 17:33:40 by bfresque         ###   ########.fr        #
+#    Updated: 2023/11/19 14:28:25 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/path_token.c \
 	srcs/init_and_parsing/path.c \
 	srcs/init_and_parsing/update_pwd.c \
+	srcs/init_and_parsing/verif_nb_quotes.c \
 
 SRCS_REDIRECTIONS = srcs/redirections/epur_filename.c \
 	srcs/redirections/epur_heredoc_name.c \

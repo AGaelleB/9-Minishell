@@ -103,7 +103,7 @@ syntax
 51: Expected [127] status but found [0]
 51: Expected [..: command not found] error output but found [minishell: .. :command not found]
 52: Expected [126] status but found [0]
-52: Expected [/mnt/nfs/homes/bfresque: Is a directory] error output but found [minishell: ~ :command not found]
+52: Expected [/home/bfresque: Is a directory] error output but found [minishell: ~ :command not found]
 53: Expected [: command not found] error output but found [minishell: ABC=hola :command not found]
 54: Expected [127] status but found [0]
 54: Expected [4ABC=hola: command not found] error output but found [minishell: 4ABC=hola :command not found]
@@ -120,9 +120,9 @@ echo
 62: Expected [echo-nHola: command not found] error output but found [minishell: echo-nHola :command not found]
 73: Expected [hola que tal] output but found []
 73: Expected no error output but found [minishell: 'echo hola' :command not found]
-94: Expected [$HOME] output but found [\/mnt/nfs/homes/bfresque]
+94: Expected [$HOME] output but found [\/home/bfresque]
 98: Expected [1000] output but found []
-102: Expected [1000/mnt/nfs/homes/bfresque%] output but found [/mnt/nfs/homes/bfresque]
+102: Expected [1000/home/bfresque%] output but found [/home/bfresque]
 104: Expected [bfresque$USERbfresque$USERtestbfresque] output but found [bfresque\bfresquebfresque\bfresque]
 107: Expected [2] status but found [0]
 107: Expected [syntax error near unexpected token `<'] error output but found [minishell: syntax error near unexpected token <]
@@ -147,6 +147,7 @@ echo
 120: Expected [minitester.sh hola] output but found [*h hola]
 121: Expected [minitester.sh] output but found [*h]
 124: Expected [minitester.sh] output but found [*]
+153: Expected [0] status but found [134]
 155: Expected [echo'hola': command not found] error output but found []
 156: Expected [127] status but found [0]
 156: Expected no error output but found [minishell: echo'hola" :command not found]
@@ -159,17 +160,18 @@ echo
 173: Expected [e'c'ho 'b'onjo'u'r: command not found] error output but found [minishell: e'cho b"onj"o"'u'r :command not found]
 174: Expected [127] status but found [0]
 174: Expected no error output but found [minishell: e'cho 'b'"o"nj"o"'u'r" :command not found]
+177: Expected [0] status but found [134]
 dollar
 178: Expected [127] status but found [0]
 178: Expected [0: command not found] error output but found []
 179: Expected [127] status but found [0]
 179: Expected [00: command not found] error output but found []
 180: Expected [127] status but found [0]
-180: Expected [?/mnt/nfs/homes/bfresque: command not found] error output but found [minishell: ?$HOME :command not found]
+180: Expected [?/home/bfresque: command not found] error output but found [minishell: ?$HOME :command not found]
 181: Expected [127] status but found [0]
 181: Expected [$: command not found] error output but found [minishell: $ :command not found]
 182: Expected [126] status but found [0]
-182: Expected [/mnt/nfs/homes/bfresque: Is a directory] error output but found []
+182: Expected [/home/bfresque: Is a directory] error output but found []
 183: Expected no error output but found [minishell: $HOMEdskjhfkdshfsd :command not found]
 184: Expected [127] status but found [0]
 184: Expected [: command not found] error output but found [minishell: $HOMEdskjhfkdshfsd :command not found]
@@ -180,12 +182,16 @@ dollar
 187: Expected [-R: command not found] error output but found []
 envvar
 189: Expected [127] status but found [0]
+189: Expected [env: ʻhola
+��: No such file or directory] error output but found [env: «hola»: Aucun fichier ou dossier de ce type]
 190: Expected [127] status but found [0]
+190: Expected [env: ʻhola
+��: No such file or directory] error output but found [env: «hola»: Aucun fichier ou dossier de ce type]
 194: Expected [126] status but found [0]
-197: Expected [export PATH="..."] output but found [export SHELL="/bin/zsh"
+197: Expected [export PATH="..."] output but found [export SHELL="/usr/bin/zsh"
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
-export SESSION_MANAGER="local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751"
-export USER_ZDOTDIR="/mnt/nfs/homes/bfresque"
+export SESSION_MANAGER="local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154"
+export USER_ZDOTDIR="/home/bfresque"
 export QT_ACCESSIBILITY="1"]
 202: Expected [1] status but found [0]
 202: Expected [minishell: export: `': not a valid identifier] error output but found [minishell: export: `""': not a valid identifier]
@@ -194,10 +200,10 @@ export QT_ACCESSIBILITY="1"]
 204: Expected [1] status but found [0]
 204: Expected [minishell: export: ʻ%': not a valid identifier] error output but found [minishell: export: `%': not a valid identifier]
 205: Expected [1] status but found [0]
-205: Expected no output but found [export SHELL="/bin/zsh"
+205: Expected no output but found [export SHELL="/usr/bin/zsh"
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
-export SESSION_MANAGER="local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751"
-export USER_ZDOTDIR="/mnt/nfs/homes/bfresque"
+export SESSION_MANAGER="local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154"
+export USER_ZDOTDIR="/home/bfresque"
 export QT_ACCESSIBILITY="1"]
 205: Expected [minishell: export: `0': not a valid identifier] error output but found []
 206: Expected [1] status but found [0]
@@ -234,26 +240,26 @@ export QT_ACCESSIBILITY="1"]
 225: Expected [1] status but found [0]
 225: Expected [minishell: export: `HO@LA=bonjour': not a valid identifier] error output but found [minishell: export: `HO@LA': not a valid identifier]
 226: Expected [minishell: !LA=bonjour: event not found] error output but found [minishell: export: `HO!LA': not a valid identifier]
-227: Expected [HO0LA=bonjour] output but found [SHELL=/bin/zsh
+227: Expected [HO0LA=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 227: Expected no error output but found [minishell: export: `HO$?LA': not a valid identifier]
 228: Expected [1] status but found [0]
 228: Expected [minishell: export: `+HOLA=bonjour': not a valid identifier] error output but found [minishell: export: `+HOLA': not a valid identifier]
 229: Expected [1] status but found [0]
 229: Expected [minishell: export: `HOL+A=bonjour': not a valid identifier] error output but found [minishell: export: `HOL+A': not a valid identifier]
-230: Expected [HOLA=bonjour] output but found [SHELL=/bin/zsh
+230: Expected [HOLA=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 230: Expected no error output but found [minishell: export: `HOLA+': not a valid identifier]
-231: Expected [HOLA=bonjourbonjour] output but found [SHELL=/bin/zsh
+231: Expected [HOLA=bonjourbonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 231: Expected no error output but found [minishell: export: `HOLA+': not a valid identifier]
 232: Expected no error output but found [minishell: exportHOLA=bonjour :command not found]
@@ -262,15 +268,15 @@ QT_ACCESSIBILITY=1]
 ��: not a valid identifier] error output but found [minishell: export: `': not a valid identifier]
 234: Expected [1] status but found [0]
 234: Expected [minishell: export: ʻ=': not a valid identifier] error output but found [minishell: export: `': not a valid identifier]
-242: Expected [HOLA=bonjour] output but found [SHELL=/bin/zsh
+242: Expected [HOLA=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
-243: Expected [HOLA=bon\jour] output but found [SHELL=/bin/zsh
+243: Expected [HOLA=bon\jour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 244: Expected [2] status but found [0]
 244: Expected [minishell: syntax error near unexpected token `('] error output but found []
@@ -278,15 +284,15 @@ QT_ACCESSIBILITY=1]
 245: Expected [minishell: syntax error near unexpected token `('] error output but found []
 246: Expected [127] status but found [0]
 246: Expected [jour: command not found] error output but found []
-247: Expected [HOLA=bon@jour] output but found [SHELL=/bin/zsh
+247: Expected [HOLA=bon@jour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
-248: Expected no output but found [SHELL=/bin/zsh
+248: Expected no output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 248: Expected [jour: command not found
 
@@ -301,16 +307,17 @@ HOLA=bon] error output but found []
 257: Expected [bonjour$] output but found [bonjour      $]
 258: Expected [bonjour$>] output but found [   -n bonjour   ]
 259: Expected [bonjour /] output but found [bonjour   /]
-260: Expected [ " $] output but found [  $]
+260: Expected [ " $] output but found [ "' $]
 261: Expected [[cela affiche le Makefile]] output but found []
 261: Expected no error output but found [minishell: c$HOLA :command not found]
 262: Expected [1] status but found [0]
-262: Expected [HOLA=bonjour] output but found [SHELL=/bin/zsh
+262: Expected [HOLA=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 262: Expected [minishell: export: `': not a valid identifier] error output but found [minishell: export: `""': not a valid identifier]
+263: Expected no error output but found [free(): invalid pointer]
 265: Expected [bonjour hey$] output but found [  bonjour  hey  $]
 266: Expected [   bonjour    hey    $] output but found [  bonjour  hey  $]
 267: Expected [wesh   bonjour    hey    $] output but found [wesh  bonjour  hey  $]
@@ -318,6 +325,7 @@ QT_ACCESSIBILITY=1]
 269: Expected [weshHOLA.] output but found [wesh$HOLA.]
 270: Expected [weshHOLA HOLA.] output but found [wesh$HOLA HOLA.]
 272: Expected [hola et $HOLA] output but found [ hola et bonjour]
+273: Expected [hola et bonjourbonjour] output but found []
 274: Expected [ls -l - a] output but found [ls        -l    - a]
 275: Expected [total] output but found []
 275: Expected no error output but found [minishell: l$HOLA :command not found]
@@ -328,23 +336,23 @@ QT_ACCESSIBILITY=1]
 278: Expected no error output but found [minishell: $HOLAs :command not found]
 279: Expected [minitester.sh] output but found []
 279: Expected no error output but found [minishell: $HOLAs :command not found]
-280: Expected [HOL=A=bonjour] output but found [SHELL=/bin/zsh
+280: Expected [HOL=A=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 281: Expected [127] status but found [0]
 281: Expected [$HOLAs: command not found] error output but found [minishell: $HOLAs :command not found]
-282: Expected [HOL=A=] output but found [SHELL=/bin/zsh
+282: Expected [HOL=A=] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 283: Expected [1] status but found [0]
-283: Expected no output but found [SHELL=/bin/zsh
+283: Expected no output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/made-f0Br5s3.clusters.42paris.fr:@/tmp/.ICE-unix/445751,unix/made-f0Br5s3.clusters.42paris.fr:/tmp/.ICE-unix/445751
-USER_ZDOTDIR=/mnt/nfs/homes/bfresque
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 283: Expected [minishell: export: `TE+S=T': not a valid identifier] error output but found [minishell: export: `TE+S': not a valid identifier]
 284: Expected [1] status but found [0]
@@ -356,10 +364,10 @@ QT_ACCESSIBILITY=1]
 287: Expected [1] status but found [0]
 287: Expected [minishell: export: `===': not a valid identifier] error output but found []
 288: Expected [127] status but found [0]
-288: Expected [pBYEd: command not found] error output but found [minishell: $HOLABYEd :command not found]
+288: Expected [pBYEd: command not found] error output but found []
 289: Expected [127] status but found [0]
 289: Expected [p$BYEd: command not found] error output but found [minishell: $HOLA'$BYEd :command not found]
-290: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+290: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 290: Expected no error output but found [minishell: $HOLA$BYEd :command not found]
 291: Expected [127] status but found [0]
 291: Expected [HOLABYEd: command not found] error output but found [minishell: $HOLA$BYEd :command not found]
@@ -368,7 +376,6 @@ QT_ACCESSIBILITY=1]
 293: Expected [127] status but found [0]
 293: Expected no output but found [$HOLA hey]
 293: Expected [echo -n: command not found] error output but found []
-294: Expected [1'2$C"$D5"$F'7'8] output but found []
 298: Expected [127] status but found [0]
 299: Expected [1] status but found [0]
 299: Expected [minishell: unset: `': not a valid identifier] error output but found []
@@ -411,7 +418,7 @@ minishell: unset: `HOL.A': not a valid identifier] error output but found []
 324: Expected [1] status but found [0]
 324: Expected [minishell: unset: `HOL#A': not a valid identifier] error output but found []
 326: Expected [1] status but found [0]
-326: Expected [minishell: unset: `/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester': not a valid identifier] error output but found []
+326: Expected [minishell: unset: `/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester': not a valid identifier] error output but found []
 327: Expected [1] status but found [0]
 327: Expected [minishell: unset: `HOL@': not a valid identifier] error output but found []
 328: Expected [1] status but found [0]
@@ -427,13 +434,13 @@ minishell: unset: `HOL.A': not a valid identifier] error output but found []
 337: Expected [minishell: unset: `++++++': not a valid identifier] error output but found []
 cdpwd
 350: Expected [2] status but found [0]
-350: Expected no output but found [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester]
+350: Expected no output but found [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester]
 350: Expected [pwd: -p: invalid option] error output but found []
 351: Expected [2] status but found [0]
-351: Expected no output but found [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester]
+351: Expected no output but found [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester]
 351: Expected [pwd: --: invalid option] error output but found []
 352: Expected [2] status but found [0]
-352: Expected no output but found [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester]
+352: Expected no output but found [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester]
 352: Expected [pwd: --: invalid option] error output but found []
 367: Expected no error output but found [minishell: cd: srcs: No such file or directory]
 368: Expected [1] status but found [0]
@@ -448,15 +455,15 @@ cdpwd
 382: Expected [//] output but found [/]
 386: Expected [1] status but found [0]
 388: Expected [1] status but found [0]
-389: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+389: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 389: Expected no error output but found [minishell: cd: -: No such file or directory]
 390: Expected no error output but found [minishell: cd: --: No such file or directory]
 391: Expected [2] status but found [0]
 391: Expected [cd: --: invalid option] error output but found [minishell: cd: ---: No such file or directory]
 393: Expected [1] status but found [0]
-395: Expected no error output but found [minishell: cd: /mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester/srcs: No such file or directory]
+395: Expected no error output but found [minishell: cd: /home/bfresque/Téléchargements/9-Minishell-main/minishell42tester/srcs: No such file or directory]
 396: Expected [1] status but found [0]
-396: Expected [cd: $PWD/srcs: No such file or directory] error output but found [minishell: cd: /mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester/srcs: No such file or directory]
+396: Expected [cd: $PWD/srcs: No such file or directory] error output but found [minishell: cd: /home/bfresque/Téléchargements/9-Minishell-main/minishell42tester/srcs: No such file or directory]
 397: Expected [1] status but found [0]
 397: Expected [cd: HOME not set] error output but found [minishell: cd: : No such file or directory]
 398: Expected no error output but found [minishell: cd: : No such file or directory]
@@ -469,16 +476,23 @@ cdpwd
 407: Expected [1] status but found [0]
 407: Expected [cd: too many arguments] error output but found [minishell: cd: *: No such file or directory]
 408: Expected [1] status but found [0]
-408: Expected [chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory] error output but found [rm: cannot remove 'a': No such file or directory
-mkdir: cannot create directory ‘a/b’: No such file or directory
+408: Expected [chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory] error output but found [rm: impossible de supprimer 'a': Aucun fichier ou dossier de ce type
+mkdir: impossible de créer le répertoire «a/b»: Aucun fichier ou dossier de ce type
 minishell: cd: a/b: No such file or directory]
 409: Expected [1] status but found [0]
 409: Expected [pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory] error output but found []
-414: Expected [/mnt/nfs/homes/bfresque] output but found []
+410: Expected no error output but found [munmap_chunk(): invalid pointer
+munmap_chunk(): invalid pointer]
+411: Expected no error output but found [munmap_chunk(): invalid pointer]
+412: Expected no error output but found [munmap_chunk(): invalid pointer
+munmap_chunk(): invalid pointer]
+414: Expected [/home/bfresque] output but found []
 414: Expected no error output but found [minishell: cd: mnt/nfs/homes/bfresque: No such file or directory]
 exit
 417: Expected no output but found [exit]
 417: Expected [exit] error output but found []
+418: Expected no output but found [2 JE SUIS LE BASIC]
+419: Expected no output but found [2 JE SUIS LE BASIC]
 420: Expected [2] status but found [0]
 424: Expected [1] status but found [0]
 425: Expected [1] status but found [0]
@@ -487,39 +501,44 @@ exit
 428: Expected [1] status but found [0]
 429: Expected [2] status but found [0]
 436: Expected [154] status but found [2]
+436: Expected no output but found [2 JE SUIS LE BASIC]
 438: Expected [0] status but found [2]
+438: Expected no output but found [2 JE SUIS LE BASIC]
 440: Expected [42] status but found [2]
+440: Expected no output but found [2 JE SUIS LE BASIC]
 441: Expected [1] status but found [0]
 442: Expected [2] status but found [0]
+443: Expected no output but found [2 JE SUIS LE BASIC]
+444: Expected no output but found [2 JE SUIS LE BASIC]
 445: Expected [2] status but found [0]
-446: Expected [154] status but found [2]
-447: Expected [154] status but found [2]
-448: Expected [102] status but found [2]
 449: Expected [154] status but found [2]
-452: Expected [154] status but found [2]
-453: Expected [8] status but found [2]
-456: Expected [170] status but found [2]
+449: Expected no output but found [2 JE SUIS LE BASIC]
+450: Expected [2] status but found [0]
+451: Expected no output but found [2 JE SUIS LE BASIC]
+454: Expected [2] status but found [154]
+455: Expected [2] status but found [154]
 457: Expected [170] status but found [2]
-458: Expected [86] status but found [2]
+457: Expected no output but found [2 JE SUIS LE BASIC]
 460: Expected [2] status but found [0]
 462: Expected [2] status but found [255]
 pipe
 465: Expected [42] status but found [0]
-466: Expected [minitester.sh] output but found []
-466: Expected no error output but found [exit
-minishell: exit: too many arguments]
-467: Expected [hola$] output but found []
-467: Expected no error output but found [exit
-minishell: exit: too many arguments]
 474: Expected [1] status but found [0]
 475: Expected [1] status but found [0]
+481: Expected [docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+
+
+   ether 02:42:27:cf:95:49  txqueuelen 0  (Ethernet)] output but found []
+481: Expected no error output but found [minishell: ifconfig :command not found]
 482: Expected [1] status but found [0]
+482: Expected no error output but found [minishell: ifconfig :command not found]
 483: Expected [bfresque] output but found []
 484: Expected [bfresque] output but found []
-486: Expected [ls: /usr/bin/ls /usr/share/man/man1/ls.1posix.gz /usr/share/man/man1/ls.1.gz$$] output but found [ls: /usr/bin/ls /usr/share/man/man1/ls.1.gz /usr/share/man/man1/ls.1posix.gz$$]
+486: Expected [ls: /usr/bin/ls /usr/share/man/man1/ls.1posix.gz /usr/share/man/man1/ls.1.gz$$] output but found [ls: /usr/bin/ls /usr/share/man/man1/ls.1.gz$$]
 487: Expected [127] status but found [0]
 487: Expected [hola: command not found] error output but found [minishell: hola :command not found]
 488: Expected [2] status but found [0]
+488: Expected [ls: cannot access 'hola': No such file or directory] error output but found [ls: impossible d'accéder à 'hola': Aucun fichier ou dossier de ce type]
 489: Expected [127] status but found [0]
 489: Expected [hola: command not found] error output but found [minishell: hola :command not found]
 490: Expected [hola: command not found] error output but found [minishell: hola :command not found]
@@ -529,49 +548,48 @@ minishell: exit: too many arguments]
 502: Expected no error output but found [minishell: syntax error near unexpected token '||']
 503: Expected [2] status but found [0]
 505: Expected [$$] output but found []
-505: Expected no error output but found [cat: .testignore: No such file or directory]
+505: Expected no error output but found [cat: .testignore: Aucun fichier ou dossier de ce type]
 506: Expected [syntax;] output but found []
-506: Expected no error output but found [cat: .testignore: No such file or directory]
+506: Expected no error output but found [cat: .testignore: Aucun fichier ou dossier de ce type]
 507: Expected [syntax;] output but found []
-507: Expected no error output but found [cat: .testignore: No such file or directory]
+507: Expected no error output but found [cat: .testignore: Aucun fichier ou dossier de ce type]
 508: Expected [1] status but found [0]
 508: Expected [minishell: cd: file_not_exist: No such file or directory] error output but found []
 509: Expected [127] status but found [0]
-509: Expected [hello: command not found] error output but found [minishell: hello :command not found
-cat: .testignore: No such file or directory]
+509: Expected [hello: command not found] error output but found [cat: .testignore: Aucun fichier ou dossier de ce type
+minishell: hello :command not found]
 512: Expected [1] status but found [0]
 515: Expected [real0m3.002s
 
 
 user0m0.003s] output but found []
-515: Expected no error output but found [0.00user 0.00system 0:01.00elapsed 0%CPU (0avgtext+0avgdata 2020maxresident)k
-0inputs+0outputs (0major+94minor)pagefaults 0swaps]
-517: Expected no error output but found [exit
-minishell: exit: too many arguments]
+515: Expected no error output but found [0.00user 0.00system 0:01.00elapsed 0%CPU (0avgtext+0avgdata 1892maxresident)k
+0inputs+0outputs (0major+99minor)pagefaults 0swaps]
 518: Expected no error output but found [b: No such file or directory
 b: No such file or directory
-rm: cannot remove 'b': No such file or directory]
+rm: impossible de supprimer 'b': Aucun fichier ou dossier de ce type]
 tricky
 519: Expected [minishell: ./minishell: Permission denied] error output but found [./minishell: Permission denied]
 520: Expected [2] status but found [0]
+520: Expected [ls: cannot access 'hola': No such file or directory] error output but found [ls: impossible d'accéder à 'hola': Aucun fichier ou dossier de ce type]
 521: Expected [126] status but found [0]
 521: Expected [minishell: ./README.md: Permission denied] error output but found [./README.md: Permission denied]
-523: Expected no output but found [SHLVL=2
-SHLVL=2
+523: Expected no output but found [SHLVL=3
+SHLVL=3
 exit
-SHLVL=2]
+SHLVL=3]
 524: Expected [126] status but found [0]
 524: Expected [minishell: ./hola: Permission denied] error output but found [./hola: Permission denied]
-525: Expected [53] output but found [70]
+525: Expected [53] output but found [79]
 526: Expected [127] status but found [0]
 526: Expected [wc -l: command not found] error output but found [minishell: wc -l :command not found]
 528: Expected [0] output but found []
-528: Expected no error output but found [expr: non-integer argument]
+528: Expected no error output but found [expr: argument non entier]
 redir
 535: Expected [que tal] output but found []
 535: Expected no error output but found [bonjour: No such file or directory
 bonjour: No such file or directory]
-539: Expected [grep: /usr/bin/grep /usr/share/man/man1/grep.1.gz /usr/share/man/man1/grep.1posix.gz /usr/share/info/grep.info.gz] output but found [grep: /usr/bin/grep /usr/share/man/man1/grep.1posix.gz /usr/share/man/man1/grep.1.gz /usr/share/info/grep.info.gz]
+539: Expected [grep: /usr/bin/grep /usr/share/man/man1/grep.1.gz /usr/share/man/man1/grep.1posix.gz /usr/share/info/grep.info.gz] output but found [grep: /usr/bin/grep /usr/share/man/man1/grep.1.gz /usr/share/info/grep.info.gz]
 543: Expected [2] status but found [0]
 543: Expected [minishell: syntax error near unexpected token `>'] error output but found [minishell: syntax error near unexpected token >]
 544: Expected [2] status but found [0]
@@ -582,13 +600,13 @@ bonjour: No such file or directory]
 548: Expected [minishell: prout: command not found] error output but found [minishell: prout :command not found]
 559: Expected [hola] output but found []
 559: Expected no error output but found [hello: No such file or directory
-cat: hello: No such file or directory]
+cat: hello: Aucun fichier ou dossier de ce type]
 563: Expected [hola] output but found []
 563: Expected no error output but found [bonjour: No such file or directory
-cat: hello: No such file or directory]
+cat: hello: Aucun fichier ou dossier de ce type]
 565: Expected [hola] output but found []
 565: Expected no error output but found [bonjour: No such file or directory
-cat: hello: No such file or directory]
+cat: hello: Aucun fichier ou dossier de ce type]
 567: Expected [bonjour hola] output but found [hola bonjour]
 568: Expected [] output but found []
 572: Expected [1] status but found [0]
@@ -623,10 +641,10 @@ ls1  [...]] output but found []
 bonjour: No such file or directory]
 595: Expected [hola] output but found []
 595: Expected no error output but found [minishell: ec"ho hola  >  bonjour :command not found
-cat: 'bo"njour': No such file or directory]
-596: Expected no error output but found [cat: 1: No such file or directory]
+cat: 'bo"njour': Aucun fichier ou dossier de ce type]
+596: Expected no error output but found [cat: 1: Aucun fichier ou dossier de ce type]
 597: Expected [1] status but found [0]
-597: Expected no error output but found [cat: hey: No such file or directory]
+597: Expected no error output but found [cat: hey: Aucun fichier ou dossier de ce type]
 598: Expected [minishell: prout: No such file or directory] error output but found [prout: No such file or directory]
 599: Expected [
 
@@ -667,6 +685,7 @@ bonjour] output but found []
 616: Expected [minishell: prout: No such file or directory] error output but found [prout: No such file or directory]
 617: Expected [minishell: prout: No such file or directory] error output but found [prout: No such file or directory]
 619: Expected [2] status but found [0]
+619: Expected [ls: cannot access 'bonjour': No such file or directory] error output but found [ls: impossible d'accéder à 'bonjour': Aucun fichier ou dossier de ce type]
 620: Expected ['bonjour hello' [...]] output but found [$"HOLA"
 $HOLA
 bonjour\
@@ -703,9 +722,9 @@ examples]
 
 Amour] output but found []
 635: Expected no error output but found [e: No such file or directory
-cat: e: No such file or directory]
+cat: e: Aucun fichier ou dossier de ce type]
 heredoc
-638: Expected [/mnt/nfs/homes/bfresque] output but found [> 
+638: Expected [/home/bfresque] output but found [> 
 > 
 > $HOME
 > 
@@ -737,35 +756,32 @@ hola]
 > minishell: warning: here-document at line 0 delimited by end-of-file (wanted '')]
 656: Expected [minishell: syntax error near unexpected token `<<'] error output but found [bonjour: No such file or directory]
 parandor
-658: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+658: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 658: Expected no error output but found [minishell: syntax error near unexpected token '||']
 659: Expected [hola] output but found []
 659: Expected no error output but found [minishell: syntax error near unexpected token '||']
 661: Expected [bonjour] output but found []
 661: Expected no error output but found [minishell: syntax error near unexpected token '||']
 663: Expected [bonjourhola] output but found [bonjour && echo -n holaminishell$> exit]
-665: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester
+665: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester
 
 
 hola] output but found []
 665: Expected no error output but found [minishell: syntax error near unexpected token '||']
-666: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester
+666: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester
 
 
 minitester.sh] output but found []
 666: Expected no error output but found [minishell: syntax error near unexpected token '||']
-667: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+667: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 667: Expected no error output but found [minishell: syntax error near unexpected token '||']
 668: Expected [minitester.sh] output but found []
 668: Expected no error output but found [minishell: syntax error near unexpected token '||']
 669: Expected [minitester.sh] output but found []
 669: Expected [minishell: export: `': not a valid identifier] error output but found [minishell: syntax error near unexpected token '||']
-670: Expected [1] status but found [0]
+670: Expected [1] status but found [134]
 670: Expected [minitester.sh] output but found []
-670: Expected [minishell: export: `': not a valid identifier] error output but found [ls: cannot access '&&': No such file or directory
-ls: cannot access 'export': No such file or directory
-ls: cannot access '': No such file or directory
-ls: cannot access 'consol!': No such file or directory]
+670: Expected [minishell: export: `': not a valid identifier] error output but found [minishell: malloc.c:2379: sysmalloc: Assertion `(old_top == initial_top (av) && old_size == 0) || ((unsigned long) (old_size) >= MINSIZE && prev_inuse (old_top) && ((unsigned long) old_end & (pagesize - 1)) == 0)' failed.]
 671: Expected [1] status but found [0]
 671: Expected [minishell: export: `': not a valid identifier] error output but found [minishell: export: `""': not a valid identifier]
 672: Expected [2] status but found [0]
@@ -792,44 +808,44 @@ ls: cannot access 'consol!': No such file or directory]
 
 
 minitester.sh] output but found []
-686: Expected no error output but found [ls: cannot access '&&': No such file or directory
-ls: cannot access '(ls)': No such file or directory]
+686: Expected no error output but found [ls: impossible d'accéder à '&&': Aucun fichier ou dossier de ce type
+ls: impossible d'accéder à '(ls)': Aucun fichier ou dossier de ce type]
 687: Expected [minitester.sh
 
 
-/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 687: Expected no error output but found [minishell: (ls :command not found]
 688: Expected [minitester.sh
 
 
-/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 688: Expected no error output but found [minishell: ( :command not found]
 689: Expected [minitester.sh
 
 
-/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 689: Expected no error output but found [minishell: ( :command not found]
 690: Expected [minitester.sh
 
 
-/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 690: Expected no error output but found [minishell: (ls :command not found]
 691: Expected [crashtest.c
 
 
 Docs] output but found []
 691: Expected no error output but found [minishell: (ls :command not found]
-692: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
-692: Expected no error output but found [ls: cannot access '&&': No such file or directory
-ls: cannot access 'pwd': No such file or directory]
+692: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
+692: Expected no error output but found [ls: impossible d'accéder à '&&': Aucun fichier ou dossier de ce type
+ls: impossible d'accéder à 'pwd': Aucun fichier ou dossier de ce type]
 693: Expected [2] status but found [0]
 693: Expected [minishell: syntax error near unexpected token `('] error output but found [minishell: (ls :command not found]
 694: Expected no error output but found [minishell: ( :command not found
-rm: cannot remove 'pwd': No such file or directory]
+rm: impossible de supprimer 'pwd': Aucun fichier ou dossier de ce type]
 695: Expected [minishell: pwd: No such file or directory] error output but found [minishell: ( :command not found]
 696: Expected [1] status but found [0]
 696: Expected [minishell: pwd: No such file or directory] error output but found [minishell: ( :command not found]
-697: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+697: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 697: Expected no error output but found [minishell: ( :command not found]
 698: Expected [2] status but found [0]
 698: Expected [minishell: syntax error near unexpected token `)'] error output but found [minishell: () :command not found]
@@ -840,10 +856,10 @@ rm: cannot remove 'pwd': No such file or directory]
 
 logfile.txt] output but found []
 700: Expected no error output but found [minishell: syntax error near unexpected token '||']
-701: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester
+701: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester
 
 
-/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 702: Expected [127] status but found [0]
 702: Expected [lss: command not found] error output but found [minishell: (lss&&pwd)&&(lss&&pwd) :command not found]
 703: Expected [crashtest.c
@@ -865,8 +881,7 @@ minishell: wc) :command not found]
 minishell: wc) :command not found
 minishell: wc) :command not found]
 706: Expected [      1       1      34] output but found []
-706: Expected no error output but found [minishell: (pwd :command not found
-minishell: wc) :command not found]
+706: Expected no error output but found [minishell: minishell: (pwdwc) :command not found :command not found]
 707: Expected [logfile.txt
 
 
@@ -886,7 +901,7 @@ minishell: wc) :command not found]
 minishell: wc) :command not found]
 711: Expected [      1       1      34] output but found []
 711: Expected [ls: invalid option -- 'z'] error output but found [minishell: syntax error near unexpected token '||']
-712: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester
+712: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester
 
 
 logfile.txt] output but found []
@@ -897,22 +912,24 @@ logfile.txt] output but found []
       1       1      34] output but found []
 713: Expected no error output but found [minishell: syntax error near unexpected token '||']
 714: Expected [2] status but found [0]
-715: Expected [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+714: Expected [ls: invalid option -- 'z'] error output but found [ls : option invalide -- 'z'
+Saisissez « ls --help » pour plus d'informations.]
+715: Expected [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 715: Expected no error output but found [minishell: (ls :command not found]
-717: Expected [/mnt/nfs/homes/bfresque/
+717: Expected [/home/bfresque/
 
 
-/mnt/nfs/homes/bfresque/] output but found []
+/home/bfresque/] output but found []
 717: Expected no error output but found [cd: too many arguments]
-718: Expected [/mnt/nfs/homes/bfresque/
+718: Expected [/home/bfresque/
 
 
-/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester] output but found []
+/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester] output but found []
 718: Expected no error output but found [minishell: (cd :command not found]
 719: Expected no error output but found [minishell: syntax error near unexpected token '||']
 720: Expected no error output but found [minishell: syntax error near unexpected token '||']
 721: Expected [2] status but found [0]
-721: Expected no output but found [/mnt/nfs/homes/bfresque/Downloads/9-Minishell/minishell42tester]
+721: Expected no output but found [/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester]
 721: Expected [minishell: syntax error near unexpected token `&&'] error output but found []
 722: Expected [2] status but found [0]
 722: Expected [minishell: syntax error near unexpected token `||'] error output but found [minishell: syntax error near unexpected token '||']
@@ -922,15 +939,17 @@ logfile.txt] output but found []
 724: Expected [minishell: syntax error near unexpected token `||'] error output but found [minishell: syntax error near unexpected token '||']
 wildcard
 725: Expected [minitester.sh] output but found []
-725: Expected no error output but found [ls: cannot access '*': No such file or directory]
+725: Expected no error output but found [ls: impossible d'accéder à '*': Aucun fichier ou dossier de ce type]
 726: Expected [ignore_rl_leaks.supp
 
 
 logfile.txt] output but found []
-726: Expected no error output but found [ls: cannot access '*.*': No such file or directory]
+726: Expected no error output but found [ls: impossible d'accéder à '*.*': Aucun fichier ou dossier de ce type]
 727: Expected [2] status but found [0]
+727: Expected [ls: cannot access '*.hola': No such file or directory] error output but found [ls: impossible d'accéder à '*.hola': Aucun fichier ou dossier de ce type]
 728: Expected [syntax;] output but found []
-728: Expected no error output but found [cat: '.*es*re': No such file or directory]
+728: Expected no error output but found [cat: '.*es*re': Aucun fichier ou dossier de ce type]
 729: Expected [1] status but found [0]
+729: Expected [cat: '.*es*are': No such file or directory] error output but found [cat: '.*es*are': Aucun fichier ou dossier de ce type]
 730: Expected [syntax;] output but found []
-730: Expected no error output but found [cat: '.*es*re': No such file or directory]
+730: Expected no error output but found [cat: '.*es*re': Aucun fichier ou dossier de ce type]

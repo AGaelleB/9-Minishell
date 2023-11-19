@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:59:32 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 17:00:15 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/19 15:34:34 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ void	handle_quotes_echo(t_arg_handler *arg_handler)
 	i = arg_handler->i;
 	double_quote = arg_handler->double_quote;
 	single_quote = arg_handler->single_quote;
-	if (str[*i] == '\'' && !*double_quote)
+	if (str[*i] == '\'' && !*double_quote && str[*i + 1] != '\'')
 	{
 		*single_quote = !*single_quote;
 		(*i)++;
 	}
-	else if (str[*i] == '\"' && !*single_quote)
+	else if (str[*i] == '\"' && !*single_quote && str[*i + 1] != '\"')
 	{
 		*double_quote = !*double_quote;
 		(*i)++;
 	}
-	if (!*single_quote && str[*i] == '\"' && str[*i + 1] == '\"')
+	while (!*single_quote && str[*i] == '\"' && str[*i + 1] == '\"')
 		*i += 2;
-	else if (!*double_quote && str[*i] == '\'' && str[*i + 1] == '\'')
+	while (!*double_quote && str[*i] == '\'' && str[*i + 1] == '\'')
 		*i += 2;
 	if (!*double_quote && str[*i] == '\'')
 		*single_quote = !*single_quote;
