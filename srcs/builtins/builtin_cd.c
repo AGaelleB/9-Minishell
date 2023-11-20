@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/16 13:56:49 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:35:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
 	return (free(var_name), ret); // NEW FREE 
 }
 
-char	*check_expender(t_env *env)
+char	*check_expander(t_env *env)
 {
 	int		i;
 	int		m;
@@ -114,7 +114,7 @@ int	ft_builtin_cd(char **args, t_env *env)
 	else
 		env->path_to_change = args[1];
 	update_env_oldpwd(env);
-	env->path_to_change = check_expender(env);
+	env->path_to_change = check_expander(env);
 	if (chdir(env->path_to_change) == -1)
 		return (print_error_cd(env, 1), 1);
 	env->new_directory = getcwd(NULL, 0);

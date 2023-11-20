@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_builtins_verifs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:23:56 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:39:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,11 @@ int	check_expand(t_command *current, t_env *env)
 			g_exit_status = 127;
 			return (1);
 		}
-		free(str);
+		else
+		{
+			free(str);
+			return (1);
+		}
 	}
 	return (0);
 }

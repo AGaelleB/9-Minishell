@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   epur_filename.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:04:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/06 14:26:06 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:21:37 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,14 @@ static void	skip_until_char(char *str, int *i, char c)
 		(*i)++;
 }
 
-static void	handle_quotes(char *str, int *i, bool *in_quote, bool *double_quote)
-{
-	if (!*in_quote && str[*i] == '\"' && str[*i + 1] == '\"')
-		(*i) += 2;
-	else if (!*double_quote && str[*i] == '\'' && str[*i + 1] == '\'')
-		(*i) += 2;
-	if (!*double_quote && str[*i] == '\'')
-		*in_quote = !*in_quote;
-	else if (!*in_quote && str[*i] == '\"')
-		*double_quote = !*double_quote;
-	if (!*in_quote && str[*i] == '\"')
-		(*i)++;
-	else if (!*double_quote && str[*i] == '\'')
-		(*i)++;
-}
-
 static char	*extract_filename(char *cmd, int *i)
 {
 	int		j;
-	bool	in_quote;
+	bool	single_quote;
 	bool	double_quote;
 	char	*file_name;
 
-	in_quote = false;
+	single_quote = false;
 	double_quote = false;
 	file_name = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
 	if (!file_name)
@@ -49,10 +33,11 @@ static char	*extract_filename(char *cmd, int *i)
 	j = 0;
 	while (cmd[*i])
 	{
-		if (cmd[*i] == '>' || cmd[*i] == '<')
+		if ((cmd[*i] == '>' || cmd[*i] == '<' )
+			&& (!single_quote && !double_quote))
 			break ;
-		handle_quotes(cmd, i, &in_quote, &double_quote);
-		if (!in_quote && !double_quote && cmd[*i] == ' ')
+		handle_quotes_master(cmd, i, &single_quote, &double_quote);
+		if (!single_quote && !double_quote && cmd[*i] == ' ')
 			break ;
 		file_name[j++] = cmd[(*i)++];
 	}

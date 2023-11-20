@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_exit_in_process.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:28:21 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:43:20 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	validate_exit_status_process(char *exit_status_str)
 	int	i;
 
 	i = 0;
-	if (strcmp(exit_status_str, "-") == 0)
+	if (ft_strcmp_minishell(exit_status_str, "-") == 0)
 	{
 		ft_putstr_fd("minishell: exit: -: numeric argument required\n", 2);
 		exit(g_exit_status = 2);
@@ -56,8 +56,11 @@ static void	handle_exit_with_status_process(char *input)
 	char	**args;
 	int		i;
 	int		exit_status;
+	int		nb_pipe;
+	char	*str;
 
 	args = parse_exit_args_process(input, &arg_count);
+	nb_pipe = count_pipe(input);
 	i = 0;
 	if (arg_count > 1)
 	{
@@ -65,10 +68,21 @@ static void	handle_exit_with_status_process(char *input)
 		g_exit_status = 1;
 		return ;
 	}
+	else if (nb_pipe > 0)
+	{
+		str = epurstr(args[0]);
+		exit_status = validate_exit_status_process(str);
+		g_exit_status = exit_status;
+		free(str);
+		return ;
+	}
 	else
 	{
-		exit_status = validate_exit_status_process(args[0]);
+		str = epurstr(args[0]);
+		exit_status = validate_exit_status_process(str);
 		g_exit_status = exit_status;
+		free (input);
+		free(str);
 		exit(g_exit_status);
 	}
 	while (args[i] != NULL)

@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/19 14:28:25 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/11/20 14:39:53 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ SRCS_UTILS = srcs/utils/check_redirections.c \
 	srcs/utils/count_args.c \
 	srcs/utils/free_bis.c \
 	srcs/utils/free_struct.c \
+	srcs/utils/handle_quotes.c \
 	srcs/utils/libft_modify.c \
 	srcs/utils/print_error.c \
 	srcs/utils/print_export.c \
@@ -87,6 +88,7 @@ SRCS_UTILS = srcs/utils/check_redirections.c \
 	srcs/utils/split_string_token_utils.c \
 	srcs/utils/split_string_token.c \
 	srcs/utils/split_string.c \
+	srcs/utils/util_count.c \
 	srcs/utils/utils_echo.c \
 	srcs/utils/utils.c \
 

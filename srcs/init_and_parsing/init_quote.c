@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 10:44:53 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/19 15:37:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 10:09:28 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,6 @@ int	verif_nb_double_quote(char *str)
 	else
 		return (-1);
 }
-
-// int	verif_nb_quote(char *input)
-// {
-// 	if ((verif_nb_single_quote(input) != 0)
-// 		|| (verif_nb_double_quote(input) != 0))
-// 	{
-// 		printf("minishell: miss quote\n");
-// 		free(input);
-// 		return (-1);
-// 	}
-// 	return (0);
-// }
 
 bool	contains_single_quote(char *str)
 {

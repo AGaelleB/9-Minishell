@@ -190,7 +190,7 @@ envvar
 194: Expected [126] status but found [0]
 197: Expected [export PATH="..."] output but found [export SHELL="/usr/bin/zsh"
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
-export SESSION_MANAGER="local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154"
+export SESSION_MANAGER="local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129"
 export USER_ZDOTDIR="/home/bfresque"
 export QT_ACCESSIBILITY="1"]
 202: Expected [1] status but found [0]
@@ -202,7 +202,7 @@ export QT_ACCESSIBILITY="1"]
 205: Expected [1] status but found [0]
 205: Expected no output but found [export SHELL="/usr/bin/zsh"
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
-export SESSION_MANAGER="local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154"
+export SESSION_MANAGER="local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129"
 export USER_ZDOTDIR="/home/bfresque"
 export QT_ACCESSIBILITY="1"]
 205: Expected [minishell: export: `0': not a valid identifier] error output but found []
@@ -242,7 +242,7 @@ export QT_ACCESSIBILITY="1"]
 226: Expected [minishell: !LA=bonjour: event not found] error output but found [minishell: export: `HO!LA': not a valid identifier]
 227: Expected [HO0LA=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 227: Expected no error output but found [minishell: export: `HO$?LA': not a valid identifier]
@@ -252,13 +252,13 @@ QT_ACCESSIBILITY=1]
 229: Expected [minishell: export: `HOL+A=bonjour': not a valid identifier] error output but found [minishell: export: `HOL+A': not a valid identifier]
 230: Expected [HOLA=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 230: Expected no error output but found [minishell: export: `HOLA+': not a valid identifier]
 231: Expected [HOLA=bonjourbonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 231: Expected no error output but found [minishell: export: `HOLA+': not a valid identifier]
@@ -270,12 +270,12 @@ QT_ACCESSIBILITY=1]
 234: Expected [minishell: export: ʻ=': not a valid identifier] error output but found [minishell: export: `': not a valid identifier]
 242: Expected [HOLA=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 243: Expected [HOLA=bon\jour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 244: Expected [2] status but found [0]
@@ -286,12 +286,12 @@ QT_ACCESSIBILITY=1]
 246: Expected [jour: command not found] error output but found []
 247: Expected [HOLA=bon@jour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 248: Expected no output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 248: Expected [jour: command not found
@@ -313,7 +313,7 @@ HOLA=bon] error output but found []
 262: Expected [1] status but found [0]
 262: Expected [HOLA=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 262: Expected [minishell: export: `': not a valid identifier] error output but found [minishell: export: `""': not a valid identifier]
@@ -325,7 +325,6 @@ QT_ACCESSIBILITY=1]
 269: Expected [weshHOLA.] output but found [wesh$HOLA.]
 270: Expected [weshHOLA HOLA.] output but found [wesh$HOLA HOLA.]
 272: Expected [hola et $HOLA] output but found [ hola et bonjour]
-273: Expected [hola et bonjourbonjour] output but found []
 274: Expected [ls -l - a] output but found [ls        -l    - a]
 275: Expected [total] output but found []
 275: Expected no error output but found [minishell: l$HOLA :command not found]
@@ -338,20 +337,20 @@ QT_ACCESSIBILITY=1]
 279: Expected no error output but found [minishell: $HOLAs :command not found]
 280: Expected [HOL=A=bonjour] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 281: Expected [127] status but found [0]
 281: Expected [$HOLAs: command not found] error output but found [minishell: $HOLAs :command not found]
 282: Expected [HOL=A=] output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 283: Expected [1] status but found [0]
 283: Expected no output but found [SHELL=/usr/bin/zsh
 LSCOLORS=Gxfxcxdxbxegedabagacad
-SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1154,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1154
+SESSION_MANAGER=local/bfresque-Standard-PC-Q35-ICH9-2009:@/tmp/.ICE-unix/1129,unix/bfresque-Standard-PC-Q35-ICH9-2009:/tmp/.ICE-unix/1129
 USER_ZDOTDIR=/home/bfresque
 QT_ACCESSIBILITY=1]
 283: Expected [minishell: export: `TE+S=T': not a valid identifier] error output but found [minishell: export: `TE+S': not a valid identifier]
@@ -491,8 +490,6 @@ munmap_chunk(): invalid pointer]
 exit
 417: Expected no output but found [exit]
 417: Expected [exit] error output but found []
-418: Expected no output but found [2 JE SUIS LE BASIC]
-419: Expected no output but found [2 JE SUIS LE BASIC]
 420: Expected [2] status but found [0]
 424: Expected [1] status but found [0]
 425: Expected [1] status but found [0]
@@ -500,25 +497,7 @@ exit
 427: Expected [1] status but found [0]
 428: Expected [1] status but found [0]
 429: Expected [2] status but found [0]
-436: Expected [154] status but found [2]
-436: Expected no output but found [2 JE SUIS LE BASIC]
-438: Expected [0] status but found [2]
-438: Expected no output but found [2 JE SUIS LE BASIC]
-440: Expected [42] status but found [2]
-440: Expected no output but found [2 JE SUIS LE BASIC]
 441: Expected [1] status but found [0]
-442: Expected [2] status but found [0]
-443: Expected no output but found [2 JE SUIS LE BASIC]
-444: Expected no output but found [2 JE SUIS LE BASIC]
-445: Expected [2] status but found [0]
-449: Expected [154] status but found [2]
-449: Expected no output but found [2 JE SUIS LE BASIC]
-450: Expected [2] status but found [0]
-451: Expected no output but found [2 JE SUIS LE BASIC]
-454: Expected [2] status but found [154]
-455: Expected [2] status but found [154]
-457: Expected [170] status but found [2]
-457: Expected no output but found [2 JE SUIS LE BASIC]
 460: Expected [2] status but found [0]
 462: Expected [2] status but found [255]
 pipe
@@ -563,8 +542,8 @@ minishell: hello :command not found]
 
 
 user0m0.003s] output but found []
-515: Expected no error output but found [0.00user 0.00system 0:01.00elapsed 0%CPU (0avgtext+0avgdata 1892maxresident)k
-0inputs+0outputs (0major+99minor)pagefaults 0swaps]
+515: Expected no error output but found [0.00user 0.00system 0:01.01elapsed 0%CPU (0avgtext+0avgdata 1804maxresident)k
+0inputs+0outputs (0major+97minor)pagefaults 0swaps]
 518: Expected no error output but found [b: No such file or directory
 b: No such file or directory
 rm: impossible de supprimer 'b': Aucun fichier ou dossier de ce type]
@@ -574,10 +553,10 @@ tricky
 520: Expected [ls: cannot access 'hola': No such file or directory] error output but found [ls: impossible d'accéder à 'hola': Aucun fichier ou dossier de ce type]
 521: Expected [126] status but found [0]
 521: Expected [minishell: ./README.md: Permission denied] error output but found [./README.md: Permission denied]
-523: Expected no output but found [SHLVL=3
-SHLVL=3
+523: Expected no output but found [SHLVL=2
+SHLVL=2
 exit
-SHLVL=3]
+SHLVL=2]
 524: Expected [126] status but found [0]
 524: Expected [minishell: ./hola: Permission denied] error output but found [./hola: Permission denied]
 525: Expected [53] output but found [79]
@@ -866,22 +845,23 @@ logfile.txt] output but found []
 
 
 Docs] output but found []
-703: Expected no error output but found [minishell: (ls :command not found
-minishell: wc) :command not found]
+703: Expected no error output but found [minishell: wc) :command not found
+minishell: (ls :command not found]
 704: Expected [crashtest.c
 
 
 Docs] output but found []
-704: Expected no error output but found [minishell: (ls :command not found
-minishell: wc) :command not found
+704: Expected no error output but found [minishell: wc) :command not found
 minishell: (ls :command not found
-minishell: wc) :command not found]
+minishell: wc) :command not found
+minishell: (ls :command not found]
 705: Expected [hey] output but found []
 705: Expected no error output but found [minishell: (ls :command not found
 minishell: wc) :command not found
 minishell: wc) :command not found]
 706: Expected [      1       1      34] output but found []
-706: Expected no error output but found [minishell: minishell: (pwdwc) :command not found :command not found]
+706: Expected no error output but found [minishell: (pwd :command not found
+minishell: wc) :command not found]
 707: Expected [logfile.txt
 
 

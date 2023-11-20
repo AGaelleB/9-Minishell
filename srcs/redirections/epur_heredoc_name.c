@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 10:04:43 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 15:40:47 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:08:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,24 @@ static void	skip_until_sequence(char *str, int *i, char *redir)
 		(*i)++;
 }
 
-static void	handle_quotes(char *str, int *i, bool *in_quote, bool *double_quote)
-{
-	if (!*in_quote && str[*i] == '\"' && str[*i + 1] == '\"')
-		(*i) += 2;
-	else if (!*double_quote && str[*i] == '\'' && str[*i + 1] == '\'')
-		(*i) += 2;
-	if (!*double_quote && str[*i] == '\'')
-		*in_quote = !*in_quote;
-	else if (!*in_quote && str[*i] == '\"')
-		*double_quote = !*double_quote;
-	if (!*in_quote && str[*i] == '\"')
-		(*i)++;
-	else if (!*double_quote && str[*i] == '\'')
-		(*i)++;
-}
-
 static char	*extract_filename(char *cmd, int *i)
 {
 	int		j;
-	bool	in_quote;
+	bool	single_quote;
 	bool	double_quote;
 	char	*file_name;
 
-	in_quote = false;
+	single_quote = false;
 	double_quote = false;
 	file_name = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
 	if (!file_name)
 		return (NULL);
 	j = 0;
-	while (cmd[*i] && !(cmd[*i] == ' ' && !in_quote && !double_quote))
+	while (cmd[*i] && !(cmd[*i] == ' ' && !single_quote && !double_quote))
 	{
-		handle_quotes(cmd, i, &in_quote, &double_quote);
+		handle_quotes_master(cmd, i, &single_quote, &double_quote);
 		if (cmd[*i] == '>' || cmd[*i] == '<'
-			|| (cmd[*i] == ' ' && !in_quote && !double_quote))
+			|| (cmd[*i] == ' ' && !single_quote && !double_quote))
 			break ;
 		file_name[j++] = cmd[(*i)++];
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/19 16:27:40 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:40:24 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,30 +97,17 @@ int	main(int ac, char **av, char **envp)
 
 /*
                                         TO DO :
-minishell$> exit | ls
-exit
-minishell: exit: too many arguments // doit afficher ls
 
-
-si que tab, ignorer
-                
-echo                a
+echo				a
 doit ignorer les tabs
 
-
 export PATH=$PATH:$PWD
-    ->casse, donne une ligne vide
-une fois repare, verifier si couette avec Export :xcxcxc
+	-> "minishell" doit marcher comme "./minishell"
+export :xcxcxc
+	-> casse apres si clear au 1er, doit etre fait 2x pour fonctionner
 
-
-echo "$PATH" | '/usr/bin/wc'      -c    > 'coucou>tamere'
-    -> voir les epurfilename, doit creer un file coucou>tamere
-
-
-minishell$> $cc
-minishell: $cc :command not found
-    -> on devrait juste faire un retour a la ligne
-
+ echo "$PATH" | '/usr/bin/wc'      -c    > 'coucou>tamere'
+	-> cree 2 files, probleme avec la tokenisation
 
 penser a rechercher les truc quon a (void) et voir si utile.
 pareil pour forbiden function et a recoder

@@ -1,2 +1,2 @@
-minishell: minishell: (pwdwc) :command not found :command not found
-
+minishell: (pwd :command not found
+minishell: wc) :command not found
