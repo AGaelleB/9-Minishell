@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:16:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/20 10:51:51 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:38:34 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,23 @@ char	*check_none_var(char *str)
 	return (str_cpy);
 }
 
+int	apply_var_name(t_export *export, char **str, t_env *env, char *var_name)
+{
+	if (!(export->ret))
+	{
+		export->ret = malloc(sizeof(*str)
+			* (ft_strlen(env->cpy_env[export->j]) + ft_strlen(*str) + 2));
+		if (!export->ret)
+			return (-1);
+	}
+	begin_var(export, *str);
+	copy_env_in_return(export, env);
+	*str = re_init_var_str(export, *str);
+	if (!(*str))
+		return (free(var_name), 0);
+	return (1);
+}
+
 int	expand_variable(t_export *export, char **str, t_env *env)
 {
 	char	*var_name;
@@ -47,16 +64,8 @@ int	expand_variable(t_export *export, char **str, t_env *env)
 		export->j = find_env_var(env, var_name);
 		if (export->j != -1)
 		{
-			if (!(export->ret))
-			{
-				export->ret = malloc(sizeof(*str)
-				* (ft_strlen(env->cpy_env[export->j]) + ft_strlen(*str) + 2));
-			}
-			begin_var(export, *str);
-			copy_env_in_return(export, env);
-			*str = re_init_var_str(export, *str);
-			if (!(*str))
-				return (free(var_name), 0);
+			if (apply_var_name(export, str, env, var_name) == 0)
+				return (0);
 		}
 		else
 		{
@@ -86,31 +95,3 @@ int	export_expander(t_export *export, char *str, t_env *env)
 	free(str_cpy); // NEW FREE
 	return (g_exit_status);
 }
-
-/* int	expand_variable(t_export *export, char *str, t_env *env)
-{
-	char	*var_name;
-
-	while (1)
-	{
-		export->k = 0;
-		var_name = extract_var_name(str);
-		export->j = find_env_var(env, var_name);
-		if (export->j != -1)
-		{
-			begin_var(export, str);
-			copy_env_in_return(export, env);
-			str = re_init_var_str(export, str);
-			if (!(str))
-				return (free(var_name), 0);
-		}
-		else
-		{
-			str = check_none_var(str);
-			add_var_env(env, export->i, str);
-			free(var_name);
-			return (1);
-		}
-		free(var_name);
-	}
-} */

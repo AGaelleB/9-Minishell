@@ -66,6 +66,6 @@ mkdir a☃mkdir a/b☃cd a/b☃rm -r ../../a☃echo $PWD☃echo $OLDPWD
 mkdir a☃mkdir a/b☃cd a/b☃rm -r ../../a☃cd☃echo $PWD☃echo $OLDPWD
 mkdir a☃cd a☃rm -r ../a☃echo $PWD☃echo $OLDPWD
 export CDPATH=/☃cd $HOME/..
-export CDPATH=/☃cd mnt/nfs/homes/bfresque
+export CDPATH=/☃cd mnt/nfs/homes/gaelle
 export CDPATH=./☃cd .
 export CDPATH=./☃cd ..

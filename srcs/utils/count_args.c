@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:28:21 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 11:56:45 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:27:20 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void	process_single_argument(t_arg_handler *arg_handler, int *i)
 	while (arg_handler->input[*i] && (*double_quote
 			|| *single_quote || arg_handler->input[*i] != ' '))
 	{
-		handle_quotes_echo(arg_handler);
+		handle_quotes_echo(arg_handler->input, arg_handler->i,
+			arg_handler->double_quote, arg_handler->single_quote);
 		(*i)++;
 	}
 }
@@ -72,7 +73,8 @@ static int	process_arg_length(t_arg_handler *arg_handler, int *i)
 			|| arg_handler->input[*i] != ' '))
 	{
 		length++;
-		handle_quotes_echo(arg_handler);
+		handle_quotes_echo(arg_handler->input, arg_handler->i,
+			arg_handler->double_quote, arg_handler->single_quote);
 		(*i)++;
 	}
 	return (length);

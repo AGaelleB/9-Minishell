@@ -1,45 +1,71 @@
-int    here_doc_manage(t_process_data *data, int fd[2], char *delimiter)
-{
-    char    *input;
-    int        i;
-    int        result;
 
-    (void)data;
-    i = 0;
-    signal(SIGINT, ctrl_c_heredoc);
-    close(fd[0]);
-    while (1)
-    {
-        input = readline("> ");
-        result = handle_input(input, i, delimiter, fd);
-        if (result != 0)
-            return (result);
-        i++;
-    }
-    signal(SIGQUIT, ctrl_c_heredoc);
-    return (0);
+void handle_single_quote(t_arg_handler *arg_handler)
+{
+	char *str = arg_handler->input;
+	int *i = arg_handler->i;
+	bool *single_quote = arg_handler->single_quote;
+	bool *double_quote = arg_handler->double_quote;
+
+	if (str[*i] == '\'' && !*double_quote && str[*i + 1] != '\'')
+	{
+		*single_quote = !*single_quote;
+		(*i)++;
+	}
 }
 
-int    here_doc_ray(t_process_data *data)
+void handle_double_quote(t_arg_handler *arg_handler)
 {
-    int    i;
-    int    heredoc_interrupted;
+	char *str = arg_handler->input;
+	int *i = arg_handler->i;
+	bool *single_quote = arg_handler->single_quote;
+	bool *double_quote = arg_handler->double_quote;
 
-    data->count_hd = count_heredocs(data->current->token_head);
-    data->heredocs = malloc(sizeof(t_here_doc) * data->count_hd);
-    if (!data->heredocs)
-        return (-1);
-    signal(SIGINT, ctrl_c_heredoc);
-    i = 0;
-    heredoc_interrupted = 0;
-    while (i < data->count_hd && !heredoc_interrupted)
-    {
-        heredoc_interrupted = manage_single_heredoc(data, i);
-        i++;
-    }
-    signal(SIGQUIT, ctrl_c_heredoc);
-    if (heredoc_interrupted)
-        return (-1);
-    else
-        return (0);
+	if (str[*i] == '\"' && !*single_quote && str[*i + 1] != '\"')
+	{
+		*double_quote = !*double_quote;
+		(*i)++;
+	}
+}
+
+void skip_consecutive_quotes(t_arg_handler *arg_handler, char quote_char)
+{
+	char *str = arg_handler->input;
+	int *i = arg_handler->i;
+	bool *quote_flag = (quote_char == '\'') ? arg_handler->single_quote : arg_handler->double_quote;
+
+	while (!*quote_flag && str[*i] == quote_char && str[*i + 1] == quote_char)
+		*i += 2;
+}
+
+void toggle_quote_state(t_arg_handler *arg_handler, char quote_char)
+{
+	char *str = arg_handler->input;
+	int *i = arg_handler->i;
+	bool *quote_flag = (quote_char == '\'') ? arg_handler->single_quote : arg_handler->double_quote;
+	bool *opposite_quote_flag = (quote_char == '\'') ? arg_handler->double_quote : arg_handler->single_quote;
+
+	if (!*opposite_quote_flag && str[*i] == quote_char)
+		*quote_flag = !*quote_flag;
+}
+
+void advance_index_if_quote(t_arg_handler *arg_handler, char quote_char)
+{
+	char *str = arg_handler->input;
+	int *i = arg_handler->i;
+	bool *quote_flag = (quote_char == '\'') ? arg_handler->single_quote : arg_handler->double_quote;
+
+	if (!*quote_flag && str[*i] == quote_char)
+		(*i)++;
+}
+
+void handle_quotes_echo(t_arg_handler *arg_handler)
+{
+	handle_single_quote(arg_handler);
+	handle_double_quote(arg_handler);
+	skip_consecutive_quotes(arg_handler, '\"');
+	skip_consecutive_quotes(arg_handler, '\'');
+	toggle_quote_state(arg_handler, '\'');
+	toggle_quote_state(arg_handler, '\"');
+	advance_index_if_quote(arg_handler, '\'');
+	advance_index_if_quote(arg_handler, '\"');
 }

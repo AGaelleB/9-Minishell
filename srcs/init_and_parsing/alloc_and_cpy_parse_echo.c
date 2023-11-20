@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_and_cpy_parse_echo.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/15 17:35:12 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:22:46 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static void	process_input(t_arg_handler *arg_handler, char *arg, int *arg_idx)
 	while (arg_handler->input[*i] && (*arg_handler->double_quote
 			|| *arg_handler->single_quote || arg_handler->input[*i] != ' '))
 	{
-		handle_quotes_echo(arg_handler);
+		handle_quotes_echo(arg_handler->input, arg_handler->i,
+			arg_handler->double_quote, arg_handler->single_quote);
+
 		if (is_redirection(arg_handler->input[*i])
 			&& !*arg_handler->double_quote && !*arg_handler->single_quote)
 			ft_skip_redirection_and_file(arg_handler->input, i);

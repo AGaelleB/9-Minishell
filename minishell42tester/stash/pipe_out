@@ -15,12 +15,12 @@ hola☃
 hola$$$☃
 hola☃
 hola☃
-/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester☃
+/home/gaelle/Documents/Stud-42/9-Minishell/minishell42tester☃
 docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500☃   ether 02:42:27:cf:95:49  txqueuelen 0  (Ethernet)☃[...]☃
 
-bfresque☃
-bfresque☃
-bfresque$$☃
+gaelle☃
+gaelle☃
+gaelle$$☃
 ls: /usr/bin/ls /usr/share/man/man1/ls.1posix.gz /usr/share/man/man1/ls.1.gz$$☃
 
 
@@ -28,7 +28,7 @@ ls: /usr/bin/ls /usr/share/man/man1/ls.1posix.gz /usr/share/man/man1/ls.1.gz$$�
 minitester.sh
 
 aloh☃
-total 16☃drwx------  2 bfresque [...] .☃drwxrwxewt 51 root     [...] ..☃-rwxr-xr-x  8 bfresque [...] crashtest.c☃[...]☃
+total 16☃drwx------  2 gaelle [...] .☃drwxrwxewt 51 root     [...] ..☃-rwxr-xr-x  8 gaelle [...] crashtest.c☃[...]☃
 
 test.c$$$$$$$$$$$☃
 minitester.sh☃

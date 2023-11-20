@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 14:51:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:52:52 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,10 @@ int				export_expander(t_export *export, char *str, t_env *env);
 int				count_pipe(char *input);
 void			handle_quotes_master(char *str, int *i, bool *single_quote, bool *double_quote);
 char			*epurstr(char *str);
+void			verif_nb_args_exit(void);
+int				verif_nb_pipe_exit(char **args);
+int				validate_exit_status_process(char *exit_status_str);
+
 
 /***********MAIN***********/
 
@@ -315,7 +319,8 @@ char			**parse_arg_export(char *input);
 
 char			**parse_input_quote_echo(t_env *env, char *input);
 void			skip_spaces_echo(char *input, int *i);
-void			handle_quotes_echo(t_arg_handler *arg_handler);
+// void			handle_quotes_echo(t_arg_handler *arg_handler);
+void	handle_quotes_echo(char *str, int *i, bool *double_quote, bool *single_quote);
 
 int				calculate_new_len(char *input);
 char			*copy_with_spaces(char *input, char *new_input);
@@ -407,7 +412,6 @@ void			ft_close_fd(void);
 int				is_empty_or_space(char *str);
 int				ft_isspace(int c);
 
-void			handle_quotes_echo(t_arg_handler *arg_handler);
 int				calculate_size_of_argument(char *input);
 void			initialize_bools(t_arg_handler *arg_handler);
 

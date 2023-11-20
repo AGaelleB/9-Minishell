@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 11:54:09 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/20 10:27:26 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:54:28 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_check_relative_paths_token(t_env *env, char *args)
 	temp_path = ft_get_paths_token(env);
 	if (temp_path == NULL)
 		return (NULL);
-	if (temp_path[0][0] == 0)//ne pas remttre au dessus (segfault)
+	if (temp_path[0][0] == 0) //ne pas remttre au dessus (segfault)
 		return (NULL);
 	valid_path = find_valid_path_token(temp_path, args);
 	ft_free_tab(temp_path);

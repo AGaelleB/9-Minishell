@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 14:51:44 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:42:44 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	validate_exit_status(char *exit_status_str)
 	i = 0;
 	if (ft_strcmp_minishell(exit_status_str, "-") == 0)
 	{
-		// write(2, "exit\n", 5);
 		ft_putstr_fd("minishell: exit: -: numeric argument required\n", 2);
 		exit(g_exit_status = 2);
 	}
@@ -53,7 +52,6 @@ static char	**parse_exit_args(char *input, int *arg_count)
 	return (args);
 }
 
-
 static void	handle_exit_with_status(char *input)
 {
 	int		arg_count;
@@ -65,11 +63,7 @@ static void	handle_exit_with_status(char *input)
 	args = parse_exit_args(input, &arg_count);
 	i = 0;
 	if (arg_count > 1)
-	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		g_exit_status = 1;
-		return ;
-	}
+		verif_nb_args_exit();
 	else
 	{
 		str = epurstr(args[0]);

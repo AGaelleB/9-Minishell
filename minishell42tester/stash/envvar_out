@@ -8,10 +8,10 @@ minitester.sh
 HOLA=bonjour
 HOLA=bonjour
 export PATH="..."☃
-export HOME="/home/bfresque"☃export Hola☃export PATH="..."☃
-HOME="/home/bfresque"☃Hola9hey☃PATH="..."☃
-export HOME="/home/bfresque"☃export PATH="..."☃
-export HOME="/home/bfresque"☃
+export HOME="/home/gaelle"☃export Hola☃export PATH="..."☃
+HOME="/home/gaelle"☃Hola9hey☃PATH="..."☃
+export HOME="/home/gaelle"☃export PATH="..."☃
+export HOME="/home/gaelle"☃
 
 
 
@@ -48,8 +48,8 @@ PATH=☃
 HOLA=bon☃
 HOLA=☃
 HOLA=bonjour☃
-HOLA=/home/bfresque☃
-HOLA=bonjour/home/bfresque☃
+HOLA=/home/gaelle☃
+HOLA=bonjour/home/gaelle☃
 HOLA=☃
 HOLA=bon☃
 HOLA=bonjour☃
@@ -61,7 +61,7 @@ HOLA=bon@jour☃
 
 
 HOLA=bonjour☃PATH=☃
-HOLAbfresque=bonjour☃PATH=☃
+HOLAgaelle=bonjour☃PATH=☃
 HOLA=bonjour=casse-toi☃
 HOLA=bonjour=casse-toi☃
 bonjour et casse-toi☃
@@ -100,7 +100,7 @@ HOL=A=
 
 
 
-/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester
+/home/gaelle/Documents/Stud-42/9-Minishell/minishell42tester
 
 
 
@@ -111,8 +111,8 @@ PATH=☃
 
 
 ☃
-☃☃/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester☃
-/home/bfresque/Téléchargements/9-Minishell-main/minishell42tester☃☃☃☃/home/bfresque
+☃☃/home/gaelle/Documents/Stud-42/9-Minishell/minishell42tester☃
+/home/gaelle/Documents/Stud-42/9-Minishell/minishell42tester☃☃☃☃/home/gaelle
 ☃
 
 ☃

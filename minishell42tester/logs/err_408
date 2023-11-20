@@ -1,3 +1,3 @@
-rm: impossible de supprimer 'a': Aucun fichier ou dossier de ce type
-mkdir: impossible de créer le répertoire «a/b»: Aucun fichier ou dossier de ce type
+rm: cannot remove 'a': No such file or directory
+mkdir: cannot create directory ‘a/b’: No such file or directory
 minishell: cd: a/b: No such file or directory

@@ -1,2 +1,2 @@
-ls: impossible d'accéder à '&&': Aucun fichier ou dossier de ce type
-ls: impossible d'accéder à ';': Aucun fichier ou dossier de ce type
+ls: cannot access '&&': No such file or directory
+ls: cannot access ';': No such file or directory

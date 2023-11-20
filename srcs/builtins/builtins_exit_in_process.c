@@ -6,13 +6,13 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 15:43:20 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:56:22 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	validate_exit_status_process(char *exit_status_str)
+int	validate_exit_status_process(char *exit_status_str)
 {
 	int	i;
 
@@ -55,7 +55,6 @@ static void	handle_exit_with_status_process(char *input)
 	int		arg_count;
 	char	**args;
 	int		i;
-	int		exit_status;
 	int		nb_pipe;
 	char	*str;
 
@@ -63,25 +62,15 @@ static void	handle_exit_with_status_process(char *input)
 	nb_pipe = count_pipe(input);
 	i = 0;
 	if (arg_count > 1)
-	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		g_exit_status = 1;
-		return ;
-	}
+		verif_nb_args_exit();
 	else if (nb_pipe > 0)
-	{
-		str = epurstr(args[0]);
-		exit_status = validate_exit_status_process(str);
-		g_exit_status = exit_status;
-		free(str);
-		return ;
-	}
+		if (verif_nb_pipe_exit(args) == 0)
+			return ;
 	else
 	{
 		str = epurstr(args[0]);
-		exit_status = validate_exit_status_process(str);
-		g_exit_status = exit_status;
-		free (input);
+		g_exit_status = validate_exit_status_process(str);
+		free(input);
 		free(str);
 		exit(g_exit_status);
 	}

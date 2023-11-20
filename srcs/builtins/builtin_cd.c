@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 15:35:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:00:23 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
 	j = 0;
 	k = 0;
 	l = 0;
-	var_name = malloc(sizeof(char) * SIZE);
+	var_name = malloc(sizeof(char) * SIZE); // WARNING : printf var name
 	if (!var_name)
 		return (NULL);
 	j = pass_find_var_name(env, var_name, i, j);
@@ -69,7 +69,7 @@ char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
 		while (var_name[l])
 			ret[(*m)++] = var_name[l++];
 	}
-	return (free(var_name), ret); // NEW FREE 
+	return (free(var_name), ret); // NEW FREE
 }
 
 char	*check_expander(t_env *env)

@@ -3,26 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 10:59:32 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/19 15:34:34 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:26:53 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_quotes_echo(t_arg_handler *arg_handler)
+void	handle_quotes_echo(char *str, int *i, bool *double_quote,
+	bool *single_quote)
 {
-	char	*str;
-	int		*i;
-	bool	*double_quote;
-	bool	*single_quote;
-
-	str = arg_handler->input;
-	i = arg_handler->i;
-	double_quote = arg_handler->double_quote;
-	single_quote = arg_handler->single_quote;
 	if (str[*i] == '\'' && !*double_quote && str[*i + 1] != '\'')
 	{
 		*single_quote = !*single_quote;
