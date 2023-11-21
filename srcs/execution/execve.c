@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/14 12:53:07 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:35:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,37 @@ int	is_builtin(t_command *cur)
 	return (0);
 }
 
-int	execve_process(t_command *cur, t_env *env)
+int	execve_process(t_process_data *data, t_env *env)
 {
-	ft_set_args_and_paths(cur, env);
-	if (env->flag_error || is_builtin(cur) == 2)
+	ft_set_args_and_paths(data->current, env);
+	if (env->flag_error || is_builtin(data->current) == 2)
+	{
+		free_child(data, env);
 		exit(g_exit_status);
-	if (verif_access(cur, cur->command) == 1)
+	}
+	if (verif_access(data, env, data->current->command) == 1)
+	{
+		free_child(data, env);
 		exit(126);
-	if ((cur->command_path == NULL) && is_builtin(cur) == 0)
+	}
+	if ((data->current->command_path == NULL) && is_builtin(data->current) == 0)
 	{
 		write(2, "minishell: ", 11);
-		write(2, cur->command_arg[0], ft_strlen(cur->command_arg[0]));
+		write(2, data->current->command_arg[0], ft_strlen(data->current->command_arg[0]));
 		write(2, " :command not found", 19);
 		write(2, "\n", 1);
+		free_child(data, env);
 		exit(g_exit_status = 127);
 	}
-	else if ((cur->command_path)
-		&& (execve(cur->command_path, cur->command_arg, env->cpy_env) == -1))
+	else if ((data->current->command_path)
+		&& (execve(data->current->command_path,
+			data->current->command_arg, env->cpy_env) == -1))
 	{
 		write(2, "minishell: ", 11);
-		write(2, cur->command_arg[0], ft_strlen(cur->command_arg[0]));
+		write(2, data->current->command_arg[0], ft_strlen(data->current->command_arg[0]));
 		write(2, " :command not found", 19);
 		write(2, "\n", 1);
+		free_child(data, env);
 		exit(g_exit_status = 127);
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 10:50:09 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:33:26 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,8 @@ typedef struct s_command
 	struct s_command	*next;
 }	t_command;
 
-
+int	execve_process(t_process_data *data, t_env *env);
+int	verif_access(t_process_data *data, t_env *env, char *command);
 void	write_exit_simple(t_env *env, char *str);
 int	ft_builtin_write_exit(t_env *env, char *input);
 void	free_child(t_process_data *data, t_env *env);
@@ -277,7 +278,6 @@ void			handle_all_process(t_process_data *data, t_env *env);
 int				here_doc_ray(t_process_data *data);
 
 void			init_execve(t_command *cur, pid_t **childs_pids);
-int				execve_process(t_command *cur, t_env *env);
 
 /***********INIT_AND_PARSING***********/
 char			*ft_allocate_and_copy(t_arg_handler *arg_handler);
@@ -373,11 +373,6 @@ int				pipe_syntax_errors(char *input);
 void			ft_print_error(char *str);
 void			exit_with_error(char *message, pid_t *child_pids);
 void			print_error_cd(t_env *env, int i);
-int				verif_access(t_command *current, char *command);
-
-void			exit_access_exec(t_command *current, char *command);
-void			exit_access_not_found(t_command *current, char *command);
-int				is_dir_error(t_command *current, char *command);
 
 void			print_no_file_or_directory(t_env *env, char *args);
 void			ft_print_error(char *str);

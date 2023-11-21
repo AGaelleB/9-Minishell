@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 13:48:55 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:25:19 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,7 @@ void	handle_child_process(t_process_data *data, t_env *env)
 		free_child(data, env);
 		exit(g_exit_status);
 	}
-	if (execve_process(data->current, env) == 127)
-	{
-		free_child(data, env);
-		exit(127);
-	}
+	execve_process(data, env);
 	free_child(data, env);
 }
 
