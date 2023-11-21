@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollars.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:20:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 10:45:01 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:49:54 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*get_exit_status_str(void)
 
 	str = ft_itoa(g_exit_status);
 	if (!str)
-		exit(EXIT_FAILURE);
+		return (-1);
 	return (str);
 }
 
@@ -34,7 +34,7 @@ static void	extract_variable_name(char *input, int *i, int *start, char **str)
 	end = *i - *start;
 	*str = ft_substr(input, *start, end);
 	if (!(*str))
-		exit(EXIT_FAILURE);
+		return (-1);
 }
 
 static void	append_env_value(t_arg_handler *arg_handler, char *env_value)

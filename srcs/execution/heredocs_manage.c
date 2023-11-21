@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_manage.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/16 14:19:35 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:51:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	manage_single_heredoc(t_process_data *data, int index)
 	if (pid == 0)
 	{
 		here_doc_manage(data, data->heredocs[index].fd, delimiter);
-		exit(1);
+		exit(1); // ?? free ?? 
 	}
 	waitpid(pid, &status, 0);
 	close(data->heredocs[index].fd[1]);
