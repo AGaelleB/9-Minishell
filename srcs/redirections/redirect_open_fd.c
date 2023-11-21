@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:07:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 15:35:56 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:34:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	set_last_redirection_flag(t_command *command, t_token *token_head)
 	command->last_redir_is_heredoc = false;
 }
 
-int	open_fd(t_process_data *data, t_command *command)
+int	open_fd(t_process_data *data, t_env *env, t_command *command)
 {
 	t_token	*token;
 	t_token	*token_head;
@@ -52,9 +52,9 @@ int	open_fd(t_process_data *data, t_command *command)
 	while (token)
 	{
 		heredoc_open_fd(data, command, &token);
-		redirect_file_in_open_fd(command, token, token_head);
-		redirect_file_out_open_fd(command, token, token_head);
-		redirect_append_file_out_open_fd(command, token, token_head);
+		redirect_file_in_open_fd(data, env, token);
+		redirect_file_out_open_fd(data, env, token);
+		redirect_append_file_out_open_fd(data, env, token);
 		token = token->next;
 	}
 	return (0);

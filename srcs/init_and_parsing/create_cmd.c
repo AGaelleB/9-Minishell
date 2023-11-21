@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 15:51:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:19:09 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ t_command	*create_new_cmd(char *command_str, t_env *env)
 	if (!new_cmd)
 	{
 		perror("Failed to allocate memory for new command");
-		return (-1);
+		return (NULL);
 	}
 	new_cmd->command = add_spaces_around_redir(command_str);
 	if (!new_cmd->command)
 	{
 		perror("Failed to duplicate command string");
-		return (-1);
+		return (NULL);
 	}
 	new_cmd->token_head = tokenize_input(new_cmd->command, env);
 	if (new_cmd->token_head != NULL)

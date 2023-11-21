@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 15:48:58 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:17:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_execve(t_command *cur, pid_t **childs_pids)
 	}
 	*childs_pids = malloc(nb_child * sizeof(pid_t));
 	if (!*childs_pids)
-		return (-1);
+		return ;
 }
 
 void	ft_set_args_and_paths(t_command *cur, t_env *env)

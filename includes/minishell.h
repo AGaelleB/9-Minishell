@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 15:33:26 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/21 16:35:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,6 @@ void			ft_set_args_and_paths(t_command *cur, t_env *env);
 char			**parse_input_quote(char *input);
 int				builtins_verif(t_command *current, t_env	*env_bis);
 char			**split_string_token(char *str, char **delimiters);
-void			heredoc_open_fd(t_process_data *data, t_command *command, t_token **token);
 int				find_env_var(t_env *env, char *arg);
 void			remove_env_var(t_env *env, int idx);
 char			*extract_var_name(char *str);
@@ -334,24 +333,19 @@ char			*epur_filename_heredoc(t_token *token_head);
 
 int				is_redir_at_beginning(char *input, int i);
 
-int				redirect_file_in(t_command *current, t_token *token,
-					t_token *token_head);
-int				redirect_file_out(t_command *current, t_token *token,
-					t_token *token_head);
-int				redirect_append_file_out(t_command *current, t_token *token,
-					t_token *token_head);
+int				redirect_file_in(t_process_data *data, t_env *env, t_token *token);
+int				redirect_file_out(t_process_data *data, t_env *env, t_token *token);
+int				redirect_append_file_out(t_process_data *data, t_env *env, t_token *token);
 int				is_redir_at_beginning(char *input, int i);
 
-void			redirect_file_in_open_fd(t_command *command, t_token *token,
-					t_token *token_head);
-void			redirect_file_out_open_fd(t_command *command, t_token *token,
-					t_token *token_head);
-void			redirect_append_file_out_open_fd(t_command *command,
-					t_token *token, t_token *token_head);
+void			redirect_append_file_out_open_fd(t_process_data *data, t_env *env, t_token *token);
 
+void			heredoc_open_fd(t_process_data *data,t_command *command, t_token **token);
+void			redirect_file_in_open_fd(t_process_data *data, t_env *env, t_token *token);
 int				redirect_heredoc(t_command *current, t_token *token);
+void			redirect_file_out_open_fd(t_process_data *data, t_env *env, t_token *token);
 
-int				open_fd(t_process_data *data, t_command *command);
+int				open_fd(t_process_data *data, t_env *env, t_command *command);
 
 int				write_in_fd(int fd, char *delimiter, t_command *current);
 
