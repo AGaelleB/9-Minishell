@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 16:52:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:50:09 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,10 @@ typedef struct s_command
 }	t_command;
 
 
+void	write_exit_simple(t_env *env, char *str);
+int	ft_builtin_write_exit(t_env *env, char *input);
+void	free_child(t_process_data *data, t_env *env);
+int	ft_builtin_write_exit_process(t_process_data *data, t_env *env);
 t_export		*init_export(t_export *export);
 void			cleanup(pid_t *child_pids, int infile);
 int				is_char_valid(char c);
@@ -237,9 +241,7 @@ int				validate_exit_status_process(char *exit_status_str);
 void			update_env_pwd(t_env *env, char *new_pwd);
 int				ft_builtin_cd(char **args, t_env *env);
 
-int				ft_builtin_write_exit_process(char *input);
 
-int				ft_builtin_write_exit(char *input);
 int				ft_builtin_enter(char *input);
 int				ft_is_all_space(char *input);
 
@@ -311,7 +313,6 @@ char			*ft_check_paths_token(t_env *env, char *args);
 char			*ft_check_paths(t_env *env, char *args);
 void			execve_fd(t_command *current, t_env *env);
 
-void			write_exit_simple(void);
 int				ft_builtin_enter(char *input);
 int				ft_is_all_space(char *input);
 

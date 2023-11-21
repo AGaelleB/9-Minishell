@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/16 14:45:28 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/21 13:46:06 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_free_env(t_env *env)
 	int	i;
 
 	i = 0;
-	// printf("%sje commance a free env\n%s", BLUE, RESET);
+	// printf("%sI'M FREE ENV\n%s", BLUE, RESET);
 	while (env->cpy_env[i])
 	{
 		free(env->cpy_env[i]);
@@ -30,7 +30,7 @@ void	ft_free_env(t_env *env)
 void	free_export(t_export *export)
 {
 	// if (export->ret)
-	// 	free(export->ret); // nous fait perdre 5 tests
+	// 	free(export->ret); // nous fait perdre 6 tests
 	if (export->new)
 		free(export->new);
 	if (export)
@@ -81,7 +81,7 @@ void	ft_free_current(t_command *current)
 	t_command	*tmp;
 
 	tmp = NULL;
-	// printf("%sI WILL COMMAND\n%s", GREEN, RESET);
+	// printf("%sI'M FREE COMMAND\n%s", GREEN, RESET);
 	ft_free_herdocs(current);
 	ft_free_tab(current->command_arg);
 	ft_free_tab(current->export_arg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_builtins_verifs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 16:33:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:44:04 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	error_input(t_env *env, t_command *new_cmd, char *input, int flag_ok)
 {
 	if (ft_builtin_enter(input) != 0)
 		return (2);
-	if (ft_builtin_write_exit(input) != 0)
+	if (ft_builtin_write_exit(env, input) != 0)
 	{
 		free(input);
 		if (flag_ok == 1)

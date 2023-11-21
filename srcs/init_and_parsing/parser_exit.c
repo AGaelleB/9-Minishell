@@ -6,17 +6,19 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:23:27 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 10:11:54 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:49:54 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	write_exit_simple(void)
+void	write_exit_simple(t_env *env, char *str)
 {
 	g_exit_status = 0;
 	write(1, "exit\n", 5);
-	exit(g_exit_status);
+	free(str);
+	ft_free_env(env);
+	exit (g_exit_status);
 }
 
 int	ft_builtin_enter(char *input)
