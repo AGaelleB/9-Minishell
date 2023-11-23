@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 15:40:24 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/23 12:13:19 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ void	main_loop(t_env *env_bis)
 		if (new_cmd != NULL)
 		{
 			new_cmd->command_arg = parse_input_quote(new_cmd->command);
-			new_cmd->export_arg = parse_arg_export(new_cmd->command); //not free
+			new_cmd->export_arg = parse_arg_export(new_cmd->command);
 			execve_builtins_unset_export(new_cmd, env_bis);
 			execve_builtin_cd(new_cmd, env_bis);
+			// ft_free_tab(new_cmd->command_arg);
 			execve_fd(new_cmd, env_bis);
 			// ft_close_all_fd();
 		}

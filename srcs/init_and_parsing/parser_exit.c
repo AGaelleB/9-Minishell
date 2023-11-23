@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:23:27 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 10:49:54 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/23 10:58:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	write_exit_simple(t_env *env, char *str)
 	write(1, "exit\n", 5);
 	free(str);
 	ft_free_env(env);
-	exit (g_exit_status);
+	exit(g_exit_status);
 }
 
 int	ft_builtin_enter(char *input)

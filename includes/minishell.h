@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 16:35:10 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/23 09:57:46 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,7 @@ t_command		*get_command(char *input, t_env *env);
 void			handle_arg_value(t_arg_handler *arg_handler);
 void			handle_all_process(t_process_data *data, t_env *env);
 
-int				here_doc_ray(t_process_data *data);
+int				here_doc_ray(t_process_data *data, t_env *env);
 
 void			init_execve(t_command *cur, pid_t **childs_pids);
 

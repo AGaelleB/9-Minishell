@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 10:21:16 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/23 10:55:48 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ctrl_c_heredoc(int signal)
 	{
 		g_exit_status = 130;
 		write(2, "\n", 1); // si coms n affiche plus C^ sur le readline
+		//free a faire pour le ctrl^c dans les heredocs bcp de leaks
 		exit(g_exit_status);
 	}
 }

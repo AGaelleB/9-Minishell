@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 16:17:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/23 12:09:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ void	init_execve(t_command *cur, pid_t **childs_pids)
 
 void	ft_set_args_and_paths(t_command *cur, t_env *env)
 {
-	cur->command_arg = NULL;
+	// int	i;
+
+	// i = 0;
+	// while (cur->command_arg[i])
+	// 	cur->command_arg[i++] = NULL;
+	// ft_free_tab(cur->command_arg); // repare les leaks d une cmd not found mais casse des pipes
+	// cur->command_arg = NULL;
 	cur->command_path = NULL;
 	cur->command_arg = parse_input_quote(cur->command);
 	cur->command_path = ft_check_paths(env, cur->command_arg[0]);

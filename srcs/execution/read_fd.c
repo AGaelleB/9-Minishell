@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/19 14:06:42 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/23 12:04:08 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	handle_execve_processes(t_process_data *data, t_env *env)
 	{
 		if (pipe(data->current->fd) == -1)
 			exit_with_error("pipe", data->child_pids);
-		here_doc_ray(data);
+		here_doc_ray(data, env);
 		data->pid = fork();
 		data->child_pids[data->index++] = data->pid;
 		data->current->fd_in = data->current->fd[0];
