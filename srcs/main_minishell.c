@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 11:58:40 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:45:04 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	main_loop(t_env *env_bis)
 		count_and_set_pipes(input, new_cmd);
 		if (new_cmd != NULL)
 		{
-			// printf("%snew_cmd->command = %s%s\n", GREEN, new_cmd->command, RESET);
 			new_cmd->command_arg_main = parse_input_quote(new_cmd->command);
 			new_cmd->export_arg = parse_arg_export(new_cmd->command);
 			execve_builtins_unset_export(new_cmd, env_bis);
@@ -70,9 +69,10 @@ void	main_loop(t_env *env_bis)
 			// ft_free_all(new_cmd, new_cmd->token_head); // 38/730 + SEG
 
 			// if (flag_ok != 0)
+
 			if (new_cmd->command_arg_main)
 				ft_free_tab(new_cmd->command_arg_main);
-			
+
 			if (new_cmd->token_head)
 				ft_free_token(new_cmd);
 			if (new_cmd)
@@ -110,15 +110,6 @@ int	main(int ac, char **av, char **envp)
 
 /*
                                         TO DO :
-
-cat celine.txt | wc =>  Conditional jump
-sdf =>  Conditional jump
-
-
-
-
-
-
 
 echo				a
 doit ignorer les tabs
