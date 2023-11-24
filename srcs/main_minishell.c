@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/23 12:13:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 09:50:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	main_loop(t_env *env_bis)
 	{
 		input = readline("minishell$> ");
 		add_history(input);
-		ft_builtin_ctrl_d(input, new_cmd, env_bis, flag_ok);
+		ctrl_d_main(input, new_cmd, env_bis, flag_ok);
 		// ft_builtin_write_exit(input);
 		if (error_input(env_bis, new_cmd, input, flag_ok) == 2
 			|| verif_nb_quote(input) != 0
@@ -65,6 +65,14 @@ void	main_loop(t_env *env_bis)
 			// ft_free_tab(new_cmd->command_arg);
 			execve_fd(new_cmd, env_bis);
 			// ft_close_all_fd();
+
+			// ft_free_all(new_cmd, new_cmd->token_head); // 38/730 + SEG
+
+			// if (flag_ok != 0)
+			if (new_cmd->token_head)
+				ft_free_token(new_cmd);
+			if (new_cmd)
+				ft_free_current(new_cmd);
 		}
 		flag_ok = 1;
 		free(input);

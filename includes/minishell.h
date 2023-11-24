@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/23 09:57:46 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 09:50:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void			print_expander_cmd(t_env *env, char *str, int i);
 int				print_env_vars(t_env *env);
 void			free_export(t_export *export);
 int				error_input(t_env *env, t_command *new_cmd, char *input, int flag_ok);
-void			ft_builtin_ctrl_d(char *input, t_command *new_cmd, t_env *env_bis, int flag_ok);
+void			ctrl_d_main(char *input, t_command *new_cmd, t_env *env_bis, int flag_ok);
 int				check_valid_identifier_bis_bis(char c);
 int				check_after_equal(char *str);
 int				check_before_equal(char *s);

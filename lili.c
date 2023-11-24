@@ -32,7 +32,7 @@ int	ft_is_all_space(char *input)
 	return (1);
 }
 
-void	ft_builtin_ctrl_d(char *input, t_command *new_cmd,
+void	ctrl_d_main(char *input, t_command *new_cmd,
 	t_env *env_bis, int flag_ok)
 {
 	if (!input)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/16 16:21:47 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/24 09:40:10 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ char	**free_token_split(char **tokens)
 
 void	ft_free_all(t_command *current, t_token *token)
 {
-	ft_close_all_fd();
-	// if (token)
+	ft_close_all_fd(); // on gagne un test 325/730
+	if (token)
 		ft_free_token(current);
-	// if (current)
+	if (current)
 		ft_free_current(current);
+	// ft_close_all_fd(); // en bas on perd un test 324/730
 	(void)token;
 }
 
