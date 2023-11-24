@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/23 12:09:30 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 12:03:51 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,38 @@ void	init_execve(t_command *cur, pid_t **childs_pids)
 void	ft_set_args_and_paths(t_command *cur, t_env *env)
 {
 	// int	i;
+	// char **tab_temp;
+
+	// tab_temp = malloc(sizeof(char**) * ft_strlen(cur->command) + 1);
+	// tab_temp = parse_input_quote(cur->command);;
 
 	// i = 0;
-	// while (cur->command_arg[i])
-	// 	cur->command_arg[i++] = NULL;
-	// ft_free_tab(cur->command_arg); // repare les leaks d une cmd not found mais casse des pipes
-	// cur->command_arg = NULL;
+	// // while (cur->command_arg[i++])
+	// // 	printf("%scur->command_arg[%d] = %s%s\n", MAGENTA, i , cur->command_arg[i], RESET);
+	
+	// printf("%scur->command = %s%s\n", YELLOW, cur->command, RESET);
+	// printf("%scur->command = %s%s\n", BLUE, cur->command, RESET);
+	// cur->command_arg = tab_temp;
+
+	// cur->command_arg_main = NULL;
+	if (cur->command_arg_main)
+		ft_free_tab(cur->command_arg_main); // repare les leaks d une cmd not found mais casse des pipes
+	
+	cur->command_arg = NULL;
 	cur->command_path = NULL;
+
+	
 	cur->command_arg = parse_input_quote(cur->command);
+
+
+
+	// i = 0;
+	// while (cur->command_arg[i++])
+	// 	printf("%scur->command_arg[%d] = %s%s\n", BLUE, i , cur->command_arg[i], RESET);
+	
 	cur->command_path = ft_check_paths(env, cur->command_arg[0]);
+	
+	
 }
 
 int	is_builtin(t_command *cur)

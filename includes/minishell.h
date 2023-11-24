@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 09:50:36 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 10:54:46 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ typedef struct s_command
 {
 	int					nb_pipes;
 	char				*command;
+	char				**command_arg_main;
 	char				**command_arg;
 	char				**export_arg;
 	char				*command_path;

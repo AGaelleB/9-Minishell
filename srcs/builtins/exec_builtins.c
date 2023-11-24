@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/13 17:51:02 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 12:02:42 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	execve_builtins_unset_export(t_command *cmd, t_env *env_bis)
 {
 	if (ft_strncmp(cmd->command, "unset", 5) == 0 && cmd->nb_pipes == 0)
-		ft_builtin_unset(cmd->command_arg, env_bis);
+		ft_builtin_unset(cmd->command_arg_main, env_bis);
 	else if ((ft_strncmp(cmd->command, "export ", 7) == 0)
 		&& (cmd->nb_pipes == 0))
 		ft_builtin_export(cmd->export_arg, env_bis);
@@ -46,6 +46,6 @@ void	execve_builtin_cd(t_command *cmd, t_env *env_bis)
 			ft_putstr_fd("cd: too many arguments\n", 2);
 		}
 		else
-			ft_builtin_cd(cmd->command_arg, env_bis);
+			ft_builtin_cd(cmd->command_arg_main, env_bis);
 	}
 }
