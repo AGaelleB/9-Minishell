@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 10:12:35 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:59:39 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	handle_child_process(t_process_data *data, t_env *env)
 	ft_builtin_write_exit_process(data, env);
 	if (builtins_verif(data->current, env) == 1)
 	{
+		ft_free_tab(data->command->command_arg_main); // test, if ? 
 		free_child(data, env);
 		exit(g_exit_status);
 	}

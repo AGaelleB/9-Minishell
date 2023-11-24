@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 10:08:28 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:54:38 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	here_doc_manage(t_process_data *data, t_env *env, int fd[2], char *delimiter
 		result = handle_input(input, i, delimiter, fd);
 		if (result != 0)
 		{
+			ft_free_tab(data->command->command_arg_main); // test, if ? 
 			free_child(data, env);
 			exit(0);
 		}

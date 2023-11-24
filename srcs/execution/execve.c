@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 13:43:24 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:58:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,16 @@ int	is_builtin(t_command *cur)
 
 int	execve_process(t_process_data *data, t_env *env)
 {
-	ft_set_args_and_paths(data->current, env);
+	ft_set_args_and_paths(data->current, env); // ici on free command_arg_main
 	if (env->flag_error || is_builtin(data->current) == 2)
 	{
+		// ft_free_tab(data->command->command_arg_main); // test, if ? 
 		free_child(data, env);
 		exit(g_exit_status);
 	}
 	if (verif_access(data, env, data->current->command) == 1)
 	{
+		// ft_free_tab(data->command->command_arg_main); // test, if ? 
 		free_child(data, env);
 		exit(126);
 	}
@@ -85,6 +87,7 @@ int	execve_process(t_process_data *data, t_env *env)
 		write(2, data->current->command_arg[0], ft_strlen(data->current->command_arg[0]));
 		write(2, " :command not found", 19);
 		write(2, "\n", 1);
+		// ft_free_tab(data->command->command_arg_main); // test, if ? 
 		free_child(data, env);
 		exit(g_exit_status = 127);
 	}
@@ -96,6 +99,7 @@ int	execve_process(t_process_data *data, t_env *env)
 		write(2, data->current->command_arg[0], ft_strlen(data->current->command_arg[0]));
 		write(2, " :command not found", 19);
 		write(2, "\n", 1);
+		// ft_free_tab(data->command->command_arg_main); // test, if ? 
 		free_child(data, env);
 		exit(g_exit_status = 127);
 	}

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 09:47:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:53:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void	ft_free_current(t_command *current)
 	tmp = NULL;
 	// printf("%sI'M FREE COMMAND\n%s", GREEN, RESET);
 	ft_free_herdocs(current);
+	
+	// if (current->command_arg_main)
+	// 		ft_free_tab(current->command_arg_main);
 	if (current->command_arg)
 		ft_free_tab(current->command_arg);
 	if (current->export_arg)
