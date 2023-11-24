@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 10:10:51 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 16:52:25 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void	execve_fd(t_command *current, t_env *env)
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);
 	if (data.count_hd)
+	{
+		printf("%s data->count_hd = %d %s\n", MAGENTA, data.count_hd, RESET);
 		free(data.heredocs); // NEW FREE
+	}
 	cleanup(data.child_pids, data.infile);
 }

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 13:53:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:05:06 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	main_loop(t_env *env_bis)
 			// ft_free_all(new_cmd, new_cmd->token_head); // 38/730 + SEG
 
 			// if (flag_ok != 0)
-
+			
 			if (new_cmd->command_arg_main)
 				ft_free_tab(new_cmd->command_arg_main);
 
@@ -110,6 +110,34 @@ int	main(int ac, char **av, char **envp)
 
 /*
                                         TO DO :
+
+leaks a corriger :
+
+sur les heredooc : 
+cat << a | cat << b
+leaks aussi si on quitte avec ctrl D ou une cmd not found apres un heredoc
+
+sur les echo :
+jump partout
+
+leaks sur 
+'.' ou '..'
+
+leaks sur :
+
+cd (cd simple genre cd .. puis cd 9-Minishell)
+
+cd srcs
+minishell: cd: srcs: No such file or directory
+
+<Makefile
+
+
+
+
+
+
+
 
 echo				a
 doit ignorer les tabs
