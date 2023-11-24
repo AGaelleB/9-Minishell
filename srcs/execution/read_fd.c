@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/23 12:04:08 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 10:10:51 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	execve_fd(t_command *current, t_env *env)
 	data.current = current;
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);
-	free(data.heredocs); // NEW FREE
+	if (data.count_hd)
+		free(data.heredocs); // NEW FREE
 	cleanup(data.child_pids, data.infile);
 }

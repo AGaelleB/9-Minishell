@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 10:39:58 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/24 09:58:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,10 @@ int	ft_builtin_export(char **args, t_env *env)
 	export->new = NULL;
 	export->ret = NULL;
 	if (!args[1])
+	{
+		free(export);
 		return (print_env_vars(env));
+	}
 	arg_idx = 1;
 	while (args[arg_idx])
 	{

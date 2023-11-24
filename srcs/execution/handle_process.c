@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/23 17:30:50 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 10:12:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	free_child(t_process_data *data, t_env *env)
 {
 	// ft_close_all_fd();
-	free(data->heredocs);
+	if (data->count_hd)
+		free(data->heredocs);
 	ft_free_env(env);
 	ft_free_all(data->current, data->current->token_head);
 	cleanup(data->child_pids, data->infile); // on perd un test

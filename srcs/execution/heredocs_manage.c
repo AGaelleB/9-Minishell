@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/23 11:55:15 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/24 10:08:28 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,12 @@ int	here_doc_ray(t_process_data *data, t_env *env)
 	int	heredoc_interrupted;
 
 	data->count_hd = count_heredocs(data->current->token_head);
-	data->heredocs = malloc(sizeof(t_here_doc) * data->count_hd);
-	if (!data->heredocs)
-		return (-1);
+	if (data->count_hd)
+	{
+		data->heredocs = malloc(sizeof(t_here_doc) * data->count_hd);
+		if (!data->heredocs)
+			return (-1);
+	}
 	signal(SIGINT, ctrl_c_heredoc);
 	i = 0;
 	heredoc_interrupted = 0;
