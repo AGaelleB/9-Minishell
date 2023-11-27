@@ -1,48 +1,42 @@
-void	write_exit_simple(t_env *env, char *str)
+static void	process_input(t_arg_handler *arg_handler, char *arg, int *arg_idx)
 {
-	g_exit_status = 0;
-	write(1, "exit\n", 5);
-	free(str);
-	ft_free_env(env);
-	exit(g_exit_status);
+	int	*i;
+
+	i = arg_handler->i;
+	while (arg_handler->input[*i] && (*arg_handler->double_quote
+			|| *arg_handler->single_quote || arg_handler->input[*i] != ' '))
+	{
+		handle_quotes_echo(arg_handler->input, arg_handler->i,
+			arg_handler->double_quote, arg_handler->single_quote);
+
+		if (is_redirection(arg_handler->input[*i])
+			&& !*arg_handler->double_quote && !*arg_handler->single_quote)
+			ft_skip_redirection_and_file(arg_handler->input, i);
+		else if (arg_handler->input[*i] == '$' && !*arg_handler->single_quote)
+			handle_arg_value(arg_handler);
+		else
+			arg[(*arg_idx)++] = arg_handler->input[(*i)++];
+	}
+	arg[*arg_idx] = '\0';
 }
 
-int	ft_builtin_enter(char *input)
+char	*ft_allocate_and_copy(t_arg_handler *arg_handler)
 {
-	if (ft_strcmp_minishell(input, "") == 0)
-	{
-		free(input);
-		return (1);
-	}
-	return (0);
-}
+	char	*arg;
+	int		*arg_idx;
+	int		*i;
+	int		size_of_argument;
 
-int	ft_is_all_space(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (!(input[i] >= 9 && input[i] <= 13) && input[i] != 32)
-			return (0);
-		i++;
-	}
-	// free(input);
-	return (1);
-}
-
-void	ctrl_d_main(char *input, t_command *new_cmd,
-	t_env *env_bis, int flag_ok)
-{
-	if (!input)
-	{
-		write(1, "exit", 5);
-		write(1, "\n", 1);
-		ft_close_all_fd();
-		ft_free_env(env_bis);
-		if (flag_ok == 1)
-			ft_free_all(new_cmd, new_cmd->token_head);
-		exit(0);
-	}
+	size_of_argument = calculate_size_of_argument(arg_handler->input);
+	arg = malloc(sizeof(char) * (size_of_argument + 1));
+	if (!arg)
+		return (NULL);
+	arg_handler->arg = arg;
+	arg_idx = arg_handler->arg_idx;
+	*arg_idx = 0;
+	i = arg_handler->i;
+	initialize_bools(arg_handler);
+	process_input(arg_handler, arg, arg_idx);
+	skip_spaces_echo(arg_handler->input, i);
+	return (arg);
 }

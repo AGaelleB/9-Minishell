@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 14:54:36 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/09/06 17:08:20 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/27 12:22:52 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strdup(char *s)
 	int		i;
 
 	i = 0;
-	dest = malloc(sizeof(*dest) * ft_strlen(s) + 1);
+	dest = malloc(sizeof(*dest) * (ft_strlen(s) + 1));
 	if (dest == 0)
 		return (NULL);
 	while (s[i])
