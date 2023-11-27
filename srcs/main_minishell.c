@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 17:05:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:40:11 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,19 +123,19 @@ jump partout
 leaks sur 
 '.' ou '..'
 
-leaks sur :
-
-cd (cd simple genre cd .. puis cd 9-Minishell)
-
-cd srcs
-minishell: cd: srcs: No such file or directory
 
 <Makefile
 
 
 
 
+OLALA j AI FAIT SEGFAULT RAYAN
 
+[RAYAN] $> unset HOME
+[RAYAN] $> pwd
+/home/gaelle/Downloads/minishell Rayan/minishell
+[RAYAN] $> cd
+[1]    47308 segmentation fault (core dumped)  ./minishell
 
 
 

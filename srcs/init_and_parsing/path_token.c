@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 11:54:09 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/20 15:54:28 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/27 10:29:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,14 @@ char	*ft_check_relative_paths_token(t_env *env, char *args)
 	if (temp_path[0][0] == 0) //ne pas remttre au dessus (segfault)
 		return (NULL);
 	valid_path = find_valid_path_token(temp_path, args);
+	// printf("path = %s\n", valid_path);
 	ft_free_tab(temp_path);
 	if (valid_path != NULL)
 	{
 		if (access(valid_path, F_OK | X_OK) == 0)
 			return (valid_path);
 	}
+	// free(valid_path); // sert a rien
 	return (NULL);
 }
 

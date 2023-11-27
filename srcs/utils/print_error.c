@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:51:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/09 15:02:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:30:04 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	print_no_file_or_directory(t_env *env, char *args)
 	write(2, "\n", 1);
 	env->flag_error = true;
 	g_exit_status = 127;
+
 }
 
 void	ft_print_error(char *str)
@@ -42,6 +43,7 @@ void	print_error_cd(t_env *env, int i)
 		write(2, env->path_to_change, ft_strlen(env->path_to_change));
 		write(2, ": ", 2);
 		perror("");
+		free(env->path_to_change); // test
 		g_exit_status = 1;
 	}
 	if (i == 2)
@@ -51,3 +53,4 @@ void	print_error_cd(t_env *env, int i)
 		free(env->new_directory);
 	}
 }
+

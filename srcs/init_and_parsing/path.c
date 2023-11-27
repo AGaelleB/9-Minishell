@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/08 17:51:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/27 11:31:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,17 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 	env->flag_error = false;
 	valid_path = find_valid_path(temp_path, args);
 	ft_free_tab(temp_path);
+	// printf("**************** valid_path 1 = %s \n", valid_path);
 	if (valid_path != NULL)
 	{
 		if (access(valid_path, F_OK | X_OK) == 0)
+		{
+			// printf("**************** JE SUIS LA \n");
 			return (valid_path);
+		}
 	}
+	// printf("**************** JE VAIS free \n");
+	free(valid_path); // test
 	return (NULL);
 }
 
@@ -100,8 +106,10 @@ char	*ft_check_paths(t_env *env, char *args)
 	char	*valid_path;
 
 	valid_path = ft_check_absolute_path(args);
+	// printf("**************** valid_path 2 = %s \n", valid_path);
 	if (valid_path != NULL)
 		return (valid_path);
 	valid_path = ft_check_relative_paths(env, args);
+	
 	return (valid_path);
 }
