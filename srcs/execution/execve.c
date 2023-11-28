@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 13:58:27 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:58:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	execve_process(t_process_data *data, t_env *env)
 	{
 		// ft_free_tab(data->command->command_arg_main); // test, if ? 
 		free_child(data, env);
+		usleep(1000);
+		usleep(1000);
 		exit(g_exit_status);
 	}
 	if (verif_access(data, env, data->current->command) == 1)
@@ -81,6 +83,8 @@ int	execve_process(t_process_data *data, t_env *env)
 		free_child(data, env);
 		exit(126);
 	}
+	usleep(1000);
+	usleep(1000);
 	if ((data->current->command_path == NULL) && is_builtin(data->current) == 0)
 	{
 		write(2, "minishell: ", 11);

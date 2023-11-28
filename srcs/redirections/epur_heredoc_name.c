@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 10:04:43 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/20 15:08:30 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 14:22:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*update_command(char *cmd, int i)
 {
 	char	*new_cmd;
 
-	new_cmd = strdup(&cmd[i]);
+	new_cmd = ft_strdup(&cmd[i]);
 	if (!new_cmd)
 		return (NULL);
 	free(cmd);

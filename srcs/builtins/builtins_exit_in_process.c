@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:41:02 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 13:53:56 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:57:56 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ t_env *env, char *input)
 		ft_free_tab(args);
 		ft_free_tab(data->command->command_arg_main); // test, if ? 
 		free_child(data, env);
+		usleep(1000);
+		usleep(1000);
 		exit(g_exit_status);
 	}
 	ft_free_tab(args);

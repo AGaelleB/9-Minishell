@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 11:54:09 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/27 12:03:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 12:26:38 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,11 @@ char	**ft_get_paths_token(t_env *env)
 
 char	*ft_check_absolute_path_token(char *args)
 {
+	// printf("ft_check_absolute_path_token args = %s\n", args);
 	if (ft_strchr_slash(args, '/') == 1)
 	{
 		if (access(args, F_OK | X_OK) == 0)
-		// if (access(args, X_OK) == 0) // test
-		{
-			// free(args); //test mais sert a rien j ai l impression
 			return (ft_strdup(args));
-		}
 		else
 			return (NULL);
 	}
@@ -63,7 +60,6 @@ char	*find_valid_path_token(char **temp_path, char *args)
 	{
 		valid_path = ft_strjoin_minishell(temp_path[i], args);
 		if (access(valid_path, F_OK | X_OK) != 0)
-		// if (access(valid_path, X_OK) != 0) // test
 		{
 			free(valid_path);
 			valid_path = NULL;
@@ -84,16 +80,13 @@ char	*ft_check_relative_paths_token(t_env *env, char *args)
 	if (temp_path[0][0] == 0) //ne pas remttre au dessus (segfault)
 		return (NULL);
 	valid_path = find_valid_path_token(temp_path, args);
-	// printf("path = %s\n", valid_path);
 	ft_free_tab(temp_path);
 	if (valid_path != NULL)
 	{
 		if (access(valid_path, F_OK | X_OK) == 0)
-		// if (access(valid_path, X_OK) == 0) // test
 			return (valid_path);
 		free(valid_path); // sert a rien
 	}
-	// free(valid_path); // sert a rien
 	return (NULL);
 }
 

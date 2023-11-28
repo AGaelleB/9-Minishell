@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/23 11:38:21 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 11:43:04 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*allocate_and_copy(char *input, int *i, int *arg_idx)
 		(*i)++;
 	}
 	arg[*arg_idx] = '\0';
+	// arg[(*arg_idx)++] = '\0'; // test
 	return (arg);
 }
 
@@ -82,6 +83,7 @@ char	**copy_argument(char *input, t_parser *parser)
 	else
 		free(arg);
 	skip_spaces(input, &(parser->i));
+	// parser->args[(parser->idx)++] = '\0'; ///////////////////
 	return (parser->args);
 }
 

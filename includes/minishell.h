@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 10:24:30 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:18:33 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,7 +327,8 @@ t_token			*new_token(t_e_token_type e_type, char *split_value);
 t_token			*tokenize_input(char *input, t_env *env);
 char			*ft_check_paths_token(t_env *env, char *args);
 char			*ft_check_paths(t_env *env, char *args);
-void			execve_fd(t_command *current, t_env *env);
+// void			execve_fd(t_command *current, t_env *env);
+t_process_data	execve_fd(t_command *current, t_env *env);
 
 int				ft_builtin_enter(char *input);
 int				ft_is_all_space(char *input);

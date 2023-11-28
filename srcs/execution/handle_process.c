@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/27 11:40:34 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:07:39 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 void	free_child(t_process_data *data, t_env *env)
 {
 	// ft_close_all_fd();
-
-	
 	if (data->count_hd)
 	{
-		// printf("%s data->count_hd = %d %s\n", RED, data->count_hd, RESET);
+		printf("%s data->count_hd = %d | free_child %s\n", BLUE, data->count_hd, RESET);
 		free(data->heredocs);
 	}
 	ft_free_env(env);
-	ft_free_all(data->current, data->current->token_head);
+	ft_free_all(data->command, data->command->token_head);
 	cleanup(data->child_pids, data->infile); // on perd un test
 }
 
+
 void	handle_child_process(t_process_data *data, t_env *env)
 {
+	
 	close(data->current->fd_in);
 	dup2(data->infile, 0);
 	if (data->current->next)
@@ -68,9 +68,9 @@ void	handle_parent_process(t_process_data *data)
 
 void	handle_all_process(t_process_data *data, t_env *env)
 {
-	if (data->pid == 0)
+	if (data->pid == 0) // child
 		handle_child_process(data, env);
-	else if (data->pid > 0)
+	else if (data->pid > 0) // parent
 		handle_parent_process(data);
 		// free(data->heredocs);  // on perd un test
 	else

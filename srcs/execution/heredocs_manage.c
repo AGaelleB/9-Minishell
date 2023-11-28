@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 13:54:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:59:45 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static int	manage_single_heredoc(t_process_data *data, t_env *env, int index)
 	close(data->heredocs[index].fd[1]);
 	return (WIFEXITED(status) && WEXITSTATUS(status) == 130);
 }
+
 int	here_doc_ray(t_process_data *data, t_env *env)
 {
 	int	i;

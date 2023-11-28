@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 11:12:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:28:45 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_env	*initialize_env(char **envp)
 
 void	main_loop(t_env *env_bis)
 {
+	t_process_data	data_main;
 	t_command	*new_cmd;
 	char		*input;
 	int			flag_ok;
@@ -63,16 +64,19 @@ void	main_loop(t_env *env_bis)
 			execve_builtins_unset_export(new_cmd, env_bis);
 			execve_builtin_cd(new_cmd, env_bis);
 			// ft_free_tab(new_cmd->command_arg);
-			execve_fd(new_cmd, env_bis);
+			data_main = execve_fd(new_cmd, env_bis);
+
+			if (new_cmd->command_arg_main)
+				ft_free_tab(new_cmd->command_arg_main);
+
+			// free_child(&data_main, env_bis);
+			
 			// ft_close_all_fd();
 
 			// ft_free_all(new_cmd, new_cmd->token_head); // 38/730 + SEG
 
 			// if (flag_ok != 0)
-			
-			if (new_cmd->command_arg_main)
-				ft_free_tab(new_cmd->command_arg_main);
-
+			(void)data_main;
 			if (new_cmd->token_head)
 				ft_free_token(new_cmd);
 			if (new_cmd)
@@ -115,22 +119,19 @@ leaks a corriger :
 
 sur les heredooc : 
 cat << a | cat << b
-leaks aussi si on quitte avec ctrl D ou une cmd not found apres un heredoc
+leaks sur les hd et les builtins apres pipe.
+=> here_doc_ray leaks sur les cmd apres pipe. exemple : cat << a | pwd
+
+leaks sur les ctrl C des hd
 
 sur les echo :
 jump partout
 
 <Makefile
 
-OLALA j AI FAIT SEGFAULT RAYAN
 
-[RAYAN] $> unset HOME
-[RAYAN] $> pwd
-/home/gaelle/Downloads/minishell Rayan/minishell
-[RAYAN] $> cd
-[1]    47308 segmentation fault (core dumped)  ./minishell
-
-
+/////////////////////////////////////////////////
+sous tapis ? : 
 
 echo				a
 doit ignorer les tabs

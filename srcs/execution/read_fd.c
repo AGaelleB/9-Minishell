@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 16:52:25 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:22:57 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	handle_execve_processes(t_process_data *data, t_env *env)
 	}
 }
 
-void	execve_fd(t_command *current, t_env *env)
+t_process_data	execve_fd(t_command *current, t_env *env)
 {
 	t_process_data	data;
 
@@ -65,9 +65,27 @@ void	execve_fd(t_command *current, t_env *env)
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);
 	if (data.count_hd)
-	{
-		printf("%s data->count_hd = %d %s\n", MAGENTA, data.count_hd, RESET);
 		free(data.heredocs); // NEW FREE
-	}
 	cleanup(data.child_pids, data.infile);
+	return (data);
 }
+
+// t_process_data	execve_fd(t_command *current, t_env *env)
+// {
+// 	t_process_data	*data;
+
+// 	data->command = current;
+// 	data->current = current;
+// 	data->infile = 0;
+// 	data->index = 0;
+// 	data->current_hd = 0;
+// 	init_execve(current, (data->child_pids));
+// 	data->current->flag = 0;
+// 	data->current = current;
+// 	handle_execve_processes(data, env);
+// 	wait_for_children(data->command, data->child_pids);
+// 	if (data->count_hd)
+// 		free(data->heredocs); // NEW FREE
+// 	cleanup(data->child_pids, data->infile);
+// 	return (data);
+// }
