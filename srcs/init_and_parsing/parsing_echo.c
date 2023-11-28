@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:49:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/28 16:00:12 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 17:04:17 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	**copy_argument_echo(t_env *env, t_parser *parser, char *input)
 	arg_idx = 0;
 	arg_handler.env = env;
 	arg_handler.input = input;
-	// arg_handler.i = &(parser->i);
 	arg_handler.i = &(parser->i);
 	arg_handler.arg_idx = &arg_idx;
 	arg_handler.arg = NULL;

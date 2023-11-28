@@ -6,11 +6,22 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/28 16:00:05 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 17:05:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/* 
+ici on a des conditional jump sur le *i qui est renvoyé 
+(notamment dans handle_quotes_echo),
+on ne sait pas comment l'initialiser.
+
+on fait les init de la struct "t_arg_handler	arg_handler" dans
+la fonction "copy_argument_echo"
+
+les jumps sont sur toutes les cmd genre : echo coucou
+*/
 
 static void	process_input(t_arg_handler *arg_handler, char *arg, int *arg_idx)
 {

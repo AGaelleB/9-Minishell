@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 15:59:45 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 17:00:04 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	here_doc_manage(t_process_data *data, t_env *env, int fd[2], char *delimiter
 		i++;
 	}
 	signal(SIGQUIT, ctrl_c_heredoc);
+	// printf("%sSIGNAL here_doc_manage%s\n", CYAN, RESET); ////////////
 	return (0);
 }
 
