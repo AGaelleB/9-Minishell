@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/27 11:40:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 09:51:29 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ leaks aussi si on quitte avec ctrl D ou une cmd not found apres un heredoc
 sur les echo :
 jump partout
 
-leaks sur 
+leaks sur -> regarder les appels a access()
 '.' ou '..'
 
 

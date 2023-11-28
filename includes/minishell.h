@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/27 16:22:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:24:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,27 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-// typedef struct s_parser
-// {
-// 	char	**args;
-// 	int		i;
-// 	int		idx;
-// 	bool	in_quote;
-// }	t_parser;
-
 typedef struct s_parser
 {
-    char    **args;
-    int     i;
-    int     idx;
-    bool    in_quote;
-    t_env   *env;
-    char    *input;
-    char    *arg;
-    int     arg_idx;
-    bool    double_quote;
-    bool    single_quote;
-}   t_parser;
+	char	**args;
+	int		i;
+	int		idx;
+	bool	in_quote;
+}	t_parser;
+
+// typedef struct s_parser
+// {
+//     char    **args;
+//     int     i;
+//     int     idx;
+//     bool    in_quote;
+//     t_env   *env;
+//     char    *input;
+//     char    *arg;
+//     int     arg_idx;
+//     bool    double_quote;
+//     bool    single_quote;
+// }   t_parser;
 
 
 typedef struct s_quote
@@ -293,9 +293,9 @@ int				here_doc_ray(t_process_data *data, t_env *env);
 void			init_execve(t_command *cur, pid_t **childs_pids);
 
 /***********INIT_AND_PARSING***********/
-// char			*ft_allocate_and_copy(t_arg_handler *arg_handler);
-char *ft_allocate_and_copy(t_parser *parser);
-void process_input_echo(t_parser *parser);
+char			*ft_allocate_and_copy(t_arg_handler *arg_handler);
+// char *ft_allocate_and_copy(t_parser *parser);
+// void process_input_echo(t_parser *parser);
 
 
 int				check_valid_identifier_export(char *str);

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:15:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 14:13:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:34:24 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	calculate_new_len(char *input)
 			new_len += 2;
 		i++;
 	}
-	return (new_len);
+	return (new_len + 1);
 }
 
 char	*copy_with_spaces(char *input, char *new_input)
