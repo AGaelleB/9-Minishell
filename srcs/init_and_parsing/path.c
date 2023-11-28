@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/27 13:53:55 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/28 11:11:29 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char	*ft_check_absolute_path(char *args)
 	{
 		if (access(args, F_OK | X_OK) == 0)
 			return (ft_strdup(args));
-		// else
-		// 	return (NULL);
 	}
 	return (NULL);
 }
@@ -55,6 +53,9 @@ char	*find_valid_path(char **temp_path, char *args)
 
 	valid_path = NULL;
 	i = 0;
+	if ((ft_strcmp_minishell(args, ".") == 0)
+		|| (ft_strcmp_minishell(args, "..") == 0))
+		return (NULL);
 	while (temp_path[i] && !valid_path)
 	{
 		valid_path = ft_strjoin_minishell(temp_path[i], args);
@@ -87,17 +88,11 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 	env->flag_error = false;
 	valid_path = find_valid_path(temp_path, args);
 	ft_free_tab(temp_path);
-	// printf("%s*** valid_path = %s ***%s\n", RED, valid_path, RESET);
 	if (valid_path != NULL)
 	{
 		if (access(valid_path, F_OK | X_OK) == 0)
-		{
-			// printf("**************** JE SUIS LA \n");
 			return (valid_path);
-		}
 	}
-	// printf("**************** JE VAIS free \n");
-	free(valid_path); // test
 	return (NULL);
 }
 
@@ -105,14 +100,9 @@ char	*ft_check_paths(t_env *env, char *args)
 {
 	char	*valid_path;
 
-	// printf("%s*** ft_check_paths ***%s\n", RED, RESET);
 	valid_path = ft_check_absolute_path(args);
 	if (!valid_path)
-	{
-		// printf("%s***je free valid_path ***%s\n", RED, RESET);
 		free(valid_path);
-	}
-	// printf("%s*** valid_path = %s ***%s\n", RED, valid_path, RESET);
 	if (valid_path != NULL)
 		return (valid_path);
 	valid_path = ft_check_relative_paths(env, args);
