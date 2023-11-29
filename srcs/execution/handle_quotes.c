@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 11:43:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 11:58:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*allocate_and_copy(char *input, int *i, int *arg_idx)
 	*arg_idx = 0;
 	while (input[*i])
 	{
-		handle_quotes(input, i, &double_quote, &single_quote);
+		handle_quotes(input, i, &double_quote, &single_quote); // warning jump
 		if ((input[*i] == ' ' || input[*i] == '>' || input[*i] == '<')
 			&& !double_quote && !single_quote)
 			break ;
@@ -70,7 +70,7 @@ void	skip_spaces(char *input, int *i)
 		(*i)++;
 }
 
-char	**copy_argument(char *input, t_parser *parser)
+char	**copy_argument(char *input, t_parser_one *parser)
 {
 	char	*arg;
 	int		arg_idx;
@@ -87,14 +87,28 @@ char	**copy_argument(char *input, t_parser *parser)
 	return (parser->args);
 }
 
+// t_parser	init_parser()
+// {
+// 	t_parser	parser;
+
+// 	parser.args = NULL;
+// 	parser.i = 0;
+// 	parser.idx = 0;
+// 	parser.in_quote = false;
+	
+// 	return (parser);
+// }
+
 char	**parse_input_quote(char *input)
 {
-	t_parser	parser;
+
+	t_parser_one	parser;
+	// t_parser	parser = init_parser();
 	int			arg_count;
 
 	parser.i = is_redir_at_beginning(input, 0);
 	arg_count = count_args_single_quotes(input);
-	parser.args = malloc((arg_count + 1) * sizeof(char *));
+	parser.args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!parser.args)
 		return (NULL);
 	parser.in_quote = false;

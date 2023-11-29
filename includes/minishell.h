@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 16:18:33 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:09:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,30 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_parser
+typedef struct s_parser_one
 {
 	char	**args;
 	int		i;
 	int		idx;
 	bool	in_quote;
-}	t_parser;
+}	t_parser_one;
+
+typedef struct s_parser_two
+{
+	char	**args;
+	int		i;
+	int		idx;
+	bool	in_quote;
+}	t_parser_two;
+
+typedef struct s_parser_three
+{
+	char	**args;
+	int		i;
+	int		idx;
+	bool	in_quote;
+}	t_parser_three;
+
 
 // typedef struct s_parser
 // {
@@ -204,6 +221,11 @@ typedef struct s_command
 	struct s_quote		*quote_head;
 	struct s_command	*next;
 }	t_command;
+
+
+t_process_data	*return_data(t_process_data *data); ////////////////////////
+t_env	*return_env(t_env *env); ////////////////////////
+
 
 int	execve_process(t_process_data *data, t_env *env);
 int	verif_access(t_process_data *data, t_env *env, char *command);

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/28 17:05:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 11:43:25 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	process_input(t_arg_handler *arg_handler, char *arg, int *arg_idx)
 	{
 		handle_quotes_echo(arg_handler->input, arg_handler->i,
 			arg_handler->double_quote, arg_handler->single_quote);
-
 		if (is_redirection(arg_handler->input[*i])
 			&& !*arg_handler->double_quote && !*arg_handler->single_quote)
 			ft_skip_redirection_and_file(arg_handler->input, i);

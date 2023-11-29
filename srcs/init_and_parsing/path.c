@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 12:26:28 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 10:42:37 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ char	*find_valid_path(char **temp_path, char *args)
 
 	valid_path = NULL;
 	i = 0;
+	if (args[i] == '<')
+		return (NULL);
 	if ((ft_strcmp_minishell(args, ".") == 0)
 		|| (ft_strcmp_minishell(args, "..") == 0))
 		return (NULL);
+	
 	while (temp_path[i] && !valid_path)
 	{
 		valid_path = ft_strjoin_minishell(temp_path[i], args);
@@ -79,7 +82,6 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 {
 	char	**temp_path;
 	char	*valid_path;
-
 	temp_path = ft_get_paths(env);
 	if ((temp_path == NULL || (temp_path[0][0]) == 0)
 		&& (ft_strcmp_minishell(args, "unset") != 0)

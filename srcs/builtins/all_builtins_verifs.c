@@ -3,14 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   all_builtins_verifs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 10:44:04 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/29 11:23:14 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+// int	skip_spaces(char *input)
+// {
+// 	char	*str;
+// 	int		i;
+	
+// 	str = ft_strtrim(input, " ");
+// 	i = 0;
+// 	if (str[i] == "\'" || str[i] == "\"")
+// 	{
+// 		i++;
+// 		while (str[i] == ' ')
+// 			i++;
+// 		if (str[i] == "\'" || str[i] == "\"")
+// 		{
+// 			free(str);
+// 			return (1);
+// 		}
+// 	}
+// 	free(str);
+// 	return (0);
+// }
 
 int	error_input(t_env *env, t_command *new_cmd, char *input, int flag_ok)
 {
@@ -30,6 +52,7 @@ int	error_input(t_env *env, t_command *new_cmd, char *input, int flag_ok)
 	}
 	if (ft_is_all_space(input) != 0)
 		return (2);
+	
 	if (ft_strcmp_minishell(input, "\"\"") == 0
 		|| ft_strcmp_minishell(input, "\'\'") == 0)
 	{

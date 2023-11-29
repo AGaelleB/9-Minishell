@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 16:57:11 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:20:09 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_env	*initialize_env(char **envp)
 	env_bis = (t_env *)malloc(sizeof(t_env));
 	if (!env_bis)
 		return (NULL);
+	return_env(env_bis);
 	copy_env(env_bis, envp);
 	return (env_bis);
 }
@@ -116,16 +117,18 @@ int	main(int ac, char **av, char **envp)
 
 leaks a corriger :
 
-sur les heredooc : 
+1/ sur les echo :
+jump partout
+
+2/ leaks sur les ctrl C des hd
+
+3/ sur les heredoc : 
 leaks sur les hd et les builtins apres pipe.
 => here_doc_ray leaks sur les cmd apres pipe. exemple : cat << a | pwd
 
-leaks sur les ctrl C des hd
+4/ <Makefile
 
-sur les echo :
-jump partout
-
-<Makefile
+5/ si unset PATH puis cmd ls => PROBLEMESS
 
 /////////////////////////////////////////////////
 

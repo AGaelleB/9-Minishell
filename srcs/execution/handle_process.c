@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 16:07:39 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:18:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	free_child(t_process_data *data, t_env *env)
 {
+	// int i = 0;
 	// ft_close_all_fd();
 	if (data->count_hd)
 	{
-		printf("%s data->count_hd = %d | free_child %s\n", BLUE, data->count_hd, RESET);
+		// printf("%s data->count_hd = %d | free_child %s\n", BLUE, data->count_hd, RESET);
+		// while (data->heredocs[i])
+		// {
+		// 	free(data->heredocs[i]);
+		// 	i++;
+		// }
 		free(data->heredocs);
 	}
 	ft_free_env(env);
@@ -28,7 +34,6 @@ void	free_child(t_process_data *data, t_env *env)
 
 void	handle_child_process(t_process_data *data, t_env *env)
 {
-	
 	close(data->current->fd_in);
 	dup2(data->infile, 0);
 	if (data->current->next)

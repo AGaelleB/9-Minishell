@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 16:22:57 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:16:17 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 		}
 	}
 	signal(SIGINT, ctrl_c_main);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 static void	handle_execve_processes(t_process_data *data, t_env *env)
@@ -53,7 +54,8 @@ static void	handle_execve_processes(t_process_data *data, t_env *env)
 t_process_data	execve_fd(t_command *current, t_env *env)
 {
 	t_process_data	data;
-
+	
+	return_data(&data);
 	data.command = current;
 	data.current = current;
 	data.infile = 0;
