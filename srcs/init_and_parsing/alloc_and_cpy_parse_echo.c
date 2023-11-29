@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/29 16:46:46 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 20:20:34 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@ les jumps sont sur toutes les cmd genre : echo coucou
 
 static void	process_input(t_arg_handler *arg_handler, char *arg, int *arg_idx)
 {
-	int	*i;
-
-	i = arg_handler->i;
-
-	bool *double_quote = arg_handler->double_quote; // init
-	bool *single_quote = arg_handler->single_quote; // init
-
+	int		*i;
+	bool	*double_quote; // init
+	bool	*single_quote; // init
+	
+	double_quote = arg_handler->double_quote; // init
+	single_quote = arg_handler->single_quote; // init
 	*double_quote = false; // init
 	*single_quote = false; // init
+	i = arg_handler->i;
+	// *i = 0; // init mais marche pas
 	while (arg_handler->input[*i] && (*arg_handler->double_quote
 			|| *arg_handler->single_quote || arg_handler->input[*i] != ' '))
 	{
@@ -65,6 +66,7 @@ char	*ft_allocate_and_copy(t_arg_handler *arg_handler)
 	arg_idx = arg_handler->arg_idx;
 	*arg_idx = 0;
 	i = arg_handler->i;
+	// *i = 0; // init mais marche pas
 	initialize_bools(arg_handler);
 	process_input(arg_handler, arg, arg_idx);
 	skip_spaces_echo(arg_handler->input, i);
