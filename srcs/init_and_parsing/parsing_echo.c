@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:49:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/29 16:18:53 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:45:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	**parse_input_quote_echo(t_env *env, char *input)
 
 	// printf("%s parser.i = %d %s\n", RED, parser.i, RESET);
 	parser.i = is_redir_at_beginning(input, 0);
-	printf("%s parser.i = %d %s\n", RED, parser.i, RESET);
+	// printf("%s parser.i = %d %s\n", RED, parser.i, RESET);
 	arg_count = count_args_single_quotes(input);
 	parser.args = malloc((arg_count + 1) * sizeof(char *));
 	if (!parser.args)
