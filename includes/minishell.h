@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 14:09:00 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:58:57 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,45 +58,13 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_parser_one
+typedef struct s_parser
 {
 	char	**args;
 	int		i;
 	int		idx;
 	bool	in_quote;
-}	t_parser_one;
-
-typedef struct s_parser_two
-{
-	char	**args;
-	int		i;
-	int		idx;
-	bool	in_quote;
-}	t_parser_two;
-
-typedef struct s_parser_three
-{
-	char	**args;
-	int		i;
-	int		idx;
-	bool	in_quote;
-}	t_parser_three;
-
-
-// typedef struct s_parser
-// {
-//     char    **args;
-//     int     i;
-//     int     idx;
-//     bool    in_quote;
-//     t_env   *env;
-//     char    *input;
-//     char    *arg;
-//     int     arg_idx;
-//     bool    double_quote;
-//     bool    single_quote;
-// }   t_parser;
-
+}	t_parser;
 
 typedef struct s_quote
 {

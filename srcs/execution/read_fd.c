@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 14:16:17 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:52:19 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 	int	status;
 
 	i = -1;
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, SIG_IGN); //
 	while (++i <= command->nb_pipes)
 	{
 		if (waitpid(child_pids[i], &status, 0) > 0)
@@ -29,8 +29,8 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 				g_exit_status = WTERMSIG(status) + 128;
 		}
 	}
-	signal(SIGINT, ctrl_c_main);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ctrl_c_main); //
+	signal(SIGQUIT, SIG_IGN); // pour le ctrl "\"
 }
 
 static void	handle_execve_processes(t_process_data *data, t_env *env)
@@ -71,23 +71,3 @@ t_process_data	execve_fd(t_command *current, t_env *env)
 	cleanup(data.child_pids, data.infile);
 	return (data);
 }
-
-// t_process_data	execve_fd(t_command *current, t_env *env)
-// {
-// 	t_process_data	*data;
-
-// 	data->command = current;
-// 	data->current = current;
-// 	data->infile = 0;
-// 	data->index = 0;
-// 	data->current_hd = 0;
-// 	init_execve(current, (data->child_pids));
-// 	data->current->flag = 0;
-// 	data->current = current;
-// 	handle_execve_processes(data, env);
-// 	wait_for_children(data->command, data->child_pids);
-// 	if (data->count_hd)
-// 		free(data->heredocs); // NEW FREE
-// 	cleanup(data->child_pids, data->infile);
-// 	return (data);
-// }

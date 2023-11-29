@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 17:00:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:48:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	here_doc_manage(t_process_data *data, t_env *env, int fd[2], char *delimiter
 		i++;
 	}
 	signal(SIGQUIT, ctrl_c_heredoc);
-	// printf("%sSIGNAL here_doc_manage%s\n", CYAN, RESET); ////////////
 	return (0);
 }
 
@@ -84,8 +83,10 @@ static int	manage_single_heredoc(t_process_data *data, t_env *env, int index)
 	pid = fork();
 	if (pid == 0)
 		here_doc_manage(data, env, data->heredocs[index].fd, delimiter);
-	free(delimiter); // NEW
+	free(delimiter);
+	signal(SIGINT, ctrl_c_main); // nvx pour pas quitte tout
 	waitpid(pid, &status, 0);
+	// signal(SIGINT, ctrl_c_heredoc); // semble servir a rien
 	close(data->heredocs[index].fd[1]);
 	return (WIFEXITED(status) && WEXITSTATUS(status) == 130);
 }

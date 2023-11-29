@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 14:33:24 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/29 11:27:33 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:59:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	skip_spaces_export(char *input, int *i)
 		(*i)++;
 }
 
-char	**copy_argument_export(char *input, t_parser_three *parser)
+char	**copy_argument_export(char *input, t_parser *parser)
 {
 	char	*arg;
 	int		arg_idx;
@@ -64,7 +64,7 @@ char	**copy_argument_export(char *input, t_parser_three *parser)
 
 char	**parse_arg_export(char *input)
 {
-	t_parser_three	parser;
+	t_parser	parser;
 	int			arg_count;
 
 	parser.i = is_redir_at_beginning(input, 0);

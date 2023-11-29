@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 14:20:09 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/29 15:50:38 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,8 @@ void	main_loop(t_env *env_bis)
 			execve_builtin_cd(new_cmd, env_bis);
 			// ft_free_tab(new_cmd->command_arg);
 			data_main = execve_fd(new_cmd, env_bis);
-
 			if (new_cmd->command_arg_main)
 				ft_free_tab(new_cmd->command_arg_main);
-
 			// free_child(&data_main, env_bis);
 			// ft_close_all_fd();
 			// ft_free_all(new_cmd, new_cmd->token_head); // 38/730 + SEG
@@ -114,6 +112,9 @@ int	main(int ac, char **av, char **envp)
 /*
                                         TO DO :
 /////////////////////////////////////////////////
+
+pb sur le ctrl C d un hd qui affiche son contenu 
+
 
 leaks a corriger :
 
