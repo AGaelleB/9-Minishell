@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:49:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/29 20:20:23 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:04:21 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ char	**parse_input_quote_echo(t_env *env, char *input)
 		return (NULL);
 	parser.in_quote = false;
 	parser.idx = 0;
-	while (input[parser.i])
+	while (input[parser.i]) //
 	{
-		parser.args = copy_argument_echo(env, &parser, input);
+		parser.args = copy_argument_echo(env, &parser, input); //
 		if (!parser.args)
 			return (NULL);
 	}

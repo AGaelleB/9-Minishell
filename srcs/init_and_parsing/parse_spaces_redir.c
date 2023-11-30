@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:15:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 10:34:24 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:13:18 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,7 @@ char	*add_spaces_around_redir(char *input)
 	new_len = calculate_new_len(input);
 	new_input = malloc(sizeof(char) * (new_len + 1));
 	if (!new_input)
-	{
-		perror("malloc");
 		return (NULL);
-	}
+	ft_memset(new_input, '\0', new_len + 1);
 	return (copy_with_spaces(input, new_input));
 }
