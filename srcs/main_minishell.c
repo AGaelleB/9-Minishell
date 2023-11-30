@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 14:45:30 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:32:59 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,34 +110,16 @@ int	main(int ac, char **av, char **envp)
 }
 
 /*
-                                        TO DO :
+									TO DO :
 /////////////////////////////////////////////////
 
-1/ pb sur le ctrl C d un hd qui affiche son contenu 
+1/ pb sur le ctrl C d un hd qui affiche son contenu
 
-2/ here_doc_ray leaks:
-- ctrl c des hds
-- builtins apres un pipe : cat << a | pwd
-- hds apres un pipe :cat << a | cat << b
-
-3/ leaks sur export : export PATH=$PATH:$PWD
+2/ 1 leak sur export : export PATH=$PATH:$PWD le free fait perdre 22 tests
 
 4/ si unset PATH puis cmd ls => leaks et seg invisilble (pareil que <Makefile ?)
 
 /////////////////////////////////////////////////
-
-sous tapis ? :
-
-4/ <Makefile leaks plus seg invisible (valgrind)
-
-echo				a
-doit ignorer les tabs
-
-export :xcxcxc
-	-> casse apres si clear au 1er, doit etre fait 2x pour fonctionner
-
- echo "$PATH" | '/usr/bin/wc'      -c    > 'coucou>tamere'
-	-> cree 2 files, probleme avec la tokenisation
 
 penser a rechercher les truc quon a (void) et voir si utile.
 pareil pour forbiden function et a recoder et warning

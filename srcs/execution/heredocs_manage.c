@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_manage.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 15:48:13 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:25:19 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	handle_input(char *input, int i, char *delimiter, int fd[2])
 	return (0);
 }
 
-int	here_doc_manage(t_process_data *data, t_env *env, int fd[2], char *delimiter)
+int	here_doc_manage(t_process_data *data, t_env *env, int fd[2])
 {
 	char	*input;
 	int		i;
@@ -45,7 +45,7 @@ int	here_doc_manage(t_process_data *data, t_env *env, int fd[2], char *delimiter
 	while (1)
 	{
 		input = readline("> ");
-		result = handle_input(input, i, delimiter, fd);
+		result = handle_input(input, i, data->delimiter, fd);
 		if (result != 0)
 		{
 			ft_free_tab(data->command->command_arg_main); // test, if ? 
@@ -76,14 +76,13 @@ static int	manage_single_heredoc(t_process_data *data, t_env *env, int index)
 {
 	pid_t	pid;
 	int		status;
-	char	*delimiter;
 
-	delimiter = epur_filename_heredoc(data->current->token_head);
+	data->delimiter = epur_filename_heredoc(data->current->token_head);
 	pipe(data->heredocs[index].fd);
 	pid = fork();
 	if (pid == 0)
-		here_doc_manage(data, env, data->heredocs[index].fd, delimiter);
-	free(delimiter);
+		here_doc_manage(data, env, data->heredocs[index].fd);
+	free(data->delimiter);
 	signal(SIGINT, ctrl_c_main); // nvx pour pas quitte tout
 	waitpid(pid, &status, 0);
 	// signal(SIGINT, ctrl_c_heredoc); // semble servir a rien

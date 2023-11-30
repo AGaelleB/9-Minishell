@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 16:51:18 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:26:20 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	process_arg(t_export *export, char *arg, t_env *env, int *i)
 			// free(str); // fait perdre 20 tests
 		}
 		free(var_name);
-		free(str); // fait perdre 19 tests // ancien seg
+		// free(str); // fait perdre 22 tests // ancien seg
 	}
 	else
 	{

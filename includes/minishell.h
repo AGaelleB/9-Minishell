@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 14:23:36 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:22:19 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ typedef struct s_process_data
 	t_here_doc	*heredocs;
 	int			current_hd;
 	int			count_hd;
+	char		*delimiter;
 }	t_process_data;
 
 typedef struct s_command
