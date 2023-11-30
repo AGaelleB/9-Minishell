@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 14:42:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:15:41 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ void	handle_all_process(t_process_data *data, t_env *env)
 	if (data->pid == 0) // child
 		handle_child_process(data, env);
 	else if (data->pid > 0) // parent
+	{
 		handle_parent_process(data);
-		// free(data->heredocs);  // on perd un test
+		if (data->count_hd)
+			free(data->heredocs);
+	}
 	else
 		exit_with_error("fork", data->child_pids);
 }

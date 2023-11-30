@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 15:52:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:17:45 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ t_process_data	execve_fd(t_command *current, t_env *env)
 	data.current = current;
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);
-	if (data.count_hd)
-		free(data.heredocs); // NEW FREE
 	cleanup(data.child_pids, data.infile);
 	return (data);
 }
