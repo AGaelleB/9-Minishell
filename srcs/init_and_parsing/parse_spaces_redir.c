@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_spaces_redir.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:15:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 14:13:18 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:24:49 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,16 @@ char	*copy_with_spaces(char *input, char *new_input)
 	return (new_input);
 }
 
-char	*add_spaces_around_redir(char *input)
+char	*add_spaces_around_redir(char *input, t_env *env)
 {
 	char	*new_input;
 	int		new_len;
+	(void)env;
 
 	new_len = calculate_new_len(input);
-	new_input = malloc(sizeof(char) * (new_len + 1));
+	//check i il y a une varible
+	new_input = malloc(sizeof(char) * SIZE);
+	// new_input = malloc(sizeof(char) * (new_len + 1));
 	if (!new_input)
 		return (NULL);
 	ft_memset(new_input, '\0', new_len + 1);

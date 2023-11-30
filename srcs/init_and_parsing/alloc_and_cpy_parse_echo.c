@@ -3,38 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_and_cpy_parse_echo.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/29 20:20:34 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:36:54 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* 
-ici on a des conditional jump sur le *i qui est renvoyé 
-(notamment dans handle_quotes_echo),
-on ne sait pas comment l'initialiser.
-
-on fait les init de la struct "t_arg_handler	arg_handler" dans
-la fonction "copy_argument_echo"
-
-les jumps sont sur toutes les cmd genre : echo coucou
-*/
-
 static void	process_input(t_arg_handler *arg_handler, char *arg, int *arg_idx)
 {
 	int		*i;
-	bool	*double_quote; // init
-	bool	*single_quote; // init
+	bool	*double_quote;
+	bool	*single_quote;
 	
-	double_quote = arg_handler->double_quote; // init
-	single_quote = arg_handler->single_quote; // init
-	*double_quote = false; // init
-	*single_quote = false; // init
+	double_quote = arg_handler->double_quote;
+	single_quote = arg_handler->single_quote;
+	*double_quote = false;
+	*single_quote = false;
 	i = arg_handler->i;
-	// *i = 0; // init mais marche pas
 	while (arg_handler->input[*i] && (*arg_handler->double_quote
 			|| *arg_handler->single_quote || arg_handler->input[*i] != ' '))
 	{
@@ -59,14 +47,15 @@ char	*ft_allocate_and_copy(t_arg_handler *arg_handler)
 	int		size_of_argument;
 
 	size_of_argument = calculate_size_of_argument(arg_handler->input);
-	arg = malloc(sizeof(char) * (size_of_argument + 1));
+	(void)size_of_argument;
+	// arg = malloc(sizeof(char) * (size_of_argument + 1));
+	arg = malloc(sizeof(char) * SIZE);
 	if (!arg)
 		return (NULL);
 	arg_handler->arg = arg;
 	arg_idx = arg_handler->arg_idx;
 	*arg_idx = 0;
 	i = arg_handler->i;
-	// *i = 0; // init mais marche pas
 	initialize_bools(arg_handler);
 	process_input(arg_handler, arg, arg_idx);
 	skip_spaces_echo(arg_handler->input, i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:17:48 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 12:33:18 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:23:14 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ t_command	*create_new_cmd(char *command_str, t_env *env)
 	new_cmd = malloc(sizeof(t_command));
 	if (!new_cmd)
 		return (NULL);
-	new_cmd->command = add_spaces_around_redir(command_str);
+	new_cmd->command = add_spaces_around_redir(command_str, env);
 	if (!new_cmd->command)
 		return (NULL);
 	new_cmd->token_head = tokenize_input(new_cmd->command, env);
 	if (new_cmd->token_head != NULL)
 	{
 		new_cmd->token_head->command = NULL;
-		new_cmd->token_head->command = add_spaces_around_redir(command_str);
-		new_cmd->token_head->command_two = add_spaces_around_redir(command_str);
+		new_cmd->token_head->command = add_spaces_around_redir(command_str, env);
+		new_cmd->token_head->command_two = add_spaces_around_redir(command_str, env);
 	}
 	new_cmd->next = NULL;
 	return (new_cmd);
