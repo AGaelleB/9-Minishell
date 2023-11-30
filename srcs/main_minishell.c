@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 15:50:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:45:30 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,33 +113,26 @@ int	main(int ac, char **av, char **envp)
                                         TO DO :
 /////////////////////////////////////////////////
 
-pb sur le ctrl C d un hd qui affiche son contenu 
+1/ pb sur le ctrl C d un hd qui affiche son contenu 
 
+2/ here_doc_ray leaks:
+- ctrl c des hds
+- builtins apres un pipe : cat << a | pwd
+- hds apres un pipe :cat << a | cat << b
 
-leaks a corriger :
+3/ leaks sur export : export PATH=$PATH:$PWD
 
-1/ sur les echo :
-jump partout
-
-2/ leaks sur les ctrl C des hd
-
-3/ sur les heredoc : 
-leaks sur les hd et les builtins apres pipe.
-=> here_doc_ray leaks sur les cmd apres pipe. exemple : cat << a | pwd
-
-4/ <Makefile
-
-5/ si unset PATH puis cmd ls => PROBLEMESS
+4/ si unset PATH puis cmd ls => leaks et seg invisilble (pareil que <Makefile ?)
 
 /////////////////////////////////////////////////
 
-sous tapis ? : 
+sous tapis ? :
+
+4/ <Makefile leaks plus seg invisible (valgrind)
 
 echo				a
 doit ignorer les tabs
 
-export PATH=$PATH:$PWD
-	-> "minishell" doit marcher comme "./minishell"
 export :xcxcxc
 	-> casse apres si clear au 1er, doit etre fait 2x pour fonctionner
 
@@ -147,6 +140,6 @@ export :xcxcxc
 	-> cree 2 files, probleme avec la tokenisation
 
 penser a rechercher les truc quon a (void) et voir si utile.
-pareil pour forbiden function et a recoder
+pareil pour forbiden function et a recoder et warning
 
 */
