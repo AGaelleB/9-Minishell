@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 17:32:59 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 11:18:58 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,11 @@ int	main(int ac, char **av, char **envp)
 
 2/ 1 leak sur export : export PATH=$PATH:$PWD le free fait perdre 22 tests
 
-4/ si unset PATH puis cmd ls => leaks et seg invisilble (pareil que <Makefile ?)
+3/ si unset PATH cmds avec pipe => leaks
+
+4/ $coucouc => 1 jump
+
+5/ unset HOME puis cd $HOME => 2 jumps
 
 /////////////////////////////////////////////////
 

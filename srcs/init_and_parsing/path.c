@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 10:42:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 10:53:16 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,7 @@ char	**ft_get_paths(t_env *env)
 
 char	*ft_check_absolute_path(char *args)
 {
-
-	// printf("ft_check_absolute_path args = %s\n", args);
-	// if (!args)
-	// 	return (NULL);
-
 	if (ft_strchr_slash(args, '/') == 1)
-	// if (ft_strchr(args, '/'))
 	{
 		if (access(args, F_OK | X_OK) == 0)
 			return (ft_strdup(args));
@@ -59,12 +53,9 @@ char	*find_valid_path(char **temp_path, char *args)
 
 	valid_path = NULL;
 	i = 0;
-	if (args[i] == '<')
-		return (NULL);
 	if ((ft_strcmp_minishell(args, ".") == 0)
 		|| (ft_strcmp_minishell(args, "..") == 0))
 		return (NULL);
-	
 	while (temp_path[i] && !valid_path)
 	{
 		valid_path = ft_strjoin_minishell(temp_path[i], args);
@@ -90,7 +81,8 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 		&& (ft_strcmp_minishell(args, "echo") != 0))
 	{
 		print_no_file_or_directory(env, args);
-		ft_free_tab(temp_path);
+		if (temp_path != NULL)
+			ft_free_tab(temp_path);
 		return (NULL);
 	}
 	env->flag_error = false;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 15:59:19 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 10:59:53 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*allocate_and_copy(char *input, int *i, int *arg_idx)
 	*arg_idx = 0;
 	while (input[*i])
 	{
-		handle_quotes(input, i, &double_quote, &single_quote); // warning jump
+		handle_quotes(input, i, &double_quote, &single_quote);
 		if ((input[*i] == ' ' || input[*i] == '>' || input[*i] == '<')
 			&& !double_quote && !single_quote)
 			break ;
@@ -60,7 +60,6 @@ char	*allocate_and_copy(char *input, int *i, int *arg_idx)
 		(*i)++;
 	}
 	arg[*arg_idx] = '\0';
-	// arg[(*arg_idx)++] = '\0'; // test
 	return (arg);
 }
 
@@ -83,7 +82,6 @@ char	**copy_argument(char *input, t_parser *parser)
 	else
 		free(arg);
 	skip_spaces(input, &(parser->i));
-	// parser->args[(parser->idx)++] = '\0'; ///////////////////
 	return (parser->args);
 }
 
@@ -102,7 +100,7 @@ char	**parse_input_quote(char *input)
 	parser.idx = 0;
 	while (input[parser.i])
 	{
-		parser.args = copy_argument(input, &parser);
+		parser.args = copy_argument(input, &parser); //////////
 		if (!parser.args)
 			return (NULL);
 		if ((!parser.in_quote) && (input[parser.i] == '>'
