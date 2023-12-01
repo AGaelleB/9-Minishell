@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 17:17:45 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:22:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 	int	status;
 
 	i = -1;
-	signal(SIGINT, SIG_IGN); //
+	signal(SIGINT, SIG_IGN);
 	while (++i <= command->nb_pipes)
 	{
 		if (waitpid(child_pids[i], &status, 0) > 0)
@@ -29,8 +29,8 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 				g_exit_status = WTERMSIG(status) + 128;
 		}
 	}
-	signal(SIGINT, ctrl_c_main); //
-	signal(SIGQUIT, SIG_IGN); // pour le ctrl "\"
+	signal(SIGINT, ctrl_c_main);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 static void	handle_execve_processes(t_process_data *data, t_env *env)
@@ -51,10 +51,10 @@ static void	handle_execve_processes(t_process_data *data, t_env *env)
 	}
 }
 
-t_process_data	execve_fd(t_command *current, t_env *env)
+void	execve_fd(t_command *current, t_env *env)
 {
 	t_process_data	data;
-	
+
 	return_data(&data);
 	data.command = current;
 	data.current = current;
@@ -67,5 +67,4 @@ t_process_data	execve_fd(t_command *current, t_env *env)
 	handle_execve_processes(&data, env);
 	wait_for_children(data.command, data.child_pids);
 	cleanup(data.child_pids, data.infile);
-	return (data);
 }

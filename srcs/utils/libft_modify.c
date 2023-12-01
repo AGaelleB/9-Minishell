@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_modify.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:16:28 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 10:44:39 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:11:17 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_strchr_slash(char *str, char c)
 	int	i;
 
 	i = 0;
-	// printf("str = %s\n", str); ////////////////////////
 	if (!str)
 		return (0);
 	while (str[i])
@@ -46,9 +45,6 @@ int	ft_strcmp_minishell(char *s1, char *s2)
 	int	i;
 
 	i = 0;
-	// printf("s1 = %s\n", s1); ////////////
-	// if (!s1) /////////////////////
-	// 	return (0); ///////////////////////
 	while ((s1[i] == s2[i]) && s1[i] && s2[i])
 		i++;
 	return (s1[i] - s2[i]);

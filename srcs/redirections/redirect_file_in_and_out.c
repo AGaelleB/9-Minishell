@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 13:56:34 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:09:56 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*verif_file_name(t_process_data *data, t_env *env, t_token *token)
 {
 	char	*file_name;
-	
+
 	file_name = NULL;
 	if (token->next->split_value[0] == '\"'
 		|| token->next->split_value[0] == '\'')
@@ -28,7 +28,7 @@ char	*verif_file_name(t_process_data *data, t_env *env, t_token *token)
 			ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
 			ft_putchar_fd(file_name[0], 2);
 			ft_putstr_fd("\n", 2);
-			ft_free_tab(data->command->command_arg_main); // test, if ? 
+			ft_free_tab(data->command->command_arg_main);
 			free_child(data, env);
 			exit(g_exit_status = 2);
 		}
@@ -48,7 +48,7 @@ int	redirect_file_out(t_process_data *data, t_env *env, t_token *token)
 	{
 		write(1, "minishell: ", 12);
 		perror(filename);
-		ft_free_tab(data->command->command_arg_main); // test, if ? 
+		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
 		exit(g_exit_status = 1);
 	}
@@ -67,7 +67,7 @@ int	redirect_file_in(t_process_data *data, t_env *env, t_token *token)
 	{
 		write(1, "minishell: ", 12);
 		perror(filename);
-		ft_free_tab(data->command->command_arg_main); // test, if ? 
+		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
 		exit(g_exit_status = 1);
 	}
@@ -86,7 +86,7 @@ int	redirect_append_file_out(t_process_data *data, t_env *env, t_token *token)
 	{
 		write(1, "minishell: ", 12);
 		perror(filename);
-		ft_free_tab(data->command->command_arg_main); // test, if ? 
+		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
 		exit(g_exit_status = 1);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_manage.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 17:25:19 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:49:24 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	here_doc_manage(t_process_data *data, t_env *env, int fd[2])
 		result = handle_input(input, i, data->delimiter, fd);
 		if (result != 0)
 		{
-			ft_free_tab(data->command->command_arg_main); // test, if ? 
+			ft_free_tab(data->command->command_arg_main);
 			free_child(data, env);
 			exit(0);
 		}
@@ -83,9 +83,8 @@ static int	manage_single_heredoc(t_process_data *data, t_env *env, int index)
 	if (pid == 0)
 		here_doc_manage(data, env, data->heredocs[index].fd);
 	free(data->delimiter);
-	signal(SIGINT, ctrl_c_main); // nvx pour pas quitte tout
+	signal(SIGINT, ctrl_c_main);
 	waitpid(pid, &status, 0);
-	// signal(SIGINT, ctrl_c_heredoc); // semble servir a rien
 	close(data->heredocs[index].fd[1]);
 	return (WIFEXITED(status) && WEXITSTATUS(status) == 130);
 }

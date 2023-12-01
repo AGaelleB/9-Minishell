@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:27:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/24 16:47:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:10:19 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	heredoc_open_fd(t_process_data *data,
 			dup2(command->fd_in, 0);
 			close(command->fd_in);
 		}
-		// free(data->heredocs);
 	}
 }
 
-void	redirect_file_in_open_fd(t_process_data *data, t_env *env, t_token *token)
+void	redirect_file_in_open_fd(t_process_data *data,
+	t_env *env, t_token *token)
 {
 	if (token->type == TYPE_REDIR_IN
 		&& data->command->last_redir_is_heredoc == false)
@@ -41,7 +41,8 @@ void	redirect_file_in_open_fd(t_process_data *data, t_env *env, t_token *token)
 	}
 }
 
-void	redirect_file_out_open_fd(t_process_data *data, t_env *env, t_token *token)
+void	redirect_file_out_open_fd(t_process_data *data,
+	t_env *env, t_token *token)
 {
 	if (token->type == TYPE_REDIR_OUT)
 	{
@@ -53,7 +54,8 @@ void	redirect_file_out_open_fd(t_process_data *data, t_env *env, t_token *token)
 	}
 }
 
-void	redirect_append_file_out_open_fd(t_process_data *data, t_env *env, t_token *token)
+void	redirect_append_file_out_open_fd(t_process_data *data,
+	t_env *env, t_token *token)
 {
 	if (token->type == TYPE_REDIR_APPEND)
 	{

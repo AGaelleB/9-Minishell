@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 11:56:11 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:52:09 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ char	**copy_argument(char *input, t_parser *parser)
 
 char	**parse_input_quote(char *input)
 {
-
 	t_parser	parser;
 	int			arg_count;
 
@@ -101,7 +100,7 @@ char	**parse_input_quote(char *input)
 	parser.idx = 0;
 	while (input[parser.i])
 	{
-		parser.args = copy_argument(input, &parser); //////////
+		parser.args = copy_argument(input, &parser);
 		if (!parser.args)
 			return (NULL);
 		if ((!parser.in_quote) && (input[parser.i] == '>'

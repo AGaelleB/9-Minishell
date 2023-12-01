@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 16:00:29 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:11:56 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ char	**free_token_split(char **tokens)
 
 void	ft_free_all(t_command *current, t_token *token)
 {
-	ft_close_all_fd(); // on gagne un test 325/730
+	ft_close_all_fd();
 	if (token)
 		ft_free_token(current);
 	if (current)
 		ft_free_current(current);
-	// ft_close_all_fd(); // en bas on perd un test 324/730
 	(void)token;
 }
 
@@ -66,10 +65,3 @@ void	cleanup(pid_t *child_pids, int infile)
 	if (infile != 0)
 		close(infile);
 }
-
-// void	cleanup(t_process_data *data)
-// {
-// 	free(data->child_pids);
-// 	if (data->infile != 0)
-// 		close(data->infile);
-// }

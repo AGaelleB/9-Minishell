@@ -3,43 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 12:01:11 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:43:30 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*ft_get_env(const char *name, t_env *env)
+char	*allocate_var_name(void)
 {
-	int	i;
-	int	len;
+	char	*var_name;
 
-	i = 0;
-	len = ft_strlen(name);
-	while (env->cpy_env[i])
-	{
-		if ((ft_strncmp(env->cpy_env[i], name, len) == 0)
-			&& (env->cpy_env[i][len] == '='))
-			return (&env->cpy_env[i][len + 1]);
-		i++;
-	}
-	return (NULL);
-}
-
-int	pass_find_var_name(t_env *env, char *var_name, int *i, int j)
-{
-	while (env->path_to_change
-		&& (ft_isalnum(env->path_to_change[*i])
-			&& env->path_to_change[*i] != '_'
-			&& env->path_to_change[*i] != ':'
-			&& env->path_to_change[*i] != '$'))
-	{
-		var_name[j++] = env->path_to_change[(*i)++];
-	}
-	return (j = find_env_var(env, var_name));
+	var_name = malloc(sizeof(char) * SIZE);
+	if (!var_name)
+		return (NULL);
+	ft_memset(var_name, '\0', SIZE);
+	return (var_name);
 }
 
 char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
@@ -52,10 +33,7 @@ char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
 	j = 0;
 	k = 0;
 	l = 0;
-	var_name = malloc(sizeof(char) * SIZE);
-	if (!var_name)
-		return (NULL);
-	ft_memset(var_name, '\0', SIZE);
+	var_name = allocate_var_name();
 	j = pass_find_var_name(env, var_name, i, j);
 	if (j != -1)
 	{
@@ -70,7 +48,7 @@ char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
 		while (var_name[l])
 			ret[(*m)++] = var_name[l++];
 	}
-	return (free(var_name), ret); // NEW FREE
+	return (free(var_name), ret);
 }
 
 char	*check_expander(t_env *env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_var_export.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:00:41 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 16:46:09 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:07:15 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	add_var_env(t_env *env, int i, char *str)
 		{
 			env->cpy_env[i + 1] = str;
 			env->cpy_env[i + 2] = NULL;
-			// free(str);
 			return (1);
 		}
 		i++;

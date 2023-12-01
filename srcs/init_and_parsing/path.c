@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 14:37:03 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 10:53:16 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:07:48 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*ft_check_relative_paths(t_env *env, char *args)
 {
 	char	**temp_path;
 	char	*valid_path;
+
 	temp_path = ft_get_paths(env);
 	if ((temp_path == NULL || (temp_path[0][0]) == 0)
 		&& (ft_strcmp_minishell(args, "unset") != 0)
@@ -102,10 +103,7 @@ char	*ft_check_paths(t_env *env, char *args)
 
 	valid_path = ft_check_absolute_path(args);
 	if (!valid_path)
-	{
-		free(valid_path); // utile ?
-		// return (NULL); // test
-	}
+		free(valid_path);
 	if (valid_path != NULL)
 		return (valid_path);
 	valid_path = ft_check_relative_paths(env, args);

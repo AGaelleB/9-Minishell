@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_and_cpy_parse_echo.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/12/01 11:57:50 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:03:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	process_input(t_arg_handler *arg_handler, char *arg, int *arg_idx)
 	int		*i;
 	bool	*double_quote;
 	bool	*single_quote;
-	
+
 	double_quote = arg_handler->double_quote;
 	single_quote = arg_handler->single_quote;
 	*double_quote = false;

@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:16:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/20 16:38:34 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:45:01 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*check_none_var(char *str)
 		if (str[i] == '$')
 		{
 			i++;
-			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_')) //MODIF ICI
+			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 				i++;
 		}
 		str_cpy[y++] = str[i++];
@@ -41,7 +41,7 @@ int	apply_var_name(t_export *export, char **str, t_env *env, char *var_name)
 	if (!(export->ret))
 	{
 		export->ret = malloc(sizeof(*str)
-			* (ft_strlen(env->cpy_env[export->j]) + ft_strlen(*str) + 2));
+				* (ft_strlen(env->cpy_env[export->j]) + ft_strlen(*str) + 2));
 		if (!export->ret)
 			return (-1);
 	}
@@ -83,7 +83,7 @@ int	export_expander(t_export *export, char *str, t_env *env)
 	char	*str_cpy;
 
 	str_cpy = ft_strdup(str);
-	if (expand_variable(export, &str, env) == 0) // pb du fait qu'on renvoie l'adresse ? &str
+	if (expand_variable(export, &str, env) == 0)
 	{
 		update_var_env(env, str_cpy);
 		export->ret[export->l] = '\0';
@@ -92,6 +92,6 @@ int	export_expander(t_export *export, char *str, t_env *env)
 		free(str);
 		return (g_exit_status);
 	}
-	free(str_cpy); // NEW FREE
+	free(str_cpy);
 	return (g_exit_status);
 }

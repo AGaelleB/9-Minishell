@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_pwd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:26:35 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/15 17:26:47 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:07:25 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	update_env_pwd(t_env *env, char *new_pwd)
 	}
 }
 
-void	update_env_oldpwd(t_env *env) // a tester
+void	update_env_oldpwd(t_env *env)
 {
 	char	*current_pwd;
 

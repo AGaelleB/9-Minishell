@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:15:24 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/10 09:41:22 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:02:00 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,4 @@ void	append_env_value_to_arg(char *value, char *arg, int *arg_idx)
 		arg[(*arg_idx)++] = value[j];
 		j++;
 	}
-	// free(value);
 }

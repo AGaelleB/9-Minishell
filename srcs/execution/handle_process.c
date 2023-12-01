@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 17:15:41 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:01:17 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,14 @@
 
 void	free_child(t_process_data *data, t_env *env)
 {
-	// int i = 0;
-	// ft_close_all_fd();
 	if (data->count_hd)
-	{
-		// printf("%s data->count_hd = %d | free_child %s\n", BLUE, data->count_hd, RESET);
-		// while (data->heredocs[i])
-		// {
-		// 	free(data->heredocs[i]);
-		// 	i++;
-		// }
 		free(data->heredocs);
-	}
 	ft_free_env(env);
 	ft_free_all(data->command, data->command->token_head);
-	cleanup(data->child_pids, data->infile); // on perd un test
+	cleanup(data->child_pids, data->infile);
 }
 
-
-void	handle_child_process(t_process_data *data, t_env *env)
+static void	setup_input_output(t_process_data *data)
 {
 	close(data->current->fd_in);
 	dup2(data->infile, 0);
@@ -49,12 +38,17 @@ void	handle_child_process(t_process_data *data, t_env *env)
 		dup2(data->current->fd_out, 1);
 		close(data->current->fd_out);
 	}
+}
+
+void	handle_child_process(t_process_data *data, t_env *env)
+{
+	setup_input_output(data);
 	open_fd(data, env, data->current);
 	ft_close_fd();
 	ft_builtin_write_exit_process(data, env);
 	if (builtins_verif(data->current, env) == 1)
 	{
-		ft_free_tab(data->command->command_arg_main); // test, if ? 
+		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
 		exit(g_exit_status);
 	}
@@ -68,14 +62,13 @@ void	handle_parent_process(t_process_data *data)
 	if (data->infile != 0)
 		close(data->infile);
 	data->infile = data->current->fd_in;
-	// ft_free_tab(env->cpy_env); // fait perdre 25 tests
 }
 
 void	handle_all_process(t_process_data *data, t_env *env)
 {
-	if (data->pid == 0) // child
+	if (data->pid == 0)
 		handle_child_process(data, env);
-	else if (data->pid > 0) // parent
+	else if (data->pid > 0)
 	{
 		handle_parent_process(data);
 		if (data->count_hd)

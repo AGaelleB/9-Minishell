@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 11:36:36 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:23:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,30 @@
 
 int	g_exit_status;
 
-int	check_args_and_env(int ac, char **envp)
+static void	process_command(t_command *new_cmd, t_env *env_bis)
 {
-	if (ac != 1)
-		return (printf("run ./minishell without arg\n"));
-	if (!envp[0])
-		return (printf("env is missing\n"));
-	return (0);
+	new_cmd->command_arg_main = parse_input_quote(new_cmd->command);
+	new_cmd->export_arg = parse_arg_export(new_cmd->command);
+	execve_builtins_unset_export(new_cmd, env_bis);
+	execve_builtin_cd(new_cmd, env_bis);
+	execve_fd(new_cmd, env_bis);
+	if (new_cmd->command_arg_main)
+		ft_free_tab(new_cmd->command_arg_main);
+	if (new_cmd->token_head)
+		ft_free_token(new_cmd);
 }
 
-t_env	*initialize_env(char **envp)
+static void	cleanup_command(t_command *new_cmd)
 {
-	t_env	*env_bis;
-
-	g_exit_status = 0;
-	signal(SIGINT, ctrl_c_main);
-	signal(SIGQUIT, SIG_IGN);
-	env_bis = (t_env *)malloc(sizeof(t_env));
-	if (!env_bis)
-		return (NULL);
-	return_env(env_bis);
-	copy_env(env_bis, envp);
-	return (env_bis);
+	if (new_cmd)
+		ft_free_current(new_cmd);
 }
 
-void	main_loop(t_env *env_bis)
+static void	read_and_process_input(t_env *env_bis)
 {
-	t_process_data	data_main;
-	t_command	*new_cmd;
-	char		*input;
-	int			flag_ok;
+	t_command		*new_cmd;
+	char			*input;
+	int				flag_ok;
 
 	flag_ok = 0;
 	while (1)
@@ -51,8 +45,7 @@ void	main_loop(t_env *env_bis)
 		input = readline("minishell$> ");
 		add_history(input);
 		ctrl_d_main(input, new_cmd, env_bis, flag_ok);
-		// ft_builtin_write_exit(input);
-		if (error_input(env_bis, new_cmd, input, flag_ok) == 2
+		if (error_input(env_bis, input) == 2
 			|| verif_nb_quote(input) != 0
 			|| pipe_syntax_errors(input) == 2)
 			continue ;
@@ -60,30 +53,18 @@ void	main_loop(t_env *env_bis)
 		count_and_set_pipes(input, new_cmd);
 		if (new_cmd != NULL)
 		{
-			new_cmd->command_arg_main = parse_input_quote(new_cmd->command);
-			new_cmd->export_arg = parse_arg_export(new_cmd->command);
-			execve_builtins_unset_export(new_cmd, env_bis);
-			execve_builtin_cd(new_cmd, env_bis);
-			// ft_free_tab(new_cmd->command_arg);
-			data_main = execve_fd(new_cmd, env_bis);
-			if (new_cmd->command_arg_main)
-				ft_free_tab(new_cmd->command_arg_main);
-			// free_child(&data_main, env_bis);
-			// ft_close_all_fd();
-			// ft_free_all(new_cmd, new_cmd->token_head); // 38/730 + SEG
-			// if (flag_ok != 0)
-			
-			(void)data_main;
-			if (new_cmd->token_head)
-				ft_free_token(new_cmd);
-			if (new_cmd)
-				ft_free_current(new_cmd);
+			process_command(new_cmd, env_bis);
+			cleanup_command(new_cmd);
 		}
 		flag_ok = 1;
 		free(input);
 	}
+}
+
+void	main_loop(t_env *env_bis)
+{
+	read_and_process_input(env_bis);
 	ft_free_env(env_bis);
-	ft_free_all(new_cmd, new_cmd->token_head);
 	clear_history();
 }
 
@@ -115,9 +96,7 @@ int	main(int ac, char **av, char **envp)
 
 1/ pb sur le ctrl C d un hd qui affiche son contenu
 
-2/ 1 leak sur export : export PATH=$PATH:$PWD le free fait perdre 22 tests
-
-3/ si unset PATH cmds avec pipe => leaks
+2/ si unset PATH cmds avec pipe => leaks
 
 /////////////////////////////////////////////////
 

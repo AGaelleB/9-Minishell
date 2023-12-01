@@ -3,56 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   all_builtins_verifs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 11:31:29 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:47:53 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// int	skip_spaces(char *input)
-// {
-// 	char	*str;
-// 	int		i;
-	
-// 	str = ft_strtrim(input, " ");
-// 	i = 0;
-// 	if (str[i] == "\'" || str[i] == "\"")
-// 	{
-// 		i++;
-// 		while (str[i] == ' ')
-// 			i++;
-// 		if (str[i] == "\'" || str[i] == "\"")
-// 		{
-// 			free(str);
-// 			return (1);
-// 		}
-// 	}
-// 	free(str);
-// 	return (0);
-// }
-
-int	error_input(t_env *env, t_command *new_cmd, char *input, int flag_ok)
+int	error_input(t_env *env, char *input)
 {
 	if (ft_builtin_enter(input) != 0)
 		return (2);
 	if (ft_builtin_write_exit(env, input) != 0)
 	{
 		free(input);
-		if (flag_ok == 1)
-		{
-			(void)env;
-			(void)new_cmd;
-			// ft_free_env(env);
-			// ft_free_all(new_cmd, new_cmd->token_head);
-		}
 		return (2);
 	}
 	if (ft_is_all_space(input) != 0)
 		return (2);
-	
 	if (ft_strcmp_minishell(input, "\"\"") == 0
 		|| ft_strcmp_minishell(input, "\'\'") == 0)
 	{

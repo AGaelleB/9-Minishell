@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 11:54:09 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/28 12:26:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:06:57 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@ char	**ft_get_paths_token(t_env *env)
 	}
 	if (path == NULL)
 		return (NULL);
-	all_paths = ft_split(path, ':'); // casse tout quand on export avec : path=path:pwd plusieurs fois
+	all_paths = ft_split(path, ':');
 	return (all_paths);
 }
 
 char	*ft_check_absolute_path_token(char *args)
 {
-	// printf("ft_check_absolute_path_token args = %s\n", args);
 	if (ft_strchr_slash(args, '/') == 1)
 	{
 		if (access(args, F_OK | X_OK) == 0)
@@ -77,7 +76,7 @@ char	*ft_check_relative_paths_token(t_env *env, char *args)
 	temp_path = ft_get_paths_token(env);
 	if (temp_path == NULL)
 		return (NULL);
-	if (temp_path[0][0] == 0) //ne pas remttre au dessus (segfault)
+	if (temp_path[0][0] == 0)
 		return (NULL);
 	valid_path = find_valid_path_token(temp_path, args);
 	ft_free_tab(temp_path);
@@ -85,7 +84,7 @@ char	*ft_check_relative_paths_token(t_env *env, char *args)
 	{
 		if (access(valid_path, F_OK | X_OK) == 0)
 			return (valid_path);
-		free(valid_path); // sert a rien
+		free(valid_path);
 	}
 	return (NULL);
 }

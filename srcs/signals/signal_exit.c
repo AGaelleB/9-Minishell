@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 17:29:36 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:10:53 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ctrl_d_heredoc(char *input, int i, char *delimiter)
 
 t_process_data	*return_data(t_process_data *data)
 {
-	static	t_process_data	*test_data;
+	static t_process_data	*test_data;
 
 	if (data)
 		test_data = data;
@@ -47,7 +47,7 @@ t_process_data	*return_data(t_process_data *data)
 
 t_env	*return_env(t_env *env)
 {
-	static	t_env	*test_env;
+	static t_env	*test_env;
 
 	if (env)
 		test_env = env;

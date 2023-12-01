@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/11/29 10:54:43 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/12/01 15:56:54 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/handle_quote_export.c \
 	srcs/init_and_parsing/handle_token.c \
 	srcs/init_and_parsing/handle_var_export.c \
+	srcs/init_and_parsing/init_and_set_execve.c \
 	srcs/init_and_parsing/init_env.c \
 	srcs/init_and_parsing/init_export_var.c \
 	srcs/init_and_parsing/init_quote.c \
@@ -89,6 +90,7 @@ SRCS_UTILS = srcs/utils/check_redirections.c \
 	srcs/utils/split_string_token.c \
 	srcs/utils/split_string.c \
 	srcs/utils/util_count.c \
+	srcs/utils/utils_builtin_cd.c \
 	srcs/utils/utils_echo.c \
 	srcs/utils/utils.c \
 

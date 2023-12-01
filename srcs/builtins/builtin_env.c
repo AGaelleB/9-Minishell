@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:24 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:19:02 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:40:31 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	copy_env(t_env *env, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		env->cpy_env[i] = ft_strdup(envp[i]); // don't forget to free this later
+		env->cpy_env[i] = ft_strdup(envp[i]);
 		if (!env->cpy_env[i])
 		{
 			ft_free_tab(env->cpy_env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/30 17:26:20 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:29:12 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,14 @@ int	process_arg(t_export *export, char *arg, t_env *env, int *i)
 		{
 			update_var_env(env, str);
 			add_var_env(env, *i, str);
-			// free(str); // fait perdre 20 tests
 		}
 		free(var_name);
-		// free(str); // fait perdre 22 tests // ancien seg
 	}
 	else
 	{
-		free(str); // NEW FREE
+		free(str);
 		return (check_invalid_var(env, arg), g_exit_status);
 	}
-	// if (str)
-	// free(str); // fait perdre 22 tests
 	return (0);
 }
 
@@ -119,7 +115,5 @@ int	ft_builtin_export(char **args, t_env *env)
 		arg_idx++;
 	}
 	free_export(export);
-	// free(str);
-	// free(ret);
 	return (g_exit_status);
 }
