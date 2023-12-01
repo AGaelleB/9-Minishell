@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:47:32 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/19 10:42:44 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 11:59:03 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 t_export	*init_export(t_export *export)
 {
-	// export->ret = malloc(sizeof(char) * SIZE);
-	// if (!export->ret)
-	// 	return (NULL);
 	export->ret = NULL;
 	export->new = malloc(sizeof(char) * SIZE);
 	if (!export->new)
 		return (NULL);
+	ft_memset(export->new, '\0', SIZE);
 	export->flag = 0;
 	export->i = 0;
 	export->j = 0;

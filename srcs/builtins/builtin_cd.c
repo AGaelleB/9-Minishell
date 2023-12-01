@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:48:31 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/27 11:26:05 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:01:11 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ char	*extract_var_name_cd(t_env *env, char *ret, int *i, int *m)
 	j = 0;
 	k = 0;
 	l = 0;
-	var_name = malloc(sizeof(char) * SIZE); // WARNING : printf var name
+	var_name = malloc(sizeof(char) * SIZE);
 	if (!var_name)
 		return (NULL);
+	ft_memset(var_name, '\0', SIZE);
 	j = pass_find_var_name(env, var_name, i, j);
 	if (j != -1)
 	{
@@ -83,6 +84,7 @@ char	*check_expander(t_env *env)
 	ret = malloc(sizeof(char) * SIZE);
 	if (!ret)
 		return (NULL);
+	ft_memset(ret, '\0', SIZE);
 	while (env->path_to_change[i])
 	{
 		if (env->path_to_change[i] == '$')

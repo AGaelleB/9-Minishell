@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/30 14:36:54 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 11:57:50 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,11 @@ char	*ft_allocate_and_copy(t_arg_handler *arg_handler)
 	char	*arg;
 	int		*arg_idx;
 	int		*i;
-	int		size_of_argument;
 
-	size_of_argument = calculate_size_of_argument(arg_handler->input);
-	(void)size_of_argument;
-	// arg = malloc(sizeof(char) * (size_of_argument + 1));
 	arg = malloc(sizeof(char) * SIZE);
 	if (!arg)
 		return (NULL);
+	ft_memset(arg, '\0', SIZE);
 	arg_handler->arg = arg;
 	arg_idx = arg_handler->arg_idx;
 	*arg_idx = 0;

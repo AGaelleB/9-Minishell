@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:38:56 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 10:59:53 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/01 11:56:11 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ char	*allocate_and_copy(char *input, int *i, int *arg_idx)
 
 	double_quote = false;
 	single_quote = false;
-	arg = malloc(ft_strlen(input) + 1);
+	arg = malloc(sizeof(char) * (ft_strlen(input) + 1));
 	if (!arg)
 		return (NULL);
+	ft_memset(arg, '\0', (ft_strlen(input) + 1));
 	*arg_idx = 0;
 	while (input[*i])
 	{

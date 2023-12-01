@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_builtins_verifs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/29 11:23:14 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/01 11:31:29 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	ret_place_var(t_command *current, t_env *env, char *str)
 	{
 		str[j++] = current->command[i++];
 	}
+	str[j] = '\0';
 	i = find_env_var(env, str);
 	return (i);
 }
