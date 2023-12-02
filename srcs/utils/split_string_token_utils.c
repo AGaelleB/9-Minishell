@@ -56,12 +56,9 @@ char	**allocate_tokens(int token_count)
 {
 	char	**tokens;
 
-	tokens = malloc((token_count + 1) * sizeof(char *));
+	tokens = malloc(sizeof(char *) * (token_count + 1));
 	if (!tokens)
-	{
-		perror("malloc");
 		return (NULL);
-	}
 	return (tokens);
 }
 
@@ -70,12 +67,9 @@ char	*allocate_and_cpy(char *start, int size)
 	char	*new_str;
 	int		i;
 
-	new_str = malloc(size + 1);
+	new_str = malloc(sizeof(char *) * (size + 1));
 	if (!new_str)
-	{
-		perror("malloc");
 		return (NULL);
-	}
 	i = 0;
 	while (i < size)
 	{

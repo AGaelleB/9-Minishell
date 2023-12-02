@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 14:39:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/21 10:46:14 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:38:48 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ char	*epurstr(char *str)
 	y = 0;
 	double_quote = false;
 	single_quote = false;
-	ret = malloc(sizeof(char) * ft_strlen(str) + 1);
+	ret = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	if (!ret)
+		return (NULL);
 	while (str[i])
 	{
 		handle_quotes_master(str, &i, &single_quote, &double_quote);

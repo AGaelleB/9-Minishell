@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:42:22 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/15 17:07:53 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:40:04 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,9 @@ char	**alloc_tokens(const char *str, char delimiter)
 	char	**tokens;
 
 	token_count = count_tokens(str, delimiter);
-	tokens = malloc((token_count + 1) * sizeof(char *));
+	tokens = malloc(sizeof(char *) * (token_count + 1));
 	if (!tokens)
-	{
-		perror("malloc");
 		return (NULL);
-	}
 	return (tokens);
 }
 
@@ -49,12 +46,9 @@ char	*allocate_and_copy_token(const char *str, int start, int end)
 	char	*token;
 
 	len = end - start;
-	token = malloc(len + 1);
+	token = malloc(sizeof(int) * (len + 1));
 	if (!token)
-	{
-		perror("malloc");
 		return (NULL);
-	}
 	ft_strncpy(token, &str[start], len);
 	token[len] = '\0';
 	return (token);

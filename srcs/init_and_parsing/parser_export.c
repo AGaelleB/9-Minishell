@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 14:33:24 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/29 15:59:27 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:38:15 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*allocate_and_copy_export(char *input, int *i, int *arg_idx)
 
 	double_quote = false;
 	single_quote = false;
-	arg = malloc(ft_strlen(input) + 1);
+	arg = malloc(sizeof(char *) * (ft_strlen(input) + 1));
 	if (!arg)
 		return (NULL);
 	*arg_idx = 0;
@@ -69,7 +69,7 @@ char	**parse_arg_export(char *input)
 
 	parser.i = is_redir_at_beginning(input, 0);
 	arg_count = count_args_single_quotes(input);
-	parser.args = malloc((arg_count + 1) * sizeof(char *));
+	parser.args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!parser.args)
 		return (NULL);
 	parser.in_quote = false;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command_on_pipe.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:59:02 by bfresque          #+#    #+#             */
-/*   Updated: 2023/10/12 15:16:20 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:39:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strndup(char *s, size_t n)
 	len = ft_strlen(s);
 	if (len > n)
 		len = n;
-	new_str = malloc(len + 1);
+	new_str = malloc(sizeof(char *) * (len + 1));
 	if (!new_str)
 		return (NULL);
 	i = 0;

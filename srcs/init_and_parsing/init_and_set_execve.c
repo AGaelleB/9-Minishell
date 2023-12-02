@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:55:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 11:22:37 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:42:41 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ void	init_execve(t_command *cur, pid_t **childs_pids)
 
 void	ft_set_args_and_paths(t_process_data *data, t_env *env)
 {
-	t_command *cmd;
+	t_command	*cmd;
 
 	cmd = data->command;
-
-	while(cmd)
+	while (cmd)
 	{
 		if (cmd->command_arg_main)
 		{
@@ -45,7 +44,8 @@ void	ft_set_args_and_paths(t_process_data *data, t_env *env)
 	data->current->command_path = NULL;
 	data->current->command_arg = parse_input_quote(data->current->command);
 	if (data->current->command_arg[0] != NULL)
-		data->current->command_path = ft_check_paths(env, data->current->command_arg[0]);
+		data->current->command_path = ft_check_paths(env,
+				data->current->command_arg[0]);
 	else
 		data->current->command_path = NULL;
 }

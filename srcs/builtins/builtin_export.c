@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 15:29:12 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:36:42 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*extract_var_name(char *str)
 	while (start[len] && ((ft_isalnum(start[len]) || start[len] == '_')
 			&& start[len] != ':' && start[len] != '$'))
 		len++;
-	var_name = malloc(len + 1);
+	var_name = malloc(sizeof(int) * (len + 1));
 	if (!var_name)
 		return (NULL);
 	ft_strncpy(var_name, start, len);

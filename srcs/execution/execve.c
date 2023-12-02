@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 11:22:12 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:28:45 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	handle_builtin_errors(t_process_data *data, t_env *env)
 {
+	if (data->current->command_arg)
+		ft_free_tab(data->current->command_arg);
 	free_child(data, env);
 	exit(g_exit_status);
 }
