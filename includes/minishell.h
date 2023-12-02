@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 17:21:49 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 10:40:52 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ int				update_var_env(t_env *env, char *arg);
 int				add_var_env(t_env *env, int i, char *str);
 
 void			init_execve(t_command *cur, pid_t **childs_pids);
-void			ft_set_args_and_paths(t_command *cur, t_env *env);
+void			ft_set_args_and_paths(t_process_data *data, t_env *env);
 int				is_builtin(t_command *cur);
 int				check_args_and_env(int ac, char **envp);
 t_env			*initialize_env(char **envp);

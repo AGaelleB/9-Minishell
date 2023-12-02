@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 16:10:53 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 10:30:35 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ctrl_c_heredoc(int signal)
 	if (signal == SIGINT)
 	{
 		write(2, "\n", 1);
-		free(data->delimiter);
+		// free(data->delimiter);
 		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
 		g_exit_status = 130;

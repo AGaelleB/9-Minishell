@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 15:57:58 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:22:12 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@ static void	handle_command_not_found(t_process_data *data, t_env *env)
 		ft_strlen(data->current->command_arg[0]));
 	write(2, " :command not found", 19);
 	write(2, "\n", 1);
+	if (data->current->command_arg)
+		ft_free_tab(data->current->command_arg);
 	free_child(data, env);
 	exit(g_exit_status = 127);
 }
 
 int	execve_process(t_process_data *data, t_env *env)
 {
-	ft_set_args_and_paths(data->current, env);
+	ft_set_args_and_paths(data, env);
 	if (env->flag_error || is_builtin(data->current) == 2)
 		handle_builtin_errors(data, env);
 	if (verif_access(data, env, data->current->command) == 1)

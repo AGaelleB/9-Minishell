@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:55:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 16:24:33 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:22:37 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,27 @@ void	init_execve(t_command *cur, pid_t **childs_pids)
 		return ;
 }
 
-void	ft_set_args_and_paths(t_command *cur, t_env *env)
+void	ft_set_args_and_paths(t_process_data *data, t_env *env)
 {
-	if (cur->command_arg_main)
-		ft_free_tab(cur->command_arg_main);
-	cur->command_path = NULL;
-	cur->command_arg = parse_input_quote(cur->command);
-	if (cur->command_arg[0] != NULL)
-		cur->command_path = ft_check_paths(env, cur->command_arg[0]);
+	t_command *cmd;
+
+	cmd = data->command;
+
+	while(cmd)
+	{
+		if (cmd->command_arg_main)
+		{
+			ft_free_tab(cmd->command_arg_main);
+			cmd->command_arg_main = NULL;
+		}
+		cmd = cmd->next;
+	}
+	data->current->command_path = NULL;
+	data->current->command_arg = parse_input_quote(data->current->command);
+	if (data->current->command_arg[0] != NULL)
+		data->current->command_path = ft_check_paths(env, data->current->command_arg[0]);
 	else
-		cur->command_path = NULL;
+		data->current->command_path = NULL;
 }
 
 int	is_builtin(t_command *cur)

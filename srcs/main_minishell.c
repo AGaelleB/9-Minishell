@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 17:23:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 10:55:42 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	main(int ac, char **av, char **envp)
 /////////////////////////////////////////////////
 
 1/ pb sur le ctrl C d un hd qui affiche son contenu
+1 bis/ "cat <<< a" -> fonctionne
 
 2/ si unset PATH cmds avec pipe => leaks
 

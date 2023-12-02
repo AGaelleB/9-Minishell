@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 16:13:15 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:17:16 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	ft_free_current(t_command *current)
 
 	tmp = NULL;
 	ft_free_herdocs(current);
-	if (current->command_arg)
-		ft_free_tab(current->command_arg);
+	// if (current->command_arg) // ok mais surement leak ailleurs
+	// 	ft_free_tab(current->command_arg);  // ok mais surement leak ailleurs
 	if (current->export_arg)
 		ft_free_tab(current->export_arg);
 	while (current)
