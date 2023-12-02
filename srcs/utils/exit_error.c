@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 15:10:39 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:20:12 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,29 @@ int	check_dots_commands(t_process_data *data, t_env *env, char *command)
 	exit(g_exit_status = 127);
 }
 
-int	verif_access(t_process_data *data, t_env *env, char *command)
+int	verif_access(t_process_data *data, t_env *env, char *cmd)
 {
 	struct stat	file_stat;
 
-	if (command[0] == '.' && command[1] == '.')
-		return (check_dots_commands(data, env, command));
-	if ((command[0] == '.' && command[1] == ' ') || (command[0] == '.'
-			&& !(command[1])))
+	if (cmd[0] == '.' && cmd[1] == '.')
+		return (check_dots_commands(data, env, cmd));
+	if ((cmd[0] == '.' && cmd[1] == ' ') || (cmd[0] == '.' && !(cmd[1])))
 	{
 		write(2, ".: usage: . filename [arguments]\n", 34);
 		ft_free_tab(data->command->command_arg);
 		free_child(data, env);
 		exit(g_exit_status = 2);
 	}
-	else if (command[0] == '.' && command[1] == '/')
+	else if (cmd[0] == '.' && cmd[1] == '/')
 	{
-		if (access(command, F_OK))
-			return (exit_access_not_found(data, env, command), 1);
-		if (access(command, X_OK) && access(command, F_OK) == 0)
-			return (exit_access_exec(data, env, command), 1);
-		if (stat(command, &file_stat) == 0)
+		if (access(cmd, F_OK))
+			return (exit_access_not_found(data, env, cmd), 1);
+		if (access(cmd, X_OK) && access(cmd, F_OK) == 0)
+			return (exit_access_exec(data, env, cmd), 1);
+		if (stat(cmd, &file_stat) == 0)
 		{
 			if (S_ISDIR(file_stat.st_mode))
-				return (is_dir_error(command));
+				return (is_dir_error(cmd));
 		}
 		return (g_exit_status);
 	}

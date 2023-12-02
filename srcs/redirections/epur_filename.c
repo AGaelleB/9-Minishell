@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   epur_filename.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:04:47 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/28 10:39:27 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:11:04 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static char	*update_command(char *cmd, int *i)
 		tempo[j++] = cmd[(*i)++];
 	tempo[j] = '\0';
 	*i = k;
+	free(cmd);
 	return (tempo);
 }
 

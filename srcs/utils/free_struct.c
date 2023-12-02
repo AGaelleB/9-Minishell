@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 11:17:16 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 16:54:08 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_free_token(t_command *current)
 		{
 			tmp = head;
 			head = head->next;
+			// printf("split: %s\n", tmp->split_value);
 			if (tmp->split_value)
 				free(tmp->split_value);
 			if (tmp)

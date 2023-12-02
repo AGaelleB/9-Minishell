@@ -6,11 +6,29 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 15:06:26 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 15:36:42 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:18:39 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*epur_file_two(char *str)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = malloc(sizeof(str) * (ft_strlen(str) + 1));
+	if (!tmp)
+		return (NULL);
+	while (str[i])
+	{
+		tmp[i] = str[i];
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
+}
 
 char	*verif_file_name(t_process_data *data, t_env *env, t_token *token)
 {
@@ -22,7 +40,7 @@ char	*verif_file_name(t_process_data *data, t_env *env, t_token *token)
 		file_name = epur_filename(data->current->token_head);
 	else
 	{
-		file_name = token->next->split_value;
+		file_name = epur_file_two(token->next->split_value);
 		if (check_valid_caractere_filename(file_name[0]) == 1)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
@@ -48,10 +66,14 @@ int	redirect_file_out(t_process_data *data, t_env *env, t_token *token)
 	{
 		write(1, "minishell: ", 12);
 		perror(filename);
+		if (filename)
+			free(filename);
 		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
 		exit(g_exit_status = 1);
 	}
+	if (filename)
+		free(filename);
 	return (0);
 }
 
@@ -67,10 +89,14 @@ int	redirect_file_in(t_process_data *data, t_env *env, t_token *token)
 	{
 		write(1, "minishell: ", 12);
 		perror(filename);
+		if (filename)
+			free(filename);
 		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
 		exit(g_exit_status = 1);
 	}
+	if (filename)
+		free(filename);
 	return (0);
 }
 
@@ -86,9 +112,13 @@ int	redirect_append_file_out(t_process_data *data, t_env *env, t_token *token)
 	{
 		write(1, "minishell: ", 12);
 		perror(filename);
+		if (filename)
+			free(filename);
 		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
 		exit(g_exit_status = 1);
 	}
+	if (filename)
+		free(filename);
 	return (0);
 }
