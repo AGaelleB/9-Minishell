@@ -87,20 +87,25 @@ int	pipe_syntax_errors(char *input)
 {
 	int	syntax_error_code;
 
+	if (check_bad_redir(input))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd("syntax error near unexpected token 'newline' \n", 2);
+		free(input);
+		return (g_exit_status = 2);
+	}
 	syntax_error_code = check_syntax_errors(input);
 	if (syntax_error_code == 1)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token '|'\n", 2);
 		free(input);
-		g_exit_status = 2;
-		return (g_exit_status);
+		return (g_exit_status = 2);
 	}
 	else if (syntax_error_code == 2)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token '||'\n", 2);
 		free(input);
-		g_exit_status = 2;
-		return (g_exit_status);
+		return (g_exit_status = 2);
 	}
 	return (0);
 }

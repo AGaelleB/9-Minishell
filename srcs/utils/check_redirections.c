@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:53:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/11/01 16:19:45 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:26:54 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,26 @@ void	ft_skip_redirection_and_file(char *input, int *i)
 	skip_spaces_echo(input, i);
 	ft_skip_filename(input, i, &single_quote, &double_quote);
 	skip_spaces_echo(input, i);
+}
+
+int	check_bad_redir(char *input)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (input[i])
+	{
+		while (input[i] == '<' || input[i] == '>')
+		{
+			count++;
+			i++;
+		}
+		if (count > 2)
+			return (1);
+		count = 0;
+		i++;
+	}
+	return (0);
 }

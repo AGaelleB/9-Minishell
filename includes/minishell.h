@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 10:40:52 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:22:07 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,6 +370,7 @@ void			ctrl_c_heredoc(int signal);
 /********************************   UTILS   *********************************/
 int				is_redirection(char c);
 void			ft_skip_redirection_and_file(char *input, int *i);
+int				check_bad_redir(char *input);
 
 int				check_valid_caractere_filename(char c);
 
