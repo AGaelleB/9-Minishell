@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 12:22:07 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/02 15:05:31 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define MAGENTA "\033[35m"
 # define CYAN "\033[36m"
 # define SIZE 1000
+# define SIZE_VAR 5000
 
 extern int					g_exit_status;
 typedef struct s_command	t_command;

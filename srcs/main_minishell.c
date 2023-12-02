@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 11:30:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 15:40:42 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,26 @@ int	main(int ac, char **av, char **envp)
 /*
 									TO DO :
 /////////////////////////////////////////////////
+						LEAKS 
+
+echo coucou > "cou;cou"
+
+<coucou.c > a > "b"o'nj'our
+
+/////////////////////////////////////////////////
+						BUGS
 
 1/ 		pb sur le ctrl C d un hd qui affiche son contenu
-1 bis/ "cat <<< a" -> fonctionne
 
 /////////////////////////////////////////////////
 
 penser a rechercher les truc quon a (void) et voir si utile.
 pareil pour forbiden function et a recoder et warning
 
+
+
+tapis: 
+'e""ch'o 'd"f"'
+
+export GAGA='$'USER
 */

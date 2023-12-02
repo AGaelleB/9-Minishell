@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 16:14:59 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/02 15:10:39 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	exit_access_exec(t_process_data *data, t_env *env, char *command)
 {
 	perror(command);
+	ft_free_tab(data->command->command_arg);
 	free_child(data, env);
 	exit(g_exit_status = 126);
 }
@@ -22,6 +23,7 @@ void	exit_access_exec(t_process_data *data, t_env *env, char *command)
 void	exit_access_not_found(t_process_data *data, t_env *env, char *command)
 {
 	perror(command);
+	ft_free_tab(data->command->command_arg);
 	free_child(data, env);
 	exit(g_exit_status = 127);
 }
@@ -41,6 +43,7 @@ int	check_dots_commands(t_process_data *data, t_env *env, char *command)
 	write(2, command, ft_strlen(command));
 	write(2, " :command not found", 19);
 	write(2, "\n", 1);
+	ft_free_tab(data->command->command_arg);
 	free_child(data, env);
 	exit(g_exit_status = 127);
 }
@@ -55,6 +58,7 @@ int	verif_access(t_process_data *data, t_env *env, char *command)
 			&& !(command[1])))
 	{
 		write(2, ".: usage: . filename [arguments]\n", 34);
+		ft_free_tab(data->command->command_arg);
 		free_child(data, env);
 		exit(g_exit_status = 2);
 	}
