@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 16:29:23 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:42:44 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	handle_builtin_errors(t_process_data *data, t_env *env)
 static void	handle_access_error(t_process_data *data, t_env *env)
 {
 	ft_free_tab(data->command->command_arg);
-	free(data->command->command_path); //new
+	free(data->command->command_path);
 	free_child(data, env);
 	exit(126);
 }

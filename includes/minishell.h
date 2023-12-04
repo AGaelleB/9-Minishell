@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 14:55:56 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:22:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,6 +382,7 @@ int				count_args(char *input, int i);
 int				count_arg_length(char *input, int i);
 
 void			exit_with_error(char *message, pid_t *child_pids);
+int				is_dir_error(char *command);
 
 void			exit_access_exec(t_process_data *data, t_env *env,
 					char *command);
@@ -391,6 +392,9 @@ int				is_dir_error(char *command);
 int				check_dots_commands(t_process_data *data, t_env *env,
 					char *command);
 int				verif_access(t_process_data *data, t_env *env, char *command);
+
+void			free_export_str(t_export *export);
+void			free_export_basic(t_export *export);
 
 void			ft_free_tab(char **tab);
 void			free_tokens(char **tokens, int num);

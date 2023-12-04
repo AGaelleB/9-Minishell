@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 17:17:25 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:31:33 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,39 +72,20 @@ int	main(int ac, char **av, char **envp)
 {
 	t_env	*env_bis;
 
-	// if (isatty(0))
-	// {
+	if (isatty(0))
+	{
 		if (check_args_and_env(ac, envp))
 			return (1);
 		env_bis = initialize_env(envp);
 		if (!env_bis)
 			return (1);
 		main_loop(env_bis);
-	// }
-	// else
-	// {
-	// 	printf("the standard input is NOT from a terminal\n");
-	// 	return (-1);
-	// }
+	}
+	else
+	{
+		printf("the standard input is NOT from a terminal\n");
+		return (-1);
+	}
 	(void)av;
 	return (0);
 }
-
-/*
-/////////////////////////////////////////////////
-						BUGS
-
-1/ 		pb sur le ctrl C d un hd qui affiche son contenu
-
-/////////////////////////////////////////////////
-
-penser a rechercher les truc quon a (void) et voir si utile.
-pareil pour forbiden function et a recoder et warning
-
-
-
-tapis: 
-'e""ch'o 'd"f"'
-
-export GAGA='$'USER
-*/

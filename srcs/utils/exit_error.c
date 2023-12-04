@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 16:29:50 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:55:53 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,10 @@ void	exit_access_not_found(t_process_data *data, t_env *env, char *command)
 	exit(g_exit_status = 127);
 }
 
-int	is_dir_error(char *command)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(command, 2);
-	ft_putstr_fd(": Is a directory\n", 2);
-	g_exit_status = 126;
-	return (1);
-}
-
-int	check_dots_commands(t_process_data *data, t_env *env, char *command)
-{
-	write(2, "minishell: ", 11);
-	write(2, command, ft_strlen(command));
-	write(2, " :command not found", 19);
-	write(2, "\n", 1);
-	ft_free_tab(data->command->command_arg);
-	free_child(data, env);
-	exit(g_exit_status = 127);
-}
-
-int	verif_access(t_process_data *data, t_env *env, char *cmd)
+int	handle_access_verification(t_process_data *data, t_env *env, char *cmd)
 {
 	struct stat	file_stat;
 
-	if (cmd[0] == '.' && cmd[1] == '.')
-		return (check_dots_commands(data, env, cmd));
 	if ((cmd[0] == '.' && cmd[1] == ' ') || (cmd[0] == '.' && !(cmd[1])))
 	{
 		write(2, ".: usage: . filename [arguments]\n", 34);
@@ -76,4 +54,11 @@ int	verif_access(t_process_data *data, t_env *env, char *cmd)
 		return (42);
 	}
 	return (g_exit_status);
+}
+
+int	verif_access(t_process_data *data, t_env *env, char *cmd)
+{
+	if (cmd[0] == '.' && cmd[1] == '.')
+		return (check_dots_commands(data, env, cmd));
+	return (handle_access_verification(data, env, cmd));
 }

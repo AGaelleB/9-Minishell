@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 16:34:00 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:30:36 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,12 @@ int	process_arg(t_export *export, char *arg, t_env *env, int *i)
 	return (0);
 }
 
-int	ft_builtin_export(char **args, t_env *env)
+int	handle_export_args(char **args, t_env *env, t_export *export)
 {
-	t_export	*export;
-	int			arg_idx;
-	int			i;
+	int	arg_idx;
+	int	i;
 
 	i = 0;
-	export = malloc(sizeof(t_export));
-	if (!export)
-		return (0);
-	export->new = NULL;
-	export->ret = NULL;
-	if (!args[1])
-	{
-		free(export);
-		return (print_env_vars(env));
-	}
 	arg_idx = 1;
 	while (args[arg_idx])
 	{
@@ -115,10 +104,28 @@ int	ft_builtin_export(char **args, t_env *env)
 		}
 		arg_idx++;
 	}
+	return (g_exit_status);
+}
+
+int	ft_builtin_export(char **args, t_env *env)
+{
+	t_export	*export;
+
+	export = malloc(sizeof(t_export));
+	if (!export)
+		return (0);
+	export->new = NULL;
+	export->ret = NULL;
+	if (!args[1])
+	{
+		free(export);
+		return (print_env_vars(env));
+	}
+	if (handle_export_args(args, env, export) == 1)
+		return (0);
 	if (export->str && ft_strchr(export->str, '$'))
 		free_export_str(export);
 	else
 		free_export_basic(export);
 	return (g_exit_status);
 }
-

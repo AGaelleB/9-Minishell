@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 14:41:46 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:41:16 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	ctrl_c_heredoc(int signal)
 	{
 		write(2, "\n", 1);
 		free(data->delimiter);
-		// free(data->heredocs);
 		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
 		g_exit_status = 130;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc_and_cpy_parse_echo.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 10:51:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/12/02 15:11:34 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:39:06 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_allocate_and_copy(t_arg_handler *arg_handler)
 	int		*arg_idx;
 	int		*i;
 
-	arg = malloc(sizeof(char) * (SIZE_VAR)); // new
+	arg = malloc(sizeof(char) * (SIZE_VAR));
 	if (!arg)
 		return (NULL);
 	ft_memset(arg, '\0', SIZE);
