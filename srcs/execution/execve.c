@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 15:34:46 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:29:23 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	execve_process(t_process_data *data, t_env *env)
 	ft_set_args_and_paths(data, env);
 	if (env->flag_error || is_builtin(data->current) == 2)
 		handle_builtin_errors(data, env);
-	if (verif_access(data, env, data->current->command) == 1)
+	if (verif_access(data, env, data->current->command) == 42)
 		handle_access_error(data, env);
 	if (data->current->command_arg[0] == NULL)
 		handle_builtin_errors(data, env);

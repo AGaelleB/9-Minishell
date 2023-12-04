@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 16:25:37 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:34:00 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,14 @@ int	ft_builtin_export(char **args, t_env *env)
 		if (process_arg(export, args[arg_idx], env, &i) != 0)
 		{
 			free_export_str(export);
-			return (g_exit_status = 0);
+			return (g_exit_status);
 		}
 		arg_idx++;
 	}
-	if (ft_strchr(export->str, '$'))
+	if (export->str && ft_strchr(export->str, '$'))
 		free_export_str(export);
 	else
 		free_export_basic(export);
-	return (g_exit_status = 0);
+	return (g_exit_status);
 }
 

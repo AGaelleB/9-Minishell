@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:21:13 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 15:35:12 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:29:50 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	verif_access(t_process_data *data, t_env *env, char *cmd)
 			if (S_ISDIR(file_stat.st_mode))
 				return (is_dir_error(cmd));
 		}
-		return (g_exit_status);
+		g_exit_status = 1;
+		return (42);
 	}
 	return (g_exit_status);
 }
