@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 14:20:02 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:39:30 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	wait_for_children(t_command *command, pid_t *child_pids)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-static void	handle_execve_processes(t_process_data *data, t_env *env)
+
+int	handle_execve_processes(t_process_data *data, t_env *env)
 {
 	if (g_exit_status == 139)
 		g_exit_status = 0;
@@ -43,7 +44,7 @@ static void	handle_execve_processes(t_process_data *data, t_env *env)
 			exit_with_error("pipe", data->child_pids);
 		here_doc_ray(data, env);
 		if(g_exit_status == 130)
-			return ;
+			return (g_exit_status);
 		data->pid = fork();
 		data->child_pids[data->index++] = data->pid;
 		data->current->fd_in = data->current->fd[0];
@@ -51,6 +52,7 @@ static void	handle_execve_processes(t_process_data *data, t_env *env)
 		handle_all_process(data, env);
 		data->current = data->current->next;
 	}
+	return (0);
 }
 
 void	execve_fd(t_command *current, t_env *env)
@@ -66,7 +68,13 @@ void	execve_fd(t_command *current, t_env *env)
 	init_execve(current, &(data.child_pids));
 	data.current->flag = 0;
 	data.current = current;
-	handle_execve_processes(&data, env);
+	if (handle_execve_processes(&data, env) == 130)
+	{
+		g_exit_status = 0;
+		free(data.heredocs);
+		cleanup(data.child_pids, data.infile);
+		return ;
+	}
 	wait_for_children(data.command, data.child_pids);
 	cleanup(data.child_pids, data.infile);
 }
