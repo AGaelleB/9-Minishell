@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 13:28:20 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/04 15:53:10 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	check_invalid_var(t_env *env, char *str)
 
 int	process_arg(t_export *export, char *arg, t_env *env, int *i)
 {
-	// char		*str;
 	char		*var_name;
 
 	export->str = NULL;
@@ -74,22 +73,18 @@ int	process_arg(t_export *export, char *arg, t_env *env, int *i)
 		export = init_export(export);
 		var_name = extract_var_name(export->str);
 		if (var_name)
+		{
+			free(var_name);
 			export_expander(export, export->str, env);
+		}
 		else
 		{
 			update_var_env(env, export->str);
 			add_var_env(env, *i, export->str);
 		}
-		free(var_name);
 	}
 	else
-	{
-		// free(export->str);
-		// free_export(export);
 		return (check_invalid_var(env, arg), g_exit_status);
-	}
-	// free_export(export); // NEW EXPORT
-	// free(export->str); // si on free str ici casse 22 tests
 	return (0);
 }
 
@@ -107,7 +102,7 @@ int	ft_builtin_export(char **args, t_env *env)
 	export->ret = NULL;
 	if (!args[1])
 	{
-		free_export(export); // NEW EXPORT
+		free(export);
 		return (print_env_vars(env));
 	}
 	arg_idx = 1;
@@ -115,11 +110,14 @@ int	ft_builtin_export(char **args, t_env *env)
 	{
 		if (process_arg(export, args[arg_idx], env, &i) != 0)
 		{
-			free_export(export); // NEW EXPORT
-			return (g_exit_status);
+			free_export_str(export);
+			return (g_exit_status = 0);
 		}
 		arg_idx++;
 	}
-	free_export(export);
-	return (g_exit_status);
+	if (ft_strchr(export->str, '$'))
+		free_export_str(export);
+	else
+		free_export_basic(export);
+	return (g_exit_status = 0);
 }

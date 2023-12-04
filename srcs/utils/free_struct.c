@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 14:46:09 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 15:00:52 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,28 @@ void	ft_free_env(t_env *env)
 	i = 0;
 	while (env->cpy_env[i])
 	{
-		free(env->cpy_env[i]);
+		if (env->cpy_env[i])
+			free(env->cpy_env[i]);
 		i++;
 	}
 	free(env->cpy_env);
 	free(env);
 }
 
-void	free_export(t_export *export) ////////////////////////////////////////
+void	free_export_str(t_export *export) ////////////////////////////////////////
 {
 	if (export->new)
 		free(export->new);
-	// if (export->str) // NEW EXPORT
-	// 	free(export->str); // NEW EXPORT
+	if (export->str) // NEW EXPORT
+		free(export->str); // NEW EXPORT
+	if (export)
+		free(export);
+}
+
+void	free_export_basic(t_export *export) ////////////////////////////////////////
+{
+	if (export->new)
+		free(export->new);
 	if (export)
 		free(export);
 }

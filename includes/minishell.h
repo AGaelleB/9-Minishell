@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 12:35:03 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:55:56 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,7 +399,8 @@ void			ft_free_all(t_command *current, t_token *token);
 void			cleanup(pid_t *child_pids, int infile);
 
 void			ft_free_env(t_env *env);
-void			free_export(t_export *export);
+void			free_export_basic(t_export *export);
+void			free_export_str(t_export *export);
 void			ft_free_herdocs(t_command *current);
 void			ft_free_token(t_command *current);
 void			ft_free_current(t_command *current);

@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:55:59 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 11:38:18 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 15:03:36 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ char	*handle_quotes_export(char *str)
 	y = 0;
 	single_quote = false;
 	double_quote = false;
-	dest = malloc(sizeof(str) * (ft_strlen(str) + 1));
+	dest = malloc(sizeof(str) * SIZE);
 	if (!dest)
 		return (NULL);
+	ft_memset(dest, '\0', SIZE);
 	while (str[i])
 	{
 		skip_paired_quotes(str, &i, &single_quote, &double_quote);
