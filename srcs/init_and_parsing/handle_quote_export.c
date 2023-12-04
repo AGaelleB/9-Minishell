@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:55:59 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 17:09:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:40:03 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ static bool	should_skip_char(char c, bool single_quote, bool double_quote)
 	return ((!single_quote && c == '\"') || (!double_quote && c == '\''));
 }
 
-char	*allocate_and_initialize_dest(char *str)
+char	*allocate_and_initialize_dest(void)
 {
 	char	*dest;
 
 	dest = malloc(sizeof(char) * SIZE);
 	if (!dest)
 		return (NULL);
-	ft_memset(dest, '\0', ft_strlen(str) + 1);
+	ft_memset(dest, '\0', SIZE);
 	return (dest);
 }
 
@@ -57,7 +57,7 @@ char	*handle_quotes_export(char *str)
 	y = 0;
 	single_quote = false;
 	double_quote = false;
-	dest = allocate_and_initialize_dest(str);
+	dest = allocate_and_initialize_dest();
 	if (!dest)
 		return (NULL);
 	while (str[i])
@@ -71,5 +71,5 @@ char	*handle_quotes_export(char *str)
 		else
 			dest[y++] = str[i++];
 	}
-	return (dest);
+	return (dest[y] = '\0', dest);
 }
