@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/01 16:22:02 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:20:02 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	handle_execve_processes(t_process_data *data, t_env *env)
 		if (pipe(data->current->fd) == -1)
 			exit_with_error("pipe", data->child_pids);
 		here_doc_ray(data, env);
+		if(g_exit_status == 130)
+			return ;
 		data->pid = fork();
 		data->child_pids[data->index++] = data->pid;
 		data->current->fd_in = data->current->fd[0];

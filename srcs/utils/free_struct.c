@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 13:26:42 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:43:43 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	free_export(t_export *export) ////////////////////////////////////////
 {
 	if (export->new)
 		free(export->new);
-	// if (export->str) // NEW EXPORT
-	// 	free(export->str); // NEW EXPORT
+	if (export->str) // NEW EXPORT
+		free(export->str); // NEW EXPORT
 	if (export)
 		free(export);
 }
