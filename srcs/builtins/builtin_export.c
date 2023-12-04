@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 11:36:42 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:28:20 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,32 @@ void	check_invalid_var(t_env *env, char *str)
 
 int	process_arg(t_export *export, char *arg, t_env *env, int *i)
 {
-	char		*str;
+	// char		*str;
 	char		*var_name;
 
-	str = NULL;
+	export->str = NULL;
 	if ((check_before_equal(arg) == 0) && (check_after_equal(arg) == 0))
 	{
-		str = handle_quotes_export(arg);
+		export->str = handle_quotes_export(arg);
 		export = init_export(export);
-		var_name = extract_var_name(str);
+		var_name = extract_var_name(export->str);
 		if (var_name)
-			export_expander(export, str, env);
+			export_expander(export, export->str, env);
 		else
 		{
-			update_var_env(env, str);
-			add_var_env(env, *i, str);
+			update_var_env(env, export->str);
+			add_var_env(env, *i, export->str);
 		}
 		free(var_name);
 	}
 	else
 	{
-		free(str);
+		// free(export->str);
+		// free_export(export);
 		return (check_invalid_var(env, arg), g_exit_status);
 	}
+	// free_export(export); // NEW EXPORT
+	// free(export->str); // si on free str ici casse 22 tests
 	return (0);
 }
 
@@ -104,14 +107,17 @@ int	ft_builtin_export(char **args, t_env *env)
 	export->ret = NULL;
 	if (!args[1])
 	{
-		free(export);
+		free_export(export); // NEW EXPORT
 		return (print_env_vars(env));
 	}
 	arg_idx = 1;
 	while (args[arg_idx])
 	{
 		if (process_arg(export, args[arg_idx], env, &i) != 0)
+		{
+			free_export(export); // NEW EXPORT
 			return (g_exit_status);
+		}
 		arg_idx++;
 	}
 	free_export(export);

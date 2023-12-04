@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 15:20:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/02 16:54:08 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:26:42 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void	ft_free_env(t_env *env)
 	free(env);
 }
 
-void	free_export(t_export *export)
+void	free_export(t_export *export) ////////////////////////////////////////
 {
 	if (export->new)
 		free(export->new);
+	// if (export->str) // NEW EXPORT
+	// 	free(export->str); // NEW EXPORT
 	if (export)
 		free(export);
 }
