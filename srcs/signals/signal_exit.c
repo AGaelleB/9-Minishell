@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 11:13:13 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/05 12:32:48 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,16 @@ void	ctrl_c_manage(int signal)
 	{
 		g_exit_status = 24;
 		return ;
+	}
+}
+
+void	verif_ctrl_c(t_process_data *data, t_env *env)
+{
+	if (g_exit_status == 24)
+	{
+		free(data->delimiter);
+		ft_free_tab(data->command->command_arg_main);
+		free_child(data, env);
+		exit(g_exit_status);
 	}
 }

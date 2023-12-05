@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 11:13:54 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/05 12:33:40 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,6 +369,7 @@ void			ctrl_c_main(int signal);
 int				ctrl_d_heredoc(char *input, int i, char *delimiter);
 void			ctrl_c_manage(int signal);
 void			ctrl_c_heredoc(int signal);
+void			verif_ctrl_c(t_process_data *data, t_env *env);
 
 /********************************   UTILS   *********************************/
 int				is_redirection(char c);

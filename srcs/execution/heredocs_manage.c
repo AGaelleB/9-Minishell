@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_manage.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 12:12:59 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/05 12:32:35 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	here_doc_manage(t_process_data *data, t_env *env, int fd[2])
 	close(fd[0]);
 	while (1)
 	{
+		verif_ctrl_c(data, env);
 		input = readline("> ");
 		result = handle_input(input, i, data->delimiter, fd);
 		if (result != 0)
