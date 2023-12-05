@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 16:42:13 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/05 11:10:22 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ int	handle_execve_processes(t_process_data *data, t_env *env)
 		if (pipe(data->current->fd) == -1)
 			exit_with_error("pipe", data->child_pids);
 		here_doc_ray(data, env);
-		if (g_exit_status == 130)
-			return (g_exit_status);
+		if (g_exit_status == 24)
+		{
+			signal(SIGINT, ctrl_c_main);
+			return (g_exit_status = 130);
+		}
 		data->pid = fork();
 		data->child_pids[data->index++] = data->pid;
 		data->current->fd_in = data->current->fd[0];
@@ -69,7 +72,6 @@ void	execve_fd(t_command *current, t_env *env)
 	data.current = current;
 	if (handle_execve_processes(&data, env) == 130)
 	{
-		g_exit_status = 0;
 		free(data.heredocs);
 		cleanup(data.child_pids, data.infile);
 		return ;

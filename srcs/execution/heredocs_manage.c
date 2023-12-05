@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 16:41:35 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/05 11:07:38 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,11 @@ static int	manage_single_heredoc(t_process_data *data, t_env *env, int index)
 
 	data->delimiter = epur_filename_heredoc(data->current->token_head);
 	pipe(data->heredocs[index].fd);
-	signal(SIGINT, ctrl_c_heredoc);
+	signal(SIGINT, ctrl_c_manage);
 	pid = fork();
 	if (pid == 0)
 		here_doc_manage(data, env, data->heredocs[index].fd);
 	free(data->delimiter);
-	signal(SIGINT, ctrl_c_main);
 	waitpid(pid, &status, 0);
 	close(data->heredocs[index].fd[1]);
 	return (WIFEXITED(status) && WEXITSTATUS(status) == 130);
@@ -102,7 +101,6 @@ int	here_doc_ray(t_process_data *data, t_env *env)
 		if (!data->heredocs)
 			return (-1);
 	}
-	signal(SIGINT, ctrl_c_heredoc);
 	i = 0;
 	heredoc_interrupted = 0;
 	while (i < data->count_hd && !heredoc_interrupted)
@@ -110,7 +108,6 @@ int	here_doc_ray(t_process_data *data, t_env *env)
 		heredoc_interrupted = manage_single_heredoc(data, env, i);
 		i++;
 	}
-	signal(SIGQUIT, ctrl_c_heredoc);
 	if (heredoc_interrupted)
 		return (-1);
 	else

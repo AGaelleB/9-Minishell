@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:29:45 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 16:41:16 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/05 11:13:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,6 @@ int	ctrl_d_heredoc(char *input, int i, char *delimiter)
 	return (0);
 }
 
-t_process_data	*return_data(t_process_data *data)
-{
-	static t_process_data	*test_data;
-
-	if (data)
-		test_data = data;
-	return (test_data);
-}
-
-t_env	*return_env(t_env *env)
-{
-	static t_env	*test_env;
-
-	if (env)
-		test_env = env;
-	return (test_env);
-}
-
 void	ctrl_c_heredoc(int signal)
 {
 	t_process_data	*data;
@@ -67,7 +49,16 @@ void	ctrl_c_heredoc(int signal)
 		free(data->delimiter);
 		ft_free_tab(data->command->command_arg_main);
 		free_child(data, env);
-		g_exit_status = 130;
+		g_exit_status = 24;
 		exit(g_exit_status);
+	}
+}
+
+void	ctrl_c_manage(int signal)
+{
+	if (signal == SIGINT)
+	{
+		g_exit_status = 24;
+		return ;
 	}
 }
