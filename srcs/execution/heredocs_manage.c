@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 11:07:38 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/05 12:12:59 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static int	manage_single_heredoc(t_process_data *data, t_env *env, int index)
 	data->delimiter = epur_filename_heredoc(data->current->token_head);
 	pipe(data->heredocs[index].fd);
 	signal(SIGINT, ctrl_c_manage);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 		here_doc_manage(data, env, data->heredocs[index].fd);
@@ -108,6 +109,7 @@ int	here_doc_ray(t_process_data *data, t_env *env)
 		heredoc_interrupted = manage_single_heredoc(data, env, i);
 		i++;
 	}
+	signal(SIGQUIT, ctrl_c_manage);
 	if (heredoc_interrupted)
 		return (-1);
 	else
