@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_and_set_execve.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:55:30 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 10:34:04 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:08:54 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,43 @@ void	init_execve(t_command *cur, pid_t **childs_pids)
 		return ;
 }
 
+char	*check_expr(char *str)
+{
+	int		i;
+	int		y;
+	int		j;
+	char	*temp;
+	char	*temp_two;
+
+	i = 0;
+	y = 0;
+	j = 0;
+	temp = malloc(sizeof(char) * SIZE);
+	if (!temp)
+		return (NULL);
+	while (str[i])
+	{
+		if ((str[i] == '$') && (str[i + 1] == '?'))
+		{
+			temp_two = ft_itoa(g_exit_status); // marche pas pour g_exit_status = 127
+			while (temp_two[j])
+				temp[y++] = temp_two[j++];
+			i += 2;
+			j = 0;
+		}
+		temp[y] = str[i];
+		i++;
+		y++;
+	}
+	temp[i] = '\0';
+	printf("temp : %s\n", temp);
+	free (str);
+	str = ft_strdup(temp);
+	free (temp);
+	free (temp_two);
+	return (str);
+}
+
 void	ft_set_args_and_paths(t_process_data *data, t_env *env)
 {
 	t_command	*cmd;
@@ -42,6 +79,7 @@ void	ft_set_args_and_paths(t_process_data *data, t_env *env)
 		cmd = cmd->next;
 	}
 	data->current->command_path = NULL;
+	data->current->command = check_expr(data->current->command); // ici probleme
 	data->current->command_arg = parse_input_quote(data->current->command);
 	if (data->current->command_arg[0] != NULL)
 		data->current->command_path = ft_check_paths(env,

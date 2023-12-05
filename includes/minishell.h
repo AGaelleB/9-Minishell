@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 12:33:40 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:50:41 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
-
 # include "../includes/ft_printf.h"
 # include "../includes/get_next_line.h"
 # include "../includes/libft.h"
-
+# define SIZE 1000
+# define SIZE_VAR 5000
 # define RESET "\033[0m"
 # define RED "\033[31m"
 # define GREEN "\033[32m"
@@ -40,10 +40,7 @@
 # define BLUE "\033[34m"
 # define MAGENTA "\033[35m"
 # define CYAN "\033[36m"
-# define SIZE 1000
-# define SIZE_VAR 5000
 
-extern int					g_exit_status;
 typedef struct s_command	t_command;
 
 typedef struct s_env
@@ -191,6 +188,8 @@ typedef struct s_command
 	struct s_quote		*quote_head;
 	struct s_command	*next;
 }	t_command;
+
+extern int					g_exit_status;
 
 /*******************************   BUILTINS   *******************************/
 int				error_input(t_env *env, char *input);
