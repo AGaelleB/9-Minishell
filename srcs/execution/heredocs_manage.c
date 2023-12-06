@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs_manage.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:13:58 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 12:32:35 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/06 11:27:09 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 static int	handle_input(char *input, int i, char *delimiter, int fd[2])
 {
+	int	input_len;
+
+	input_len = ft_strlen(input);
 	if (ctrl_d_heredoc(input, i, delimiter) == 45)
 	{
 		free(delimiter);
 		free(input);
 		return (45);
 	}
+	if (input_len > 0 && input[input_len - 1] == '\n')
+		input[input_len - 1] = '\0';
 	if (ft_strcmp_minishell(input, delimiter) == 0)
 	{
 		free(delimiter);
@@ -45,7 +50,8 @@ int	here_doc_manage(t_process_data *data, t_env *env, int fd[2])
 	while (1)
 	{
 		verif_ctrl_c(data, env);
-		input = readline("> ");
+		ft_putstr_fd("> ", 1);
+		input = get_next_line(0);
 		result = handle_input(input, i, data->delimiter, fd);
 		if (result != 0)
 		{
