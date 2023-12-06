@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/06 11:32:39 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:33:08 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,3 +89,18 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	return (0);
 }
+
+
+/* 
+//////////////////////////////TO FIX///////////////////////////////////
+
+ls | cat celine.txt  | grep Vous > test
+
+voir la cmd blocante qui reagissait mal pdt la correction
+
+Export CIAO="$?""
+
+\\\\\ :command not found
+leaks
+
+ */
