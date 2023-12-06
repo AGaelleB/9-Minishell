@@ -6,7 +6,7 @@
 #    By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:44:39 by abonnefo          #+#    #+#              #
-#    Updated: 2023/12/04 16:45:48 by abonnefo         ###   ########.fr        #
+#    Updated: 2023/12/06 10:40:30 by abonnefo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS_BUILTINS = srcs/builtins/all_builtins_verifs.c \
 
 SRCS_INIT_AND_PARSING = srcs/init_and_parsing/alloc_and_cpy_parse_echo.c \
 	srcs/init_and_parsing/check_around_equal.c \
+	srcs/init_and_parsing/check_expr_dollar.c \
 	srcs/init_and_parsing/check_valid_identifier_export.c \
 	srcs/init_and_parsing/count_args_quotes.c \
 	srcs/init_and_parsing/create_cmd.c \

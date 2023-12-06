@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 15:50:41 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/06 10:39:53 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,8 @@ char			*ft_allocate_and_copy(t_arg_handler *arg_handler);
 
 int				check_before_equal(char *s);
 int				check_after_equal(char *str);
+
+char			*check_expr(char *str);
 
 int				is_char_valid(char c);
 int				print_error_export(char *s, int ok);

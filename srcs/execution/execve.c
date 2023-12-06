@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 16:27:55 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 16:07:44 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/06 09:31:19 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	execve_process(t_process_data *data, t_env *env)
 {
 	ft_set_args_and_paths(data, env);
 	//checker si data->current->command possede les caracteres $ et ? si oui faire une char qui reprends la data cmd et qui remplace $? par g_exit_statuts
-	printf("data->current->command : %s\n", data->current->command);
+	// printf("data->current->command : %s\n", data->current->command);
 	if (env->flag_error || is_builtin(data->current) == 2)
 		handle_builtin_errors(data, env);
 	if (verif_access(data, env, data->current->command) == 42)
