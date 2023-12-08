@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:37:16 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/08 10:06:34 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:23:13 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,20 @@ void	handle_child_process(t_process_data *data, t_env *env)
 	dup2(data->current->fd_out, 1);
 	close(data->current->fd_out);
 	ft_close_fd();
-	ft_builtin_write_exit_process(data, env);
-	if (builtins_verif(data->current, env) == 1)
+	if (!data->current->next)
 	{
-		ft_free_tab(data->command->command_arg_main);
-		free_child(data, env);
-		exit(g_exit_status);
+		if (builtins_verif(data->current, env) == 1)
+		{
+			ft_builtin_write_exit_process(data, env);
+			ft_free_tab(data->command->command_arg_main);
+			free_child(data, env);
+			exit(g_exit_status);
+		}
+		else
+			execve_process(data, env);
 	}
-	execve_process(data, env);
+	else
+		execve_process(data, env);
 	free_child(data, env);
 }
 

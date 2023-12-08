@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_fd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:06:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 13:16:39 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:22:49 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	execve_fd(t_command *current, t_env *env)
 	init_execve(current, &(data.child_pids));
 	data.current->flag = 0;
 	data.current = current;
+	data.execute_builtin_later = 0;
 	if (handle_execve_processes(&data, env) == 130)
 	{
 		free(data.heredocs);
