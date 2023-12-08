@@ -6,7 +6,7 @@
 /*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:16:44 by bfresque          #+#    #+#             */
-/*   Updated: 2023/11/15 17:24:05 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:18:00 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,11 @@ void	print_expander_cmd(t_env *env, char *str, int i)
 	write(1, "minishell: ", 11);
 	ft_putstr_fd(str, 1);
 	write(1, ": command not found\n", 21);
+}
+
+void	skip_var_name(char *str, int *i)
+{
+	(*i)++;
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+		(*i)++;
 }

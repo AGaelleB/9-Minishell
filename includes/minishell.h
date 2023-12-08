@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/06 10:39:53 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:18:48 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,8 @@ int				check_after_equal(char *str);
 
 char			*check_expr(char *str);
 
+void			check_invalid_var(t_env *env, char *str);
+
 int				is_char_valid(char c);
 int				print_error_export(char *s, int ok);
 int				check_valid_identifier(char c);
@@ -428,6 +430,7 @@ void			print_error_cd(t_env *env, int i);
 void			print_export(char *str, int fd);
 int				print_env_vars(t_env *env);
 void			print_expander_cmd(t_env *env, char *str, int i);
+void			skip_var_name(char *str, int *i);
 
 char			**split_command_on_pipe(char *input);
 

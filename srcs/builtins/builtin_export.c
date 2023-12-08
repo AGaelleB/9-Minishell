@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:57:35 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/05 09:58:16 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:13:46 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,37 +34,9 @@ char	*extract_var_name(char *str)
 	return (var_name);
 }
 
-void	check_invalid_var(t_env *env, char *str)
-{
-	char	*var_name;
-	int		i;
-	int		j;
-
-	j = 0;
-	if (str[0] == '$')
-	{
-		var_name = extract_var_name(str);
-		i = find_env_var(env, var_name);
-		if (i != -1)
-		{
-			ft_putstr_fd("minishell: export: `", 1);
-			while (env->cpy_env[i][j] && env->cpy_env[i][j] != '=')
-				j++;
-			j++;
-			while (env->cpy_env[i][j])
-				ft_putchar_fd(env->cpy_env[i][j++], 1);
-			ft_putstr_fd("': not a valid identifier\n", 2);
-		}
-		else
-			print_env_vars(env);
-		free(var_name);
-	}
-	return ;
-}
-
 int	process_arg(t_export *export, char *arg, t_env *env, int *i)
 {
-	char		*var_name;
+	char	*var_name;
 
 	export->str = NULL;
 	if ((check_before_equal(arg) == 0) && (check_after_equal(arg) == 0))

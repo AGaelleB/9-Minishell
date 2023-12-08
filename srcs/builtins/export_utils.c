@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:16:16 by bfresque          #+#    #+#             */
-/*   Updated: 2023/12/01 15:45:01 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:21:02 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	handle_exit_status(char **str_cpy, int *y, int *i)
+{
+	char	*exit_stat;
+	int		j;
+
+	j = 0;
+	exit_stat = ft_itoa(g_exit_status);
+	while (exit_stat[j])
+		(*str_cpy)[(*y)++] = exit_stat[j++];
+	free(exit_stat);
+	(*i)++;
+}
 
 char	*check_none_var(char *str)
 {
@@ -18,8 +31,8 @@ char	*check_none_var(char *str)
 	int		i;
 	int		y;
 
-	i = 0;
 	y = 0;
+	i = 0;
 	str_cpy = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!str_cpy)
 		return (NULL);
@@ -27,12 +40,16 @@ char	*check_none_var(char *str)
 	{
 		if (str[i] == '$')
 		{
-			i++;
-			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-				i++;
+			if (str[i + 1] == '?')
+				handle_exit_status(&str_cpy, &y, &i);
+			else
+				skip_var_name(str, &i);
 		}
-		str_cpy[y++] = str[i++];
+		else
+			str_cpy[y++] = str[i];
+		i++;
 	}
+	str_cpy[y] = '\0';
 	return (str_cpy);
 }
 
@@ -70,6 +87,7 @@ int	expand_variable(t_export *export, char **str, t_env *env)
 		else
 		{
 			*str = check_none_var(*str);
+			update_var_env(env, *str);
 			add_var_env(env, export->i, *str);
 			free(var_name);
 			return (1);
