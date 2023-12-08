@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:09:20 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/06 13:33:08 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/08 10:03:42 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,8 @@ int	main(int ac, char **av, char **envp)
 /* 
 //////////////////////////////TO FIX///////////////////////////////////
 
-ls | cat celine.txt  | grep Vous > test
-
-voir la cmd blocante qui reagissait mal pdt la correction
-
-Export CIAO="$?""
-
-\\\\\ :command not found
-leaks
+***** BUGS *****
+1/ Export CIAO="$?""
+2/ cat | cat | echo cc
 
  */

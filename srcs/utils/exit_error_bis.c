@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error_bis.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 10:21:04 by bfresque          #+#    #+#             */
-/*   Updated: 2023/12/04 16:55:31 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/08 10:01:26 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_dir_error(char *command)
 	ft_putstr_fd(command, 2);
 	ft_putstr_fd(": Is a directory\n", 2);
 	g_exit_status = 126;
-	return (1);
+	return (42);
 }
 
 int	check_dots_commands(t_process_data *data, t_env *env, char *command)

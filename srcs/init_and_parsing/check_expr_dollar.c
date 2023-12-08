@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_expr_dollar.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:39:08 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/06 10:41:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/08 09:47:56 by bfresque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*check_expr(char *str)
 	if (!temp)
 		return (NULL);
 	result = ft_strdup(temp);
+	free(str);
 	free(temp);
 	return (result);
 }
