@@ -6,7 +6,7 @@
 /*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:11:23 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/08 13:11:06 by abonnefo         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:02:34 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,8 @@ int				check_cd(t_command *current);
 
 int				check_env(t_command *current, t_env *env);
 int				check_unset(t_command *current);
-int				check_export(t_command *current, t_env *env);
+int				check_export(t_process_data *data,
+					t_command *current, t_env *env);
 
 void			execve_builtins_unset_export(t_command *cmd, t_env *env_bis);
 int				count_cd_args(char *command_arg);
@@ -401,6 +402,7 @@ int				verif_access(t_process_data *data, t_env *env, char *command);
 
 void			free_export_str(t_export *export);
 void			free_export_basic(t_export *export);
+void			exec_free_builtins(t_process_data *data, t_env *env);
 
 void			ft_free_tab(char **tab);
 void			free_tokens(char **tokens, int num);

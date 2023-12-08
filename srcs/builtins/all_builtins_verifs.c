@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_builtins_verifs.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:02:07 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 15:10:43 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:21:27 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,9 @@ int	builtins_verif(t_command *current, t_env *env)
 			return (1);
 		if (check_echo(current, env))
 			return (1);
-		if (check_env(current, env))
-			return (1);
 		if (check_cd(current))
 			return (1);
 		if (check_unset(current))
-			return (1);
-		if (check_export(current, env))
 			return (1);
 		if (check_expand(current, env))
 			return (1);

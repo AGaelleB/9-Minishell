@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_expr_dollar.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:39:08 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/08 09:47:56 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/08 13:59:15 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*replace_exit_status(char *str)
 	temp = malloc(sizeof(char) * SIZE);
 	if (!temp)
 		return (NULL);
+	ft_memset(temp, '\0', SIZE);
 	while (str[i])
 	{
 		if ((str[i] == '$') && (str[i + 1] == '?'))
@@ -63,13 +64,10 @@ char	*replace_exit_status(char *str)
 char	*check_expr(char *str)
 {
 	char	*temp;
-	char	*result;
 
 	temp = replace_exit_status(str);
 	if (!temp)
 		return (NULL);
-	result = ft_strdup(temp);
 	free(str);
-	free(temp);
-	return (result);
+	return (temp);
 }

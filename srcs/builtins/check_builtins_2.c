@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfresque <bfresque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abonnefo <abonnefo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:44:17 by abonnefo          #+#    #+#             */
-/*   Updated: 2023/12/04 15:34:41 by bfresque         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:03:18 by abonnefo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	check_unset(t_command *current)
 	return (0);
 }
 
-int	check_export(t_command *current, t_env *env)
+int	check_export(t_process_data *data, t_command *current, t_env *env)
 {
 	if (ft_strcmp_minishell(current->command, "export") == 0)
 	{
-		ft_builtin_export(current->command_arg_main, env);
+		ft_builtin_export(data->command->export_arg, env);
 		return (1);
 	}
 	else if (ft_strncmp(current->command, "export ", 7) == 0)
