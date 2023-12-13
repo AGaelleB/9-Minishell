@@ -1,0 +1,106 @@
+/"bi"n'/l's 
+=> doit exec ls normalement 
+
+			(only tab) 
+=> ne fait rien 
+
+echo -nnn -nna Hello "world \n"
+=> doit imprimer : -nna Hello world \n (sans retour à la ligne)
+
+echo "'''"
+=> doit print '''
+
+exitaaaa
+=> cmd not found
+
+exit -1
+=> echo $? = 256 - 1 = 255
+
+exit 0 (ou -0)
+=> doit exit avec 0
+
+$?
+=> cmd : 0: not found (recommencer en voir si: cmd : 127: not found)
+
+expr $? + $? 
+=> repeter le test doit faire 0,2,0,2,0,2,0,2,0,2,etc 
+
+cat | cat | cat << a
+=> doit attendre la fin de l'exec du heredocs pour exec les pipes ouverts
+
+cat | cat | pwd
+=> exec pwd puis attend deux "entrer" pour revenir au prompt
+
+cat Makefile | grep lib | wc > file.txt
+=> doit rediriger dans file l'exec du wc
+
+<Makefile
+=> ne doit rien faire attention leaks et jump (echo $? = 0)
+
+>file
+=> créé file (vide) et ne fait rien
+
+            >a>   b>c   cat    Makefile
+=> doit correctement rediriger dans c le Makefile
+
+ctr^c (avec plusieurs ./minishell ouverts)
+=> les signaux doivent être correctements interceptés (un seul prompt doit etre retourné)
+
+export l="ls -la"
+=> on doit pouvoir exec juste $l depuis le terminal et cela doit exec ls -la
+
+export PATH=$PATH:$PWD
+=> on doit pouvoir exec juste minishell sans ./ devant et cela doit ouvrir un mini dans le mini
+
+export TEST=$USER:$SHELL:$USER:$SHELL:$USER:$SHELL
+=> doit bien alterner les var user et shell sous la var TEST
+
+export co=la cou=lo ccou=li coo=le
+=> doit correctement creer les differentes variables
+
+export $var (var non existante)
+=> doit afficher export comme s'il etait sans argument MAIS...
+
+export $USER (user existant)
+=> n'affiche rien et doit export le user de la personne en var (resultat apres export : "export bfresque" ajouté en bas)
+
+export var (puis) var=test
+=> verifier pas de doublon
+
+==> env n'affiche jamais les variable sans '=' (voir test au dessus ne doit pas apparaitre)
+
+unset VAR1 VAR2
+=> doit supprimer du export VAR1 et VAR2 (si l'une d'elle n'existe pas ne doit pas avoir un comportement inattendu)
+
+unset $HOME (puis ou && pour ceux qui ont fait les bonus) cd $HOME
+=> ne doit pas bouger de directory
+
+creer un directory / entrer dedans / rm -rf ../DIRECTORY 
+=> cd .. / ls / pwd ne doivent pas avoir de comportement inattendu
+
+<< a << b | << c
+=> valgrind --trace-children=yes --track-fds=yes : ne doit pas avoir de fds ouverts
+
+<< a << b | << c
+=> faire des tests en quittant les hds avec ctrl^C/D sur des lignes vides ou remplies
+
+ls><abc
+=> parsing : bash: syntax error near unexpected token `<'
+
+./file_that_is_not_an_executable (ou) ./srcs
+=> permission denied et exit status = 126
+
+. (ou) ..
+=> ne doit pas avoir un comportement inattendu
+
+
+
+BATARD:
+export TEST=$LS_COLORS::LS_COLORS::LS_COLORS::LS_COLORS::LS_COLORS::LS_COLORS::LS_COLORS
+=> permet de verifier que les mallocs soient alloués de maniere proportionels à la taille des vars
+
+./minishell | ./minishell
+=> ne doit pas avoir un comportement inattendu (pour fix voir fonction isatty)
+
+echo[TAB]a
+=> doit fonctionner comme echo[space]a
